@@ -19,7 +19,7 @@ class MediaController extends Controller
     }
 
     /**
-     * Will return media list
+     * Will return media manager page
      */
     public function mediaManager(Request $request): View
     {
