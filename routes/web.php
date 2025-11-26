@@ -1,7 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\PageController;
 use Illuminate\Support\Facades\Route;
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [PageController::class, 'homePage'])->name('home');
 require __DIR__.'/admin.php';
