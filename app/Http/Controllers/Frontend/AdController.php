@@ -12,4 +12,9 @@ class AdController extends Controller
     {
         return view('frontend.pages.ad.post-ad');
     }
+
+    public function adListingPage($category_slug = null)
+    {
+        return view('frontend.pages.ad.listing', compact('category_slug'));
+    }
 }

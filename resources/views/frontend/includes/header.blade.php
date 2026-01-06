@@ -27,7 +27,7 @@
                              <a href="about.html">About</a>
                          </li>
                          <li>
-                             <a href="listings.html">Listings</a>
+                             <a href="{{ route('ad.listing.page') }}">Listings</a>
                          </li>
                          <li>
                              <a href="membership.html">Membership</a>
