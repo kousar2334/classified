@@ -3,7 +3,7 @@
          <div class="container-fluid container-1920 container-two nav-container">
              <div class="responsive-mobile-menu">
                  <div class="logo-wrapper">
-                     <a href="index.html" class="logo">
+                     <a href="{{ url('/') }}" class="logo">
                          <h3> {{ get_setting('site_name') }}</h3>
                      </a>
                  </div>
@@ -73,7 +73,7 @@
                      </li>
                      <li class="single">
                          <div class="btn-wrapper">
-                             <a href="listing/guest/add-listing.html" class="cmn-btn1 popup-modal">
+                             <a href="{{ route('ad.post.page') }}" class="cmn-btn1 popup-modal">
                                  <i class="las la-plus-circle"></i><span class="text">Post your ad</span>
                              </a>
                          </div>
