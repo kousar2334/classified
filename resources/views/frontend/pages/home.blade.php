@@ -1,9 +1,9 @@
 @extends('frontend.layouts.master')
 @section('meta')
-    <title>Listocean - Classifieds ads</title>
-    <title>ListOcean: Your Gateway to Seamless Buying and Selling Experiences</title>
+    <title>{{ get_setting('site_name') }} - Classifieds ads</title>
+    <title>{{ get_setting('site_name') }}: Your Gateway to Seamless Buying and Selling Experiences</title>
     <!-- Primary Meta Tags -->
-    <meta name="title" content="ListOcean: Your Gateway to Seamless Buying and Selling Experiences">
+    <meta name="title" content="Your Gateway to Seamless Buying and Selling Experiences">
     <meta name="description"
         content="Dive into the endless possibilities of buying and selling at ListOcean! Navigate a vast sea of opportunities as you connect with buyers and sellers effortlessly. Uncover incredible deals on a wide range of items or transform your unused items into treasure by listing them for sale. Immerse yourself in our dynamic community and enjoy the simplicity of buying and selling. Begin your oceanic journey today at ListOcean – where opportunities flow like waves!">
     <meta name="keywords"
@@ -12,7 +12,7 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://listocean.bytesed.com">
-    <meta property="og:title" content="ListOcean: Your Gateway to Seamless Buying and Selling Experiences">
+    <meta property="og:title" content="Your Gateway to Seamless Buying and Selling Experiences">
     <meta property="og:description"
         content="Dive into the endless possibilities of buying and selling at ListOcean! Navigate a vast sea of opportunities as you connect with buyers and sellers effortlessly. Uncover incredible deals on a wide range of items or transform your unused items into treasure by listing them for sale. Immerse yourself in our dynamic community and enjoy the simplicity of buying and selling. Begin your oceanic journey today at ListOcean – where opportunities flow like waves!">
     <meta property="og:image" content="https://listocean.bytesed.com//public/uploads/media-uploader/icon1717328206.png">
@@ -20,7 +20,7 @@
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://listocean.bytesed.com">
-    <meta property="twitter:title" content="ListOcean: Your Gateway to Seamless Buying and Selling Experiences">
+    <meta property="twitter:title" content="Your Gateway to Seamless Buying and Selling Experiences">
     <meta property="twitter:description"
         content="Dive into the endless possibilities of buying and selling at ListOcean! Navigate a vast sea of opportunities as you connect with buyers and sellers effortlessly. Uncover incredible deals on a wide range of items or transform your unused items into treasure by listing them for sale. Immerse yourself in our dynamic community and enjoy the simplicity of buying and selling. Begin your oceanic journey today at ListOcean – where opportunities flow like waves!">
     <meta property="twitter:description"

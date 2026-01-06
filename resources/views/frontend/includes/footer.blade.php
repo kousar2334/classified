@@ -8,8 +8,9 @@
                             <div class="footer-tittle">
 
                                 <div class="footer-logo mb-40">
-                                    <a href="index.html" class="footer-logo"><img
-                                            src="/public/uploads/media-uploader/frame-117211717588605.png" alt="" /></a>
+                                    <a href="index.html" class="footer-logo">
+                                        <h3 class="text-white"> {{ get_setting('site_name') }}</h3>
+                                    </a>
                                 </div>
                                 <ul class="listing">
                                     <li class="listItem wow fadeInUp" data-wow-delay="0.0s"><a href="index.html#"
@@ -112,7 +113,8 @@
                                     <div class="footer-social2 ">
                                         <a class="wow fadeInUp social" data-wow-delay="0.2s" href="fb.com.html"> <i
                                                 class="lab la-facebook-f"></i> </a>
-                                        <a class="wow fadeInUp social" data-wow-delay="0.2s" href="https://twitter.com">
+                                        <a class="wow fadeInUp social" data-wow-delay="0.2s"
+                                            href="https://twitter.com">
                                             <i class="lab la-twitter"></i> </a>
 
                                     </div>
