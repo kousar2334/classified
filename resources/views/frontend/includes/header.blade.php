@@ -64,7 +64,7 @@
                  <ul class="header-cart">
                      <li class="single userAccount">
                          <div class="btn-wrapper">
-                             <a href="user/listing/add.html" class="cmn-btn sign-in">
+                             <a href="{{ route('member.login') }}" class="cmn-btn sign-in">
                                  Sign In
                              </a>
                          </div>

@@ -11,20 +11,19 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://listocean.bytesed.com">
+    <meta property="og:url" content="http://localhost:8080/">
     <meta property="og:title" content="Your Gateway to Seamless Buying and Selling Experiences">
     <meta property="og:description"
         content="Dive into the endless possibilities of buying and selling at ListOcean! Navigate a vast sea of opportunities as you connect with buyers and sellers effortlessly. Uncover incredible deals on a wide range of items or transform your unused items into treasure by listing them for sale. Immerse yourself in our dynamic community and enjoy the simplicity of buying and selling. Begin your oceanic journey today at ListOcean – where opportunities flow like waves!">
-    <meta property="og:image" content="https://listocean.bytesed.com//public/uploads/media-uploader/icon1717328206.png">
+    <meta property="og:image" content="http://localhost:8080//public/uploads/media-uploader/icon1717328206.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://listocean.bytesed.com">
+    <meta property="twitter:url" content="http://localhost:8080/">
     <meta property="twitter:title" content="Your Gateway to Seamless Buying and Selling Experiences">
     <meta property="twitter:description"
         content="Dive into the endless possibilities of buying and selling at ListOcean! Navigate a vast sea of opportunities as you connect with buyers and sellers effortlessly. Uncover incredible deals on a wide range of items or transform your unused items into treasure by listing them for sale. Immerse yourself in our dynamic community and enjoy the simplicity of buying and selling. Begin your oceanic journey today at ListOcean – where opportunities flow like waves!">
-    <meta property="twitter:description"
-        content="https://listocean.bytesed.com//public/uploads/media-uploader/icon1717328206.png">
+    <meta property="twitter:description" content="http://localhost:8080//public/uploads/media-uploader/icon1717328206.png">
 @endsection
 @section('content')
     <!--Banner part Start-->
@@ -505,7 +504,7 @@
 
                             <!--if user membership empty buy free membership -->
                             <!--free membership form start -->
-                            <form action="https://listocean.bytesed.com/membership/buy" method="post">
+                            <form action="http://localhost:8080/membership/buy" method="post">
                                 <input type="hidden" name="_token" value="4qMgoof0CGXn76Y2Ovd5AWGkX891VOaiaqMZeUxn"
                                     autocomplete="off"> <input type="hidden" name="membership_id" class="membership_id"
                                     value="1">
