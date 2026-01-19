@@ -2,15 +2,15 @@
     $lang = request()->get('lang');
 @endphp
 
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Edit Ad') }}
 @endsection
-@section('custom_css')
+@section('page-style')
     <link rel="stylesheet" href="{{ asset('/public/web-assets/backend/plugins/select2/select2.min.css') }}">
     <link href="{{ asset('/public/web-assets/backend/plugins/summernote/summernote-lite.css') }}" rel="stylesheet" />
 @endsection
-@section('main_content')
+@section('page-content')
     <form action="{{ route('classified.ads.update') }}" method="POST" class="row">
         @csrf
         <div class="col-lg-8">
@@ -47,7 +47,7 @@
                             <label class="font-14 bold black">{{ translate('Title') }} </label>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text" name="title" class="theme-input-style"
+                            <input type="text" name="title" class="form-control"
                                 value="{{ $ad_details->translation('title', $lang) }}"
                                 placeholder="{{ translate('Type Enter') }}">
                             @if ($errors->has('title'))
@@ -79,7 +79,7 @@
                             <label class="font-14 bold black">{{ translate('Condition') }} </label>
                         </div>
                         <div class="col-sm-9">
-                            <select class="theme-input-style" name="condition">
+                            <select class="form-control" name="condition">
                                 @foreach ($conditions as $condition)
                                     <option value="{{ $condition->id }}" @selected($ad_details->item_condition == $condition->id)>
                                         {{ $condition->translation('title', $lang) }}
@@ -123,7 +123,7 @@
                 <div class="card-body">
                     <div class="form-row mb-20">
                         <div class="form-group col-lg-12">
-                            <textarea class="theme-input-style" id="ad_description" name="description">{{ $ad_details->translation('description', $lang) }}</textarea>
+                            <textarea class="form-control" id="ad_description" name="description">{{ $ad_details->translation('description', $lang) }}</textarea>
                             @if ($errors->has('description'))
                                 <div class="invalid-input">{{ $errors->first('description') }}</div>
                             @endif
@@ -196,25 +196,25 @@
                                 </div>
                                 <div class="col-sm-9">
                                     @if ($cf['type'] == config('settings.input_types.text'))
-                                        <input type="text" name="custom_field[{{ $field->id }}]"
-                                            class="theme-input-style" value="{{ $cf['value'] }}"
+                                        <input type="text" name="custom_field[{{ $field->id }}]" class="form-control"
+                                            value="{{ $cf['value'] }}"
                                             placeholder="{{ translate('Type ') }} {{ $field->translation('title', $lang) }}">
                                     @endif
                                     @if ($cf['type'] == config('settings.input_types.number'))
                                         <input type="number" name="custom_field[{{ $field->id }}]"
-                                            class="theme-input-style" value="{{ $cf['value'] }}"
+                                            class="form-control" value="{{ $cf['value'] }}"
                                             placeholder="{{ translate('Type ') }} {{ $field->translation('title', $lang) }}">
                                     @endif
                                     @if ($cf['type'] == config('settings.input_types.text_area'))
-                                        <textarea name="custom_field[{{ $field->id }}]" class="theme-input-style">{{ $cf['value'] }}</textarea>
+                                        <textarea name="custom_field[{{ $field->id }}]" class="form-control">{{ $cf['value'] }}</textarea>
                                     @endif
                                     @if ($cf['type'] == config('settings.input_types.date'))
                                         <input type="date" name="custom_field[{{ $field->id }}]"
-                                            class="theme-input-style" value="{{ $cf['value'] }}"
+                                            class="form-control" value="{{ $cf['value'] }}"
                                             placeholder="{{ translate('Type ') }} {{ $field->translation('title', $lang) }}">
                                     @endif
                                     @if ($cf['type'] == config('settings.input_types.select'))
-                                        <select name="custom_field[{{ $field->id }}]" class="theme-input-style">
+                                        <select name="custom_field[{{ $field->id }}]" class="form-control">
                                             @foreach ($field->options as $option)
                                                 <option value="{{ $option->id }}" @selected($option->id == $cf['value'])>
                                                     {{ $option->translation('value', $lang) }}
@@ -367,7 +367,7 @@
     </form>
     @include('core::base.media.partial.media_modal')
 @endsection
-@section('custom_scripts')
+@section('page-script')
     <!--Select2-->
     <script src="{{ asset('/public/web-assets/backend/plugins/select2/select2.min.js') }}"></script>
     <script src="{{ asset('/public/web-assets/backend/plugins/summernote/summernote-lite.js') }}"></script>

@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Models\AdsCategory;
-use App\Repositories\CategoryRepository;
+use App\Repository\CategoryRepository;
 use App\Http\Requests\AdsCategoryRequest;
 
 class CategoryController extends Controller

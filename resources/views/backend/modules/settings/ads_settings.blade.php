@@ -1,8 +1,8 @@
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Ads Settings') }}
 @endsection
-@section('main_content')
+@section('page-content')
     <div class="theme-option-container">
         @include('backend.modules.settings.includes.head')
         <div class="theme-option-tab-wrap">
@@ -22,7 +22,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="theme-input-style" name="ad_per_page"
+                                        <input type="number" class="form-control" name="ad_per_page"
                                             value="{{ getGeneralSetting('ad_per_page') }}" placeholder="00">
                                     </div>
                                 </div>
@@ -33,7 +33,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="theme-input-style" name="free_ad_posting_limit"
+                                        <input type="number" class="form-control" name="free_ad_posting_limit"
                                             value="{{ getGeneralSetting('free_ad_posting_limit') }}" placeholder="00">
                                     </div>
                                 </div>
@@ -44,7 +44,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="theme-input-style" name="cost_per_ads"
+                                        <input type="number" class="form-control" name="cost_per_ads"
                                             value="{{ getGeneralSetting('cost_per_ads') }}" placeholder="0.00">
                                     </div>
                                 </div>
@@ -54,7 +54,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="theme-input-style" name="cost_per_featured_ads"
+                                        <input type="number" class="form-control" name="cost_per_featured_ads"
                                             value="{{ getGeneralSetting('cost_per_featured_ads') }}" placeholder="0.00">
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="theme-input-style" name="featured_ad_visible_at_top"
+                                        <input type="number" class="form-control" name="featured_ad_visible_at_top"
                                             value="{{ getGeneralSetting('featured_ad_visible_at_top') }}" placeholder="00">
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="theme-input-style" name="featured_ad_on_to_counter"
+                                        <input type="number" class="form-control" name="featured_ad_on_to_counter"
                                             value="{{ getGeneralSetting('featured_ad_on_to_counter') }}" placeholder="00">
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
                                         </label>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="number" class="theme-input-style" name="maximum_gallery_image"
+                                        <input type="number" class="form-control" name="maximum_gallery_image"
                                             value="{{ getGeneralSetting('maximum_gallery_image') }}" placeholder="00">
                                     </div>
                                 </div>

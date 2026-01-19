@@ -1,196 +1,159 @@
-@extends('core::base.layouts.master')
-@section('title')
-    {{ translate('Categories') }}
+@php
+    $links = [
+        [
+            'title' => 'Listing',
+            'route' => 'classified.ads.list',
+            'active' => false,
+        ],
+        [
+            'title' => 'Listing Categories',
+            'route' => '',
+            'active' => true,
+        ],
+    ];
+@endphp
+@extends('backend.layouts.dashboard_layout')
+@section('page-title')
+    Listing Categories
 @endsection
-@section('custom_css')
-    <!--Select2-->
-    <link rel="stylesheet" href="{{ asset('/public/web-assets/backend/plugins/select2/select2.min.css') }}">
-
-    <style>
-        .select2-container--classic {
-            width: 100% !important;
-        }
-    </style>
+@section('page-style')
+    <link rel="stylesheet" href="{{ asset('/public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
 @endsection
-@section('main_content')
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-30">
-                <div class="align-items-center bg-white card-header d-sm-flex justify-content-between py-2">
-                    <h4 class="font-20">{{ translate('Categories') }}</h4>
-                    @if (auth()->user()->can('Create Categories'))
-                        <button class="btn long" data-toggle="modal"
-                            data-target="#new-category-modal">{{ translate('Add New Category') }}
-                        </button>
-                    @endif
-                </div>
-                <div class="card-body">
-
-                    <div class="px-2 filter-area d-flex align-items-center">
-                        <form method="get" action="{{ route('classified.ads.categories.list') }}">
-                            <select class="theme-input-style mb-10" name="per_page">
-                                <option value="">{{ translate('Per page') }}</option>
-                                <option value="20" @selected(request()->has('per_page') && request()->get('per_page') == '20')>20</option>
-                                <option value="50" @selected(request()->has('per_page') && request()->get('per_page') == '50')>50</option>
-                                <option value="all" @selected(request()->has('per_page') && request()->get('per_page') == 'all')>All</option>
-                            </select>
-                            <select class="theme-input-style mb-10" name="status">
-                                <option value="">{{ translate('Status') }}</option>
-                                <option value="{{ config('settings.general_status.active') }}" @selected(request()->has('status') && request()->get('status') == config('settings.general_status.active'))>
-                                    {{ translate('Active') }}</option>
-                                <option value="{{ config('settings.general_status.in_active') }}"
-                                    @selected(request()->has('status') && request()->get('status') == config('settings.general_status.in_active'))>
-                                    {{ translate('Inactive') }}</option>
-                            </select>
-                            <input type="text" name="search" class="theme-input-style mb-10"
-                                value="{{ request()->has('search') ? request()->get('search') : '' }}"
-                                placeholder="Enter title">
-                            <button type="submit" class="btn long mb-1">{{ translate('Filter') }}</button>
-                        </form>
-                        <a class="btn btn-danger long mb-2"
-                            href="{{ route('classified.ads.categories.list') }}">{{ translate('Clear Filter') }}</a>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="hoverable text-nowrap border-top2">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        #
-                                    </th>
-                                    <th>{{ translate('Title') }}</th>
-                                    <th>{{ translate('Parent') }}</th>
-                                    <th>{{ translate('Icon') }}</th>
-                                    <th>{{ translate('Image') }}</th>
-                                    <th>{{ translate('Status') }}</th>
-                                    <th class="text-center">{{ translate('Actions') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($categories->count() > 0)
-                                    @foreach ($categories as $key => $category)
+@section('page-content')
+    <x-admin-page-header title="Listing Categories" :links="$links" />
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ translation('Listing Categories') }}</h3>
+                            <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
+                                data-target="#create-item-modal">{{ translation('Create New Category') }}
+                            </button>
+                        </div>
+                        <div class="card-body p-0">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>{{ translation('#') }}</th>
+                                        <th>{{ translation('Title') }}</th>
+                                        <th>{{ translation('Parent') }}</th>
+                                        <th>{{ translation('Icon') }}</th>
+                                        <th>{{ translation('Image') }}</th>
+                                        <th>{{ translation('Status') }}</th>
+                                        <th class="text-right">{{ translation('Action') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($categories as $key=> $category)
                                         <tr>
                                             <td>
                                                 {{ $key + 1 }}
                                             </td>
                                             <td>
-                                                {{ $category->translation('title') }}
+                                                {{ $category->title }}
                                             </td>
                                             <td>
                                                 @if ($category->parentCategory != null)
-                                                    {{ $category->parentCategory->translation('title') }}
+                                                    {{ $category->parentCategory?->title }}
                                                 @else
                                                     --
                                                 @endif
                                             </td>
                                             <td>
-                                                <img src="{{ asset(getFilePath($category->icon, true)) }}" class="img-45"
+                                                <img src="{{ asset(getFilePath($category->icon, true)) }}" class="img-md"
                                                     alt="{{ $category->title }}">
                                             </td>
                                             <td>
-                                                <img src="{{ asset(getFilePath($category->image, true)) }}" class="img-45"
+                                                <img src="{{ asset(getFilePath($category->image, true)) }}" class="img-md"
                                                     alt="{{ $category->title }}">
                                             </td>
 
                                             <td>
                                                 @if ($category->status == config('settings.general_status.active'))
-                                                    <p class="badge badge-success">{{ translate('Active') }}</p>
+                                                    <p class="badge badge-success">{{ translation('Active') }}</p>
                                                 @else
-                                                    <p class="badge badge-danger">{{ translate('Inactive') }}</p>
+                                                    <p class="badge badge-danger">{{ translation('Inactive') }}</p>
                                                 @endif
                                             </td>
-                                            <td>
-                                                <div class="d-flex dropdown-button justify-content-center show">
-                                                    <a href="#" class="d-flex align-items-center justify-content-end"
-                                                        data-toggle="dropdown">
-                                                        <div class="menu-icon mr-0">
-                                                            <span></span>
-                                                            <span></span>
-                                                            <span></span>
-                                                        </div>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        @if (auth()->user()->can('Edit Categories'))
-                                                            <a
-                                                                href="{{ route('classified.ads.categories.edit', ['id' => $category->id, 'lang' => getDefaultLang()]) }}">
-                                                                {{ translate('Edit') }}
-                                                            </a>
-                                                        @endif
-                                                        @if (auth()->user()->can('Delete Categories'))
-                                                            <a href="#" class="delete-category"
-                                                                data-category="{{ $category->id }}">{{ translate('Delete') }}
-                                                            </a>
-                                                        @endif
+                                            <td class="text-right">
+                                                <div class="btn-group">
+                                                    <button type="button"
+                                                        class="btn btn-default">{{ translation('Action') }}
+                                                    </button>
+                                                    <button type="button"
+                                                        class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
+                                                        data-toggle="dropdown" aria-expanded="false">
+                                                    </button>
+                                                    <div class="dropdown-menu" role="menu">
+                                                        <button class="dropdown-item edit-item"
+                                                            data-id="{{ $category->id }}">
+                                                            {{ translation('EDIT') }}
+                                                        </button>
+                                                        <div class="dropdown-divider"></div>
+                                                        <button class="dropdown-item delete-item"
+                                                            data-id="{{ $category->id }}">
+                                                            {{ translation('Delete') }}
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="9">
-                                            <p class="alert alert-danger text-center">{{ translate('Nothing Found') }}</p>
-                                        </td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                        <div class="pgination px-3">
-                            {!! $categories->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5-custom') !!}
+                                    @empty
+                                        <tr>
+                                            <td colspan="10">
+                                                <div class="text-center">{{ translation('No item found') }}</div>
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                            @if ($categories->hasPages())
+                                <div class="p-3">
+                                    {{ $categories->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-    </div>
-    <!--Category adding Modal-->
-    <div id="new-category-modal" class="new-category-modal modal fade show" aria-modal="true">
-        <div class="modal-dialog modal-md modal-dialog-centered">
-            <div class="modal-content">
+        <!--New  Modal-->
+        <div class="modal fade" id="create-item-modal">
+            <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title bold h6">{{ translate('Category information') }}</h4>
+                        <h5 class="modal-title">{{ translation('New Category') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <form id="new-category-form">
                             <div class="form-row mb-20">
                                 <div class="form-group col-lg-6">
-                                    <label class="black font-14">{{ translate('Icon') }}</label>
-                                    @include('core::base.includes.media.media_input', [
-                                        'input' => 'icon',
-                                        'data' => '',
-                                    ])
+                                    <label class="black font-14">{{ translation('Icon') }}</label>
+                                    <x-media name="icon"></x-media>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="black font-14">{{ translate('Featured Image') }}</label>
-                                    @include('core::base.includes.media.media_input', [
-                                        'input' => 'image',
-                                        'data' => '',
-                                    ])
+                                    <label class="black font-14">{{ translation('Featured Image') }}</label>
+                                    <x-media name="image"></x-media>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translate('Title') }}</label>
-                                    <input type="text" name="title" class="theme-input-style slugable_input"
-                                        placeholder="{{ translate('Enter title') }}">
+                                    <label class="black font-14">{{ translation('Title') }}</label>
+                                    <input type="text" name="title" class="form-control slugable_input"
+                                        placeholder="{{ translation('Enter title') }}">
                                 </div>
                             </div>
 
-                            @include('plugin/classilookscore::includes.permalink', [
-                                'root_url' => 'ads/category',
-                                'value' => '',
-                                'lang' => getDefaultLang(),
-                            ])
-
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="font-14 bold black w-100">{{ translate('Parent') }} </label>
-                                    <select class="parent-options theme-input-style w-100" name="parent">
+                                    <label class="font-14 bold black w-100">{{ translation('Parent') }} </label>
+                                    <select class="parent-options form-control w-100" name="parent">
                                     </select>
                                     @if ($errors->has('parent'))
                                         <div class="invalid-input">{{ $errors->first('parent') }}</div>
@@ -200,72 +163,86 @@
 
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translate('Status') }}</label>
-                                    <select name="status" class="theme-input-style">
+                                    <label class="black font-14">{{ translation('Status') }}</label>
+                                    <select name="status" class="form-control">
                                         <option value="{{ config('settings.general_status.active') }}">
-                                            {{ translate('Active') }}
+                                            {{ translation('Active') }}
                                         </option>
                                         <option value="{{ config('settings.general_status.in_active') }}">
-                                            {{ translate('Inactive') }}
+                                            {{ translation('Inactive') }}
                                         </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="btn-area d-flex justify-content-between">
-                                <button class="btn long mt-2 store-category">{{ translate('Save') }}</button>
+                                <button class="btn btn-primary mt-2 store-category">{{ translation('Save') }}</button>
                             </div>
 
                         </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--End New  Modal-->
+        <!-- Edit Modal-->
+        <div class="modal fade" id="edit-item-modal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ translation('Notice Information') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body item-edit-content">
 
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--End Category adding modal-->
-    <!--Delete Modal-->
-    <div id="delete-modal" class="delete-modal modal fade show" aria-modal="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title h6">{{ translate('Delete Confirmation') }}</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">
-                    <p class="mt-1">{{ translate('Are you sure to delete this category') }}?</p>
-                    <form method="POST" action="{{ route('classified.ads.categories.delete') }}">
-                        @csrf
-                        <input type="hidden" id="delete-category-id" name="id">
-                        <div class="form-row d-flex justify-content-between">
-                            <button type="button" class="btn long mt-2 btn-danger"
-                                data-dismiss="modal">{{ translate('cancel') }}</button>
-                            <button type="submit" class="btn long mt-2">{{ translate('Delete') }}</button>
-                        </div>
-                    </form>
+        <!--End  Edit Modal-->
+        <!-- Delete Modal-->
+        <div class="modal fade" id="user-delete-modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete ?') }}</h4>
+                        <form method="POST" action="#">
+                            @csrf
+                            <input type="hidden" id="delete-item-id" name="id">
+                            <button type="button" class="btn mt-2 btn-danger"
+                                data-dismiss="modal">{{ translation('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--Delete Modal-->
-    @include('core::base.media.partial.media_modal')
+        <!--End  Delete Modal-->
+    </section>
 @endsection
-@section('custom_scripts')
-    <!--Select2-->
-    <script src="{{ asset('/public/web-assets/backend/plugins/select2/select2.min.js') }}"></script>
+@section('page-script')
+    <script src="{{ asset('/public/web-assets/backend/plugins/select2/js/select2.min.js') }}"></script>
     <script>
         (function($) {
             "use strict";
-            initDropzone();
+            initMediaManager();
             /**
              *  Parent Select
              * 
              */
             $('.parent-options').select2({
                 theme: "classic",
-                placeholder: '{{ translate('Select parent category') }}',
+                placeholder: '{{ translation('Select parent category') }}',
                 closeOnSelect: true,
+                width: '100%',
                 ajax: {
                     url: '{{ route('classified.ads.categories.options') }}',
                     dataType: 'json',
@@ -280,56 +257,135 @@
                     cache: true
                 }
             });
-            /**
-             * Store New Category
-             *
-             **/
-            $(document).on('click', '.store-category', function(e) {
-                $(document).find('.invalid-input').remove();
+            //Create new 
+            $('#new-category-form').submit(function(e) {
                 e.preventDefault();
+                $(document).find(".invalid-input").remove();
+                $(document).find(".form-control").removeClass('is-invalid');
+                var formData = new FormData(this);
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     },
                     type: "POST",
-                    data: $("#new-category-form").serialize(),
+                    data: formData,
                     url: '{{ route('classified.ads.categories.store') }}',
+                    processData: false,
+                    contentType: false,
                     success: function(response) {
                         if (response.success) {
-                            toastr.success('{{ translate('Category created successfully') }}');
+                            toastr.success('New category added successfully', 'Success');
+                            location.reload();
+
+                        } else {
+                            toastr.error(response.message, 'Error')
+                        }
+                    },
+                    error: function(response) {
+                        if (response.status === 422) {
+                            $.each(response.responseJSON.errors, function(field_name,
+                                error) {
+                                $(document).find('[name=' + field_name + ']')
+                                    .addClass('is-invalid');
+                                $(document).find('[name=' + field_name + ']')
+                                    .after(
+                                        '<div class="error text-danger mb-0 invalid-input">' +
+                                        error + '</div>');
+                            })
+                        } else {
+                            toastr.error('Category add failed', 'Error')
+                        }
+                    }
+                });
+            });
+            //Visible user delete modal
+            $('.delete-item').on('click', function(e) {
+                e.preventDefault();
+                let user_id = $(this).data('id');
+                $('#delete-item-id').val(user_id);
+                $('#user-delete-modal').modal('show');
+            });
+
+
+            //Edit  form
+            $('.edit-item').on('click', function(e) {
+                e.preventDefault();
+                let id = $(this).data('id');
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    },
+                    type: "POST",
+                    data: {
+                        id: id,
+                    },
+                    url: '{{ route('classified.ads.categories.edit') }}',
+                    success: function(response) {
+                        if (response.success) {
+                            $('.item-edit-content').html(response.data);
+                            $("#edit-item-modal").modal('show');
+                            initSummernote();
+                        } else {
+                            toastr.error('Item not found', 'Error');
+                        }
+                    },
+                    error: function(response) {
+                        toastr.error('Item not found', 'Error');
+                    }
+                });
+            });
+
+            $(document).on('submit', "#itemEditForm", function(e) {
+                e.preventDefault();
+                $(document).find(".invalid-input").remove();
+                var formData = new FormData(this);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    },
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    url: '/',
+                    success: function(response) {
+                        if (response.success) {
+                            toastr.success('Updated successfully', 'Success');
+                            $('#edit-item-modal').modal('hide');
                             location.reload();
                         } else {
-                            toastr.error('{{ translate('Category create failed') }}');
+                            toastr.error(response.message, 'Error')
                         }
                     },
                     error: function(response) {
                         if (response.status === 422) {
                             $.each(response.responseJSON.errors, function(field_name, error) {
-                                $(document).find('[name=' + field_name + ']').closest(
-                                    '.theme-input-style').after(
-                                    '<div class="invalid-input d-flex">' + error +
-                                    '</div>')
+                                $(document).find('[name=' + field_name + ']').after(
+                                    '<div class="error text-danger mb-0 invalid-input">' +
+                                    error + '</div>');
                             })
                         } else {
-                            toastr.error('{{ translate('Category create failed') }}');
+                            toastr.error('update failed', 'Error');
                         }
                     }
                 });
             });
-            /**
-             *
-             * Visible category delete modal
-             *
-             * */
-            $('.delete-category').on('click', function(e) {
-                e.preventDefault();
-                var id = $(this).data('category');
-                $('#delete-category-id').val(id);
-                $("#delete-modal").modal("show");
-            });
 
+            function initSummernote() {
+                $('#contentEditSummernote').summernote({
+                    tabsize: 2,
+                    height: 200,
+                    toolbar: [
+                        ["style", ["style"]],
+                        ['fontsize', ['fontsize']],
+                        ["font", ["bold", "underline", "clear"]],
+                        ["color", ["color"]],
+                        ["para", ["ul", "ol", "paragraph"]],
+                        ["insert", ["link"]],
+                        ["view", ["fullscreen", "help", "codeview"]],
+                    ],
+                });
+            }
         })(jQuery);
     </script>
-
-    @include('plugin/classilookscore::includes.permalink_script')
 @endsection

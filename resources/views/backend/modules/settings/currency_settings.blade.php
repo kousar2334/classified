@@ -1,7 +1,7 @@
 @php
     $currency_position = getCurrencyPosition();
 @endphp
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Currency Settings') }}
 @endsection
@@ -16,7 +16,7 @@
         }
     </style>
 @endpush
-@section('main_content')
+@section('page-content')
     <div class="theme-option-container">
         @include('backend.modules.settings.includes.head')
         <div class="theme-option-tab-wrap">
@@ -35,7 +35,7 @@
                                         <label class="font-14 bold black">{{ translate('Name') }} </label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="text" name="default_currency_name" class="theme-input-style"
+                                        <input type="text" name="default_currency_name" class="form-control"
                                             value="{{ getGeneralSetting('default_currency_name') }}"
                                             placeholder="{{ translate('Type Name') }}">
                                         @if ($errors->has('default_currency_name'))
@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <input type="text" name="default_currency_symbol"
-                                            class="theme-input-style currency-font"
+                                            class="form-control currency-font"
                                             value="{{ getGeneralSetting('default_currency_symbol') }}"
                                             placeholder="{{ translate('Symbol') }}">
                                         @if ($errors->has('default_currency_symbol'))
@@ -63,7 +63,7 @@
                                         <label class="font-14 bold black">{{ translate('Code') }}</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="text" name="default_currency_code" class="theme-input-style"
+                                        <input type="text" name="default_currency_code" class="form-control"
                                             value="{{ getGeneralSetting('default_currency_code') }}"
                                             placeholder="{{ translate('Code') }}">
                                         @if ($errors->has('default_currency_code'))
@@ -96,7 +96,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <input type="text" name="default_currency_thousand_separator"
-                                            class="theme-input-style"
+                                            class="form-control"
                                             value="{{ getGeneralSetting('default_currency_thousand_separator') }}"
                                             placeholder="{{ translate('Thousand separator') }}">
                                         @if ($errors->has('default_currency_thousand_separator'))
@@ -110,8 +110,7 @@
                                         <label class="font-14 bold black">{{ translate('Decimal separator') }}</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="text" name="default_currency_decimal_separator"
-                                            class="theme-input-style"
+                                        <input type="text" name="default_currency_decimal_separator" class="form-control"
                                             value="{{ getGeneralSetting('default_currency_decimal_separator') }}"
                                             placeholder="{{ translate('Decimal separator') }}">
                                         @if ($errors->has('default_currency_decimal_separator'))
@@ -125,8 +124,7 @@
                                         <label class="font-14 bold black">{{ translate('Number of decimals') }}</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="number" name="default_currency_number_of_decimal"
-                                            class="theme-input-style"
+                                        <input type="number" name="default_currency_number_of_decimal" class="form-control"
                                             value="{{ getGeneralSetting('default_currency_number_of_decimal') }}"
                                             placeholder="0">
                                         @if ($errors->has('default_currency_number_of_decimal'))

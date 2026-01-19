@@ -1,11 +1,11 @@
 @php
     $lang = request()->get('lang');
 @endphp
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Edit Safety Tips') }}
 @endsection
-@section('main_content')
+@section('page-content')
     <div class="theme-option-container">
         @include('backend.modules.settings.includes.head')
         <div class="theme-option-tab-wrap">
@@ -44,7 +44,7 @@
                                     <div class="col-sm-12">
                                         <input type="hidden" name="id" value="{{ $tips->id }}">
                                         <input type="hidden" name="lang" value="{{ $lang }}">
-                                        <input type="text" name="title" class="theme-input-style"
+                                        <input type="text" name="title" class="form-control"
                                             value="{{ $tips->translation('title', $lang) }}"
                                             placeholder="{{ translate('Type Enter') }}">
                                         @if ($errors->has('title'))
@@ -57,7 +57,7 @@
                                     class="form-row {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
                                     <div class="form-group col-lg-12">
                                         <label class="black font-14">{{ translate('Status') }}</label>
-                                        <select name="status" class="theme-input-style">
+                                        <select name="status" class="form-control">
                                             <option value="{{ config('settings.general_status.active') }}"
                                                 @selected($tips->status == config('settings.general_status.active'))>
                                                 {{ translate('Active') }}

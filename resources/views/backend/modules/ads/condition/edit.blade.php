@@ -2,11 +2,11 @@
     $lang = request()->get('lang');
 @endphp
 
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Edit Condition') }}
 @endsection
-@section('main_content')
+@section('page-content')
     <div class="row">
         <div class="col-lg-6 mx-auto">
             <div class="mb-3">
@@ -44,7 +44,7 @@
                             <div class="col-sm-12">
                                 <input type="hidden" name="id" value="{{ $condition->id }}">
                                 <input type="hidden" name="lang" value="{{ $lang }}">
-                                <input type="text" name="title" class="theme-input-style"
+                                <input type="text" name="title" class="form-control"
                                     value="{{ $condition->translation('title', $lang) }}"
                                     placeholder="{{ translate('Type Enter') }}">
                                 @if ($errors->has('title'))
@@ -56,7 +56,7 @@
                         <div class="form-row {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
                             <div class="form-group col-lg-12">
                                 <label class="black font-14">{{ translate('Status') }}</label>
-                                <select name="status" class="theme-input-style">
+                                <select name="status" class="form-control">
                                     <option value="{{ config('settings.general_status.active') }}"
                                         @selected($condition->status == config('settings.general_status.active'))>
                                         {{ translate('Active') }}

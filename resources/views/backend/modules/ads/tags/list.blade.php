@@ -1,8 +1,8 @@
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Tags') }}
 @endsection
-@section('main_content')
+@section('page-content')
     <div class="row">
         <div class="col-12">
             <div class="card mb-30">
@@ -18,7 +18,7 @@
 
                     <div class="px-2 filter-area d-flex align-items-center">
                         <!--Bulk actions-->
-                        <select class="theme-input-style bulk-action-selection mb-2">
+                        <select class="form-control bulk-action-selection mb-2">
                             <option value="null">{{ translate('Bulk Action') }}</option>
                             <option value="delete_all">{{ translate('Delete selection') }}</option>
                         </select>
@@ -27,13 +27,13 @@
                         <!--End bulk actions-->
 
                         <form method="get" action="{{ route('classified.ads.tag.list') }}">
-                            <select class="theme-input-style mb-10" name="per_page">
+                            <select class="form-control mb-10" name="per_page">
                                 <option value="">{{ translate('Per page') }}</option>
                                 <option value="20" @selected(request()->has('per_page') && request()->get('per_page') == '20')>20</option>
                                 <option value="50" @selected(request()->has('per_page') && request()->get('per_page') == '50')>50</option>
                                 <option value="all" @selected(request()->has('per_page') && request()->get('per_page') == 'all')>All</option>
                             </select>
-                            <select class="theme-input-style mb-10" name="status">
+                            <select class="form-control mb-10" name="status">
                                 <option value="">{{ translate('Status') }}</option>
                                 <option value="{{ config('settings.general_status.active') }}" @selected(request()->has('status') && request()->get('status') == config('settings.general_status.active'))>
                                     {{ translate('Active') }}</option>
@@ -41,7 +41,7 @@
                                     @selected(request()->has('status') && request()->get('status') == config('settings.general_status.in_active'))>
                                     {{ translate('Inactive') }}</option>
                             </select>
-                            <input type="text" name="search" class="theme-input-style mb-10"
+                            <input type="text" name="search" class="form-control mb-10"
                                 value="{{ request()->has('search') ? request()->get('search') : '' }}"
                                 placeholder="Enter title">
                             <button type="submit" class="btn long mb-1">{{ translate('Filter') }}</button>
@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="hoverable text-nowrap border-top2">
+                        <table class="table table-hover text-nowrap table-bordered">
                             <thead>
                                 <tr>
                                     <th>
@@ -145,7 +145,7 @@
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
                                     <label class="black font-14">{{ translate('Tags') }}</label>
-                                    <textarea name="tags" class="theme-input-style" required></textarea>
+                                    <textarea name="tags" class="form-control" required></textarea>
                                     <span class="fz-14">Enter the tags separated by commas ,</span>
                                 </div>
                             </div>
@@ -202,7 +202,7 @@
                                 <div class="form-group col-lg-12">
                                     <label class="black font-14">{{ translate('Title') }}</label>
                                     <input type="hidden" id="edit-tag-id" name="id">
-                                    <input type="text" id="edit-tag-title" name="title" class="theme-input-style">
+                                    <input type="text" id="edit-tag-title" name="title" class="form-control">
                                 </div>
                             </div>
                             <div class="btn-area d-flex justify-content-between">
@@ -216,7 +216,7 @@
     </div>
     <!--End Tag Edit modal-->
 @endsection
-@section('custom_scripts')
+@section('page-script')
     <script src="{{ asset('/public/web-assets/backend/plugins/moment/moment.min.js') }}"></script>
     <script type="text/javascript"
         src="{{ asset('/public/web-assets/backend/plugins/daterangepicker/daterangepicker.js') }}"></script>
@@ -250,7 +250,7 @@
                         if (response.status === 422) {
                             $.each(response.responseJSON.errors, function(field_name, error) {
                                 $(document).find('[name=' + field_name + ']').closest(
-                                    '.theme-input-style').after(
+                                    '.form-control').after(
                                     '<div class="invalid-input d-flex">' + error +
                                     '</div>')
                             })
@@ -312,7 +312,7 @@
                         if (response.status === 422) {
                             $.each(response.responseJSON.errors, function(field_name, error) {
                                 $(document).find('[name=' + field_name + ']').closest(
-                                    '.theme-input-style').after(
+                                    '.form-control').after(
                                     '<div class="invalid-input d-flex">' + error +
                                     '</div>')
                             })

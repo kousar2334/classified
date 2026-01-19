@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repository;
 
-use Illuminate\Support\Facades\DB;
 use App\Models\AdsCategory;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use App\Models\AdsCategoryTranslation;
 
 class CategoryRepository
@@ -12,7 +13,7 @@ class CategoryRepository
     //Will return ads category
     public function adsCategoryList($request, $status = [1, 2])
     {
-        $query = AdsCategory::with(['child', 'category_translations'])->orderBy('id', 'DESC');
+        $query = AdsCategory::with(['child'])->orderBy('id', 'DESC');
 
 
         if ($request->has('search')) {
@@ -33,7 +34,7 @@ class CategoryRepository
         try {
             $category = new AdsCategory();
             $category->title = $data['title'];
-            $category->permalink = $data['permalink'];
+            $category->permalink = Str::slug($data['title']);
             $category->icon = $data['icon'];
             $category->image = $data['image'];
             $category->parent = $data['parent'];
@@ -41,6 +42,7 @@ class CategoryRepository
             $category->save();
             return true;
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return false;
         }
     }

@@ -1,8 +1,8 @@
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Ads') }}
 @endsection
-@section('custom_css')
+@section('page-style')
     <!--Select2-->
     <link rel="stylesheet" href="{{ asset('/public/web-assets/backend/plugins/select2/select2.min.css') }}">
 
@@ -23,7 +23,7 @@
         }
     </style>
 @endsection
-@section('main_content')
+@section('page-content')
     <div class="row">
         <div class="col-12">
             <div class="card mb-30">
@@ -34,13 +34,13 @@
 
                     <div class="px-2 filter-area d-flex align-items-center">
                         <form method="get" action="{{ route('classified.ads.list') }}">
-                            <select class="theme-input-style mb-10" name="per_page">
+                            <select class="form-control mb-10" name="per_page">
                                 <option value="">{{ translate('Per page') }}</option>
                                 <option value="20" @selected(request()->has('per_page') && request()->get('per_page') == '20')>20</option>
                                 <option value="50" @selected(request()->has('per_page') && request()->get('per_page') == '50')>50</option>
                                 <option value="all" @selected(request()->has('per_page') && request()->get('per_page') == 'all')>All</option>
                             </select>
-                            <select class="theme-input-style mb-10" name="status">
+                            <select class="form-control mb-10" name="status">
                                 <option value="">{{ translate('Status') }}</option>
                                 <option value="{{ config('settings.general_status.active') }}" @selected(request()->has('status') && request()->get('status') == config('settings.general_status.active'))>
                                     {{ translate('Active') }}</option>
@@ -48,7 +48,7 @@
                                     @selected(request()->has('status') && request()->get('status') == config('settings.general_status.in_active'))>
                                     {{ translate('Inactive') }}</option>
                             </select>
-                            <select class="theme-input-style mb-10" name="payment_status">
+                            <select class="form-control mb-10" name="payment_status">
                                 <option value="">{{ translate('Payment Status') }}</option>
                                 <option value="{{ config('settings.general_status.active') }}"
                                     @selected(request()->has('payment_status') && request()->get('payment_status') == config('settings.general_status.active'))>
@@ -59,7 +59,7 @@
                                     {{ translate('Pending') }}
                                 </option>
                             </select>
-                            <input type="text" name="search" class="theme-input-style mb-10"
+                            <input type="text" name="search" class="form-control mb-10"
                                 value="{{ request()->has('search') ? request()->get('search') : '' }}"
                                 placeholder="Enter title">
                             <button type="submit" class="btn long mb-1">{{ translate('Filter') }}</button>
@@ -214,7 +214,7 @@
     <!--Delete Modal-->
     @include('core::base.media.partial.media_modal')
 @endsection
-@section('custom_scripts')
+@section('page-script')
     <!--Select2-->
     <script src="{{ asset('/public/web-assets/backend/plugins/select2/select2.min.js') }}"></script>
     <script>

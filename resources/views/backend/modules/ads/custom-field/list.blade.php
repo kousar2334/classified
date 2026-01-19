@@ -1,8 +1,8 @@
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Custom Fields') }}
 @endsection
-@section('custom_css')
+@section('page-style')
     <!--Select2-->
     <link rel="stylesheet" href="{{ asset('/public/web-assets/backend/plugins/select2/select2.min.css') }}">
     <style>
@@ -11,7 +11,7 @@
         }
     </style>
 @endsection
-@section('main_content')
+@section('page-content')
     <div class="row">
         <div class="col-12">
             <div class="card mb-30">
@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <div class="px-2 filter-area d-flex align-items-center">
                         <!--Bulk actions-->
-                        <select class="theme-input-style bulk-action-selection mb-2">
+                        <select class="form-control bulk-action-selection mb-2">
                             <option value="null">{{ translate('Bulk Action') }}</option>
                             <option value="delete_all">{{ translate('Delete selection') }}</option>
                             <option value="active">{{ translate('Active selection') }}</option>
@@ -36,13 +36,13 @@
                         </button>
                         <!--End bulk actions-->
                         <form method="get" action="{{ route('classified.ads.custom.field.list') }}">
-                            <select class="theme-input-style mb-10" name="per_page">
+                            <select class="form-control mb-10" name="per_page">
                                 <option value="">{{ translate('Per page') }}</option>
                                 <option value="20" @selected(request()->has('per_page') && request()->get('per_page') == '20')>20</option>
                                 <option value="50" @selected(request()->has('per_page') && request()->get('per_page') == '50')>50</option>
                                 <option value="all" @selected(request()->has('per_page') && request()->get('per_page') == 'all')>All</option>
                             </select>
-                            <select class="theme-input-style mb-10" name="status">
+                            <select class="form-control mb-10" name="status">
                                 <option value="">{{ translate('Status') }}</option>
                                 <option value="{{ config('settings.general_status.active') }}"
                                     @selected(request()->has('status') && request()->get('status') == config('settings.general_status.active'))>
@@ -51,7 +51,7 @@
                                     @selected(request()->has('status') && request()->get('status') == config('settings.general_status.in_active'))>
                                     {{ translate('Inactive') }}</option>
                             </select>
-                            <input type="text" name="search" class="theme-input-style mb-10"
+                            <input type="text" name="search" class="form-control mb-10"
                                 value="{{ request()->has('search') ? request()->get('search') : '' }}"
                                 placeholder="Enter title">
                             <button type="submit" class="btn long mb-1">{{ translate('Filter') }}</button>
@@ -60,7 +60,7 @@
                             href="{{ route('classified.ads.custom.field.list') }}">{{ translate('Clear Filter') }}</a>
                     </div>
                     <div class="table-responsive">
-                        <table class="hoverable text-nowrap border-top2">
+                        <table class="table table-hover text-nowrap table-bordered">
                             <thead>
                                 <tr>
                                     <th>
@@ -210,7 +210,7 @@
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
                                     <label class="black font-14">{{ translate('Type') }}</label>
-                                    <select name="type" class="theme-input-style text-capitalize">
+                                    <select name="type" class="form-control text-capitalize">
                                         @foreach (config('settings.input_types') as $key => $value)
                                             <option value="{{ $value }}">
                                                 {{ ucwords(str_replace('_', ' ', $key)) }}
@@ -222,7 +222,7 @@
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
                                     <label class="black font-14">{{ translate('Title') }}</label>
-                                    <input type="text" name="title" class="theme-input-style slugable_input"
+                                    <input type="text" name="title" class="form-control slugable_input"
                                         placeholder="{{ translate('Enter title') }}">
                                 </div>
                             </div>
@@ -230,7 +230,7 @@
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
                                     <label class="black font-14">{{ translate('Default Value') }}</label>
-                                    <input type="text" name="default_value" class="theme-input-style slugable_input"
+                                    <input type="text" name="default_value" class="form-control slugable_input"
                                         placeholder="{{ translate('Enter Default Value') }}">
                                 </div>
                             </div>
@@ -258,7 +258,7 @@
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
                                     <label class="black font-14">{{ translate('Status') }}</label>
-                                    <select name="status" class="theme-input-style">
+                                    <select name="status" class="form-control">
                                         <option value="{{ config('settings.general_status.active') }}">
                                             {{ translate('Active') }}
                                         </option>
@@ -320,7 +320,7 @@
                         <div class="form-row">
                             <div class="form-group col-lg-12">
                                 <label class="font-14 bold black w-100">{{ translate('Select category') }} </label>
-                                <select class="category-options theme-input-style w-100" name="category">
+                                <select class="category-options form-control w-100" name="category">
                                 </select>
                             </div>
                         </div>
@@ -334,7 +334,7 @@
     </div>
     <!--End Assign Category-->
 @endsection
-@section('custom_scripts')
+@section('page-script')
     <!--Select2-->
     <script src="{{ asset('/public/web-assets/backend/plugins/select2/select2.min.js') }}"></script>
     <script>
@@ -388,7 +388,7 @@
                         if (response.status === 422) {
                             $.each(response.responseJSON.errors, function(field_name, error) {
                                 $(document).find('[name=' + field_name + ']').closest(
-                                    '.theme-input-style').after(
+                                    '.form-control').after(
                                     '<div class="invalid-input d-flex">' + error +
                                     '</div>')
                             })
@@ -441,7 +441,7 @@
                         if (response.status === 422) {
                             $.each(response.responseJSON.errors, function(field_name, error) {
                                 $(document).find('[name=' + field_name + ']').closest(
-                                    '.theme-input-style').after(
+                                    '.form-control').after(
                                     '<div class="invalid-input d-flex">' + error +
                                     '</div>')
                             })

@@ -1,14 +1,14 @@
 @php
     $lang = request()->get('lang');
 @endphp
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Edit State') }}
 @endsection
-@section('custom_css')
+@section('page-style')
     <link rel="stylesheet" href="{{ asset('/public/web-assets/backend/plugins/select2/select2.min.css') }}">
 @endsection
-@section('main_content')
+@section('page-content')
     <div class="row">
         <div class="col-lg-6 mx-auto">
             <div class="mb-3">
@@ -44,7 +44,7 @@
                                 <label class="font-14 bold black">{{ translate('Name') }} </label>
                             </div>
                             <div class="col-sm-8">
-                                <input type="text" name="name" class="theme-input-style"
+                                <input type="text" name="name" class="form-control"
                                     value="{{ $stateDetails->translation('name', $lang) }}"
                                     placeholder="{{ translate('Type Name') }}">
                                 <input type="hidden" name="id" value="{{ $stateDetails->id }}">
@@ -60,8 +60,8 @@
                                 <label class="font-14 bold black">{{ translate('Code') }}</label>
                             </div>
                             <div class="col-sm-8">
-                                <input type="text" name="code" class="theme-input-style"
-                                    value="{{ $stateDetails->code }}" placeholder="{{ translate('Type  Here') }}">
+                                <input type="text" name="code" class="form-control" value="{{ $stateDetails->code }}"
+                                    placeholder="{{ translate('Type  Here') }}">
                                 @if ($errors->has('code'))
                                     <div class="invalid-input">{{ $errors->first('code') }}</div>
                                 @endif
@@ -99,7 +99,7 @@
         </div>
     </div>
 @endsection
-@section('custom_scripts')
+@section('page-script')
     <script src="{{ asset('/public/web-assets/backend/plugins/select2/select2.min.js') }}"></script>
     <script>
         (function($) {

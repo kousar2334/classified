@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
+            $table->integer('state_id')->nullable();
+            $table->string('name', 150)->nullable();
+            $table->integer('status')->nullable();
             $table->timestamps();
+
+            $table->foreign('state_id')->references('id')->on('states')
+                ->onDelete('no action')->onUpdate('no action');
         });
     }
 

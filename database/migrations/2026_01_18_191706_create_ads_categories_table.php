@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('ads_categories', function (Blueprint $table) {
             $table->id();
+            $table->string('title', 250)->nullable();
+            $table->string('permalink', 250);
+            $table->foreignId('parent')->nullable()->constrained('ads_categories')->onDelete('set null')->onUpdate('cascade');
+            $table->string('image')->nullable();
+            $table->string('icon')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

@@ -2,11 +2,11 @@
     $lang = request()->get('lang');
 @endphp
 
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Edit Custom Field') }}
 @endsection
-@section('main_content')
+@section('page-content')
     <div class="row">
         <div class="col-lg-6 mx-auto">
             <div class="mb-3">
@@ -42,7 +42,7 @@
                             <div class="col-sm-12">
                                 <input type="hidden" name="id" value="{{ $field->id }}">
                                 <input type="hidden" name="lang" value="{{ $lang }}">
-                                <input type="text" name="title" class="theme-input-style "
+                                <input type="text" name="title" class="form-control "
                                     value="{{ $field->translation('title', $lang) }}"
                                     placeholder="{{ translate('Type Enter') }}">
                                 @if ($errors->has('title'))
@@ -53,7 +53,7 @@
                         <div class="form-row {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
                             <div class="form-group col-lg-12">
                                 <label class="black font-14">{{ translate('Type') }}</label>
-                                <select name="type" class="theme-input-style text-capitalize">
+                                <select name="type" class="form-control text-capitalize">
                                     @foreach (config('settings.input_types') as $key => $value)
                                         <option value="{{ $value }}" @selected($field->type == $value)>
                                             {{ ucwords(str_replace('_', ' ', $key)) }}
@@ -65,7 +65,7 @@
                         <div class="form-row {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
                             <div class="form-group col-lg-12">
                                 <label class="black font-14">{{ translate('Default Value') }}</label>
-                                <input type="text" name="default_value" class="theme-input-style"
+                                <input type="text" name="default_value" class="form-control"
                                     value="{{ $field->default_value }}"
                                     placeholder="{{ translate('Enter Default Value') }}">
                             </div>
@@ -94,7 +94,7 @@
                         <div class="form-row {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
                             <div class="form-group col-lg-12">
                                 <label class="black font-14">{{ translate('Status') }}</label>
-                                <select name="status" class="theme-input-style">
+                                <select name="status" class="form-control">
                                     <option value="{{ config('settings.general_status.active') }}"
                                         @selected($field->status == config('settings.general_status.active'))>
                                         {{ translate('Active') }}

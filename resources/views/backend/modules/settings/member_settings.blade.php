@@ -1,8 +1,8 @@
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Member Settings') }}
 @endsection
-@section('main_content')
+@section('page-content')
     <div class="theme-option-container">
         @include('backend.modules.settings.includes.head')
         <div class="theme-option-tab-wrap">

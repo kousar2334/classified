@@ -1,8 +1,8 @@
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Map Settings') }}
 @endsection
-@section('main_content')
+@section('page-content')
     <div class="theme-option-container">
         @include('backend.modules.settings.includes.head')
         <div class="theme-option-tab-wrap">
@@ -21,7 +21,7 @@
                                         <label class="font-14 bold black">{{ translate('Google Map Api Key') }}</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input type="text" name="google_map_api_key" class="theme-input-style"
+                                        <input type="text" name="google_map_api_key" class="form-control"
                                             placeholder="{{ translate('Enter Google Map Api Key') }}"
                                             value="{{ getGeneralSetting('google_map_api_key') }}">
                                     </div>

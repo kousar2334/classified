@@ -1,8 +1,8 @@
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Safety Tips') }}
 @endsection
-@section('main_content')
+@section('page-content')
     <div class="theme-option-container">
         @include('backend.modules.settings.includes.head')
         <div class="theme-option-tab-wrap">
@@ -105,14 +105,14 @@
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
                                     <label class="black font-14">{{ translate('Title') }}</label>
-                                    <input type="text" name="title" class="theme-input-style slugable_input"
+                                    <input type="text" name="title" class="form-control slugable_input"
                                         placeholder="{{ translate('Enter title') }}">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
                                     <label class="black font-14">{{ translate('Status') }}</label>
-                                    <select name="status" class="theme-input-style">
+                                    <select name="status" class="form-control">
                                         <option value="{{ config('settings.general_status.active') }}">
                                             {{ translate('Active') }}
                                         </option>
@@ -160,7 +160,7 @@
     </div>
     <!--Delete Modal-->
 @endsection
-@section('custom_scripts')
+@section('page-script')
     <script>
         (function($) {
             "use strict";
@@ -190,7 +190,7 @@
                         if (response.status === 422) {
                             $.each(response.responseJSON.errors, function(field_name, error) {
                                 $(document).find('[name=' + field_name + ']').closest(
-                                    '.theme-input-style').after(
+                                    '.form-control').after(
                                     '<div class="invalid-input d-flex">' + error +
                                     '</div>')
                             })

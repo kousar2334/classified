@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -15,7 +16,6 @@ class AdsCategoryRequest extends FormRequest
     {
         return [
             'title' => 'required|max:250',
-            'permalink' => 'required|unique:tl_ads_categories,permalink,' . request()->id,
         ];
     }
 
@@ -23,10 +23,10 @@ class AdsCategoryRequest extends FormRequest
     {
 
         return [
-            'title.required' => translate('Title is required'),
-            'permalink.required' => translate('Permalink is required'),
-            'permalink.unique' => translate('Permalink is already exists'),
-            'parent.exists' => translate('Selected parent does not exists'),
+            'title.required' => translation('Title is required'),
+            'permalink.required' => translation('Permalink is required'),
+            'permalink.unique' => translation('Permalink is already exists'),
+            'parent.exists' => translation('Selected parent does not exists'),
 
         ];
     }

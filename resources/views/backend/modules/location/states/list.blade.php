@@ -1,10 +1,10 @@
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('States') }}
 @endsection
-@section('custom_css')
+@section('page-style')
 @endsection
-@section('main_content')
+@section('page-content')
     <div class="row">
         <div class="col-12">
             <div class="card mb-30">
@@ -23,14 +23,14 @@
                 <div class="px-2 filter-area d-flex align-items-center">
                     <!--Filter area-->
                     <form method="get" action="{{ route('plugin.location.state.list') }}">
-                        <select class="theme-input-style mb-2" name="per_page">
+                        <select class="form-control mb-2" name="per_page">
                             <option value="">{{ translate('Per page') }}</option>
                             <option value="10" @selected(request()->has('per_page') && request()->get('per_page') == '10')>10</option>
                             <option value="20" @selected(request()->has('per_page') && request()->get('per_page') == '20')>20</option>
                             <option value="50" @selected(request()->has('per_page') && request()->get('per_page') == '50')>50</option>
                             <option value="all" @selected(request()->has('per_page') && request()->get('per_page') == 'all')>{{ translate('All') }}</option>
                         </select>
-                        <input type="text" name="search_key" class="theme-input-style mb-2"
+                        <input type="text" name="search_key" class="form-control mb-2"
                             value="{{ request()->has('search_key') ? request()->get('search_key') : '' }}"
                             placeholder="Enter state name">
                         <button type="submit" class="btn long">{{ translate('Filter') }}</button>
@@ -43,7 +43,7 @@
                     @endif
                     <!--End filter area-->
                     <!--Bulk actions-->
-                    <select class="theme-input-style bulk-action-selection">
+                    <select class="form-control bulk-action-selection">
                         <option value="null">{{ translate('Bulk Action') }}</option>
                         <option value="active">{{ translate('Make Active') }}</option>
                         <option value="in_active">{{ translate('Make Inactive') }}</option>
@@ -165,7 +165,7 @@
     </div>
     <!--Delete Modal-->
 @endsection
-@section('custom_scripts')
+@section('page-script')
     <script>
         (function($) {
             "use strict";

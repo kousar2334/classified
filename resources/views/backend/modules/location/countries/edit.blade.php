@@ -2,11 +2,11 @@
     $lang = request()->get('lang');
 @endphp
 
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Edit Country') }}
 @endsection
-@section('main_content')
+@section('page-content')
     <div class="row">
         <div class="col-lg-6 mx-auto">
             <div class="mb-3">
@@ -42,7 +42,7 @@
                             <div class="col-sm-8">
                                 <input type="hidden" name="id" value="{{ $countryDetails->id }}">
                                 <input type="hidden" name="lang" value="{{ $lang }}">
-                                <input type="text" name="name" class="theme-input-style"
+                                <input type="text" name="name" class="form-control"
                                     value="{{ $countryDetails->translation('name', $lang) }}"
                                     placeholder="{{ translate('Type Name') }}">
                                 @if ($errors->has('name'))
@@ -57,7 +57,7 @@
                                 <label class="font-14 bold black">{{ translate('Code') }}</label>
                             </div>
                             <div class="col-sm-8">
-                                <input type="text" name="code" class="theme-input-style"
+                                <input type="text" name="code" class="form-control"
                                     value="{{ $countryDetails->code }}" placeholder="{{ translate('Enter Code') }}">
                                 @if ($errors->has('code'))
                                     <div class="invalid-input">{{ $errors->first('code') }}</div>

@@ -1,11 +1,11 @@
-@extends('core::base.layouts.master')
+@extends('backend.layouts.dashboard_layout')
 @section('title')
     {{ translate('Members') }}
 @endsection
-@section('custom_css')
+@section('page-style')
     <link rel="stylesheet" href="{{ asset('/public/web-assets/backend/plugins/daterangepicker/daterangepicker.css') }}">
 @endsection
-@section('main_content')
+@section('page-content')
     <div class="row">
         <div class="col-12">
             <div class="card mb-30">
@@ -19,13 +19,13 @@
 
                     <div class="px-2 filter-area d-flex align-items-center">
                         <form method="get" action="{{ route('plugin.classilookscore.members.list') }}">
-                            <select class="theme-input-style mb-10" name="per_page">
+                            <select class="form-control mb-10" name="per_page">
                                 <option value="">{{ translate('Per page') }}</option>
                                 <option value="20" @selected(request()->has('per_page') && request()->get('per_page') == '20')>20</option>
                                 <option value="50" @selected(request()->has('per_page') && request()->get('per_page') == '50')>50</option>
                                 <option value="all" @selected(request()->has('per_page') && request()->get('per_page') == 'all')>All</option>
                             </select>
-                            <select class="theme-input-style mb-10" name="status">
+                            <select class="form-control mb-10" name="status">
                                 <option value="">{{ translate('Status') }}</option>
                                 <option value="{{ config('settings.general_status.active') }}" @selected(request()->has('status') && request()->get('status') == config('settings.general_status.active'))>
                                     {{ translate('Active') }}</option>
@@ -33,9 +33,9 @@
                                     @selected(request()->has('status') && request()->get('status') == config('settings.general_status.in_active'))>
                                     {{ translate('Inactive') }}</option>
                             </select>
-                            <input type="text" class="theme-input-style mb-10" id="joinDateRange"
+                            <input type="text" class="form-control mb-10" id="joinDateRange"
                                 placeholder="Filter by join date" name="join_date" readonly>
-                            <input type="text" name="search" class="theme-input-style mb-10"
+                            <input type="text" name="search" class="form-control mb-10"
                                 value="{{ request()->has('search') ? request()->get('search') : '' }}"
                                 placeholder="Enter name, email, phone, uid">
                             <button type="submit" class="btn long mb-1">{{ translate('Filter') }}</button>
@@ -48,7 +48,7 @@
 
                     </div>
                     <div class="table-responsive">
-                        <table id="memberTable" class="hoverable text-nowrap border-top2">
+                        <table id="memberTable" class="table table-hover text-nowrap table-bordered">
                             <thead>
                                 <tr>
                                     <th>
@@ -171,12 +171,12 @@
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
                                     <label class="black font-14">{{ translate('Name') }}</label>
-                                    <input type="text" name="name" class="theme-input-style"
+                                    <input type="text" name="name" class="form-control"
                                         placeholder="{{ translate('Enter Name') }}">
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label class="black font-14">{{ translate('Email') }}</label>
-                                    <input type="email" name="email" class="theme-input-style"
+                                    <input type="email" name="email" class="form-control"
                                         placeholder="{{ translate('Enter Email') }}">
                                 </div>
                             </div>
@@ -184,12 +184,12 @@
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
                                     <label class="black font-14">{{ translate('Phone') }}</label>
-                                    <input type="text" name="phone" class="theme-input-style"
+                                    <input type="text" name="phone" class="form-control"
                                         placeholder="{{ translate('Enter Phone') }}">
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label class="black font-14">{{ translate('Status') }}</label>
-                                    <select name="status" class="theme-input-style">
+                                    <select name="status" class="form-control">
                                         <option value="{{ config('settings.general_status.active') }}">
                                             {{ translate('Active') }}
                                         </option>
@@ -203,12 +203,12 @@
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
                                     <label>{{ translate('New password') }}</label>
-                                    <input type="password" name="password" class="theme-input-style"
+                                    <input type="password" name="password" class="form-control"
                                         placeholder="{{ translate('Enter new password') }}">
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label>{{ translate('Confirm password') }}</label>
-                                    <input type="password" name="password_confirmation" class="theme-input-style"
+                                    <input type="password" name="password_confirmation" class="form-control"
                                         placeholder="{{ translate('Confirm password') }}">
                                 </div>
                             </div>
@@ -264,12 +264,12 @@
                     <form id="reset-passwork-form">
                         <div class="form-row mb-20">
                             <label>{{ translate('New password') }}</label>
-                            <input type="password" name="password" class="theme-input-style"
+                            <input type="password" name="password" class="form-control"
                                 placeholder="{{ translate('Enter new password') }}">
                         </div>
                         <div class="form-row mb-20">
                             <label>{{ translate('Confirm password') }}</label>
-                            <input type="password" name="password_confirmation" class="theme-input-style"
+                            <input type="password" name="password_confirmation" class="form-control"
                                 placeholder="{{ translate('Confirm password') }}">
                         </div>
                         <input type="hidden" id="reset-password-member-id" name="id">
@@ -306,7 +306,7 @@
     <!--End member modal-->
     @include('core::base.media.partial.media_modal')
 @endsection
-@section('custom_scripts')
+@section('page-script')
     <script src="{{ asset('/public/web-assets/backend/plugins/moment/moment.min.js') }}"></script>
     <script type="text/javascript"
         src="{{ asset('/public/web-assets/backend/plugins/daterangepicker/daterangepicker.js') }}"></script>
@@ -368,7 +368,7 @@
                         if (response.status === 422) {
                             $.each(response.responseJSON.errors, function(field_name, error) {
                                 $(document).find('[name=' + field_name + ']').closest(
-                                    '.theme-input-style').after(
+                                    '.form-control').after(
                                     '<div class="invalid-input d-flex">' + error +
                                     '</div>')
                             })
@@ -435,7 +435,7 @@
                         if (response.status === 422) {
                             $.each(response.responseJSON.errors, function(field_name, error) {
                                 $(document).find('[name=' + field_name + ']').closest(
-                                    '.theme-input-style').after(
+                                    '.form-control').after(
                                     '<div class="invalid-input d-flex">' + error +
                                     '</div>')
                             })
@@ -469,7 +469,7 @@
                         if (response.status === 422) {
                             $.each(response.responseJSON.errors, function(field_name, error) {
                                 $(document).find('[name=' + field_name + ']').closest(
-                                    '.theme-input-style').after(
+                                    '.form-control').after(
                                     '<div class="invalid-input d-flex">' + error +
                                     '</div>')
                             })

@@ -128,8 +128,74 @@
                     </li>
                 @endcan
                 <!--End Pages Module-->
+                <li class="nav-item {{ Request::routeIs(['classified.ads.categories.list']) ? 'menu-open ' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ Request::routeIs(['classified.ads.categories.list']) ? 'active ' : '' }}">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>
+                            {{ translation('Listings') }}
+                            <i class="fas fa-angle-up right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.page.list') }}"
+                                class="nav-link {{ Request::routeIs(['admin.page.list']) ? 'active' : '' }}">
+                                <i class="fa fa-minus nav-icon"></i>
+                                <p>
+                                    {{ translation('All Listing') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.page.list') }}"
+                                class="nav-link {{ Request::routeIs(['admin.page.list']) ? 'active' : '' }}">
+                                <i class="fa fa-minus nav-icon"></i>
+                                <p>
+                                    {{ translation('Featured Listing') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('classified.ads.categories.list') }}"
+                                class="nav-link {{ Request::routeIs(['classified.ads.categories.list']) ? 'active' : '' }}">
+                                <i class="fa fa-minus nav-icon"></i>
+                                <p>
+                                    {{ translation('Categories') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.page.create') }}"
+                                class="nav-link {{ Request::routeIs(['admin.page.create']) ? 'active' : '' }}">
+                                <i class="fa fa-minus nav-icon"></i>
+                                <p>
+                                    {{ translation('Custom Fields') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.page.create') }}"
+                                class="nav-link {{ Request::routeIs(['admin.page.create']) ? 'active' : '' }}">
+                                <i class="fa fa-minus nav-icon"></i>
+                                <p>
+                                    {{ translation('Conditions') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.page.create') }}"
+                                class="nav-link {{ Request::routeIs(['admin.page.create']) ? 'active' : '' }}">
+                                <i class="fa fa-minus nav-icon"></i>
+                                <p>
+                                    {{ translation('Tags') }}
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
-              
+
                 @can('Manage Appearances')
                     <li
                         class="nav-item {{ Request::routeIs(['admin.appearance.video.add','admin.appearance.video.edit','admin.appearance.video.list','admin.appearance.team.add','admin.appearance.team.edit','admin.appearance.team.list','admin.appearance.faq.add','admin.appearance.faq.edit','admin.appearance.faq.list','admin.appearance.why.us.add','admin.appearance.why.us.edit','admin.appearance.why.us.list','admin.appearance.partner.add','admin.appearance.partner.edit','admin.appearance.partner.list','admin.appearance.product.application.add','admin.appearance.product.application.edit','admin.appearance.product.application.list','admin.appearance.slider.edit.slider.item','admin.appearance.slider.add.slider.item','admin.appearance.slider.list','admin.page.content.about','admin.page.content.contact','admin.page.content.home','admin.appearance.site.setting.banner','admin.appearance.site.setting.custom.css','admin.appearance.site.setting.page','admin.appearance.site.setting.social.account','admin.appearance.site.setting','admin.appearance.menu.builder'])? 'menu-open ': '' }}">
@@ -154,7 +220,7 @@
                                 </li>
                             @endcan
 
-                         
+
                             <li class="nav-item">
                                 <a href="{{ route('admin.page.content.home', ['lang' => defaultLangCode()]) }}"
                                     class="nav-link {{ Request::routeIs(['admin.page.content.home']) ? 'active' : '' }}">
