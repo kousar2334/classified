@@ -128,9 +128,10 @@
                     </li>
                 @endcan
                 <!--End Pages Module-->
-                <li class="nav-item {{ Request::routeIs(['classified.ads.categories.list']) ? 'menu-open ' : '' }}">
+                <li
+                    class="nav-item {{ Request::routeIs(['classified.ads.condition.list', 'classified.ads.categories.list']) ? 'menu-open ' : '' }}">
                     <a href="#"
-                        class="nav-link {{ Request::routeIs(['classified.ads.categories.list']) ? 'active ' : '' }}">
+                        class="nav-link {{ Request::routeIs(['classified.ads.condition.list', 'classified.ads.categories.list']) ? 'active ' : '' }}">
                         <i class="nav-icon fas fa-file"></i>
                         <p>
                             {{ translation('Listings') }}
@@ -175,8 +176,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.page.create') }}"
-                                class="nav-link {{ Request::routeIs(['admin.page.create']) ? 'active' : '' }}">
+                            <a href="{{ route('classified.ads.condition.list') }}"
+                                class="nav-link {{ Request::routeIs(['classified.ads.condition.list']) ? 'active' : '' }}">
                                 <i class="fa fa-minus nav-icon"></i>
                                 <p>
                                     {{ translation('Conditions') }}

@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('ads_conditions', function (Blueprint $table) {
             $table->id();
+            $table->string('title', 250);
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

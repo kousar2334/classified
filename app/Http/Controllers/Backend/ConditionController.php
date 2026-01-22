@@ -8,7 +8,8 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\ConditionRequest;
-use App\Repositories\ConditionRepository;
+use App\Repository\ConditionRepository;
+use BeyondCode\QueryDetector\Outputs\Json;
 
 class ConditionController extends Controller
 {
@@ -63,23 +64,34 @@ class ConditionController extends Controller
     /**
      * Will redirect category edit page
      */
-    public function editCondition($id): View
+    public function editCondition(Request $request): JsonResponse|View
     {
-        $condition = $this->condition_repository->conditionDetails($id);
-        return view('backend.modules.ads.condition.edit', ['condition' => $condition]);
+        $condition = $this->condition_repository->conditionDetails($request['id']);
+        return response()->json([
+            'success' => true,
+            'html' => view('backend.modules.ads.condition.edit', compact('condition'))->render(),
+        ]);
     }
     /**
      * Will update Condition
      */
-    public function updateCondition(ConditionRequest $request): RedirectResponse
+    public function updateCondition(ConditionRequest $request): JsonResponse|RedirectResponse
     {
         $res = $this->condition_repository->updateAdsCondition($request);
         if ($res) {
-            toastNotification('success', 'Condition updated successfully', 'Success');
-        } else {
-            toastNotification('error', 'Condition update failed', 'Error');
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'Condition updated successfully',
+                ]
+            );
         }
 
-        return to_route('classified.ads.condition.edit', ['id' => $request['id'], 'lang' => $request['lang'] != null ? $request['lang'] : getDefaultLang()]);
+        return response()->json(
+            [
+                'success' => false,
+                'message' => 'Condition update failed',
+            ]
+        );
     }
 }

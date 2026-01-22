@@ -257,21 +257,21 @@ Route::prefix('admin')->group(function () {
 
             //Condition module
             Route::group(['prefix' => 'condition'], function () {
-                Route::get('/', [ConditionController::class, 'conditions'])->name('classified.ads.condition.list')->middleware(['can:Manage Conditions']);
-                Route::post('store', [ConditionController::class, 'storeCondition'])->name('classified.ads.condition.store')->middleware(['can:Create Conditions', 'demo']);
-                Route::post('delete', [ConditionController::class, 'deleteCondition'])->name('classified.ads.condition.delete')->middleware(['can:Delete Conditions', 'demo']);
-                Route::get('edit/{id}', [ConditionController::class, 'editCondition'])->name('classified.ads.condition.edit');
-                Route::post('update', [ConditionController::class, 'updateCondition'])->name('classified.ads.condition.update')->middleware(['can:Edit Conditions', 'demo']);
+                Route::get('/', [ConditionController::class, 'conditions'])->name('classified.ads.condition.list');
+                Route::post('store', [ConditionController::class, 'storeCondition'])->name('classified.ads.condition.store');
+                Route::post('delete', [ConditionController::class, 'deleteCondition'])->name('classified.ads.condition.delete');
+                Route::post('edit', [ConditionController::class, 'editCondition'])->name('classified.ads.condition.edit');
+                Route::post('update', [ConditionController::class, 'updateCondition'])->name('classified.ads.condition.update');
             });
 
             //Tags module
             Route::group(['prefix' => 'tag'], function () {
-                Route::get('/', [TagController::class, 'tags'])->name('classified.ads.tag.list')->middleware('can:Manage Tags');
-                Route::post('store', [TagController::class, 'storeTag'])->name('classified.ads.tag.store')->middleware(['can:Create Tags', 'demo']);
-                Route::post('delete', [TagController::class, 'deleteTag'])->name('classified.ads.tag.delete')->middleware(['can:Delete Tags', 'demo']);
+                Route::get('/', [TagController::class, 'tags'])->name('classified.ads.tag.list');
+                Route::post('store', [TagController::class, 'storeTag'])->name('classified.ads.tag.store');
+                Route::post('delete', [TagController::class, 'deleteTag'])->name('classified.ads.tag.delete');
                 Route::get('edit/{id}', [TagController::class, 'editTag'])->name('classified.ads.tag.edit');
-                Route::post('update', [TagController::class, 'updateTag'])->name('classified.ads.tag.update')->middleware(['can:Edit Tags', 'demo']);
-                Route::post('bulk-action', [TagController::class, 'tagBulkAction'])->name('classified.ads.tag.bulk.action')->middleware(['can:Manage Tags', 'demo']);
+                Route::post('update', [TagController::class, 'updateTag'])->name('classified.ads.tag.update');
+                Route::post('bulk-action', [TagController::class, 'tagBulkAction'])->name('classified.ads.tag.bulk.action');
                 Route::get('options', [TagController::class, 'tagOption'])->name('classified.ads.tag.options');
             });
 

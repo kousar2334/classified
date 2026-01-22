@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repository;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\AdsCondition;
@@ -77,16 +77,10 @@ class ConditionRepository
     {
         try {
             DB::beginTransaction();
-            if ($request['lang'] != null && $request['lang'] != getDefaultLang()) {
-                $condition_translation = AdsConditionTranslation::firstOrNew(['condition_id' => $request['id'], 'lang' => $request['lang']]);
-                $condition_translation->title = $request['title'];
-                $condition_translation->save();
-            } else {
-                $condition = AdsCondition::findOrFail($request['id']);
-                $condition->title = $request['title'];
-                $condition->status = $request['status'];
-                $condition->save();
-            }
+            $condition = AdsCondition::findOrFail($request['id']);
+            $condition->title = $request['title'];
+            $condition->status = $request['status'];
+            $condition->save();
             DB::commit();
             return true;
         } catch (\Exception $e) {

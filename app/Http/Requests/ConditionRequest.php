@@ -17,11 +17,4 @@ class ConditionRequest extends FormRequest
             'title' => 'required|max:250',
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'title.required' => translate('Title is required'),
-        ];
-    }
 }
