@@ -13,14 +13,11 @@ return new class extends Migration
     {
         Schema::create('states', function (Blueprint $table) {
             $table->id();
-            $table->integer('country_id')->nullable();
+            $table->foreignId('country_id')->nullable()->constrained('countries')->nullOnDelete()->cascadeOnUpdate();
             $table->string('name', 150)->nullable();
             $table->string('code', 150)->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();
-
-            $table->foreign('country_id')->references('id')->on('countries')
-                ->onDelete('no action')->onUpdate('no action');
         });
     }
 

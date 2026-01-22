@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('ad_gallery_images', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('ad_id')->nullable()->constrained('ads')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

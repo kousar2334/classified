@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('ad_has_tags', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('ad_id')->nullable()->constrained('ads')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('tag_id')->nullable()->constrained('ads_tags')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
