@@ -87,10 +87,10 @@
                                                         data-toggle="dropdown" aria-expanded="false">
                                                     </button>
                                                     <div class="dropdown-menu" role="menu">
-                                                        <button class="dropdown-item edit-item"
-                                                            data-id="{{ $category->id }}">
-                                                            {{ translation('EDIT') }}
-                                                        </button>
+                                                        <a href="{{ route('classified.ads.categories.edit', $category->id) }}"
+                                                            class="dropdown-item" data-id="{{ $category->id }}">
+                                                            {{ translation('Edit') }}
+                                                        </a>
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item delete-item"
                                                             data-id="{{ $category->id }}">
@@ -305,87 +305,6 @@
                 $('#delete-item-id').val(user_id);
                 $('#user-delete-modal').modal('show');
             });
-
-
-            //Edit  form
-            $('.edit-item').on('click', function(e) {
-                e.preventDefault();
-                let id = $(this).data('id');
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    },
-                    type: "POST",
-                    data: {
-                        id: id,
-                    },
-                    url: '{{ route('classified.ads.categories.edit') }}',
-                    success: function(response) {
-                        if (response.success) {
-                            $('.item-edit-content').html(response.data);
-                            $("#edit-item-modal").modal('show');
-                            initSummernote();
-                        } else {
-                            toastr.error('Item not found', 'Error');
-                        }
-                    },
-                    error: function(response) {
-                        toastr.error('Item not found', 'Error');
-                    }
-                });
-            });
-
-            $(document).on('submit', "#itemEditForm", function(e) {
-                e.preventDefault();
-                $(document).find(".invalid-input").remove();
-                var formData = new FormData(this);
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    },
-                    type: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    url: '/',
-                    success: function(response) {
-                        if (response.success) {
-                            toastr.success('Updated successfully', 'Success');
-                            $('#edit-item-modal').modal('hide');
-                            location.reload();
-                        } else {
-                            toastr.error(response.message, 'Error')
-                        }
-                    },
-                    error: function(response) {
-                        if (response.status === 422) {
-                            $.each(response.responseJSON.errors, function(field_name, error) {
-                                $(document).find('[name=' + field_name + ']').after(
-                                    '<div class="error text-danger mb-0 invalid-input">' +
-                                    error + '</div>');
-                            })
-                        } else {
-                            toastr.error('update failed', 'Error');
-                        }
-                    }
-                });
-            });
-
-            function initSummernote() {
-                $('#contentEditSummernote').summernote({
-                    tabsize: 2,
-                    height: 200,
-                    toolbar: [
-                        ["style", ["style"]],
-                        ['fontsize', ['fontsize']],
-                        ["font", ["bold", "underline", "clear"]],
-                        ["color", ["color"]],
-                        ["para", ["ul", "ol", "paragraph"]],
-                        ["insert", ["link"]],
-                        ["view", ["fullscreen", "help", "codeview"]],
-                    ],
-                });
-            }
         })(jQuery);
     </script>
 @endsection
