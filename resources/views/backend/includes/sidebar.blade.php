@@ -36,6 +36,86 @@
                     </li>
                 @endcan
 
+                <!--Members Module-->
+                <li class="nav-item">
+                    <a href="{{ route('admin.members.list') }}"
+                        class="nav-link {{ Request::routeIs(['admin.members.list']) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            {{ translation('Members') }}
+                        </p>
+                    </a>
+                </li>
+
+                <!--Listings Module-->
+                <li
+                    class="nav-item {{ Request::routeIs(['classified.ads.list.featured', 'classified.ads.list', 'classified.ads.custom.field.options', 'classified.ads.custom.field.list', 'classified.ads.tag.list', 'classified.ads.condition.list', 'classified.ads.categories.list']) ? 'menu-open ' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ Request::routeIs(['classified.ads.list.featured', 'classified.ads.list', 'classified.ads.custom.field.options', 'classified.ads.custom.field.list', 'classified.ads.tag.list', 'classified.ads.condition.list', 'classified.ads.categories.list']) ? 'active ' : '' }}">
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>
+                            {{ translation('Listings') }}
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('classified.ads.list') }}"
+                                class="nav-link {{ Request::routeIs(['classified.ads.list']) ? 'active' : '' }}">
+                                <i class="fa fa-minus nav-icon"></i>
+                                <p>
+                                    {{ translation('All Listing') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('classified.ads.list.featured') }}"
+                                class="nav-link {{ Request::routeIs(['classified.ads.list.featured']) ? 'active' : '' }}">
+                                <i class="fa fa-minus nav-icon"></i>
+                                <p>
+                                    {{ translation('Featured Listing') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('classified.ads.categories.list') }}"
+                                class="nav-link {{ Request::routeIs(['classified.ads.categories.list']) ? 'active' : '' }}">
+                                <i class="fa fa-minus nav-icon"></i>
+                                <p>
+                                    {{ translation('Categories') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('classified.ads.custom.field.list') }}"
+                                class="nav-link {{ Request::routeIs(['classified.ads.custom.field.list']) ? 'active' : '' }}">
+                                <i class="fa fa-minus nav-icon"></i>
+                                <p>
+                                    {{ translation('Custom Fields') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('classified.ads.condition.list') }}"
+                                class="nav-link {{ Request::routeIs(['classified.ads.condition.list']) ? 'active' : '' }}">
+                                <i class="fa fa-minus nav-icon"></i>
+                                <p>
+                                    {{ translation('Conditions') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('classified.ads.tag.list') }}"
+                                class="nav-link {{ Request::routeIs(['classified.ads.tag.list']) ? 'active' : '' }}">
+                                <i class="fa fa-minus nav-icon"></i>
+                                <p>
+                                    {{ translation('Tags') }}
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <!--Media Module-->
                 @can('Manage Media')
                     <li class="nav-item">
@@ -128,86 +208,6 @@
                     </li>
                 @endcan
                 <!--End Pages Module-->
-                <!--Members Module-->
-                <li class="nav-item">
-                    <a href="{{ route('admin.members.list') }}"
-                        class="nav-link {{ Request::routeIs(['admin.members.list']) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            {{ translation('Members') }}
-                        </p>
-                    </a>
-                </li>
-
-                <!--Listings Module-->
-                <li
-                    class="nav-item {{ Request::routeIs(['classified.ads.list.featured', 'classified.ads.list', 'classified.ads.custom.field.options', 'classified.ads.custom.field.list', 'classified.ads.tag.list', 'classified.ads.condition.list', 'classified.ads.categories.list']) ? 'menu-open ' : '' }}">
-                    <a href="#"
-                        class="nav-link {{ Request::routeIs(['classified.ads.list.featured', 'classified.ads.list', 'classified.ads.custom.field.options', 'classified.ads.custom.field.list', 'classified.ads.tag.list', 'classified.ads.condition.list', 'classified.ads.categories.list']) ? 'active ' : '' }}">
-                        <i class="nav-icon fas fa-list"></i>
-                        <p>
-                            {{ translation('Listings') }}
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('classified.ads.list') }}"
-                                class="nav-link {{ Request::routeIs(['classified.ads.list']) ? 'active' : '' }}">
-                                <i class="fa fa-minus nav-icon"></i>
-                                <p>
-                                    {{ translation('All Listing') }}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('classified.ads.list.featured') }}"
-                                class="nav-link {{ Request::routeIs(['classified.ads.list.featured']) ? 'active' : '' }}">
-                                <i class="fa fa-minus nav-icon"></i>
-                                <p>
-                                    {{ translation('Featured Listing') }}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('classified.ads.categories.list') }}"
-                                class="nav-link {{ Request::routeIs(['classified.ads.categories.list']) ? 'active' : '' }}">
-                                <i class="fa fa-minus nav-icon"></i>
-                                <p>
-                                    {{ translation('Categories') }}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('classified.ads.custom.field.list') }}"
-                                class="nav-link {{ Request::routeIs(['classified.ads.custom.field.list']) ? 'active' : '' }}">
-                                <i class="fa fa-minus nav-icon"></i>
-                                <p>
-                                    {{ translation('Custom Fields') }}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('classified.ads.condition.list') }}"
-                                class="nav-link {{ Request::routeIs(['classified.ads.condition.list']) ? 'active' : '' }}">
-                                <i class="fa fa-minus nav-icon"></i>
-                                <p>
-                                    {{ translation('Conditions') }}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('classified.ads.tag.list') }}"
-                                class="nav-link {{ Request::routeIs(['classified.ads.tag.list']) ? 'active' : '' }}">
-                                <i class="fa fa-minus nav-icon"></i>
-                                <p>
-                                    {{ translation('Tags') }}
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
 
                 @can('Manage Appearances')
                     <li
