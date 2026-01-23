@@ -78,4 +78,8 @@
         border: 1px dashed rgba(0, 0, 0, .3) !important;
         border-radius: 10px;
     }
+
+    .gap-10 {
+        gap: 10px;
+    }
 </style>

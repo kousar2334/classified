@@ -199,12 +199,12 @@ Route::prefix('admin')->group(function () {
          * Member Module
          */
         Route::group(['prefix' => 'members'], function () {
-            Route::get('/', [MemberController::class, 'memberList'])->name('members.list');
-            Route::post('delete', [MemberController::class, 'memberDelete'])->name('members.delete');
-            Route::post('reset/password', [MemberController::class, 'memberPasswordReset'])->name('members.password.reset');
-            Route::post('edit', [MemberController::class, 'memberEdit'])->name('members.edit');
-            Route::post('update', [MemberController::class, 'memberUpdate'])->name('members.update');
-            Route::post('store', [MemberController::class, 'memberStore'])->name('members.store');
+            Route::get('/', [MemberController::class, 'memberList'])->name('admin.members.list');
+            Route::post('delete', [MemberController::class, 'memberDelete'])->name('admin.members.delete');
+            Route::post('reset/password', [MemberController::class, 'memberPasswordReset'])->name('admin.members.password.reset');
+            Route::post('edit', [MemberController::class, 'memberEdit'])->name('admin.members.edit');
+            Route::post('update', [MemberController::class, 'memberUpdate'])->name('admin.members.update');
+            Route::post('store', [MemberController::class, 'memberStore'])->name('admin.members.store');
         });
 
         /**

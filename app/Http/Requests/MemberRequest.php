@@ -27,7 +27,7 @@ class MemberRequest extends FormRequest
         if ($request->has('id') && $request['id'] != null) {
             return [
                 'name' => 'required|max:250',
-                'phone' => 'required|max:250|unique:App\Models\User,phone:BD,' . $request->id,
+                'phone' => 'required|phone:BD|max:250|unique:users,phone,' . $request->id,
                 'email' => 'required|max:250|email|unique:App\Models\User,email,' . $request->id
             ];
         } else {
@@ -36,7 +36,7 @@ class MemberRequest extends FormRequest
                 'password' => 'required|confirmed|min:6|max:250',
                 'phone' => 'required|phone:BD|max:250|unique:users,phone',
                 'email' => 'required|max:250|email|unique:App\Models\User,email',
-                'terms_conditions' => 'accepted'
+                // 'terms_conditions' => 'accepted'
             ];
         }
     }

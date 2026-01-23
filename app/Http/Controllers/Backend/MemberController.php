@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Backend;
 
-use Core\Models\User;
+use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MemberRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\MemberRequest;
 use App\Http\Requests\MemberPasswordResetRequest;
 
 class MemberController extends Controller
@@ -23,7 +23,7 @@ class MemberController extends Controller
         $query = User::with(['ads' => function ($q) {
             $q->select('id', 'user_id');
         }])
-            ->where('user_type', config('settings.user_type.member'));
+            ->where('type', config('settings.user_type.member'));
 
         if ($request->has('join_date') && $request['join_date'] != null) {
             $date_range = explode(' to ', $request['join_date']);
@@ -117,7 +117,7 @@ class MemberController extends Controller
      */
     public function memberEdit(Request $request): JsonResponse
     {
-        $member = User::where('id', $request['id'])->where('user_type', config('settings.user_type.member'))->first();
+        $member = User::where('id', $request['id'])->where('type', config('settings.user_type.member'))->first();
 
         if ($member != null) {
             return response()->json([
@@ -174,7 +174,7 @@ class MemberController extends Controller
             $member->email = $request['email'];
             $member->phone = $request['phone'];
             $member->image = $request['image'];
-            $member->user_type = config('settings.user_type.member');
+            $member->type = config('settings.user_type.member');
             $member->password = Hash::make($request['password']);
             $member->status = $request['status'];
             $member->save();

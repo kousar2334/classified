@@ -1,159 +1,174 @@
+@php
+    $links = [
+        [
+            'title' => 'Members',
+            'route' => '',
+            'active' => true,
+        ],
+    ];
+@endphp
 @extends('backend.layouts.dashboard_layout')
-@section('title')
-    {{ translation('Members') }}
+@section('page-title')
+    Members
 @endsection
 @section('page-style')
-    <link rel="stylesheet" href="{{ asset('/public/web-assets/backend/plugins/daterangepicker/daterangepicker.css') }}">
 @endsection
 @section('page-content')
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-30">
-                <div class="align-items-center bg-white card-header d-sm-flex justify-content-between py-2">
-                    <h4 class="font-20">{{ translation('Members') }}</h4>
-                    <button class="btn long" data-toggle="modal"
-                        data-target="#new-member-modal">{{ translation('Add New Member') }}
-                    </button>
-                </div>
-                <div class="card-body">
+    <x-admin-page-header title="Members" :links="$links" />
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ translation('Members') }}</h3>
+                            <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
+                                data-target="#new-member-modal">{{ translation('Add New Member') }}</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="filter-area mb-3">
+                                <form method="get" action="{{ route('admin.members.list') }}"
+                                    class="d-flex align-items-center gap-10">
+                                    <select class="form-control mb-10" name="per_page">
+                                        <option value="">{{ translation('Per page') }}</option>
+                                        <option value="20" @selected(request()->has('per_page') && request()->get('per_page') == '20')>20</option>
+                                        <option value="50" @selected(request()->has('per_page') && request()->get('per_page') == '50')>50</option>
+                                        <option value="all" @selected(request()->has('per_page') && request()->get('per_page') == 'all')>All</option>
+                                    </select>
+                                    <select class="form-control mb-10" name="status">
+                                        <option value="">{{ translation('Status') }}</option>
+                                        <option value="{{ config('settings.general_status.active') }}"
+                                            @selected(request()->has('status') && request()->get('status') == config('settings.general_status.active'))>
+                                            {{ translation('Active') }}</option>
+                                        <option value="{{ config('settings.general_status.in_active') }}"
+                                            @selected(request()->has('status') && request()->get('status') == config('settings.general_status.in_active'))>
+                                            {{ translation('Inactive') }}</option>
+                                    </select>
 
-                    <div class="px-2 filter-area d-flex align-items-center">
-                        <form method="get" action="{{ route('plugin.classilookscore.members.list') }}">
-                            <select class="form-control mb-10" name="per_page">
-                                <option value="">{{ translation('Per page') }}</option>
-                                <option value="20" @selected(request()->has('per_page') && request()->get('per_page') == '20')>20</option>
-                                <option value="50" @selected(request()->has('per_page') && request()->get('per_page') == '50')>50</option>
-                                <option value="all" @selected(request()->has('per_page') && request()->get('per_page') == 'all')>All</option>
-                            </select>
-                            <select class="form-control mb-10" name="status">
-                                <option value="">{{ translation('Status') }}</option>
-                                <option value="{{ config('settings.general_status.active') }}" @selected(request()->has('status') && request()->get('status') == config('settings.general_status.active'))>
-                                    {{ translation('Active') }}</option>
-                                <option value="{{ config('settings.general_status.in_active') }}"
-                                    @selected(request()->has('status') && request()->get('status') == config('settings.general_status.in_active'))>
-                                    {{ translation('Inactive') }}</option>
-                            </select>
-                            <input type="text" class="form-control mb-10" id="joinDateRange"
-                                placeholder="Filter by join date" name="join_date" readonly>
-                            <input type="text" name="search" class="form-control mb-10"
-                                value="{{ request()->has('search') ? request()->get('search') : '' }}"
-                                placeholder="Enter name, email, phone, uid">
-                            <button type="submit" class="btn long mb-1">{{ translation('Filter') }}</button>
-                        </form>
-                        @if (auth()->user()->can('Create Members'))
-                            <a class="btn btn-danger long mb-2"
-                                href="{{ route('plugin.classilookscore.members.list') }}">{{ translation('Clear Filter') }}
-                            </a>
-                        @endif
+                                    <input type="text" name="search" class="form-control mb-10"
+                                        value="{{ request()->has('search') ? request()->get('search') : '' }}"
+                                        placeholder="Enter name, email, phone, uid">
+                                    <button type="submit" class="btn btn-primary">{{ translation('Filter') }}</button>
 
-                    </div>
-                    <div class="table-responsive">
-                        <table id="memberTable" class="table table-hover text-nowrap table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        #
-                                    </th>
-                                    <th>{{ translation('Image') }}</th>
-                                    <th>{{ translation('Name') }}</th>
-                                    <th>{{ translation('Email') }}</th>
-                                    <th>{{ translation('Email Verified') }}</th>
-                                    <th>{{ translation('Phone') }}</th>
-                                    <th>{{ translation('No. of Ads') }}</th>
-                                    <th>{{ translation('Status') }}</th>
-                                    <th class="text-center">{{ translation('Actions') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($members->count() > 0)
-                                    @foreach ($members as $key => $member)
+                                    @if (request()->has('per_page') || request()->has('status') || request()->has('search'))
+                                        <a class="btn btn-danger"
+                                            href="{{ route('admin.members.list') }}">{{ translation('Clear Filter') }}
+                                        </a>
+                                    @endif
+                                </form>
+
+
+                            </div>
+                            <div class="table-responsive">
+                                <table id="memberTable" class="table table-hover text-nowrap table-bordered">
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                {{ $member->uid }}
-                                            </td>
-                                            <td>
-                                                <img src="{{ asset(getFilePath($member->image, true)) }}" class="img-45"
-                                                    alt="{{ $member->name }}">
-                                            </td>
-                                            <td>
-                                                {{ $member->name }}
-                                            </td>
-                                            <td>{{ $member->email }}</td>
-                                            <td>
-                                                @if ($member->email_verified_at != null)
-                                                    {{ $member->email_verified_at->format('d M Y') }}
-                                                @else
-                                                    <p class="badge badge-danger">{{ translation('Not Verified') }}</p>
-                                                @endif
-                                            </td>
-                                            <td>{{ $member->phone }}</td>
-                                            <td>{{ $member->ads->count() }}</td>
-                                            <td>
-                                                @if ($member->status == config('settings.general_status.active'))
-                                                    <p class="badge badge-success">{{ translation('Active') }}</p>
-                                                @else
-                                                    <p class="badge badge-danger">{{ translation('Inactive') }}</p>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <div class="d-flex dropdown-button justify-content-center show">
-                                                    <a href="#" class="d-flex align-items-center justify-content-end"
-                                                        data-toggle="dropdown">
-                                                        <div class="menu-icon mr-0">
-                                                            <span></span>
-                                                            <span></span>
-                                                            <span></span>
-                                                        </div>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        @if (auth()->user()->can('Edit Members'))
-                                                            <a href="#" data-id="{{ $member->id }}"
-                                                                class="edit-member-btn">
-                                                                {{ translation('Edit') }}
-                                                            </a>
-                                                        @endif
-                                                        @if (auth()->user()->can('Edit Members'))
-                                                            <a href="#" data-id="{{ $member->id }}"
-                                                                class="member-reset-password">
-                                                                {{ translation('Reset Password') }}
-                                                            </a>
-                                                        @endif
-                                                        @if (auth()->user()->can('Delete Members'))
-                                                            <a href="#" class="delete-member"
-                                                                data-member="{{ $member->id }}">{{ translation('Delete member') }}
-                                                            </a>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>{{ translation('Image') }}</th>
+                                            <th>{{ translation('Name') }}</th>
+                                            <th>{{ translation('Email') }}</th>
+                                            <th>{{ translation('Email Verified') }}</th>
+                                            <th>{{ translation('Phone') }}</th>
+                                            <th>{{ translation('No. of Ads') }}</th>
+                                            <th>{{ translation('Status') }}</th>
+                                            <th class="text-center">{{ translation('Actions') }}</th>
                                         </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="9">
-                                            <p class="alert alert-danger text-center">{{ translation('Nothing Found') }}
-                                            </p>
-                                        </td>
-                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if ($members->count() > 0)
+                                            @foreach ($members as $key => $member)
+                                                <tr>
+                                                    <td>
+                                                        {{ $member->uid }}
+                                                    </td>
+                                                    <td>
+                                                        <img src="{{ asset(getFilePath($member->image, true)) }}"
+                                                            class="img-md rounded" alt="{{ $member->name }}">
+                                                    </td>
+                                                    <td>
+                                                        {{ $member->name }}
+                                                    </td>
+                                                    <td>{{ $member->email }}</td>
+                                                    <td>
+                                                        @if ($member->email_verified_at != null)
+                                                            {{ $member->email_verified_at->format('d M Y') }}
+                                                        @else
+                                                            <p class="badge badge-danger">{{ translation('Not Verified') }}
+                                                            </p>
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $member->phone }}</td>
+                                                    <td>{{ $member->ads->count() }}</td>
+                                                    <td>
+                                                        @if ($member->status == config('settings.general_status.active'))
+                                                            <p class="badge badge-success">{{ translation('Active') }}</p>
+                                                        @else
+                                                            <p class="badge badge-danger">{{ translation('Inactive') }}</p>
+                                                        @endif
+                                                    </td>
+
+                                                    <td class="text-right">
+                                                        <div class="btn-group">
+                                                            <button type="button"
+                                                                class="btn btn-default">{{ translation('Action') }}
+                                                            </button>
+                                                            <button type="button"
+                                                                class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
+                                                                data-toggle="dropdown" aria-expanded="false">
+                                                            </button>
+                                                            <div class="dropdown-menu" role="menu">
+                                                                <button class="dropdown-item edit-member-btn"
+                                                                    data-id="{{ $member->id }}">
+                                                                    {{ translation('Edit') }}
+                                                                </button>
+                                                                <div class="dropdown-divider"></div>
+                                                                <button class="dropdown-item member-reset-password"
+                                                                    data-id="{{ $member->id }}">
+                                                                    {{ translation('Reset Password') }}
+                                                                </button>
+                                                                <div class="dropdown-divider"></div>
+                                                                <button class="dropdown-item delete-member"
+                                                                    data-member="{{ $member->id }}">
+                                                                    {{ translation('Delete') }}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="9">
+                                                    <p class="alert alert-danger text-center">
+                                                        {{ translation('Nothing Found') }}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                                @if ($members->hasPages())
+                                    <div class="pgination px-3">
+                                        {!! $members->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5-custom') !!}
+                                    </div>
                                 @endif
-                            </tbody>
-                        </table>
-                        <div class="pgination px-3">
-                            {!! $members->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5-custom') !!}
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-    </div>
-    <!--Edit member Modal-->
+    </section>
+
+    <!--New member Modal-->
     <div id="new-member-modal" class="new-member-modal modal fade show" aria-modal="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title bold h6">{{ translation('member information') }}</h4>
+                        <h4 class="modal-title bold h6">{{ translation('Member information') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -162,11 +177,7 @@
                         <form id="new-member-form">
                             <div class="form-row mb-20">
                                 <label class="black font-14 col-12">{{ translation('Image') }}</label>
-                                @include('core::base.includes.media.media_input', [
-                                    'input' => 'image',
-                                    'data' => '',
-                                ])
-
+                                <x-media name="image"></x-media>
                             </div>
 
                             <div class="form-row">
@@ -214,7 +225,7 @@
                                 </div>
                             </div>
                             <div class="btn-area d-flex justify-content-between">
-                                <button class="btn long mt-2 store-member">{{ translation('Save') }}</button>
+                                <button class="btn mt-2 btn-primary store-member">{{ translation('Save') }}</button>
                             </div>
 
                         </form>
@@ -237,13 +248,13 @@
                 </div>
                 <div class="modal-body text-center">
                     <p class="mt-1">{{ translation('Are you sure to delete this member') }}?</p>
-                    <form method="POST" action="{{ route('plugin.classilookscore.members.delete') }}">
+                    <form method="POST" action="{{ route('admin.members.delete') }}">
                         @csrf
                         <input type="hidden" id="delete-member-id" name="id">
                         <div class="form-row d-flex justify-content-between">
-                            <button type="button" class="btn long mt-2 btn-danger"
+                            <button type="button" class="btn mt-2 btn-primary"
                                 data-dismiss="modal">{{ translation('cancel') }}</button>
-                            <button type="submit" class="btn long mt-2">{{ translation('Delete') }}</button>
+                            <button type="submit" class="btn btn-danger mt-2">{{ translation('Delete') }}</button>
                         </div>
                     </form>
                 </div>
@@ -253,7 +264,7 @@
     <!--Delete Modal-->
     <!--Reset password modal Modal-->
     <div id="reset-password-modal" class="reset-password-modal modal fade show" aria-modal="true">
-        <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-dialog modal-md ">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title bold h6">{{ translation('Reset Password') }}</h4>
@@ -263,21 +274,21 @@
                 </div>
                 <div class="modal-body text-center">
                     <form id="reset-passwork-form">
-                        <div class="form-row mb-20">
+                        <div class="form-row mb-2">
                             <label>{{ translation('New password') }}</label>
                             <input type="password" name="password" class="form-control"
                                 placeholder="{{ translation('Enter new password') }}">
                         </div>
-                        <div class="form-row mb-20">
+                        <div class="form-row mb-2">
                             <label>{{ translation('Confirm password') }}</label>
                             <input type="password" name="password_confirmation" class="form-control"
                                 placeholder="{{ translation('Confirm password') }}">
                         </div>
                         <input type="hidden" id="reset-password-member-id" name="id">
-                        <div class="btn-area d-flex justify-content-between">
-                            <button type="button" class="btn long mt-2 btn-danger"
+                        <div class="form-row mt-3 justify-content-between">
+                            <button type="button" class="btn btn-danger"
                                 data-dismiss="modal">{{ translation('cancel') }}</button>
-                            <button class="btn long mt-2 reset-password-btn">{{ translation('Submit') }}</button>
+                            <button class="btn btn-primary reset-password-btn">{{ translation('Submit') }}</button>
                         </div>
 
                     </form>
@@ -287,12 +298,12 @@
     </div>
     <!--Reset password modal-->
     <!--Edit member Modal-->
-    <div id="edit-cutomer-modal" class="edit-cutomer-modal modal fade show" aria-modal="true">
-        <div class="modal-dialog modal-md modal-dialog-centered">
+    <div id="edit-member-modal" class="edit-member-modal modal fade show" aria-modal="true">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title bold h6">{{ translation('member information') }}</h4>
+                        <h4 class="modal-title bold h6">{{ translation('Member information') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -304,21 +315,13 @@
             </div>
         </div>
     </div>
-    <!--End member modal-->
-    @include('core::base.media.partial.media_modal')
 @endsection
 @section('page-script')
-    <script src="{{ asset('/public/web-assets/backend/plugins/moment/moment.min.js') }}"></script>
-    <script type="text/javascript"
-        src="{{ asset('/public/web-assets/backend/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <script>
         (function($) {
             "use strict";
-            initDropzone()
-            $(document).ready(function() {
-                is_for_browse_file = true
-                filtermedia()
-            });
+            initMediaManager();
+
             /**
              *
              * delete member
@@ -346,7 +349,7 @@
              *
              **/
             $(".reset-password-btn").on('click', function(e) {
-                $(document).find('.invalid-input').remove();
+                $(document).find('.invalid-feedback').remove();
                 e.preventDefault();
                 $.ajax({
                     headers: {
@@ -354,7 +357,7 @@
                     },
                     type: "POST",
                     data: $("#reset-passwork-form").serialize(),
-                    url: '{{ route('plugin.classilookscore.members.password.reset') }}',
+                    url: '{{ route('admin.members.password.reset') }}',
                     success: function(response) {
                         if (response.success) {
                             $("#reset-password-modal").modal('hide');
@@ -370,7 +373,8 @@
                             $.each(response.responseJSON.errors, function(field_name, error) {
                                 $(document).find('[name=' + field_name + ']').closest(
                                     '.form-control').after(
-                                    '<div class="invalid-input d-flex">' + error +
+                                    '<div class="d-flex invalid-feedback text-danger">' +
+                                    error +
                                     '</div>')
                             })
                         } else {
@@ -395,11 +399,11 @@
                     data: {
                         id: id
                     },
-                    url: '{{ route('plugin.classilookscore.members.edit') }}',
+                    url: '{{ route('admin.members.edit') }}',
                     success: function(response) {
                         if (response.success) {
                             $('.member-edit-form').html(response.data);
-                            $("#edit-cutomer-modal").modal('show');
+                            $("#edit-member-modal").modal('show');
                         } else {
                             toastr.error('{{ translation('Member not found') }}');
                         }
@@ -414,7 +418,7 @@
              *
              **/
             $(document).on('click', '.update-member', function(e) {
-                $(document).find('.invalid-input').remove();
+                $(document).find('.invalid-feedback').remove();
                 e.preventDefault();
                 $.ajax({
                     headers: {
@@ -422,10 +426,10 @@
                     },
                     type: "POST",
                     data: $("#member-update-form").serialize(),
-                    url: '{{ route('plugin.classilookscore.members.update') }}',
+                    url: '{{ route('admin.members.update') }}',
                     success: function(response) {
                         if (response.success) {
-                            $("#edit-cutomer-modal").modal('hide');
+                            $("#edit-member-modal").modal('hide');
                             toastr.success('{{ translation('Member updated successfully') }}');
                             location.reload();
                         } else {
@@ -437,7 +441,8 @@
                             $.each(response.responseJSON.errors, function(field_name, error) {
                                 $(document).find('[name=' + field_name + ']').closest(
                                     '.form-control').after(
-                                    '<div class="invalid-input d-flex">' + error +
+                                    '<div class="d-flex invalid-feedback text-danger">' +
+                                    error +
                                     '</div>')
                             })
                         } else {
@@ -450,13 +455,14 @@
             //Store new member
             $('.store-member').on('click', function(e) {
                 e.preventDefault();
+                $(document).find('.invalid-feedback').remove();
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     },
                     type: "POST",
                     data: $("#new-member-form").serialize(),
-                    url: '{{ route('plugin.classilookscore.members.store') }}',
+                    url: '{{ route('admin.members.store') }}',
                     success: function(response) {
                         if (response.success) {
                             $("#new-member-modal").modal('hide');
@@ -471,7 +477,8 @@
                             $.each(response.responseJSON.errors, function(field_name, error) {
                                 $(document).find('[name=' + field_name + ']').closest(
                                     '.form-control').after(
-                                    '<div class="invalid-input d-flex">' + error +
+                                    '<div class="d-flex invalid-feedback text-danger">' +
+                                    error +
                                     '</div>')
                             })
                         } else {
@@ -480,33 +487,7 @@
                     }
                 });
             });
-            //Join date filter
-            function cb(start, end) {
-                let initVal = '{{ request()->has('join_date') ? request()->get('join_date') : '' }}';
-                $('#joinDateRange').val(initVal);
-            }
-            var start = moment().subtract(0, 'days');
-            var end = moment();
-            $('#joinDateRange').on('apply.daterangepicker', function(ev, picker) {
-                let val = picker.startDate.format('YYYY-MM-DD') + ' to ' + picker.endDate.format(
-                    'YYYY-MM-DD')
-                $('#joinDateRange').val(val);
-            });
-            $('#joinDateRange').daterangepicker({
-                startDate: start,
-                endDate: end,
-                showCustomRangeLabel: true,
-                ranges: {
-                    'Today': [moment(), moment()],
-                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
-                        'month').endOf('month')]
-                }
-            }, cb);
-            cb(start, end);
+
 
         })(jQuery);
     </script>
