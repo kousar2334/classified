@@ -24,9 +24,11 @@
          <div class="form-group col-lg-12">
              <label class="font-14 bold black w-100">{{ translation('Parent') }} </label>
              <select class="parent-options form-control w-100" name="parent">
-                 <option value="{{ $category->parentCategory->id }}" selected>
-                     {{ $category->parentCategory->title }}
-                 </option>
+                 @if ($category->parentCategory != null)
+                     <option value="{{ $category->parentCategory->id }}" selected>
+                         {{ $category->parentCategory->title }}
+                     </option>
+                 @endif
              </select>
              @if ($errors->has('parent'))
                  <div class="invalid-input">{{ $errors->first('parent') }}</div>
