@@ -192,152 +192,55 @@
                                                 <input type="text" name="title" id="title" value=""
                                                     class="input-filed w-100" placeholder="Item Name">
 
-                                                <div class="input-form input-form2 permalink_label">
-                                                    <label for="title" class="mt-4"> Permalink <span
-                                                            class="text-danger">*</span> </label>
-                                                    <span id="slug_show" class="display-inline"></span>
-                                                    <span id="slug_edit" class="display-inline">
-                                                        <button class="btn btn-warning btn-sm slug_edit_button"> <i
-                                                                class="las la-edit"></i> </button>
-                                                        <input class="listing_slug input-filed w-100" name="slug"
-                                                            value="" id="slug" style="display: none"
-                                                            type="text">
-                                                        <button class="red-btn btn-sm slug_update_button mt-2"
-                                                            style="display: none">Update</button>
-                                                    </span>
-                                                </div>
-
                                             </div>
                                             <div class="about-item box-shadow1 p-24 mt-4">
                                                 <h3 class="head4">About Item</h3>
-                                                <form action="add-listing.html#" class="about-item-form">
-                                                    <div class="row g-3 mt-3">
-                                                        <div class="col-sm-4">
-                                                            <div class="item-catagory-wraper">
-                                                                <label for="item-catagory">Item Category <span
-                                                                        class="text-danger">*</span> </label>
-                                                                <select name="category_id" id="category"
-                                                                    class="select-itms select2_activation">
-                                                                    <option value="">Select Category</option>
-                                                                    <option value="1">Car &amp; Vehicles</option>
-                                                                    <option value="2">Electronics</option>
-                                                                    <option value="3">Home &amp; Livings</option>
-                                                                    <option value="4">Fashion</option>
-                                                                    <option value="5">Sports</option>
-                                                                    <option value="6">Pet’s &amp; Animals</option>
-                                                                    <option value="7">Appliances</option>
-                                                                    <option value="8">Education</option>
-                                                                    <option value="9">Mobile Phones</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="item-subcatagory-wraper">
-                                                                <label for="item-subcatagory">Sub Category</label>
-                                                                <select name="sub_category_id" id="subcategory"
-                                                                    class="subcategory select2_activation">
-                                                                    <option value="">Select Sub Category</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="item-subcatagory-wraper">
-                                                                <label for="item-subcatagory">Child Category </label>
-                                                                <select name="child_category_id" id="child_category"
-                                                                    class="select2_activation">
-                                                                    <option value="">Select Child Category</option>
-                                                                </select>
-                                                            </div>
+                                                <div class="row g-3 mt-3">
+                                                    <div class="col-sm-12">
+                                                        <div class="item-catagory-wraper">
+                                                            <label for="item-catagory">Item Category <span
+                                                                    class="text-danger">*</span> </label>
+                                                            <select name="category" id="select-category"
+                                                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                                required>
+                                                                <option value="">Select a category</option>
+                                                                @foreach ($categories as $key => $category)
+                                                                    @if (is_array($category) && isset($category['subcategories']))
+                                                                        <optgroup label="{{ $category['name'] }}">
+                                                                            @foreach ($category['subcategories'] as $subKey => $subcategory)
+                                                                                @if (is_array($subcategory) && isset($subcategory['subcategories']))
+                                                                        <optgroup
+                                                                            label="&nbsp;&nbsp;{{ $subcategory['name'] }}">
+                                                                            @foreach ($subcategory['subcategories'] as $subSubKey => $subSubcategory)
+                                                                                <option value="{{ $subSubKey }}"
+                                                                                    {{ old('category') == $subSubKey ? 'selected' : '' }}>
+                                                                                    &nbsp;&nbsp;&nbsp;&nbsp;{{ is_array($subSubcategory) ? $subSubcategory['name'] : $subSubcategory }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </optgroup>
+                                                                    @else
+                                                                        <option value="{{ $subKey }}"
+                                                                            {{ old('category') == $subKey ? 'selected' : '' }}>
+                                                                            &nbsp;&nbsp;{{ is_array($subcategory) ? $subcategory['name'] : $subcategory }}
+                                                                        </option>
+                                                                    @endif
+                                                                @endforeach
+                                                                </optgroup>
+                                                            @else
+                                                                <option value="{{ $key }}"
+                                                                    {{ old('category') == $key ? 'selected' : '' }}>
+                                                                    {{ is_array($category) ? $category['name'] : $category }}
+                                                                </option>
+                                                                @endif
+                                                                @endforeach
+                                                            </select>
+                                                            <p class="text-sm text-gray-500 mt-1" id="category-breadcrumb">
+                                                            </p>
                                                         </div>
                                                     </div>
-                                                    <div class="row mt-3">
-                                                        <div class="col-sm-6">
-                                                            <div
-                                                                class="item-condition-wraper input-filed p-24 mb-sm-0 mb-3">
-                                                                <input type="checkbox" class="custom-check-box"
-                                                                    id="item-condition">
-                                                                <label for="item-condition">This item has Condition</label>
-                                                                <div class="conditions condition_disable_enable mt-2">
-                                                                    <label>
-                                                                        <input type="radio" id="condition-1"
-                                                                            name="condition" value="used"
-                                                                            class="custom-radio-button radio_disable_color">
-                                                                        <span>Used</span>
-                                                                    </label>
-                                                                    <label class="ms-3">
-                                                                        <input type="radio" id="condition-2"
-                                                                            name="condition" value="new"
-                                                                            class="custom-radio-button radio_disable_color">
-                                                                        <span>New</span>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
 
-                                                        <div class="col-sm-6">
-                                                            <div class="item-condition-wraper input-filed p-24">
-                                                                <input type="checkbox" class="custom-check-box"
-                                                                    id="item-authenticity">
-                                                                <label for="item-authenticity">This item has
-                                                                    authenticity</label>
-                                                                <div class="conditions authenticity_disable_enable mt-2">
-                                                                    <label>
-                                                                        <input type="radio" id="authenticity-1"
-                                                                            name="authenticity" value="original"
-                                                                            class="custom-radio-button radio_disable_color">
-                                                                        <span>Original</span>
-                                                                    </label>
-                                                                    <label class="ms-3">
-                                                                        <input type="radio" id="authenticity-2"
-                                                                            name="authenticity" value="refurbished"
-                                                                            class="custom-radio-button radio_disable_color">
-                                                                        <span>Refurbished</span>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                </div>
 
-                                                    </div>
-                                                    <div class="row mt-3">
-                                                        <div class="col-12">
-                                                            <div class="brand">
-                                                                <label for="item-catagory">Brand</label>
-                                                                <select name="brand_id" id="brand_id"
-                                                                    class="select-itms select2_activation">
-                                                                    <option value="">Select Brand</option>
-                                                                    <option value="1">Apple</option>
-                                                                    <option value="3">Samsung</option>
-                                                                    <option value="4">OnePlus</option>
-                                                                    <option value="5">LG</option>
-                                                                    <option value="6">Sony</option>
-                                                                    <option value="7">Toyota</option>
-                                                                    <option value="8">Microsoft</option>
-                                                                    <option value="9">Nike</option>
-                                                                    <option value="10">Ford</option>
-                                                                    <option value="11">Honda</option>
-                                                                    <option value="12">BMW</option>
-                                                                    <option value="13">Panasonic</option>
-                                                                    <option value="14">Philips</option>
-                                                                    <option value="18">Bose</option>
-                                                                    <option value="19">IKEA</option>
-                                                                    <option value="20">Pottery Barn</option>
-                                                                    <option value="21">Wayfair</option>
-                                                                    <option value="22">Prada</option>
-                                                                    <option value="23">Adidas</option>
-                                                                    <option value="24">Puma</option>
-                                                                    <option value="25">Under Armour</option>
-                                                                    <option value="26">Coursera</option>
-                                                                    <option value="27">Khan Academy</option>
-                                                                    <option value="28">Udemy</option>
-                                                                    <option value="29">LinkedIn Learning</option>
-                                                                    <option value="30">Google Pixel</option>
-                                                                    <option value="31">Xiaomi</option>
-                                                                    <option value="32">Volkswagen</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
                                             </div>
                                             <div class="description box-shadow1 p-24 mt-4">
                                                 <label for="description">Description <span class="text-danger">*</span>
@@ -892,4 +795,38 @@
     </div>
 @endsection
 @section('js')
+    <script>
+        // Category breadcrumb functionality
+        $(document).ready(function() {
+            const categorySelect = $('#select-category');
+            const breadcrumb = $('#category-breadcrumb');
+
+            categorySelect.on('change', function() {
+                const selectedOption = $(this).find('option:selected');
+
+                if (selectedOption.val()) {
+                    // Get parent optgroups
+                    let path = [];
+                    let element = selectedOption;
+
+                    while (element.length) {
+                        if (element.prop('tagName') === 'OPTGROUP') {
+                            path.unshift(element.attr('label').trim());
+                        }
+                        element = element.parent();
+                    }
+
+                    path.push(selectedOption.text().trim());
+                    breadcrumb.text(path.join(' > '));
+                } else {
+                    breadcrumb.text('');
+                }
+            });
+
+            // Trigger on page load if there's an old value
+            if (categorySelect.val()) {
+                categorySelect.trigger('change');
+            }
+        });
+    </script>
 @endsection

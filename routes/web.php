@@ -27,5 +27,6 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/post/ad', [AdController::class, 'addPostPage'])->name('ad.post.page');
 Route::get('listings/{category_slug?}', [AdController::class, 'adListingPage'])->name('ad.listing.page');
 Route::get('/ad/details/{slug}', [AdController::class, 'adDetailsPage'])->name('ad.details.page');
+Route::post('/ad/details/{slug}', [AdController::class, 'adDetailsPage'])->name('ad.details.page');
 
 require __DIR__ . '/admin.php';
