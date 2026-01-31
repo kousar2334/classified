@@ -99,4 +99,9 @@ class MemberAuthController extends Controller
     {
         return view('frontend.auth.forgot-password');
     }
+
+    public function memberDashboard(Request $request)
+    {
+        return view('frontend.pages.member.dashboard.index');
+    }
 }
