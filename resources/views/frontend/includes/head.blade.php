@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/dynamic-style.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/helpers.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/common/css/toastr.min.css') }}">
-    <link rel="stylesheet" href="assets/frontend/css/jquery.ihavecookies.css">
+    <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/jquery.ihavecookies.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/all.min.css') }}">
     <link rel="canonical" href="#" />
     <style>

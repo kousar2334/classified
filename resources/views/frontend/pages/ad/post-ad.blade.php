@@ -1,10 +1,8 @@
 @extends('frontend.layouts.master')
 @section('meta')
     <title>Post ad - {{ get_setting('site_name') }}</title>
-    <link rel="stylesheet" href="../../assets/backend/css/dropzone.css">
-    <link rel="stylesheet" href="../../assets/backend/css/media-uploader.css">
-    <link rel="stylesheet" href="../../assets/backend/css/summernote.css">
-    <link rel="stylesheet" href="../../assets/backend/css/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/summernote/summernote-bs4.min.css') }}">
     <style>
         input#pac-input {
             background-color: ghostwhite;
@@ -259,8 +257,7 @@
                                                     <!-- Condition -->
                                                     <div class="col-sm-6">
                                                         <label for="condition">Item Condition</label>
-                                                        <select name="condition" id="condition"
-                                                            class="input-filed w-100">
+                                                        <select name="condition" id="condition" class="input-filed w-100">
                                                             <option value="">Select Condition</option>
                                                             @foreach ($conditions as $condition)
                                                                 <option value="{{ $condition->id }}"
@@ -655,6 +652,7 @@
     </div>
 @endsection
 @section('js')
+    <script src="{{ asset('public/web-assets/backend/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             // Initialize Select2
@@ -666,17 +664,19 @@
             }
 
             // Initialize Summernote
-            if ($.fn.summernote) {
-                $('.summernote').summernote({
-                    height: 200,
-                    toolbar: [
-                        ['style', ['bold', 'italic', 'underline']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['insert', ['link']],
-                        ['view', ['codeview']]
-                    ]
-                });
-            }
+            $('.summernote').summernote({
+                tabsize: 2,
+                height: 250,
+                toolbar: [
+                    ["style", ["style"]],
+                    ["font", ["bold", "underline", "clear"]],
+                    ["color", ["color"]],
+                    ["para", ["ul", "ol", "paragraph"]],
+                    ["table", ["table"]],
+                    ["insert", ["link", "picture"]],
+                    ["view", ["fullscreen", "help"]],
+                ],
+            });
 
             // ============================================
             // Multi-level Category Selection
@@ -928,7 +928,7 @@
                     reader.onload = function(ev) {
                         $('#thumbnail-preview').html(
                             `<img src="${ev.target.result}" style="max-width:200px;max-height:200px;border-radius:6px;object-fit:cover;">`
-                            );
+                        );
                     };
                     reader.readAsDataURL(file);
                 }
@@ -942,7 +942,7 @@
                     reader.onload = function(ev) {
                         preview.append(
                             `<img src="${ev.target.result}" style="width:80px;height:80px;border-radius:6px;object-fit:cover;">`
-                            );
+                        );
                     };
                     reader.readAsDataURL(file);
                 });
