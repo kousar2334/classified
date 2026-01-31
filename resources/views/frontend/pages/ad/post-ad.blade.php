@@ -27,7 +27,6 @@
             width: 100% !important;
         }
 
-
         .close {
             border: none;
         }
@@ -40,7 +39,6 @@
             color: #da0000 !important;
         }
 
-        /* Default styles for the input box */
         #pac-input {
             height: 3em;
             width: 75%;
@@ -50,7 +48,6 @@
             font-size: 16px;
         }
 
-        /* Media query for screens smaller than 768px */
         @media (max-width: 1499px) {
             #pac-input {
                 width: 100%;
@@ -58,7 +55,6 @@
             }
         }
 
-        /*select tags start css*/
         .select2-container--default .select2-selection--multiple {
             border: 1px solid #e3e3e3;
         }
@@ -77,9 +73,6 @@
             font-weight: 400;
         }
 
-        /*select tags end css*/
-
-        /* price and number css start   */
         label.infoTitle.position-absolute {
             top: 0;
             background-color: whitesmoke;
@@ -97,8 +90,6 @@
         input.effectBorder.checkBox__input {
             border: 2px solid #a3a3a3;
         }
-
-        /* price and number css end   */
 
         button.btn.btn-info.media_upload_form_btn {
             background-color: rgb(239, 246, 255);
@@ -140,194 +131,241 @@
         .media-upload-btn-wrapper .img-wrap .rmv-span {
             padding: 0;
         }
-    </style>
-    <style>
+
         .input-group .form-control.is-valid,
         .input-group .form-select.is-valid,
         .was-validated .input-group .form-control:valid,
         .was-validated .input-group .form-select:valid {
             z-index: 0 !important;
         }
+
+        #custom-fields-container .custom-field-group {
+            margin-bottom: 15px;
+        }
+
+        #custom-fields-container .custom-field-group label {
+            font-weight: 500;
+            margin-bottom: 5px;
+            display: block;
+        }
     </style>
 @endsection
 @section('content')
     <div class="add-listing-wrapper mt-5 mb-5">
-        <!--check user verification -->
 
-        <!--Nav Bar Tabs markup start -->
+        @if(session('success'))
+            <div class="container">
+                <div class="alert alert-success">{{ session('success') }}</div>
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="container">
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            </div>
+        @endif
+
+        <!-- Nav Bar Tabs -->
         <div style="display: none" class="nav nav-pills" id="add-listing-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link  stepIndicator active stepForm_btn__previous" id="listing-info-tab" data-bs-toggle="pill"
-                href="add-listing.html#listing-info" role="tab" aria-controls="listing-info" aria-selected="true">
+            <a class="nav-link stepIndicator active stepForm_btn__previous" id="listing-info-tab" data-bs-toggle="pill"
+                href="#listing-info" role="tab" aria-controls="listing-info" aria-selected="true">
                 <span class="nav-link-number">1</span>
                 Listing Info
             </a>
-
-            <a class="nav-link  stepIndicator" id="location-tab" data-bs-toggle="pill" href="add-listing.html#media-uploads"
+            <a class="nav-link stepIndicator" id="location-tab" data-bs-toggle="pill" href="#media-uploads"
                 role="tab" aria-controls="media-uploads" aria-selected="true">
                 <span class="nav-link-number">2</span>
                 Location
             </a>
         </div>
-        <form action="add-listing.html" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="_token" value="4qMgoof0CGXn76Y2Ovd5AWGkX891VOaiaqMZeUxn" autocomplete="off">
+
+        <form action="{{ route('ad.store') }}" method="POST" enctype="multipart/form-data" id="ad-post-form">
+            @csrf
             <div class="add-listing-content-wrapper">
                 <div class="tab-content add-listing-content" id="add-listing-tabContent">
-                    <!-- listing Info start-->
+
+                    <!-- Step 1: Listing Info -->
                     <div class="tab-pane fade step active show" id="listing-info" role="tabpanel"
                         aria-labelledby="listing-info-tab">
-                        <!--Post your add-->
                         <div class="post-your-add">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="mt-3 mb-2">
-                                        </div>
+                                        <div class="mt-3 mb-2"></div>
                                     </div>
                                 </div>
                                 <div class="row g-4">
                                     <div class="col-lg-8">
                                         <div class="post-add-wraper">
+                                            <!-- Item Name -->
                                             <div class="item-name box-shadow1 p-24">
-                                                <label for="item-name">Item Name <span class="text-danger">*</span> </label>
-                                                <input type="text" name="title" id="title" value=""
-                                                    class="input-filed w-100" placeholder="Item Name">
-
+                                                <label for="title">Item Name <span class="text-danger">*</span></label>
+                                                <input type="text" name="title" id="title" value="{{ old('title') }}"
+                                                    class="input-filed w-100 @error('title') is-invalid @enderror" placeholder="Item Name">
+                                                @error('title')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
                                             </div>
+
+                                            <!-- About Item -->
                                             <div class="about-item box-shadow1 p-24 mt-4">
                                                 <h3 class="head4">About Item</h3>
                                                 <div class="row g-3 mt-3">
-                                                    <div class="col-sm-12">
-                                                        <div class="item-catagory-wraper">
-                                                            <label for="item-catagory">Item Category <span
-                                                                    class="text-danger">*</span> </label>
-                                                            <select name="category" id="select-category"
-                                                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                                                required>
-                                                                <option value="">Select a category</option>
-                                                                @foreach ($categories as $key => $category)
-                                                                    @if (is_array($category) && isset($category['subcategories']))
-                                                                        <optgroup label="{{ $category['name'] }}">
-                                                                            @foreach ($category['subcategories'] as $subKey => $subcategory)
-                                                                                @if (is_array($subcategory) && isset($subcategory['subcategories']))
-                                                                        <optgroup
-                                                                            label="&nbsp;&nbsp;{{ $subcategory['name'] }}">
-                                                                            @foreach ($subcategory['subcategories'] as $subSubKey => $subSubcategory)
-                                                                                <option value="{{ $subSubKey }}"
-                                                                                    {{ old('category') == $subSubKey ? 'selected' : '' }}>
-                                                                                    &nbsp;&nbsp;&nbsp;&nbsp;{{ is_array($subSubcategory) ? $subSubcategory['name'] : $subSubcategory }}
-                                                                                </option>
-                                                                            @endforeach
-                                                                        </optgroup>
-                                                                    @else
-                                                                        <option value="{{ $subKey }}"
-                                                                            {{ old('category') == $subKey ? 'selected' : '' }}>
-                                                                            &nbsp;&nbsp;{{ is_array($subcategory) ? $subcategory['name'] : $subcategory }}
-                                                                        </option>
-                                                                    @endif
-                                                                @endforeach
-                                                                </optgroup>
-                                                            @else
-                                                                <option value="{{ $key }}"
-                                                                    {{ old('category') == $key ? 'selected' : '' }}>
-                                                                    {{ is_array($category) ? $category['name'] : $category }}
-                                                                </option>
-                                                                @endif
-                                                                @endforeach
-                                                            </select>
-                                                            <p class="text-sm text-gray-500 mt-1" id="category-breadcrumb">
-                                                            </p>
-                                                        </div>
+                                                    <!-- Category -->
+                                                    <div class="col-sm-4">
+                                                        <label for="category">Category <span class="text-danger">*</span></label>
+                                                        <select name="" id="select-category" class="input-filed w-100">
+                                                            <option value="">Select Category</option>
+                                                            @foreach($categories as $category)
+                                                                <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
 
+                                                    <!-- Subcategory -->
+                                                    <div class="col-sm-4" id="subcategory-wrapper" style="display:none;">
+                                                        <label for="subcategory">Subcategory <span class="text-danger">*</span></label>
+                                                        <select name="" id="select-subcategory" class="input-filed w-100">
+                                                            <option value="">Select Subcategory</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Sub-subcategory -->
+                                                    <div class="col-sm-4" id="sub-subcategory-wrapper" style="display:none;">
+                                                        <label for="sub-subcategory">Sub Subcategory</label>
+                                                        <select id="select-sub-subcategory" class="input-filed w-100">
+                                                            <option value="">Select Sub Subcategory</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- Hidden field to store the final selected category -->
+                                                    <input type="hidden" name="category" id="final-category" value="{{ old('category') }}">
+
+                                                    <div class="col-12">
+                                                        <p class="text-sm text-muted" id="category-breadcrumb"></p>
+                                                        @error('category')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
+
+                                                    <!-- Condition -->
+                                                    <div class="col-sm-6">
+                                                        <label for="condition">Item Condition</label>
+                                                        <select name="condition" id="condition" class="input-filed w-100">
+                                                            <option value="">Select Condition</option>
+                                                            @foreach($conditions as $condition)
+                                                                <option value="{{ $condition->id }}" {{ old('condition') == $condition->id ? 'selected' : '' }}>
+                                                                    {{ $condition->title }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <!-- City -->
+                                                    <div class="col-sm-6">
+                                                        <label for="city">City</label>
+                                                        <select name="city" id="city" class="input-filed w-100">
+                                                            <option value="">Select City</option>
+                                                            @foreach($cities as $city)
+                                                                <option value="{{ $city->id }}" {{ old('city') == $city->id ? 'selected' : '' }}>
+                                                                    {{ $city->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
 
+                                                <!-- Custom Fields Container -->
+                                                <div id="custom-fields-container" class="mt-3"></div>
                                             </div>
+
+                                            <!-- Description -->
                                             <div class="description box-shadow1 p-24 mt-4">
                                                 <label for="description">Description <span class="text-danger">*</span>
-                                                    <span class="text-danger">(minimum 150 characters.)</span> </label>
-                                                <textarea name="description" id="description" rows="6" class="input-filed w-100 textarea--form summernote"
-                                                    placeholder="Enter a Description"></textarea>
+                                                    <span class="text-danger">(minimum 150 characters.)</span>
+                                                </label>
+                                                <textarea name="description" id="description" rows="6"
+                                                    class="input-filed w-100 textarea--form summernote @error('description') is-invalid @enderror"
+                                                    placeholder="Enter a Description">{{ old('description') }}</textarea>
+                                                @error('description')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-4">
                                         <div class="right-sidebar">
+                                            <!-- Price -->
                                             <div class="box-shadow1 price p-24">
                                                 <div class="price-wraper">
-                                                    <label for="price">Price <span class="text-danger">*</span>
-                                                    </label>
-                                                    <input type="number" name="price" id="price" value=""
-                                                        class="input-filed w-100 mb-3" placeholder="0.00">
+                                                    <label for="price">Price <span class="text-danger">*</span></label>
+                                                    <input type="number" name="price" id="price" value="{{ old('price') }}"
+                                                        class="input-filed w-100 mb-3 @error('price') is-invalid @enderror"
+                                                        placeholder="0.00" step="0.01">
+                                                    @error('price')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
                                                     <label class="negotiable">
                                                         <input type="checkbox" class="custom-check-box" name="negotiable"
-                                                            id="negotiable">
+                                                            id="negotiable" {{ old('negotiable') ? 'checked' : '' }}>
                                                         <span class="ms-2">Negotiable</span>
                                                     </label>
                                                 </div>
                                             </div>
 
+                                            <!-- Contact -->
+                                            <div class="box-shadow1 p-24 mt-3">
+                                                <label for="contact_email">Contact Email <span class="text-danger">*</span></label>
+                                                <input type="email" name="contact_email" id="contact_email"
+                                                    value="{{ old('contact_email', auth()->check() ? auth()->user()->email : '') }}"
+                                                    class="input-filed w-100 mb-3 @error('contact_email') is-invalid @enderror"
+                                                    placeholder="Email Address">
+                                                @error('contact_email')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
 
+                                            <!-- Phone -->
                                             <div class="box-shadow1 hode-phone-number p-24 mt-3">
                                                 <label class="hide-number">
                                                     <input type="checkbox" class="custom-check-box"
-                                                        name="hide_phone_number" value="">
+                                                        name="hide_phone_number" {{ old('hide_phone_number') ? 'checked' : '' }}>
                                                     <span class="black-font"> Hide My Phone Number</span>
                                                 </label>
                                                 <div class="input-group mt-3">
-                                                    <input type="hidden" id="country-code" name="country_code">
                                                     <input class="input-filed w-100" type="tel" name="phone"
-                                                        value="" id="phone" placeholder="Type Phone">
-                                                    <span id="phone_availability"></span>
-                                                    <div class="d-none">
-                                                        <span id="error-msg" class="hide"></span>
-                                                        <p id="result" class="d-none"></p>
-                                                    </div>
+                                                        value="{{ old('phone') }}" id="phone" placeholder="Type Phone"
+                                                        class="@error('contact_phone') is-invalid @enderror">
+                                                    @error('contact_phone')
+                                                        <small class="text-danger">{{ $message }}</small>
+                                                    @enderror
                                                 </div>
                                             </div>
 
-                                            <div class="upload-img text-center mt-3">
-                                                <div class="media-upload-btn-wrapper">
-                                                    <div class="img-wrap new_image_add_listing">
-                                                        <img src="../../assets/common/img/listing_single_image.jpg"
-                                                            alt="images" class="w-100">
-                                                    </div>
-                                                    <input type="hidden" name="image">
-                                                    <button type="button" class="btn btn-info media_upload_form_btn"
-                                                        data-btntitle="Select Image" data-modaltitle="Upload Image"
-                                                        data-bs-toggle="modal" data-bs-target="#media_upload_modal">
-                                                        Click to browse &amp; Upload Featured Image
-                                                    </button>
-                                                    <small>image format: jpg,jpeg,png,gif,webp</small> <br>
-                                                    <small>recommended size 810x450</small>
-                                                </div>
+                                            <!-- Thumbnail Image -->
+                                            <div class="box-shadow1 p-24 mt-3">
+                                                <label for="thumbnail_image">Featured Image <span class="text-danger">*</span></label>
+                                                <input type="file" name="thumbnail_image" id="thumbnail_image"
+                                                    class="input-filed w-100 @error('thumbnail_image') is-invalid @enderror"
+                                                    accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
+                                                <small class="text-muted">image format: jpg,jpeg,png,gif,webp | max: 5MB</small>
+                                                <div id="thumbnail-preview" class="mt-2"></div>
+                                                @error('thumbnail_image')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
                                             </div>
 
-                                            <div class="picture mt-3">
-                                                <div class="row g-3">
-                                                    <div class="col-12">
-                                                        <div class="upload-img text-center mt-3">
-                                                            <div class="media-upload-btn-wrapper">
-                                                                <div class="img-wrap new_image_gallery_add_listing">
-                                                                    <img src="../../assets/common/img/listing_single_image.jpg"
-                                                                        alt="images" class="w-100">
-                                                                </div>
-                                                                <input type="hidden" name="gallery_images">
-                                                                <button type="button"
-                                                                    class="btn btn-info media_upload_form_btn"
-                                                                    data-btntitle="Select Image"
-                                                                    data-modaltitle="Upload Image" data-mulitple="true"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#media_upload_modal">
-                                                                    Click to Upload Gallery Images
-                                                                </button>
-                                                                <small>image format: jpg,jpeg,png,gif,webp</small> <br>
-                                                                <small>recommended size 810x450</small>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <!-- Gallery Images -->
+                                            <div class="box-shadow1 p-24 mt-3">
+                                                <label for="gallery_images">Gallery Images</label>
+                                                <input type="file" name="gallery_images[]" id="gallery_images"
+                                                    class="input-filed w-100" multiple
+                                                    accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
+                                                <small class="text-muted">You can select multiple images</small>
+                                                <div id="gallery-preview" class="mt-2 d-flex flex-wrap gap-2"></div>
                                             </div>
-                                            <!-- start previous / next buttons -->
+
+                                            <!-- Continue Button -->
                                             <div class="continue-btn mt-3">
                                                 <div class="btn-wrapper mb-10 d-flex justify-content-end gap-3">
                                                     <button class="red-btn w-100 d-block" style="border: none"
@@ -340,25 +378,20 @@
                             </div>
                         </div>
                     </div>
-                    <!-- listing Info end-->
+                    <!-- Step 1 End -->
 
-                    <!-- location start-->
+                    <!-- Step 2: Location & Additional -->
                     <div class="tab-pane fade step" id="media-uploads" role="tabpanel" aria-labelledby="location-tab">
                         <div class="post-your-add add-location section-padding2">
                             <div class="container-1920 plr1">
                                 <div class="row">
-                                    <div class="col-xl-2">
-                                    </div>
+                                    <div class="col-xl-2"></div>
                                     <div class="col-xl-6">
+                                        <!-- Address -->
                                         <div class="address box-shadow1 p-24">
-                                            <!--Google Map -->
                                             <div class="location-map mt-3">
                                                 <label class="infoTitle">Google Map Location
-                                                    <a href="https://drive.google.com/file/d/1BwDAjSLAeb4LaxzOkrdsgGO_Io2jM6S6/view?usp=sharing"
-                                                        target="_blank">
-                                                        <strong class="text-warning">Video link</strong>
-                                                    </a><small class="text-info">Search your location, pick a location
-                                                    </small>
+                                                    <small class="text-info">Search your location, pick a location</small>
                                                 </label>
                                                 <div class="input-form input-form2">
                                                     <div class="map-warper dark-support rounded overflow-hidden">
@@ -371,334 +404,122 @@
                                             <div class="address-text mt-3">
                                                 <input type="hidden" name="latitude" id="latitude">
                                                 <input type="hidden" name="longitude" id="longitude">
-                                                <label for="address-text">Address</label>
+                                                <label for="user_address">Address</label>
                                                 <input type="text" class="w-100 input-filed" name="address"
-                                                    id="user_address" value="" placeholder="Address">
+                                                    id="user_address" value="{{ old('address') }}" placeholder="Address">
                                             </div>
                                         </div>
+
+                                        <!-- Video URL -->
                                         <div class="video box-shadow1 p-24 mt-3 mb-3">
-                                            <label for="vedio-link">Video Url</label>
+                                            <label for="video_url">Video Url</label>
                                             <input type="text" class="input-filed w-100" name="video_url"
-                                                id="video_url" value="" placeholder="youtube url">
+                                                id="video_url" value="{{ old('video_url') }}" placeholder="YouTube URL">
                                         </div>
                                     </div>
 
                                     <div class="col-xl-3">
                                         <div class="right-sidebar">
+                                            <!-- Featured Ad -->
                                             <div class="box-shadow1 feature p-24">
                                                 <label>
                                                     <input type="checkbox" name="is_featured" id="is_featured"
-                                                        value="" class="custom-check-box feature_disable_color">
+                                                        value="1" class="custom-check-box feature_disable_color"
+                                                        {{ old('is_featured') ? 'checked' : '' }}>
                                                     <span class="ms-2">Feature This Ad</span>
                                                 </label>
-                                                <p>To feature this ad, you will need to subscribe to a.
-                                                    <a href="../../membership.html">paid membership</a>
+                                                <p>To feature this ad, you will need to subscribe to a
+                                                    <a href="{{ url('/membership') }}">paid membership</a>
                                                 </p>
                                             </div>
 
+                                            <!-- Tags -->
                                             <div class="box-shadow1 tags p-24 mt-3">
                                                 <label for="tags">Tags</label>
                                                 <div class="select-itms">
-                                                    <select name="tags[]" id="tags" class="select2_activation"
-                                                        multiple>
-                                                        <option value="1">iPhone</option>
-                                                        <option value="2">Android</option>
-                                                        <option value="3">Smartphone</option>
-                                                        <option value="4">Computers</option>
-                                                        <option value="5">Laptops</option>
-                                                        <option value="6">Tablets</option>
-                                                        <option value="7">Cameras</option>
-                                                        <option value="8">TVs</option>
-                                                        <option value="9">Audio equipment</option>
-                                                        <option value="10">Cars</option>
-                                                        <option value="11">Trucks</option>
-                                                        <option value="12">Motorcycles</option>
-                                                        <option value="13">Auto parts</option>
-                                                        <option value="14">Car accessories</option>
-                                                        <option value="15">Furniture</option>
-                                                        <option value="16">Home decor</option>
-                                                        <option value="17">Bedding</option>
-                                                        <option value="18">Lighting</option>
-                                                        <option value="19">Home improvement</option>
-                                                        <option value="20">Organization</option>
-                                                        <option value="21">Clothing</option>
-                                                        <option value="22">Jewelry</option>
-                                                        <option value="23">Watches</option>
-                                                        <option value="24">Sports apparel</option>
-                                                        <option value="25">Pet food</option>
-                                                        <option value="26">Pet toys</option>
-                                                        <option value="27">Dog supplies</option>
-                                                        <option value="28">Kitchen appliances</option>
-                                                        <option value="29">Home appliances</option>
-                                                        <option value="30">Small appliances</option>
-                                                        <option value="31">Online courses</option>
-                                                        <option value="32">Skill development</option>
-                                                        <option value="33">E-learning platforms</option>
-                                                        <option value="51">Sports</option>
-                                                        <option value="52">Nike</option>
-                                                        <option value="53">Adidas</option>
-                                                        <option value="54">Gym</option>
-                                                        <option value="55">Shoes</option>
-                                                        <option value="56">Style</option>
-                                                        <option value="57">Fashion</option>
-                                                        <option value="58">Men’s</option>
-                                                        <option value="59">Sportswear</option>
-                                                        <option value="60">neque</option>
-                                                        <option value="61">Similique</option>
-                                                        <option value="62">Lorem</option>
-                                                        <option value="63">consequuntur</option>
-                                                        <option value="64">car</option>
-                                                        <option value="65">cosmetics</option>
-                                                        <option value="66">cat</option>
-                                                        <option value="67">microwave</option>
-                                                        <option value="68">daewoo</option>
-                                                        <option value="69">study</option>
-                                                        <option value="70">Tuitions</option>
-                                                        <option value="71">and</option>
-                                                        <option value="72">Coaching</option>
-                                                        <option value="73">Book</option>
-                                                        <option value="74">music</option>
-                                                        <option value="75">Musical</option>
-                                                        <option value="76">instruments</option>
-                                                        <option value="77">Women&#039;s</option>
-                                                        <option value="78">jeans</option>
-                                                        <option value="79">AC</option>
-                                                        <option value="80">sa</option>
-                                                        <option value="81">iajs</option>
-                                                        <option value="82">dasdokasdadl;akd;lakdl;asjdl</option>
-                                                        <option value="83">jasdkl;</option>
-                                                        <option value="84">asjd;lasd</option>
-                                                        <option value="85">;laskjd</option>
-                                                        <option value="86">lkasjdlkasdj</option>
-                                                        <option value="87">
-                                                            alsk;da;sdkas;l;adjasjklhdkjahdkjashdkjashdaksdkjashdkjashdkajsdhaskdaskjdhaskjdhaskjdhaskjdasdasd
-                                                        </option>
-                                                        <option value="88">dsf</option>
-                                                        <option value="89">sdufh</option>
-                                                        <option value="90">
-                                                            sdfhsdfjdsfoisdjofjsoidfjsodfjsodifjsodifjsdlkfjsdlkfsdfsdf
-                                                        </option>
-                                                        <option value="91">sdfjklsfhsdjkfhsdkjfhsdkjfhskdjfhsdkjfs
-                                                        </option>
-                                                        <option value="92">
-                                                            sdfnsdkjlhlfjsdlkfjsdlkfjsdklfjsdl;fksd;flkjsd;fjsdkfljsdkfhsdkjfhsdkjfhsdkjfhsdjklfhsdlkfhsdlfksdfjklhsdkjfhsdjkfhsdjkfhsdkjfhsdkjfsdoiaushjsadfhasjkdhaksjhdakjdhaskjdhaskjda
-                                                        </option>
-                                                        <option value="93">
-                                                            yuashgdaudhaiusdhaisudaiudhasuidhyasiudhasudhaisudhiasdhoiasdjsakjdasldaskldhaskjdhaskjdhaskjdhaskjdhaskjdhaskjdhaskjd
-                                                        </option>
-                                                        <option value="94">
-                                                            hnasiuasdasnjkdhnasjkhdkajsdhkasjdhasklaskdjhasdkjahskjdhaskjdhaskdasjkdgasdhasdkjaskjdaslkdlkasdasjkldhkajsldas
-                                                        </option>
-                                                        <option value="95">card</option>
-                                                        <option value="96">basketball</option>
-                                                        <option value="97">michael</option>
-                                                        <option value="98">jordan</option>
-                                                        <option value="99">HIRE</option>
-                                                        <option value="100">carz</option>
-                                                        <option value="101">nkjknj</option>
-                                                        <option value="102">reger</option>
-                                                        <option value="103">regg</option>
-                                                        <option value="104">tamo</option>
-                                                        <option value="105">56456</option>
-                                                        <option value="106">jhkjk</option>
-                                                        <option value="107">Temporibus</option>
-                                                        <option value="108">samsung</option>
-                                                        <option value="109">перевозка</option>
-                                                        <option value="110">12121</option>
-                                                        <option value="111">mumbai</option>
-                                                        <option value="112">gggh</option>
-                                                        <option value="113">kkkl</option>
-                                                        <option value="114">d4ce</option>
-                                                        <option value="115">ؤسئءءؤ</option>
-                                                        <option value="116">ccccc</option>
-                                                        <option value="117">gle</option>
-                                                        <option value="118">For</option>
-                                                        <option value="119">Forsale</option>
-                                                        <option value="120">test</option>
-                                                        <option value="121">nail</option>
-                                                        <option value="122">salon</option>
-                                                        <option value="123">domena</option>
-                                                        <option value="124">bike</option>
-                                                        <option value="125">huffy</option>
-                                                        <option value="126">ad</option>
-                                                        <option value="127">sdsd</option>
-                                                        <option value="128">adad</option>
-                                                        <option value="129">zzz</option>
-                                                        <option value="130">sss</option>
-                                                        <option value="131">Bro</option>
-                                                        <option value="132">Khamastashar</option>
-                                                        <option value="133">Max</option>
-                                                        <option value="134">ufo</option>
-                                                        <option value="135">برء</option>
-                                                        <option value="136">ddd</option>
-                                                        <option value="137">svetlo</option>
-                                                        <option value="138">skoda</option>
-                                                        <option value="139">auto</option>
-                                                        <option value="140">GPixel</option>
-                                                        <option value="141">Google</option>
-                                                        <option value="142">Phone</option>
-                                                        <option value="143">sample</option>
-                                                        <option value="144">stuff</option>
-                                                        <option value="145">towing</option>
-                                                        <option value="146">sjafjskdgsdg</option>
-                                                        <option value="147">clothes</option>
-                                                        <option value="148">dvr</option>
-                                                        <option value="149">gjtfh</option>
-                                                        <option value="150">sofa</option>
-                                                        <option value="151">home</option>
-                                                        <option value="152">Fasion</option>
-                                                        <option value="153">spa</option>
-                                                        <option value="154">sdfsdf</option>
-                                                        <option value="155">asdfsdf</option>
-                                                        <option value="156">bikini</option>
-                                                        <option value="157">bikinisets</option>
-                                                        <option value="158">bikinidesign</option>
-                                                        <option value="159">ecofriendlyswimwear</option>
-                                                        <option value="160">swimsuits</option>
-                                                        <option value="161">swimwear</option>
-                                                        <option value="162">gwhwh</option>
-                                                        <option value="163">vbvm</option>
-                                                        <option value="164">fkj</option>
-                                                        <option value="165">bdjd</option>
-                                                        <option value="166">fjfj</option>
-                                                        <option value="167">fjfjf</option>
-                                                        <option value="168">gu</option>
+                                                    <select name="tags[]" id="tags" class="select2_activation" multiple>
+                                                        @foreach($tags as $tag)
+                                                            <option value="{{ $tag->id }}"
+                                                                {{ is_array(old('tags')) && in_array($tag->id, old('tags')) ? 'selected' : '' }}>
+                                                                {{ $tag->title }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
-                                                    <small>Select Your tags name or new tag name type</small>
+                                                    <small>Select your tags or type a new tag name</small>
                                                 </div>
                                             </div>
+
+                                            <!-- Meta Section -->
                                             <div class="box-shadow1 tags p-24 mt-3">
                                                 <div class="row">
                                                     <div class="col-xxl-12 col-lg-12">
-                                                        <div
-                                                            class="collapse_wrapper dashboard__card style_one bg__white padding-20 radius-10">
+                                                        <div class="collapse_wrapper dashboard__card style_one bg__white padding-20 radius-10">
                                                             <div class="collapse_wrapper__header mb-3">
-                                                                <h5 class="collapse_wrapper__header__title">Meta Section
-                                                                </h5>
+                                                                <h5 class="collapse_wrapper__header__title">Meta Section</h5>
                                                             </div>
                                                             <div class="tab_wrapper style_seven">
-                                                                <!--Tab Button  -->
                                                                 <nav>
-                                                                    <div class="nav nav-tabs flex-nowrap" id="nav-tab8"
-                                                                        role="tablist">
+                                                                    <div class="nav nav-tabs flex-nowrap" id="nav-tab8" role="tablist">
                                                                         <a class="nav-link active" id="nav-21-tab"
-                                                                            data-bs-toggle="tab"
-                                                                            href="add-listing.html#blog_meta"
+                                                                            data-bs-toggle="tab" href="#blog_meta"
                                                                             role="tab" aria-controls="nav-21"
                                                                             aria-selected="true">Blog Meta</a>
                                                                         <a class="nav-link" id="nav-22-tab"
-                                                                            data-bs-toggle="tab"
-                                                                            href="add-listing.html#facebook_meta"
+                                                                            data-bs-toggle="tab" href="#facebook_meta"
                                                                             role="tab" aria-controls="nav-22"
                                                                             aria-selected="false">Facebook Meta</a>
                                                                         <a class="nav-link" id="nav-23-tab"
-                                                                            data-bs-toggle="tab"
-                                                                            href="add-listing.html#twitter_meta"
+                                                                            data-bs-toggle="tab" href="#twitter_meta"
                                                                             role="tab" aria-controls="nav-23"
                                                                             aria-selected="false">Twitter Meta</a>
                                                                     </div>
                                                                 </nav>
-                                                                <!--End-of Tab Button  -->
-                                                                <!-- Tab Contents -->
                                                                 <div class="tab-content mt-4" id="nav-tabContent8">
                                                                     <div class="tab-pane fade show active" id="blog_meta"
                                                                         role="tabpanel" aria-labelledby="nav-21-tab">
-
                                                                         <div class="form__input__single">
-                                                                            <label for="meta_title"
-                                                                                class="form__input__single__label">Meta
-                                                                                Title</label><br>
-                                                                            <input type="text" class="form__control"
-                                                                                name="meta_title"
-                                                                                id="meta_title"data-role="tagsinput"
-                                                                                placeholder="Title">
+                                                                            <label for="meta_title" class="form__input__single__label">Meta Title</label><br>
+                                                                            <input type="text" class="form__control" name="meta_title"
+                                                                                id="meta_title" value="{{ old('meta_title') }}" placeholder="Title">
                                                                         </div>
                                                                         <div class="form__input__single">
-                                                                            <label for="meta_tags"
-                                                                                class="form__input__single__label">Meta
-                                                                                Tags</label>
-                                                                            <input type="text" class="form__control"
-                                                                                name="meta_tags" id="meta_tags"
+                                                                            <label for="meta_tags" class="form__input__single__label">Meta Tags</label>
+                                                                            <input type="text" class="form__control" name="meta_tags"
+                                                                                id="meta_tags" value="{{ old('meta_tags') }}"
                                                                                 data-role="tagsinput" placeholder="Tag">
                                                                         </div>
                                                                         <div class="form__input__single">
-                                                                            <label for="meta_description"
-                                                                                class="form__input__single__label">Meta
-                                                                                Description</label>
-                                                                            <textarea class="form__control" name="meta_description" cols="30" rows="10"></textarea>
+                                                                            <label for="meta_description" class="form__input__single__label">Meta Description</label>
+                                                                            <textarea class="form__control" name="meta_description" cols="30" rows="10">{{ old('meta_description') }}</textarea>
                                                                         </div>
-
                                                                     </div>
                                                                     <div class="tab-pane fade" id="facebook_meta"
                                                                         role="tabpanel" aria-labelledby="nav-22-tab">
                                                                         <div class="form__input__single">
-                                                                            <label for="title"
-                                                                                class="form__input__single__label">Facebook
-                                                                                Meta Title</label>
+                                                                            <label class="form__input__single__label">Facebook Meta Title</label>
                                                                             <input type="text" class="form__control"
-                                                                                data-role="tagsinput"
-                                                                                name="facebook_meta_tags">
+                                                                                data-role="tagsinput" name="facebook_meta_tags"
+                                                                                value="{{ old('facebook_meta_tags') }}">
                                                                         </div>
                                                                         <div class="row">
                                                                             <div class="form__input__single col-md-12">
-                                                                                <label for="title"
-                                                                                    class="form__input__single__label">Facebook
-                                                                                    Meta Description</label>
-                                                                                <textarea name="facebook_meta_description" class="form__control max-height-140" cols="20" rows="4"></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form__input__single">
-                                                                            <label for="image"
-                                                                                class="form__input__single__label">Facebook
-                                                                                Meta Image</label>
-                                                                            <div class="media-upload-btn-wrapper">
-                                                                                <div class="img-wrap"></div>
-                                                                                <input type="hidden"
-                                                                                    name="facebook_meta_image">
-                                                                                <button type="button"
-                                                                                    class="cmnBtn btn_5 btn_bg_blue radius-5 media_upload_form_btn"
-                                                                                    data-btntitle="Select Image"
-                                                                                    data-modaltitle="Upload Image"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#media_upload_modal">
-                                                                                    Upload Image
-                                                                                </button>
+                                                                                <label class="form__input__single__label">Facebook Meta Description</label>
+                                                                                <textarea name="facebook_meta_description" class="form__control max-height-140" cols="20" rows="4">{{ old('facebook_meta_description') }}</textarea>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="tab-pane fade" id="twitter_meta"
                                                                         role="tabpanel" aria-labelledby="nav-22-tab">
                                                                         <div class="form__input__single">
-                                                                            <label for="title"
-                                                                                class="form__input__single__label">Twitter
-                                                                                Meta Title</label>
+                                                                            <label class="form__input__single__label">Twitter Meta Title</label>
                                                                             <input type="text" class="form__control"
-                                                                                data-role="tagsinput"
-                                                                                name="twitter_meta_tags">
+                                                                                data-role="tagsinput" name="twitter_meta_tags"
+                                                                                value="{{ old('twitter_meta_tags') }}">
                                                                         </div>
                                                                         <div class="row">
                                                                             <div class="form__input__single col-md-12">
-                                                                                <label for="title">Twitter Meta
-                                                                                    Description</label>
-                                                                                <textarea name="twitter_meta_description" class="form__control max-height-140" cols="20" rows="4"></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form__input__single">
-                                                                            <label for="image"
-                                                                                class="form__input__single__label">Twitter
-                                                                                Meta Image</label>
-                                                                            <div class="media-upload-btn-wrapper">
-                                                                                <div class="img-wrap"></div>
-                                                                                <input type="hidden"
-                                                                                    name="twitter_meta_image">
-                                                                                <button type="button"
-                                                                                    class="cmnBtn btn_5 btn_bg_blue radius-5 media_upload_form_btn"
-                                                                                    data-btntitle="Select Image"
-                                                                                    data-modaltitle="Upload Image"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#media_upload_modal">
-                                                                                    Upload Image
-                                                                                </button>
+                                                                                <label>Twitter Meta Description</label>
+                                                                                <textarea name="twitter_meta_description" class="form__control max-height-140" cols="20" rows="4">{{ old('twitter_meta_description') }}</textarea>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -709,74 +530,59 @@
                                                 </div>
                                             </div>
 
-
-
-                                            <!--Guest post section -->
+                                            <!-- Guest User Info (shown when not logged in) -->
+                                            @guest
                                             <div class="box-shadow1 hode-phone-number p-24 mt-3">
                                                 <label>User Information</label>
                                                 <div class="mt-3">
-                                                    <label for="guest_first_name" class="infoTitle">First Name <span
-                                                            class="text-danger">*</span> </label>
-                                                    <input type="text" class="input-filed w-100"
-                                                        name="guest_first_name" id="guest_first_name" value=""
-                                                        placeholder="First Name">
+                                                    <label for="guest_first_name" class="infoTitle">First Name <span class="text-danger">*</span></label>
+                                                    <input type="text" class="input-filed w-100" name="guest_first_name"
+                                                        id="guest_first_name" value="{{ old('guest_first_name') }}" placeholder="First Name">
                                                 </div>
                                                 <div class="mt-3">
-                                                    <label for="guest_first_name" class="infoTitle">Last Name <span
-                                                            class="text-danger">*</span> </label>
-                                                    <input type="text" class="input-filed w-100"
-                                                        name="guest_last_name" id="guest_last_name" value=""
-                                                        placeholder="Last Name">
+                                                    <label for="guest_last_name" class="infoTitle">Last Name <span class="text-danger">*</span></label>
+                                                    <input type="text" class="input-filed w-100" name="guest_last_name"
+                                                        id="guest_last_name" value="{{ old('guest_last_name') }}" placeholder="Last Name">
                                                 </div>
                                                 <div class="mt-3">
-                                                    <label for="guest_first_name" class="infoTitle">Email <span
-                                                            class="text-danger">*</span> </label>
+                                                    <label for="guest_email" class="infoTitle">Email <span class="text-danger">*</span></label>
                                                     <input type="email" class="input-filed w-100" name="guest_email"
-                                                        id="guest_email" value="" placeholder="Email">
+                                                        id="guest_email" value="{{ old('guest_email') }}" placeholder="Email">
                                                 </div>
                                                 <div class="mt-3">
-                                                    <label for="guest_first_name" class="infoTitle">Phone Number 11 <span
-                                                            class="text-danger">*</span> </label>
-                                                    <input type="hidden" id="guest-country-code"
-                                                        name="guest_country_code">
+                                                    <label for="guest_phone" class="infoTitle">Phone Number <span class="text-danger">*</span></label>
                                                     <input type="tel" class="input-filed w-100" name="guest_phone"
-                                                        id="guest_phone" value="" placeholder="Phone">
+                                                        id="guest_phone" value="{{ old('guest_phone') }}" placeholder="Phone">
                                                 </div>
-
-                                                <div id="guest_error_message" class="d-flex flex-column gap-2 mt-2 mb-2">
-                                                </div>
-
+                                                <div id="guest_error_message" class="d-flex flex-column gap-2 mt-2 mb-2"></div>
                                                 <div class="feature">
                                                     <label>
                                                         <input type="checkbox" name="guest_register_request"
-                                                            id="guest_register_request" value=""
-                                                            class="custom-check-box">
-                                                        <span class="ms-2 title-para text-primary">I confirm the above info
-                                                            and am excited to register!</span>
+                                                            id="guest_register_request" value="1" class="custom-check-box">
+                                                        <span class="ms-2 title-para text-primary">I confirm the above info and am excited to register!</span>
                                                     </label>
                                                 </div>
+                                            </div>
+                                            @endguest
 
-                                                <!-- Terms and Conditions -->
+                                            <!-- Terms and Conditions -->
+                                            <div class="box-shadow1 p-24 mt-3">
                                                 <div class="feature">
                                                     <label class="checkWrap2 terms-conditions">
                                                         <input class="custom-check-box check-input" type="checkbox"
                                                             name="terms_conditions" id="terms_conditions" value="1">
                                                         <span class="checkmark mx-1"></span> I agree with the
-                                                        <a href="../../terms-and-conditions.html" target="_blank"
+                                                        <a href="{{ url('/terms-and-conditions') }}" target="_blank"
                                                             class="text-primary"> Terms and Conditions </a>
                                                     </label>
                                                 </div>
-
                                             </div>
 
-
-                                            <!-- start previous / next buttons -->
+                                            <!-- Previous / Submit -->
                                             <div class="continue-btn mt-3">
                                                 <div class="btn-wrapper mb-10 d-flex justify-content-end gap-3">
-                                                    <button class="red-btn w-100 d-block" id="prevBtn"
-                                                        type="button">Previous</button>
-                                                    <button class="red-btn w-100 d-block" id="submitBtn"
-                                                        type="submit">Submit Listing</button>
+                                                    <button class="red-btn w-100 d-block" id="prevBtn" type="button">Previous</button>
+                                                    <button class="red-btn w-100 d-block" id="submitBtn" type="submit">Submit Listing</button>
                                                 </div>
                                             </div>
 
@@ -787,7 +593,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- location end-->
+                    <!-- Step 2 End -->
+
                 </div>
             </div>
         </form>
@@ -796,37 +603,270 @@
 @endsection
 @section('js')
     <script>
-        // Category breadcrumb functionality
         $(document).ready(function() {
+            // Initialize Select2
+            if ($.fn.select2) {
+                $('.select2_activation').select2({
+                    tags: true,
+                    tokenSeparators: [',']
+                });
+            }
+
+            // Initialize Summernote
+            if ($.fn.summernote) {
+                $('.summernote').summernote({
+                    height: 200,
+                    toolbar: [
+                        ['style', ['bold', 'italic', 'underline']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['insert', ['link']],
+                        ['view', ['codeview']]
+                    ]
+                });
+            }
+
+            // ============================================
+            // Multi-level Category Selection
+            // ============================================
             const categorySelect = $('#select-category');
+            const subcategorySelect = $('#select-subcategory');
+            const subSubcategorySelect = $('#select-sub-subcategory');
+            const subcategoryWrapper = $('#subcategory-wrapper');
+            const subSubcategoryWrapper = $('#sub-subcategory-wrapper');
+            const finalCategoryInput = $('#final-category');
             const breadcrumb = $('#category-breadcrumb');
 
-            categorySelect.on('change', function() {
-                const selectedOption = $(this).find('option:selected');
+            function updateFinalCategory() {
+                let finalVal = '';
+                let path = [];
 
-                if (selectedOption.val()) {
-                    // Get parent optgroups
-                    let path = [];
-                    let element = selectedOption;
+                if (subSubcategorySelect.val()) {
+                    finalVal = subSubcategorySelect.val();
+                    path = [
+                        categorySelect.find('option:selected').text().trim(),
+                        subcategorySelect.find('option:selected').text().trim(),
+                        subSubcategorySelect.find('option:selected').text().trim()
+                    ];
+                } else if (subcategorySelect.val()) {
+                    finalVal = subcategorySelect.val();
+                    path = [
+                        categorySelect.find('option:selected').text().trim(),
+                        subcategorySelect.find('option:selected').text().trim()
+                    ];
+                } else if (categorySelect.val()) {
+                    finalVal = categorySelect.val();
+                    path = [categorySelect.find('option:selected').text().trim()];
+                }
 
-                    while (element.length) {
-                        if (element.prop('tagName') === 'OPTGROUP') {
-                            path.unshift(element.attr('label').trim());
-                        }
-                        element = element.parent();
-                    }
+                finalCategoryInput.val(finalVal);
+                breadcrumb.text(path.length ? path.join(' > ') : '');
 
-                    path.push(selectedOption.text().trim());
-                    breadcrumb.text(path.join(' > '));
+                // Load custom fields for the selected category
+                if (finalVal) {
+                    loadCustomFields(finalVal);
                 } else {
-                    breadcrumb.text('');
+                    $('#custom-fields-container').html('');
+                }
+            }
+
+            // Category change -> load subcategories
+            categorySelect.on('change', function() {
+                const parentId = $(this).val();
+                subcategoryWrapper.hide();
+                subSubcategoryWrapper.hide();
+                subcategorySelect.html('<option value="">Select Subcategory</option>');
+                subSubcategorySelect.html('<option value="">Select Sub Subcategory</option>');
+
+                if (parentId) {
+                    $.get("{{ route('ad.subcategories') }}", { parent_id: parentId }, function(data) {
+                        if (data.length > 0) {
+                            data.forEach(function(item) {
+                                subcategorySelect.append(`<option value="${item.id}">${item.title}</option>`);
+                            });
+                            subcategoryWrapper.show();
+                        }
+                    });
+                }
+                updateFinalCategory();
+            });
+
+            // Subcategory change -> load sub-subcategories
+            subcategorySelect.on('change', function() {
+                const parentId = $(this).val();
+                subSubcategoryWrapper.hide();
+                subSubcategorySelect.html('<option value="">Select Sub Subcategory</option>');
+
+                if (parentId) {
+                    $.get("{{ route('ad.subcategories') }}", { parent_id: parentId }, function(data) {
+                        if (data.length > 0) {
+                            data.forEach(function(item) {
+                                subSubcategorySelect.append(`<option value="${item.id}">${item.title}</option>`);
+                            });
+                            subSubcategoryWrapper.show();
+                        }
+                    });
+                }
+                updateFinalCategory();
+            });
+
+            subSubcategorySelect.on('change', function() {
+                updateFinalCategory();
+            });
+
+            // ============================================
+            // Load Custom Fields by Category
+            // ============================================
+            function loadCustomFields(categoryId) {
+                $.get("{{ route('ad.custom.fields') }}", { category_id: categoryId }, function(fields) {
+                    let html = '';
+                    if (fields.length > 0) {
+                        html += '<h6 class="mt-3 mb-2">Additional Information</h6>';
+                        html += '<div class="row g-3">';
+                        fields.forEach(function(field) {
+                            const required = field.is_required == 1 ? 'required' : '';
+                            const requiredStar = field.is_required == 1 ? '<span class="text-danger">*</span>' : '';
+
+                            html += '<div class="col-sm-6 custom-field-group">';
+                            html += `<label>${field.title} ${requiredStar}</label>`;
+
+                            switch (parseInt(field.type)) {
+                                case {{ config('settings.input_types.text') }}:
+                                    html += `<input type="text" name="custom_field[${field.id}]" class="input-filed w-100" value="${field.default_value || ''}" ${required}>`;
+                                    break;
+                                case {{ config('settings.input_types.number') }}:
+                                    html += `<input type="number" name="custom_field[${field.id}]" class="input-filed w-100" value="${field.default_value || ''}" ${required}>`;
+                                    break;
+                                case {{ config('settings.input_types.select') }}:
+                                    html += `<select name="custom_field[${field.id}]" class="input-filed w-100" ${required}>`;
+                                    html += '<option value="">Select</option>';
+                                    if (field.options) {
+                                        field.options.forEach(function(opt) {
+                                            html += `<option value="${opt.id}">${opt.value}</option>`;
+                                        });
+                                    }
+                                    html += '</select>';
+                                    break;
+                                case {{ config('settings.input_types.text_area') }}:
+                                    html += `<textarea name="custom_field[${field.id}]" class="input-filed w-100" rows="3" ${required}>${field.default_value || ''}</textarea>`;
+                                    break;
+                                case {{ config('settings.input_types.checkbox') }}:
+                                    if (field.options) {
+                                        field.options.forEach(function(opt) {
+                                            html += `<div class="form-check">
+                                                <input type="checkbox" name="custom_field[${field.id}][]" value="${opt.id}" class="form-check-input" id="cf_${field.id}_${opt.id}">
+                                                <label class="form-check-label" for="cf_${field.id}_${opt.id}">${opt.value}</label>
+                                            </div>`;
+                                        });
+                                    }
+                                    break;
+                                case {{ config('settings.input_types.radio') }}:
+                                    if (field.options) {
+                                        field.options.forEach(function(opt) {
+                                            html += `<div class="form-check">
+                                                <input type="radio" name="custom_field[${field.id}]" value="${opt.id}" class="form-check-input" id="cf_${field.id}_${opt.id}" ${required}>
+                                                <label class="form-check-label" for="cf_${field.id}_${opt.id}">${opt.value}</label>
+                                            </div>`;
+                                        });
+                                    }
+                                    break;
+                                case {{ config('settings.input_types.file') }}:
+                                    html += `<input type="file" name="customfile_${field.id}" class="input-filed w-100" ${required}>`;
+                                    break;
+                                case {{ config('settings.input_types.date') }}:
+                                    html += `<input type="date" name="custom_field[${field.id}]" class="input-filed w-100" value="${field.default_value || ''}" ${required}>`;
+                                    break;
+                            }
+
+                            html += '</div>';
+                        });
+                        html += '</div>';
+                    }
+                    $('#custom-fields-container').html(html);
+                });
+            }
+
+            // ============================================
+            // Form Wizard (Step Navigation)
+            // ============================================
+            let currentTab = 0;
+            const tabs = document.querySelectorAll('.step');
+            const indicators = document.querySelectorAll('.stepIndicator');
+
+            function showTab(n) {
+                tabs.forEach((tab, i) => {
+                    if (i === n) {
+                        tab.classList.add('active', 'show');
+                        tab.style.display = 'block';
+                    } else {
+                        tab.classList.remove('active', 'show');
+                        tab.style.display = 'none';
+                    }
+                });
+                indicators.forEach((ind, i) => {
+                    ind.classList.toggle('active', i === n);
+                });
+            }
+
+            showTab(currentTab);
+
+            $('#nextBtn').on('click', function() {
+                // Basic validation before moving to next step
+                const title = $('#title').val();
+                const category = $('#final-category').val();
+                const description = $('#description').val() || ($('.summernote').length ? $('.summernote').summernote('code') : '');
+                const price = $('#price').val();
+
+                if (!title) {
+                    alert('Please enter an item name.');
+                    $('#title').focus();
+                    return;
+                }
+                if (!category) {
+                    alert('Please select a category.');
+                    return;
+                }
+                if (!price) {
+                    alert('Please enter a price.');
+                    $('#price').focus();
+                    return;
+                }
+
+                currentTab = 1;
+                showTab(currentTab);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            $('#prevBtn').on('click', function() {
+                currentTab = 0;
+                showTab(currentTab);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // ============================================
+            // Image Preview
+            // ============================================
+            $('#thumbnail_image').on('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(ev) {
+                        $('#thumbnail-preview').html(`<img src="${ev.target.result}" style="max-width:200px;max-height:200px;border-radius:6px;object-fit:cover;">`);
+                    };
+                    reader.readAsDataURL(file);
                 }
             });
 
-            // Trigger on page load if there's an old value
-            if (categorySelect.val()) {
-                categorySelect.trigger('change');
-            }
+            $('#gallery_images').on('change', function(e) {
+                const preview = $('#gallery-preview');
+                preview.html('');
+                Array.from(e.target.files).forEach(function(file) {
+                    const reader = new FileReader();
+                    reader.onload = function(ev) {
+                        preview.append(`<img src="${ev.target.result}" style="width:80px;height:80px;border-radius:6px;object-fit:cover;">`);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
         });
     </script>
 @endsection
