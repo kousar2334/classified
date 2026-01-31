@@ -153,12 +153,12 @@
 @section('content')
     <div class="add-listing-wrapper mt-5 mb-5">
 
-        @if(session('success'))
+        @if (session('success'))
             <div class="container">
                 <div class="alert alert-success">{{ session('success') }}</div>
             </div>
         @endif
-        @if(session('error'))
+        @if (session('error'))
             <div class="container">
                 <div class="alert alert-danger">{{ session('error') }}</div>
             </div>
@@ -171,8 +171,8 @@
                 <span class="nav-link-number">1</span>
                 Listing Info
             </a>
-            <a class="nav-link stepIndicator" id="location-tab" data-bs-toggle="pill" href="#media-uploads"
-                role="tab" aria-controls="media-uploads" aria-selected="true">
+            <a class="nav-link stepIndicator" id="location-tab" data-bs-toggle="pill" href="#media-uploads" role="tab"
+                aria-controls="media-uploads" aria-selected="true">
                 <span class="nav-link-number">2</span>
                 Location
             </a>
@@ -199,8 +199,10 @@
                                             <!-- Item Name -->
                                             <div class="item-name box-shadow1 p-24">
                                                 <label for="title">Item Name <span class="text-danger">*</span></label>
-                                                <input type="text" name="title" id="title" value="{{ old('title') }}"
-                                                    class="input-filed w-100 @error('title') is-invalid @enderror" placeholder="Item Name">
+                                                <input type="text" name="title" id="title"
+                                                    value="{{ old('title') }}"
+                                                    class="input-filed w-100 @error('title') is-invalid @enderror"
+                                                    placeholder="Item Name">
                                                 @error('title')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -212,25 +214,31 @@
                                                 <div class="row g-3 mt-3">
                                                     <!-- Category -->
                                                     <div class="col-sm-4">
-                                                        <label for="category">Category <span class="text-danger">*</span></label>
-                                                        <select name="" id="select-category" class="input-filed w-100">
+                                                        <label for="category">Category <span
+                                                                class="text-danger">*</span></label>
+                                                        <select name="" id="select-category"
+                                                            class="input-filed w-100">
                                                             <option value="">Select Category</option>
-                                                            @foreach($categories as $category)
-                                                                <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                                            @foreach ($categories as $category)
+                                                                <option value="{{ $category->id }}">{{ $category->title }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
 
                                                     <!-- Subcategory -->
                                                     <div class="col-sm-4" id="subcategory-wrapper" style="display:none;">
-                                                        <label for="subcategory">Subcategory <span class="text-danger">*</span></label>
-                                                        <select name="" id="select-subcategory" class="input-filed w-100">
+                                                        <label for="subcategory">Subcategory <span
+                                                                class="text-danger">*</span></label>
+                                                        <select name="" id="select-subcategory"
+                                                            class="input-filed w-100">
                                                             <option value="">Select Subcategory</option>
                                                         </select>
                                                     </div>
 
                                                     <!-- Sub-subcategory -->
-                                                    <div class="col-sm-4" id="sub-subcategory-wrapper" style="display:none;">
+                                                    <div class="col-sm-4" id="sub-subcategory-wrapper"
+                                                        style="display:none;">
                                                         <label for="sub-subcategory">Sub Subcategory</label>
                                                         <select id="select-sub-subcategory" class="input-filed w-100">
                                                             <option value="">Select Sub Subcategory</option>
@@ -238,7 +246,8 @@
                                                     </div>
 
                                                     <!-- Hidden field to store the final selected category -->
-                                                    <input type="hidden" name="category" id="final-category" value="{{ old('category') }}">
+                                                    <input type="hidden" name="category" id="final-category"
+                                                        value="{{ old('category') }}">
 
                                                     <div class="col-12">
                                                         <p class="text-sm text-muted" id="category-breadcrumb"></p>
@@ -250,10 +259,12 @@
                                                     <!-- Condition -->
                                                     <div class="col-sm-6">
                                                         <label for="condition">Item Condition</label>
-                                                        <select name="condition" id="condition" class="input-filed w-100">
+                                                        <select name="condition" id="condition"
+                                                            class="input-filed w-100">
                                                             <option value="">Select Condition</option>
-                                                            @foreach($conditions as $condition)
-                                                                <option value="{{ $condition->id }}" {{ old('condition') == $condition->id ? 'selected' : '' }}>
+                                                            @foreach ($conditions as $condition)
+                                                                <option value="{{ $condition->id }}"
+                                                                    {{ old('condition') == $condition->id ? 'selected' : '' }}>
                                                                     {{ $condition->title }}
                                                                 </option>
                                                             @endforeach
@@ -265,8 +276,9 @@
                                                         <label for="city">City</label>
                                                         <select name="city" id="city" class="input-filed w-100">
                                                             <option value="">Select City</option>
-                                                            @foreach($cities as $city)
-                                                                <option value="{{ $city->id }}" {{ old('city') == $city->id ? 'selected' : '' }}>
+                                                            @foreach ($cities as $city)
+                                                                <option value="{{ $city->id }}"
+                                                                    {{ old('city') == $city->id ? 'selected' : '' }}>
                                                                     {{ $city->name }}
                                                                 </option>
                                                             @endforeach
@@ -299,7 +311,8 @@
                                             <div class="box-shadow1 price p-24">
                                                 <div class="price-wraper">
                                                     <label for="price">Price <span class="text-danger">*</span></label>
-                                                    <input type="number" name="price" id="price" value="{{ old('price') }}"
+                                                    <input type="number" name="price" id="price"
+                                                        value="{{ old('price') }}"
                                                         class="input-filed w-100 mb-3 @error('price') is-invalid @enderror"
                                                         placeholder="0.00" step="0.01">
                                                     @error('price')
@@ -315,7 +328,8 @@
 
                                             <!-- Contact -->
                                             <div class="box-shadow1 p-24 mt-3">
-                                                <label for="contact_email">Contact Email <span class="text-danger">*</span></label>
+                                                <label for="contact_email">Contact Email <span
+                                                        class="text-danger">*</span></label>
                                                 <input type="email" name="contact_email" id="contact_email"
                                                     value="{{ old('contact_email', auth()->check() ? auth()->user()->email : '') }}"
                                                     class="input-filed w-100 mb-3 @error('contact_email') is-invalid @enderror"
@@ -329,12 +343,14 @@
                                             <div class="box-shadow1 hode-phone-number p-24 mt-3">
                                                 <label class="hide-number">
                                                     <input type="checkbox" class="custom-check-box"
-                                                        name="hide_phone_number" {{ old('hide_phone_number') ? 'checked' : '' }}>
+                                                        name="hide_phone_number"
+                                                        {{ old('hide_phone_number') ? 'checked' : '' }}>
                                                     <span class="black-font"> Hide My Phone Number</span>
                                                 </label>
                                                 <div class="input-group mt-3">
                                                     <input class="input-filed w-100" type="tel" name="phone"
-                                                        value="{{ old('phone') }}" id="phone" placeholder="Type Phone"
+                                                        value="{{ old('phone') }}" id="phone"
+                                                        placeholder="Type Phone"
                                                         class="@error('contact_phone') is-invalid @enderror">
                                                     @error('contact_phone')
                                                         <small class="text-danger">{{ $message }}</small>
@@ -344,11 +360,13 @@
 
                                             <!-- Thumbnail Image -->
                                             <div class="box-shadow1 p-24 mt-3">
-                                                <label for="thumbnail_image">Featured Image <span class="text-danger">*</span></label>
+                                                <label for="thumbnail_image">Featured Image <span
+                                                        class="text-danger">*</span></label>
                                                 <input type="file" name="thumbnail_image" id="thumbnail_image"
                                                     class="input-filed w-100 @error('thumbnail_image') is-invalid @enderror"
                                                     accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
-                                                <small class="text-muted">image format: jpg,jpeg,png,gif,webp | max: 5MB</small>
+                                                <small class="text-muted">image format: jpg,jpeg,png,gif,webp | max:
+                                                    5MB</small>
                                                 <div id="thumbnail-preview" class="mt-2"></div>
                                                 @error('thumbnail_image')
                                                     <small class="text-danger">{{ $message }}</small>
@@ -406,7 +424,8 @@
                                                 <input type="hidden" name="longitude" id="longitude">
                                                 <label for="user_address">Address</label>
                                                 <input type="text" class="w-100 input-filed" name="address"
-                                                    id="user_address" value="{{ old('address') }}" placeholder="Address">
+                                                    id="user_address" value="{{ old('address') }}"
+                                                    placeholder="Address">
                                             </div>
                                         </div>
 
@@ -437,8 +456,9 @@
                                             <div class="box-shadow1 tags p-24 mt-3">
                                                 <label for="tags">Tags</label>
                                                 <div class="select-itms">
-                                                    <select name="tags[]" id="tags" class="select2_activation" multiple>
-                                                        @foreach($tags as $tag)
+                                                    <select name="tags[]" id="tags" class="select2_activation"
+                                                        multiple>
+                                                        @foreach ($tags as $tag)
                                                             <option value="{{ $tag->id }}"
                                                                 {{ is_array(old('tags')) && in_array($tag->id, old('tags')) ? 'selected' : '' }}>
                                                                 {{ $tag->title }}
@@ -453,13 +473,16 @@
                                             <div class="box-shadow1 tags p-24 mt-3">
                                                 <div class="row">
                                                     <div class="col-xxl-12 col-lg-12">
-                                                        <div class="collapse_wrapper dashboard__card style_one bg__white padding-20 radius-10">
+                                                        <div
+                                                            class="collapse_wrapper dashboard__card style_one bg__white padding-20 radius-10">
                                                             <div class="collapse_wrapper__header mb-3">
-                                                                <h5 class="collapse_wrapper__header__title">Meta Section</h5>
+                                                                <h5 class="collapse_wrapper__header__title">Meta Section
+                                                                </h5>
                                                             </div>
                                                             <div class="tab_wrapper style_seven">
                                                                 <nav>
-                                                                    <div class="nav nav-tabs flex-nowrap" id="nav-tab8" role="tablist">
+                                                                    <div class="nav nav-tabs flex-nowrap" id="nav-tab8"
+                                                                        role="tablist">
                                                                         <a class="nav-link active" id="nav-21-tab"
                                                                             data-bs-toggle="tab" href="#blog_meta"
                                                                             role="tab" aria-controls="nav-21"
@@ -478,32 +501,46 @@
                                                                     <div class="tab-pane fade show active" id="blog_meta"
                                                                         role="tabpanel" aria-labelledby="nav-21-tab">
                                                                         <div class="form__input__single">
-                                                                            <label for="meta_title" class="form__input__single__label">Meta Title</label><br>
-                                                                            <input type="text" class="form__control" name="meta_title"
-                                                                                id="meta_title" value="{{ old('meta_title') }}" placeholder="Title">
+                                                                            <label for="meta_title"
+                                                                                class="form__input__single__label">Meta
+                                                                                Title</label><br>
+                                                                            <input type="text" class="form__control"
+                                                                                name="meta_title" id="meta_title"
+                                                                                value="{{ old('meta_title') }}"
+                                                                                placeholder="Title">
                                                                         </div>
                                                                         <div class="form__input__single">
-                                                                            <label for="meta_tags" class="form__input__single__label">Meta Tags</label>
-                                                                            <input type="text" class="form__control" name="meta_tags"
-                                                                                id="meta_tags" value="{{ old('meta_tags') }}"
+                                                                            <label for="meta_tags"
+                                                                                class="form__input__single__label">Meta
+                                                                                Tags</label>
+                                                                            <input type="text" class="form__control"
+                                                                                name="meta_tags" id="meta_tags"
+                                                                                value="{{ old('meta_tags') }}"
                                                                                 data-role="tagsinput" placeholder="Tag">
                                                                         </div>
                                                                         <div class="form__input__single">
-                                                                            <label for="meta_description" class="form__input__single__label">Meta Description</label>
+                                                                            <label for="meta_description"
+                                                                                class="form__input__single__label">Meta
+                                                                                Description</label>
                                                                             <textarea class="form__control" name="meta_description" cols="30" rows="10">{{ old('meta_description') }}</textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="tab-pane fade" id="facebook_meta"
                                                                         role="tabpanel" aria-labelledby="nav-22-tab">
                                                                         <div class="form__input__single">
-                                                                            <label class="form__input__single__label">Facebook Meta Title</label>
+                                                                            <label
+                                                                                class="form__input__single__label">Facebook
+                                                                                Meta Title</label>
                                                                             <input type="text" class="form__control"
-                                                                                data-role="tagsinput" name="facebook_meta_tags"
+                                                                                data-role="tagsinput"
+                                                                                name="facebook_meta_tags"
                                                                                 value="{{ old('facebook_meta_tags') }}">
                                                                         </div>
                                                                         <div class="row">
                                                                             <div class="form__input__single col-md-12">
-                                                                                <label class="form__input__single__label">Facebook Meta Description</label>
+                                                                                <label
+                                                                                    class="form__input__single__label">Facebook
+                                                                                    Meta Description</label>
                                                                                 <textarea name="facebook_meta_description" class="form__control max-height-140" cols="20" rows="4">{{ old('facebook_meta_description') }}</textarea>
                                                                             </div>
                                                                         </div>
@@ -511,9 +548,12 @@
                                                                     <div class="tab-pane fade" id="twitter_meta"
                                                                         role="tabpanel" aria-labelledby="nav-22-tab">
                                                                         <div class="form__input__single">
-                                                                            <label class="form__input__single__label">Twitter Meta Title</label>
+                                                                            <label
+                                                                                class="form__input__single__label">Twitter
+                                                                                Meta Title</label>
                                                                             <input type="text" class="form__control"
-                                                                                data-role="tagsinput" name="twitter_meta_tags"
+                                                                                data-role="tagsinput"
+                                                                                name="twitter_meta_tags"
                                                                                 value="{{ old('twitter_meta_tags') }}">
                                                                         </div>
                                                                         <div class="row">
@@ -532,37 +572,48 @@
 
                                             <!-- Guest User Info (shown when not logged in) -->
                                             @guest
-                                            <div class="box-shadow1 hode-phone-number p-24 mt-3">
-                                                <label>User Information</label>
-                                                <div class="mt-3">
-                                                    <label for="guest_first_name" class="infoTitle">First Name <span class="text-danger">*</span></label>
-                                                    <input type="text" class="input-filed w-100" name="guest_first_name"
-                                                        id="guest_first_name" value="{{ old('guest_first_name') }}" placeholder="First Name">
+                                                <div class="box-shadow1 hode-phone-number p-24 mt-3">
+                                                    <label>User Information</label>
+                                                    <div class="mt-3">
+                                                        <label for="guest_first_name" class="infoTitle">First Name <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" class="input-filed w-100"
+                                                            name="guest_first_name" id="guest_first_name"
+                                                            value="{{ old('guest_first_name') }}" placeholder="First Name">
+                                                    </div>
+                                                    <div class="mt-3">
+                                                        <label for="guest_last_name" class="infoTitle">Last Name <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" class="input-filed w-100"
+                                                            name="guest_last_name" id="guest_last_name"
+                                                            value="{{ old('guest_last_name') }}" placeholder="Last Name">
+                                                    </div>
+                                                    <div class="mt-3">
+                                                        <label for="guest_email" class="infoTitle">Email <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="email" class="input-filed w-100" name="guest_email"
+                                                            id="guest_email" value="{{ old('guest_email') }}"
+                                                            placeholder="Email">
+                                                    </div>
+                                                    <div class="mt-3">
+                                                        <label for="guest_phone" class="infoTitle">Phone Number <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="tel" class="input-filed w-100" name="guest_phone"
+                                                            id="guest_phone" value="{{ old('guest_phone') }}"
+                                                            placeholder="Phone">
+                                                    </div>
+                                                    <div id="guest_error_message" class="d-flex flex-column gap-2 mt-2 mb-2">
+                                                    </div>
+                                                    <div class="feature">
+                                                        <label>
+                                                            <input type="checkbox" name="guest_register_request"
+                                                                id="guest_register_request" value="1"
+                                                                class="custom-check-box">
+                                                            <span class="ms-2 title-para text-primary">I confirm the above info
+                                                                and am excited to register!</span>
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                                <div class="mt-3">
-                                                    <label for="guest_last_name" class="infoTitle">Last Name <span class="text-danger">*</span></label>
-                                                    <input type="text" class="input-filed w-100" name="guest_last_name"
-                                                        id="guest_last_name" value="{{ old('guest_last_name') }}" placeholder="Last Name">
-                                                </div>
-                                                <div class="mt-3">
-                                                    <label for="guest_email" class="infoTitle">Email <span class="text-danger">*</span></label>
-                                                    <input type="email" class="input-filed w-100" name="guest_email"
-                                                        id="guest_email" value="{{ old('guest_email') }}" placeholder="Email">
-                                                </div>
-                                                <div class="mt-3">
-                                                    <label for="guest_phone" class="infoTitle">Phone Number <span class="text-danger">*</span></label>
-                                                    <input type="tel" class="input-filed w-100" name="guest_phone"
-                                                        id="guest_phone" value="{{ old('guest_phone') }}" placeholder="Phone">
-                                                </div>
-                                                <div id="guest_error_message" class="d-flex flex-column gap-2 mt-2 mb-2"></div>
-                                                <div class="feature">
-                                                    <label>
-                                                        <input type="checkbox" name="guest_register_request"
-                                                            id="guest_register_request" value="1" class="custom-check-box">
-                                                        <span class="ms-2 title-para text-primary">I confirm the above info and am excited to register!</span>
-                                                    </label>
-                                                </div>
-                                            </div>
                                             @endguest
 
                                             <!-- Terms and Conditions -->
@@ -581,8 +632,10 @@
                                             <!-- Previous / Submit -->
                                             <div class="continue-btn mt-3">
                                                 <div class="btn-wrapper mb-10 d-flex justify-content-end gap-3">
-                                                    <button class="red-btn w-100 d-block" id="prevBtn" type="button">Previous</button>
-                                                    <button class="red-btn w-100 d-block" id="submitBtn" type="submit">Submit Listing</button>
+                                                    <button class="red-btn w-100 d-block" id="prevBtn"
+                                                        type="button">Previous</button>
+                                                    <button class="red-btn w-100 d-block" id="submitBtn"
+                                                        type="submit">Submit Listing</button>
                                                 </div>
                                             </div>
 
@@ -678,10 +731,13 @@
                 subSubcategorySelect.html('<option value="">Select Sub Subcategory</option>');
 
                 if (parentId) {
-                    $.get("{{ route('ad.subcategories') }}", { parent_id: parentId }, function(data) {
+                    $.get("{{ route('ad.subcategories') }}", {
+                        parent_id: parentId
+                    }, function(data) {
                         if (data.length > 0) {
                             data.forEach(function(item) {
-                                subcategorySelect.append(`<option value="${item.id}">${item.title}</option>`);
+                                subcategorySelect.append(
+                                    `<option value="${item.id}">${item.title}</option>`);
                             });
                             subcategoryWrapper.show();
                         }
@@ -697,10 +753,13 @@
                 subSubcategorySelect.html('<option value="">Select Sub Subcategory</option>');
 
                 if (parentId) {
-                    $.get("{{ route('ad.subcategories') }}", { parent_id: parentId }, function(data) {
+                    $.get("{{ route('ad.subcategories') }}", {
+                        parent_id: parentId
+                    }, function(data) {
                         if (data.length > 0) {
                             data.forEach(function(item) {
-                                subSubcategorySelect.append(`<option value="${item.id}">${item.title}</option>`);
+                                subSubcategorySelect.append(
+                                    `<option value="${item.id}">${item.title}</option>`);
                             });
                             subSubcategoryWrapper.show();
                         }
@@ -717,37 +776,45 @@
             // Load Custom Fields by Category
             // ============================================
             function loadCustomFields(categoryId) {
-                $.get("{{ route('ad.custom.fields') }}", { category_id: categoryId }, function(fields) {
+                $.get("{{ route('ad.custom.fields') }}", {
+                    category_id: categoryId
+                }, function(fields) {
                     let html = '';
                     if (fields.length > 0) {
                         html += '<h6 class="mt-3 mb-2">Additional Information</h6>';
                         html += '<div class="row g-3">';
                         fields.forEach(function(field) {
                             const required = field.is_required == 1 ? 'required' : '';
-                            const requiredStar = field.is_required == 1 ? '<span class="text-danger">*</span>' : '';
+                            const requiredStar = field.is_required == 1 ?
+                                '<span class="text-danger">*</span>' : '';
 
                             html += '<div class="col-sm-6 custom-field-group">';
                             html += `<label>${field.title} ${requiredStar}</label>`;
 
                             switch (parseInt(field.type)) {
                                 case {{ config('settings.input_types.text') }}:
-                                    html += `<input type="text" name="custom_field[${field.id}]" class="input-filed w-100" value="${field.default_value || ''}" ${required}>`;
+                                    html +=
+                                        `<input type="text" name="custom_field[${field.id}]" class="input-filed w-100" value="${field.default_value || ''}" ${required}>`;
                                     break;
                                 case {{ config('settings.input_types.number') }}:
-                                    html += `<input type="number" name="custom_field[${field.id}]" class="input-filed w-100" value="${field.default_value || ''}" ${required}>`;
+                                    html +=
+                                        `<input type="number" name="custom_field[${field.id}]" class="input-filed w-100" value="${field.default_value || ''}" ${required}>`;
                                     break;
                                 case {{ config('settings.input_types.select') }}:
-                                    html += `<select name="custom_field[${field.id}]" class="input-filed w-100" ${required}>`;
+                                    html +=
+                                        `<select name="custom_field[${field.id}]" class="input-filed w-100" ${required}>`;
                                     html += '<option value="">Select</option>';
                                     if (field.options) {
                                         field.options.forEach(function(opt) {
-                                            html += `<option value="${opt.id}">${opt.value}</option>`;
+                                            html +=
+                                                `<option value="${opt.id}">${opt.value}</option>`;
                                         });
                                     }
                                     html += '</select>';
                                     break;
                                 case {{ config('settings.input_types.text_area') }}:
-                                    html += `<textarea name="custom_field[${field.id}]" class="input-filed w-100" rows="3" ${required}>${field.default_value || ''}</textarea>`;
+                                    html +=
+                                        `<textarea name="custom_field[${field.id}]" class="input-filed w-100" rows="3" ${required}>${field.default_value || ''}</textarea>`;
                                     break;
                                 case {{ config('settings.input_types.checkbox') }}:
                                     if (field.options) {
@@ -770,10 +837,12 @@
                                     }
                                     break;
                                 case {{ config('settings.input_types.file') }}:
-                                    html += `<input type="file" name="customfile_${field.id}" class="input-filed w-100" ${required}>`;
+                                    html +=
+                                        `<input type="file" name="customfile_${field.id}" class="input-filed w-100" ${required}>`;
                                     break;
                                 case {{ config('settings.input_types.date') }}:
-                                    html += `<input type="date" name="custom_field[${field.id}]" class="input-filed w-100" value="${field.default_value || ''}" ${required}>`;
+                                    html +=
+                                        `<input type="date" name="custom_field[${field.id}]" class="input-filed w-100" value="${field.default_value || ''}" ${required}>`;
                                     break;
                             }
 
@@ -813,7 +882,8 @@
                 // Basic validation before moving to next step
                 const title = $('#title').val();
                 const category = $('#final-category').val();
-                const description = $('#description').val() || ($('.summernote').length ? $('.summernote').summernote('code') : '');
+                const description = $('#description').val() || ($('.summernote').length ? $('.summernote')
+                    .summernote('code') : '');
                 const price = $('#price').val();
 
                 if (!title) {
@@ -833,13 +903,19 @@
 
                 currentTab = 1;
                 showTab(currentTab);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
 
             $('#prevBtn').on('click', function() {
                 currentTab = 0;
                 showTab(currentTab);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
 
             // ============================================
@@ -850,7 +926,9 @@
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = function(ev) {
-                        $('#thumbnail-preview').html(`<img src="${ev.target.result}" style="max-width:200px;max-height:200px;border-radius:6px;object-fit:cover;">`);
+                        $('#thumbnail-preview').html(
+                            `<img src="${ev.target.result}" style="max-width:200px;max-height:200px;border-radius:6px;object-fit:cover;">`
+                            );
                     };
                     reader.readAsDataURL(file);
                 }
@@ -862,7 +940,9 @@
                 Array.from(e.target.files).forEach(function(file) {
                     const reader = new FileReader();
                     reader.onload = function(ev) {
-                        preview.append(`<img src="${ev.target.result}" style="width:80px;height:80px;border-radius:6px;object-fit:cover;">`);
+                        preview.append(
+                            `<img src="${ev.target.result}" style="width:80px;height:80px;border-radius:6px;object-fit:cover;">`
+                            );
                     };
                     reader.readAsDataURL(file);
                 });
