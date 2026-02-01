@@ -25,7 +25,7 @@ class LocationRepository
     /**
      * Wll return countries 
      */
-    public function countryList($request, $status = [1, 2])
+    public function countryList($request, $status = [1, 0])
     {
         $query = Country::query();
         if ($request->has('search_key')) {
@@ -51,7 +51,7 @@ class LocationRepository
             $country = new Country();
             $country->name = $data['name'];
             $country->code = $data['code'];
-            $country->status = config('settings.general_status.active');
+            $country->status = $data['status'];
             $country->save();
             return true;
         } catch (\Exception $e) {
@@ -81,6 +81,7 @@ class LocationRepository
             $country = Country::findOrFail($request['id']);
             $country->name = $request['name'];
             $country->code = $request['code'];
+            $country->status = $request['status'];
             $country->save();
 
             DB::commit();

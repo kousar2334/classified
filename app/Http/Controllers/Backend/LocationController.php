@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CountryRequest;
 use Illuminate\Http\RedirectResponse;
 use App\Repository\LocationRepository;
+use BeyondCode\QueryDetector\Outputs\Json;
 
 class LocationController extends Controller
 {
@@ -20,7 +21,7 @@ class LocationController extends Controller
      */
     public function countries(Request $request): View
     {
-        $countries = $this->location_repository->countryList($request);
+        $countries = $this->location_repository->countryList($request, [1, 0]);
         return view('backend.modules.location.countries.list', ['countries' => $countries]);
     }
     /**
@@ -33,43 +34,52 @@ class LocationController extends Controller
     /**
      * Will store new country
      */
-    public function storeNewCountry(CountryRequest $request): RedirectResponse
+    public function storeNewCountry(CountryRequest $request): JsonResponse
     {
         $res = $this->location_repository->storeCountryData($request->validated());
 
         if ($res) {
-            toastNotification('success', 'Country added successfully', 'Success');
-        } else {
-            toastNotification('error', 'Country added failed', 'Error');
+            return response()->json([
+                'success' => true,
+                'message' => translation('Country added successfully'),
+            ]);
         }
-        return to_route('classified.locations.country.list');
+
+        return response()->json([
+            'success' => false,
+            'message' => translation('Country added failed'),
+        ]);
     }
     /**
      * Will redirect edit country page
      *
      */
-    public function editCountry($id): View
+    public function editCountry(Request $request): JsonResponse
     {
-        return view('backend.modules.location.countries.edit')->with(
-            [
-                'countryDetails' => $this->location_repository->countryDetails($id)
-            ]
-        );
+        $country = $this->location_repository->countryDetails($request->id);
+        return response()->json([
+            'success' => true,
+            'html' => view('backend.modules.location.countries.edit', ['country' => $country])->render(),
+        ]);
     }
     /**
      * Will update country
      * 
      */
-    public function updateCountry(CountryRequest $request): RedirectResponse
+    public function updateCountry(CountryRequest $request): JsonResponse
     {
         $res = $this->location_repository->updateCountry($request);
         if ($res == true) {
-            toastNotification('success', translation('Country updated successfully'), 'Success');
-            return redirect()->route('classified.locations.country.edit', ['id' => $request['id'], 'lang' => $request['lang']]);
-        } else {
-            toastNotification('error', translation('Country update failed'), 'Failed');
-            return redirect()->back();
+            return response()->json([
+                'success' => true,
+                'message' => translation('Country updated successfully'),
+            ]);
         }
+
+        return response()->json([
+            'success' => false,
+            'message' => translation('Country update failed'),
+        ]);
     }
     /**
      * Will delete a country

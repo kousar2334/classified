@@ -302,13 +302,10 @@ Route::prefix('admin')->group(function () {
             //Country
             Route::group(['prefix' => 'country'], function () {
                 Route::get('', [LocationController::class, 'countries'])->name('classified.locations.country.list');
-                Route::get('add/new', [LocationController::class, 'addNewCountry'])->name('classified.locations.country.add')->middleware(['can:Create Countries']);
-                Route::post('store/new', [LocationController::class, 'storeNewCountry'])->name('classified.locations.country.store')->middleware(['can:Create Countries', 'demo']);
-                Route::get('edit/{id}', [LocationController::class, 'editCountry'])->name('classified.locations.country.edit')->middleware(['can:Edit Countries']);
-                Route::post('update', [LocationController::class, 'updateCountry'])->name('classified.locations.country.update')->middleware(['can:Edit Countries', 'demo']);
-                Route::post('delete', [LocationController::class, 'deleteCountry'])->name('classified.locations.country.delete')->middleware(['can:Delete Countries', 'demo']);
-                Route::post('bulk-action', [LocationController::class, 'countryBulkActions'])->name('classified.locations.country.bulk.action')->middleware(['can:Manage Countries', 'demo']);
-                Route::post('status/update', [LocationController::class, 'countryStatusChange'])->name('classified.locations.country..status.update')->middleware(['can:Edit Countries', 'demo']);
+                Route::post('store/new', [LocationController::class, 'storeNewCountry'])->name('classified.locations.country.store');
+                Route::post('edit', [LocationController::class, 'editCountry'])->name('classified.locations.country.edit');
+                Route::post('update', [LocationController::class, 'updateCountry'])->name('classified.locations.country.update');
+                Route::post('delete', [LocationController::class, 'deleteCountry'])->name('classified.locations.country.delete');
             });
             //States
             Route::group(['prefix' => 'state'], function () {
