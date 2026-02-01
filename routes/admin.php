@@ -309,14 +309,11 @@ Route::prefix('admin')->group(function () {
             });
             //States
             Route::group(['prefix' => 'state'], function () {
-                Route::get('', [LocationController::class, 'states'])->name('classified.locations.state.list')->middleware('can:Manage States');
-                Route::get('add/new', [LocationController::class, 'addNewState'])->name('classified.locations.state.add')->middleware(['can:Create States']);
-                Route::post('store/new', [LocationController::class, 'storeNewState'])->name('classified.locations.state.store')->middleware(['can:Create States', 'demo']);
-                Route::get('edit/{id}', [LocationController::class, 'editState'])->name('classified.locations.state.edit')->middleware(['can:Edit States']);
-                Route::post('update', [LocationController::class, 'updateState'])->name('classified.locations.state.update')->middleware(['can:Edit States', 'demo']);
-                Route::post('delete', [LocationController::class, 'deleteState'])->name('classified.locations.state.delete')->middleware(['can:Delete States', 'demo']);
-                Route::post('bulk-action', [LocationController::class, 'stateBulkActions'])->name('classified.locations.state.bulk.action')->middleware(['can:Manage States', 'demo']);
-                Route::post('status/update', [LocationController::class, 'stateStatusChange'])->name('classified.locations.state.status.update')->middleware(['can:Edit States', 'demo']);
+                Route::get('', [LocationController::class, 'states'])->name('classified.locations.state.list');
+                Route::post('store/new', [LocationController::class, 'storeNewState'])->name('classified.locations.state.store');
+                Route::post('edit', [LocationController::class, 'editState'])->name('classified.locations.state.edit');
+                Route::post('update', [LocationController::class, 'updateState'])->name('classified.locations.state.update');
+                Route::post('delete', [LocationController::class, 'deleteState'])->name('classified.locations.state.delete');
             });
             //Cities
             Route::group(['prefix' => 'city'], function () {

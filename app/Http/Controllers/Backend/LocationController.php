@@ -132,110 +132,82 @@ class LocationController extends Controller
     {
         return view('backend.modules.location.states.list')->with(
             [
-                'states' => $this->location_repository->statesList($request)
+                'states' => $this->location_repository->statesList($request, [1, 0]),
+                'countries' => $this->location_repository->countries([config('settings.general_status.active')])
             ]
         );
     }
 
-    /**
-     * Will redirect new state form page
-     */
-    public function addNewState(): View
-    {
-        return view('backend.modules.location.states.new')->with(
-            [
-                'countries' => $this->location_repository->countries()
-            ]
-        );
-    }
 
     /**
      * Store new state
      */
-    public function storeNewState(StateRequest $request): RedirectResponse
+    public function storeNewState(StateRequest $request): JsonResponse
     {
         $res = $this->location_repository->storeState($request->validated());
         if ($res == true) {
-            toastNotification('success', translation('State added successfully'), 'Success');
-            return redirect()->route('classified.locations.state.list');
+            return response()->json([
+                'success' => true,
+                'message' => translation('State added successfully'),
+            ]);
         } else {
-            toastNotification('error', translation('Action failed'), 'Failed');
-            return redirect()->back();
+            return response()->json([
+                'success' => false,
+                'message' => translation('Action failed'),
+            ]);
         }
     }
 
     /**
      * Will delete a store
      */
-    public function deleteState(Request $request): RedirectResponse
+    public function deleteState(Request $request): JsonResponse
     {
         $res = $this->location_repository->deleteState($request->id);
         if ($res == true) {
-            toastNotification('success', translation('State deleted successfully'), 'Success');
-            return redirect()->route('classified.locations.state.list');
-        } else {
-            toastNotification('error', translation('Action failed'), 'Failed');
-            return redirect()->back();
+            return response()->json([
+                'success' => true,
+                'message' => translation('State deleted successfully'),
+            ]);
         }
+        return response()->json([
+            'success' => false,
+            'message' => translation('Action failed'),
+        ]);
     }
 
     /**
-     * Will change state status
-     */
-    public function stateStatusChange(Request $request): JsonResponse
-    {
-        $res = $this->location_repository->changeStateStatus($request->id);
-        if ($res == true) {
-            toastNotification('success', translation('Status updated successfully'), 'Success');
-            return response()->json([
-                'success' => true
-            ]);
-        } else {
-            toastNotification('error', translation('Action failed'), 'Failed');
-            return response()->json([
-                'success' => false
-            ]);
-        }
-    }
-    /**
      * Will redirect state edit page
      */
-    public function editState($id): View
+    public function editState(Request $request): JsonResponse
     {
-        return view('backend.modules.location.states.edit')->with(
-            [
+        return response()->json([
+            'success' => true,
+            'html' => view('backend.modules.location.states.edit', [
                 'countries' => $this->location_repository->countries(),
-                'stateDetails' => $this->location_repository->stateDetails($id)
-            ]
-        );
+                'state' => $this->location_repository->stateDetails($request->id)
+            ])->render()
+
+        ]);
     }
     /**
      * will update state
      */
-    public function updateState(StateRequest $request): RedirectResponse
+    public function updateState(StateRequest $request): JsonResponse
     {
         $res = $this->location_repository->updateState($request);
         if ($res == true) {
-            toastNotification('success', translation('State updated successfully'), 'Success');
-            return redirect()->route('classified.locations.state.edit', ['id' => $request['id'], 'lang' => $request['lang']]);
+            return response()->json([
+                'success' => true,
+                'message' => translation('State updated successfully'),
+            ]);
         } else {
-            toastNotification('error', translation('Action failed'), 'Failed');
-            return redirect()->back();
+            return response()->json([
+                'success' => false,
+                'message' => translation('Action failed'),
+            ]);
         }
     }
-    /**
-     * Will fire states bulk actions
-     */
-    public function stateBulkActions(Request $request): JsonResponse
-    {
-        $res = $this->location_repository->statesBulkAction($request);
-        return response()->json(
-            [
-                'success' => $res,
-            ]
-        );
-    }
-
 
     /**
      * Will return cities list

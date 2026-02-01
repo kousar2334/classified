@@ -192,7 +192,7 @@ class LocationRepository
      * 
      * @return collections
      */
-    public function statesList($request, $status = [1, 2])
+    public function statesList($request, $status = [1, 0])
     {
         $query = State::with('country');
 
@@ -228,13 +228,13 @@ class LocationRepository
             $state = new State;
             $state->name = $request['name'];
             $state->country_id = $request['country'];
-            $state->code = $request['code'];
-            $state->status = config('settings.general_status.active');
+            $state->status = $request['status'];
             $state->save();
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollBack();
+            dd($e->getMessage());
             return false;
         } catch (\Error $e) {
             DB::rollBack();
@@ -309,8 +309,8 @@ class LocationRepository
             DB::beginTransaction();
             $state = State::findOrFail($request['id']);
             $state->name = $request['name'];
-            $state->code = $request['code'];
             $state->country_id = $request['country'];
+            $state->status = $request['status'];
             $state->save();
 
             DB::commit();
