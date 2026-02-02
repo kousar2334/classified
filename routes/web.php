@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Frontend\AdController;
-use App\Http\Controllers\Frontend\MemberAuthController;
-use App\Http\Controllers\Frontend\PageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\AdController;
+use App\Http\Controllers\Frontend\PageController;
+use App\Http\Controllers\Frontend\LocationController;
+use App\Http\Controllers\Frontend\MemberAuthController;
 
 Route::get('/', [PageController::class, 'homePage'])->name('home');
 
@@ -31,5 +32,9 @@ Route::get('/ad/custom-fields', [AdController::class, 'getCustomFields'])->name(
 Route::get('listings/{category_slug?}', [AdController::class, 'adListingPage'])->name('ad.listing.page');
 Route::get('/ad/details/{slug}', [AdController::class, 'adDetailsPage'])->name('ad.details.page');
 Route::post('/ad/details/{slug}', [AdController::class, 'adDetailsPage'])->name('ad.details.page');
+
+//Location Routes
+Route::get('/state/list', [LocationController::class, 'stateListofCountry'])->name('location.country.states.options');
+Route::get('/city/list', [LocationController::class, 'cityListofState'])->name('location.state.cities.options');
 
 require __DIR__ . '/admin.php';

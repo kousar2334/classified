@@ -26,7 +26,8 @@ class StateRequest extends FormRequest
         return [
             'name' => 'required|max:250',
             'code' => 'nullable|max:250',
-            'country' => 'required|exists:tl_countries,id',
+            'country' => 'required|exists:countries,id',
+            'status' => 'required|in:0,1'
         ];
     }
     /**

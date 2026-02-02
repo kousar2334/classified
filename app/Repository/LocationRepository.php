@@ -25,7 +25,7 @@ class LocationRepository
     /**
      * Wll return countries 
      */
-    public function countryList($request, $status = [1, 2])
+    public function countryList($request, $status = [1, 0])
     {
         $query = Country::query();
         if ($request->has('search_key')) {
@@ -51,7 +51,7 @@ class LocationRepository
             $country = new Country();
             $country->name = $data['name'];
             $country->code = $data['code'];
-            $country->status = config('settings.general_status.active');
+            $country->status = $data['status'];
             $country->save();
             return true;
         } catch (\Exception $e) {
@@ -81,6 +81,7 @@ class LocationRepository
             $country = Country::findOrFail($request['id']);
             $country->name = $request['name'];
             $country->code = $request['code'];
+            $country->status = $request['status'];
             $country->save();
 
             DB::commit();
@@ -191,7 +192,7 @@ class LocationRepository
      * 
      * @return collections
      */
-    public function statesList($request, $status = [1, 2])
+    public function statesList($request, $status = [1, 0])
     {
         $query = State::with('country');
 
@@ -227,8 +228,7 @@ class LocationRepository
             $state = new State;
             $state->name = $request['name'];
             $state->country_id = $request['country'];
-            $state->code = $request['code'];
-            $state->status = config('settings.general_status.active');
+            $state->status = $request['status'];
             $state->save();
             DB::commit();
             return true;
@@ -263,30 +263,6 @@ class LocationRepository
         }
     }
     /**
-     * Change state status
-     * 
-     * @param Int $id
-     * @return bool
-     */
-    public function changeStateStatus($id)
-    {
-        try {
-            DB::beginTransaction();
-            $state = State::findOrFail($id);
-            $status = $state->status == config('settings.general_status.active') ? config('settings.general_status.in_active') : config('settings.general_status.active');
-            $state->status = $status;
-            $state->save();
-            DB::commit();
-            return true;
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return false;
-        } catch (\Error $e) {
-            DB::rollBack();
-            return false;
-        }
-    }
-    /**
      * will return state details
      * 
      * @param Int $id
@@ -308,8 +284,8 @@ class LocationRepository
             DB::beginTransaction();
             $state = State::findOrFail($request['id']);
             $state->name = $request['name'];
-            $state->code = $request['code'];
             $state->country_id = $request['country'];
+            $state->status = $request['status'];
             $state->save();
 
             DB::commit();
@@ -322,54 +298,12 @@ class LocationRepository
             return false;
         }
     }
-    /**
-     * Will applied states bulk action
-     * 
-     * @param Request $request
-     * @return bool
-     */
-    public function statesBulkAction($request)
+
+    public function statesByCountry($country_id = null)
     {
-        try {
-            DB::beginTransaction();
-
-            //Active States status
-            if ($request['action'] == 'active') {
-                $status = config('settings.general_status.active');
-                State::whereIn('id', $request['items'])
-                    ->update(
-                        [
-                            'status' => $status
-                        ]
-                    );
-            }
-            //Inactive States status
-            if ($request['action'] == 'in_active') {
-                $status = config('settings.general_status.in_active');
-                State::whereIn('id', $request['items'])
-                    ->update(
-                        [
-                            'status' => $status
-                        ]
-                    );
-            }
-
-            //Delete selected sates
-            if ($request['action'] == 'delete_all') {
-                $status = config('settings.general_status.in_active');
-                State::whereIn('id', $request['items'])
-                    ->delete();
-            }
-
-            DB::commit();
-            return true;
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return false;
-        } catch (\Error $e) {
-            DB::rollBack();
-            return false;
-        }
+        return State::when($country_id, function ($query) use ($country_id) {
+            $query->where('country_id', $country_id);
+        })->where('status', config('settings.general_status.active'))->orderBy('name', 'ASC')->get();
     }
 
     /**
@@ -386,7 +320,7 @@ class LocationRepository
      * 
      * @return Collections
      */
-    public function citiesList($request, $status = [1, 2])
+    public function citiesList($request, $status = [1, 0])
     {
         $query = City::with('state');
         if ($request->has('search_key')) {
@@ -412,7 +346,7 @@ class LocationRepository
             DB::beginTransaction();
             $city = new City;
             $city->name = $request['name'];
-            $city->state_id = $request['state'];
+            $city->state_id = $request['state_id'];
             $city->status = config('settings.general_status.active');
             $city->save();
             DB::commit();
@@ -487,7 +421,8 @@ class LocationRepository
             DB::beginTransaction();
             $city = City::findOrFail($request['id']);
             $city->name = $request['name'];
-            $city->state_id = $request['state'];
+            $city->state_id = $request['state_id'];
+            $city->status = $request['status'];
             $city->save();
             DB::commit();
             return true;

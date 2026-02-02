@@ -26,6 +26,7 @@ class CountryRequest extends FormRequest
         return [
             'name' => 'required|max:250',
             'code' => 'required|max:250',
+            'status' => 'required|in:0,1'
         ];
     }
     /**

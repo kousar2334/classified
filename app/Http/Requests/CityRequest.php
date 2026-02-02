@@ -25,7 +25,8 @@ class CityRequest extends FormRequest
     {
         return [
             'name' => 'required|max:250',
-            'state' => 'required|exists:tl_states,id',
+            'state_id' => 'required|exists:states,id',
+            'status' => 'required|in:0,1'
         ];
     }
     /**

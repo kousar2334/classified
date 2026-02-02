@@ -1,246 +1,344 @@
+@php
+    $links = [
+        [
+            'title' => 'Locations',
+            'route' => '',
+            'active' => true,
+        ],
+        [
+            'title' => 'states',
+            'route' => route('classified.locations.state.list'),
+            'active' => true,
+        ],
+    ];
+@endphp
 @extends('backend.layouts.dashboard_layout')
-@section('title')
-    {{ translation('States') }}
-@endsection
-@section('page-style')
+
+@section('page-title')
+    States
 @endsection
 @section('page-content')
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-30">
-                <div class="card-body border-bottom2 mb-20">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="font-20">{{ translation('States') }}</h4>
-                        <div class="d-flex flex-wrap">
-                            @if (auth()->user()->can('Create States'))
-                                <a href="{{ route('classified.locations.state.add') }}"
-                                    class="btn long">{{ translation('Add New State') }}
-                                </a>
+    <x-admin-page-header title="States" :links="$links" />
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ translation('States') }}</h3>
+                            <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
+                                data-target="#create-item-modal">{{ translation('Create New State') }}
+                            </button>
+                        </div>
+                        <div class="card-body p-0">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>{{ translation('#') }}</th>
+                                        <th>{{ translation('Name') }}</th>
+                                        <th>{{ translation('Country') }}</th>
+                                        <th>{{ translation('Status') }}</th>
+                                        <th class="text-right">{{ translation('Actions') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($states as $key=> $state)
+                                        <tr>
+                                            <td>
+                                                {{ $key + 1 }}
+                                            </td>
+                                            <td>{{ $state->name }}</td>
+                                            <td>{{ $state->country?->name }}</td>
+                                            <td>
+                                                @if ($state->status == config('settings.general_status.active'))
+                                                    <span class="badge badge-success">{{ translation('Active') }}</span>
+                                                @else
+                                                    <span class="badge badge-danger">{{ translation('Inactive') }}</span>
+                                                @endif
+                                            </td>
+                                            <td class="text-right">
+                                                <div class="btn-group">
+                                                    <button type="button"
+                                                        class="btn btn-default">{{ translation('Action') }}
+                                                    </button>
+                                                    <button type="button"
+                                                        class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
+                                                        data-toggle="dropdown" aria-expanded="false">
+                                                    </button>
+                                                    <div class="dropdown-menu" role="menu">
+                                                        <button class="dropdown-item edit-item"
+                                                            data-id="{{ $state->id }}">
+                                                            {{ translation('Edit') }}
+                                                        </button>
+                                                        <div class="dropdown-divider"></div>
+                                                        <button class="dropdown-item delete-item"
+                                                            data-id="{{ $state->id }}">
+                                                            {{ translation('Delete') }}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="10">
+                                                <div class="text-center">{{ translation('No item found') }}</div>
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                            @if ($states->hasPages())
+                                <div class="p-3">
+                                    {{ $states->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5') }}
+                                </div>
                             @endif
                         </div>
                     </div>
                 </div>
-                <div class="px-2 filter-area d-flex align-items-center">
-                    <!--Filter area-->
-                    <form method="get" action="{{ route('classified.locations.state.list') }}">
-                        <select class="form-control mb-2" name="per_page">
-                            <option value="">{{ translation('Per page') }}</option>
-                            <option value="10" @selected(request()->has('per_page') && request()->get('per_page') == '10')>10</option>
-                            <option value="20" @selected(request()->has('per_page') && request()->get('per_page') == '20')>20</option>
-                            <option value="50" @selected(request()->has('per_page') && request()->get('per_page') == '50')>50</option>
-                            <option value="all" @selected(request()->has('per_page') && request()->get('per_page') == 'all')>{{ translation('All') }}</option>
-                        </select>
-                        <input type="text" name="search_key" class="form-control mb-2"
-                            value="{{ request()->has('search_key') ? request()->get('search_key') : '' }}"
-                            placeholder="Enter state name">
-                        <button type="submit" class="btn long">{{ translation('Filter') }}</button>
-                    </form>
+            </div>
+        </div>
+        <!--New  Modal-->
+        <div class="modal fade" id="create-item-modal">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ translation('New state') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="new-state-form">
+                            @csrf
+                            <div class="form-row">
+                                <div class="form-group col-lg-12">
+                                    <label class="black font-14">{{ translation('Name') }}</label>
+                                    <input type="text" name="name" class="form-control"
+                                        placeholder="{{ translation('Enter Name') }}">
+                                </div>
 
-                    @if (request()->has('search_key'))
-                        <a class="btn long btn-danger" href="{{ route('classified.locations.state.list') }}">
-                            {{ translation('Clear Filter') }}
-                        </a>
-                    @endif
-                    <!--End filter area-->
-                    <!--Bulk actions-->
-                    <select class="form-control bulk-action-selection">
-                        <option value="null">{{ translation('Bulk Action') }}</option>
-                        <option value="active">{{ translation('Make Active') }}</option>
-                        <option value="in_active">{{ translation('Make Inactive') }}</option>
-                        <option value="delete_all">{{ translation('Delete selection') }}</option>
-                    </select>
-                    <button class="btn long btn-warning fire-bulk-action">{{ translation('Apply') }}
-                    </button>
-                    <!--End bulk actions-->
+                                <div class="form-group col-lg-12">
+                                    <label class="black font-14">{{ translation('Country') }}</label>
+                                    <select name="country" class="form-control country-select">
+                                        @foreach ($countries as $country)
+                                            <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-lg-12">
+                                    <label class="black font-14">{{ translation('Status') }}</label>
+                                    <select name="status" class="form-control">
+                                        <option value="{{ config('settings.general_status.active') }}">
+                                            {{ translation('Active') }}
+                                        </option>
+                                        <option value="{{ config('settings.general_status.in_active') }}">
+                                            {{ translation('Inactive') }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="btn-area d-flex justify-content-between">
+                                <button class="btn btn-primary mt-2 store-state">{{ translation('Save') }}</button>
+                            </div>
+
+                        </form>
+                    </div>
+
                 </div>
-                <div class="table-responsive">
-                    <table id="state_table" class="hoverable text-nowrap">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <div class="d-flex align-items-center">
-                                        <label class="position-relative">
-                                            <input type="checkbox" name="select_all" class="checked-all-items">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </th>
-                                <th>{{ translation('Name') }}</th>
-                                <th>{{ translation('Code') }}</th>
-                                <th>{{ translation('Country') }}</th>
-                                <th>{{ translation('Status') }}</th>
-                                <th>{{ translation('Actions') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if ($states->count() > 0)
-                                @foreach ($states as $key => $state)
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center mb-3">
-                                                <label class="position-relative mr-2">
-                                                    <input type="checkbox" name="item_id[]" class="item-id"
-                                                        value="{{ $state->id }}">
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>{{ $state->translation('name') }}</td>
-                                        <td class="text-uppercase">{{ $state->code }}</td>
-                                        <td>
-                                            @if ($state->country != null)
-                                                {{ $state->country->translation('name') }}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <label class="switch glow primary medium">
-                                                <input type="checkbox" class="change-status"
-                                                    data-state="{{ $state->id }}" @checked($state->status == config('settings.general_status.active'))>
-                                                <span class="control"></span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <div class="dropdown-button">
-                                                <a href="#" class="d-flex align-items-center justify-content-end"
-                                                    data-toggle="dropdown">
-                                                    <div class="menu-icon mr-0">
-                                                        <span></span>
-                                                        <span></span>
-                                                        <span></span>
-                                                    </div>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    @if (auth()->user()->can('Edit States'))
-                                                        <a
-                                                            href="{{ route('classified.locations.state.edit', ['id' => $state->id, 'lang' => getDefaultLang()]) }}">
-                                                            {{ translation('Edit') }}
-                                                        </a>
-                                                    @endif
-                                                    @if (auth()->user()->can('Delete States'))
-                                                        <a href="#" class="delete-state"
-                                                            data-state="{{ $state->id }}">{{ translation('Delete') }}
-                                                        </a>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="8">
-                                        <p class="alert alert-danger text-center">{{ translation('Nothing found') }}</p>
-                                    </td>
-                                </tr>
-                            @endif
-                        </tbody>
-                    </table>
-                    <div class="pgination px-3">
-                        {!! $states->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5-custom') !!}
+            </div>
+        </div>
+        <!--End New  Modal-->
+        <!-- Edit Modal-->
+        <div class="modal fade" id="edit-item-modal">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ translation('state Information') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body item-edit-content">
+
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
-    <!--Delete Modal-->
-    <div id="delete-modal" class="delete-modal modal fade show" aria-modal="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
-                </div>
-                <div class="modal-body text-center">
-                    <p class="mt-1">{{ translation('Are you sure to delete this') }}?</p>
-                    <form method="POST" action="{{ route('classified.locations.state.delete') }}">
-                        @csrf
-                        <input type="hidden" id="delete-state-id" name="id">
-                        <button type="button" class="btn long btn-danger mt-2"
-                            data-dismiss="modal">{{ translation('Cancel') }}</button>
-                        <button type="submit" class="btn long mt-2">{{ translation('Delete') }}</button>
-                    </form>
+        <!--End  Edit Modal-->
+        <!-- Delete Modal-->
+        <div class="modal fade" id="user-delete-modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete ?') }}</h4>
+                        <form method="POST" action="{{ route('classified.locations.state.delete') }}">
+                            @csrf
+                            <input type="hidden" id="delete-item-id" name="id">
+                            <button type="button" class="btn mt-2 btn-danger"
+                                data-dismiss="modal">{{ translation('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--Delete Modal-->
+        <!--End  Delete Modal-->
+    </section>
 @endsection
 @section('page-script')
+    <script src="{{ asset('/public/web-assets/backend/plugins/select2/js/select2.min.js') }}"></script>
     <script>
         (function($) {
             "use strict";
-            /**
-             * 
-             * Change state status 
-             * 
-             * */
-            $('.change-status').on('click', function(e) {
+            initMediaManager();
+            //Create new 
+            $('#new-state-form').submit(function(e) {
                 e.preventDefault();
-                let $this = $(this);
-                let id = $this.data('state');
-                $.post('{{ route('classified.locations.state.status.update') }}', {
-                    _token: '{{ csrf_token() }}',
-                    id: id
-                }, function(data) {
-                    location.reload();
-                })
-            });
-            /**
-             * 
-             * Delete State
-             * 
-             * */
-            $('.delete-state').on('click', function(e) {
-                e.preventDefault();
-                let $this = $(this);
-                let id = $this.data('state');
-                $("#delete-state-id").val(id);
-                $('#delete-modal').modal('show');
+                $(document).find(".invalid-input").remove();
+                $(document).find(".form-control").removeClass('is-invalid');
+                var formData = new FormData(this);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    },
+                    type: "POST",
+                    data: formData,
+                    url: '{{ route('classified.locations.state.store') }}',
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            toastr.success('New state added successfully', 'Success');
+                            location.reload();
+
+                        } else {
+                            toastr.error(response.message, 'Error')
+                        }
+                    },
+                    error: function(response) {
+                        if (response.status === 422) {
+                            $.each(response.responseJSON.errors, function(field_name,
+                                error) {
+                                $(document).find('[name=' + field_name + ']')
+                                    .addClass('is-invalid');
+                                $(document).find('[name=' + field_name + ']')
+                                    .after(
+                                        '<div class="error text-danger mb-0 invalid-input">' +
+                                        error + '</div>');
+                            })
+                        } else {
+                            toastr.error('state add failed', 'Error')
+                        }
+                    }
+                });
             });
 
-            /**
-             * 
-             * Checked all items
-             **/
-            $('.checked-all-items').on('change', function(e) {
-                if ($('.checked-all-items').is(":checked")) {
-                    $(".item-id").prop("checked", true);
-                } else {
-                    $(".item-id").prop("checked", false);
-                }
-            });
-            /**
-             * 
-             * Bulk action
-             **/
-            $('.fire-bulk-action').on('click', function(e) {
-                let action = $('.bulk-action-selection').val();
-                if (action != 'null') {
-                    var selected_items = [];
-                    $('input[name^="item_id"]:checked').each(function() {
-                        selected_items.push($(this).val());
-                    });
-                    if (selected_items.length > 0) {
-                        $.post('{{ route('classified.locations.state.bulk.action') }}', {
-                            _token: '{{ csrf_token() }}',
-                            items: selected_items,
-                            action: action
-                        }, function(data) {
-                            if (data.success) {
-                                toastr.success('{{ translation('Action Applied Successfully') }}');
-                                location.reload();
-                            }
-                            if (!data.success) {
-                                toastr.error('{{ translation('Action Failed') }}');
-                            }
-                        })
-                    } else {
-                        toastr.error('{{ translation('No Item Selected') }}');
+            //Visible user edit modal
+            $('.edit-item').on('click', function(e) {
+                e.preventDefault();
+                let state_id = $(this).data('id');
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    },
+                    type: "POST",
+                    url: '{{ route('classified.locations.state.edit') }}',
+                    data: {
+                        id: state_id
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('.item-edit-content').html(response.html);
+                            $('#edit-item-modal').modal('show');
+                            initParentSelect();
+                        } else {
+                            toastr.error('state fetch failed', 'Error')
+                        }
+                    },
+                    error: function(response) {
+                        toastr.error('state fetch failed', 'Error')
                     }
-                } else {
-                    toastr.error('{{ translation('No Action Selected') }}');
-                }
+                });
             });
+
+
+            //update state
+            $(document).on('submit', '#editForm', function(e) {
+                e.preventDefault();
+                $(document).find(".invalid-input").remove();
+                $(document).find(".form-control").removeClass('is-invalid');
+                var formData = new FormData(this);
+                $.ajax({
+                    type: "POST",
+                    data: formData,
+                    url: '{{ route('classified.locations.state.update') }}',
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            toastr.success('state updated successfully', 'Success');
+                            location.reload();
+                        } else {
+                            toastr.error(response.message, 'Error');
+                        }
+                    },
+                    error: function(response) {
+                        if (response.status === 422) {
+                            $.each(response.responseJSON.errors, function(field_name,
+                                error) {
+                                $(document).find('[name=' + field_name + ']')
+                                    .addClass('is-invalid');
+                                $(document).find('[name=' + field_name + ']')
+                                    .after(
+                                        '<div class="error text-danger mb-0 invalid-input">' +
+                                        error + '</div>');
+                            })
+                        } else {
+                            toastr.error('state update failed', 'Error')
+                        }
+                    }
+                });
+            });
+
+
+            //Visible user delete modal
+            $('.delete-item').on('click', function(e) {
+                e.preventDefault();
+                let user_id = $(this).data('id');
+                $('#delete-item-id').val(user_id);
+                $('#user-delete-modal').modal('show');
+            });
+
+            function initParentSelect() {
+                $('.parent-options').select2({
+                    theme: "bootstrap4",
+                    placeholder: '{{ translation('Select parent state') }}',
+                    closeOnSelect: true,
+                    width: '100%',
+                    ajax: {
+                        url: '{{ route('classified.ads.categories.options') }}',
+                        dataType: 'json',
+                        method: "GET",
+                        delay: 250,
+                        data: function(params) {
+                            return {
+                                term: params.term || '',
+                                page: params.page || 1
+                            }
+                        },
+                        cache: true
+                    }
+                });
+            }
         })(jQuery);
     </script>
 @endsection
