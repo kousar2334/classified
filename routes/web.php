@@ -25,7 +25,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 //Ad Routes
-Route::get('/post/ad', [AdController::class, 'addPostPage'])->name('ad.post.page');
+Route::get('/post/listing', [AdController::class, 'addPostPage'])->name('ad.post.page');
 Route::post('/post/ad', [AdController::class, 'storeAd'])->name('ad.store');
 Route::get('/ad/subcategories', [AdController::class, 'getSubcategories'])->name('ad.subcategories');
 Route::get('/ad/custom-fields', [AdController::class, 'getCustomFields'])->name('ad.custom.fields');
