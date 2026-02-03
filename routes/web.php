@@ -29,6 +29,9 @@ Route::get('/post/listing', [AdController::class, 'addPostPage'])->name('ad.post
 Route::post('/post/ad', [AdController::class, 'storeAd'])->name('ad.store');
 Route::get('/ad/subcategories', [AdController::class, 'getSubcategories'])->name('ad.subcategories');
 Route::get('/ad/custom-fields', [AdController::class, 'getCustomFields'])->name('ad.custom.fields');
+Route::get('/ad/countries', [AdController::class, 'getCountries'])->name('ad.countries');
+Route::get('/ad/states', [AdController::class, 'getStates'])->name('ad.states');
+Route::get('/ad/cities', [AdController::class, 'getCities'])->name('ad.cities');
 Route::get('listings/{category_slug?}', [AdController::class, 'adListingPage'])->name('ad.listing.page');
 Route::get('/ad/details/{slug}', [AdController::class, 'adDetailsPage'])->name('ad.details.page');
 Route::post('/ad/details/{slug}', [AdController::class, 'adDetailsPage'])->name('ad.details.page');

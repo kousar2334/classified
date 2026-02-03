@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdPostingRequest;
 use App\Models\Ad;
 use App\Models\AdGalleryImage;
 use App\Models\AdHasTag;
@@ -11,6 +12,8 @@ use App\Models\AdsCondition;
 use App\Models\AdsCustomField;
 use App\Models\AdsTag;
 use App\Models\City;
+use App\Models\Country;
+use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -32,22 +35,12 @@ class AdController extends Controller
 
         $conditions = AdsCondition::where('status', config('settings.general_status.active'))->get();
         $tags = AdsTag::orderBy('title', 'ASC')->get();
-        $cities = City::where('status', config('settings.general_status.active'))->get();
 
-        return view('frontend.pages.ad.post-ad', compact('categories', 'conditions', 'tags', 'cities'));
+        return view('frontend.pages.ad.post-ad', compact('categories', 'conditions', 'tags'));
     }
 
-    public function storeAd(Request $request)
+    public function storeAd(AdPostingRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:250',
-            'category' => 'required|integer|exists:ads_categories,id',
-            'description' => 'required|string|min:150',
-            'price' => 'required|numeric|min:0',
-            'contact_email' => 'required|email|max:200',
-            'contact_phone' => 'required|string|max:100',
-            'thumbnail_image' => 'required|image|mimes:jpg,jpeg,png,gif,webp|max:5120',
-        ]);
 
         try {
             DB::beginTransaction();
@@ -57,7 +50,10 @@ class AdController extends Controller
             $ad->title = xss_clean($request->title);
             $ad->description = xss_clean($request->description);
             $ad->category = $request->category;
+            $ad->country = $request->country;
+            $ad->state = $request->state;
             $ad->city = $request->city;
+            $ad->address = xss_clean($request->address);
             $ad->item_condition = $request->condition;
             $ad->price = $request->price;
             $ad->is_negotiable = $request->has('negotiable') ? config('settings.general_status.active') : config('settings.general_status.in_active');
@@ -65,6 +61,7 @@ class AdController extends Controller
             $ad->contact_phone = xss_clean($request->phone);
             $ad->contact_is_hide = $request->has('hide_phone_number') ? config('settings.general_status.active') : config('settings.general_status.in_active');
             $ad->is_featured = $request->has('is_featured') ? config('settings.general_status.active') : config('settings.general_status.in_active');
+            $ad->video_url = $request->video_url;
             $ad->status = config('settings.general_status.active');
             $ad->payment_status = config('settings.general_status.active');
             $ad->cost = 0;
@@ -140,11 +137,30 @@ class AdController extends Controller
 
             DB::commit();
 
+            // Check if it's an AJAX request
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Ad posted successfully!',
+                    'redirect_url' => route('ad.details.page', Str::slug($ad->title) . '/' . $ad->uid)
+                ]);
+            }
+
             return redirect()->route('ad.details.page', Str::slug($ad->title) . '/' . $ad->uid)
                 ->with('success', 'Ad posted successfully!');
 
         } catch (\Exception $e) {
             DB::rollBack();
+
+            // Check if it's an AJAX request
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to post ad. Please try again.',
+                    'error' => $e->getMessage()
+                ], 422);
+            }
+
             return back()->withInput()->with('error', 'Failed to post ad. Please try again. ' . $e->getMessage());
         }
     }
@@ -179,5 +195,55 @@ class AdController extends Controller
     public function adDetailsPage($slug)
     {
         return view('frontend.pages.ad.details', compact('slug'));
+    }
+
+    public function getCountries(Request $request)
+    {
+        $query = Country::where('status', config('settings.general_status.active'));
+
+        // If search term is provided for Select2
+        if ($request->has('search')) {
+            $query->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+
+        $countries = $query->orderBy('name', 'ASC')
+            ->limit(50)
+            ->get(['id', 'name as text']);
+
+        return response()->json($countries);
+    }
+
+    public function getStates(Request $request)
+    {
+        $query = State::where('status', config('settings.general_status.active'))
+            ->where('country_id', $request->country_id);
+
+        // If search term is provided for Select2
+        if ($request->has('search')) {
+            $query->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+
+        $states = $query->orderBy('name', 'ASC')
+            ->limit(50)
+            ->get(['id', 'name as text']);
+
+        return response()->json($states);
+    }
+
+    public function getCities(Request $request)
+    {
+        $query = City::where('status', config('settings.general_status.active'))
+            ->where('state_id', $request->state_id);
+
+        // If search term is provided for Select2
+        if ($request->has('search')) {
+            $query->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+
+        $cities = $query->orderBy('name', 'ASC')
+            ->limit(50)
+            ->get(['id', 'name as text']);
+
+        return response()->json($cities);
     }
 }

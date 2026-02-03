@@ -1,13 +1,9 @@
 @extends('frontend.layouts.master')
 @section('meta')
-    <title>Post ad - {{ get_setting('site_name') }}</title>
+    <title>Post ad 1- {{ get_setting('site_name') }}</title>
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/summernote/summernote-bs4.min.css') }}">
     <style>
-        input#pac-input {
-            background-color: ghostwhite;
-        }
-
         .select2-container .select2-selection--single {
             background-color: var(--white-bg);
             border: 1px solid #e3e3e3;
@@ -15,6 +11,28 @@
             position: relative;
             height: auto;
             padding: 10px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 100%;
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            width: 20px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: #888 transparent transparent transparent;
+            border-style: solid;
+            border-width: 5px 4px 0 4px;
+            height: 0;
+            left: 50%;
+            margin-left: -4px;
+            margin-top: -2px;
+            position: absolute;
+            top: 50%;
+            width: 0;
         }
 
         span.select2.select2-container.select2-container--default.select2-container--focus {
@@ -35,22 +53,6 @@
 
         .swal_delete_button {
             color: #da0000 !important;
-        }
-
-        #pac-input {
-            height: 3em;
-            width: 75%;
-            margin-left: 140px;
-            border: 1px solid;
-            top: 4px;
-            font-size: 16px;
-        }
-
-        @media (max-width: 1499px) {
-            #pac-input {
-                width: 100%;
-                margin-left: 0;
-            }
         }
 
         .select2-container--default .select2-selection--multiple {
@@ -146,6 +148,249 @@
             margin-bottom: 5px;
             display: block;
         }
+
+        .invalid-feedback {
+            display: none;
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: #dc3545;
+        }
+
+        .invalid-feedback.d-block {
+            display: block !important;
+        }
+
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+
+        .is-invalid:focus {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+        }
+
+        .select2-container--default .select2-selection--single.is-invalid,
+        .select2-container--default .select2-selection--multiple.is-invalid {
+            border-color: #dc3545 !important;
+        }
+
+        .box-shadow1 {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .input-filed {
+            border: 1px solid #e3e3e3;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .input-filed:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.1);
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+            color: #333;
+        }
+
+        #form-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        #form-loader.active {
+            display: flex;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border: 0.3em solid #f3f3f3;
+            border-top: 0.3em solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .btn-loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .btn-loading .btn-text {
+            visibility: hidden;
+        }
+
+        .btn-loading::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            left: 50%;
+            margin-left: -8px;
+            margin-top: -8px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.6s linear infinite;
+        }
+
+        .error-message {
+            display: block;
+            padding: 12px 16px;
+            margin-bottom: 15px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .success-message {
+            display: block;
+            padding: 12px 16px;
+            margin-bottom: 15px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        /* Custom File Input Styling */
+        .custom-file-input {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .custom-file-input input[type="file"] {
+            position: absolute;
+            left: -9999px;
+            opacity: 0;
+        }
+
+        .custom-file-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .custom-file-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .custom-file-label i {
+            font-size: 18px;
+        }
+
+        .file-name {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Gallery Image Preview */
+        .gallery-image-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .gallery-image-wrapper img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 2px solid #e3e3e3;
+        }
+
+        .remove-gallery-image {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #dc3545;
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .remove-gallery-image:hover {
+            background: #c82333;
+            transform: scale(1.1);
+        }
+
+        /* Category Breadcrumb Styling */
+        #category-breadcrumb {
+            background: var(--main-color-one);
+            color: white !important;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-block;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #category-breadcrumb:empty {
+            display: none;
+        }
+
+        #category-breadcrumb::before {
+            content: "📁 ";
+            margin-right: 5px;
+        }
     </style>
 @endsection
 @section('content')
@@ -201,9 +446,11 @@
                                                     value="{{ old('title') }}"
                                                     class="input-filed w-100 @error('title') is-invalid @enderror"
                                                     placeholder="Item Name">
-                                                @error('title')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
+                                                <div class="invalid-feedback @error('title') d-block @enderror">
+                                                    @error('title')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
                                             </div>
 
                                             <!-- About Item -->
@@ -211,7 +458,7 @@
                                                 <h3 class="head4">About Item</h3>
                                                 <div class="row g-3 mt-3">
                                                     <!-- Category -->
-                                                    <div class="col-sm-4">
+                                                    <div class="col-12">
                                                         <label for="category">Category <span
                                                                 class="text-danger">*</span></label>
                                                         <select name="" id="select-category"
@@ -222,10 +469,11 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        <div class="invalid-feedback"></div>
                                                     </div>
 
                                                     <!-- Subcategory -->
-                                                    <div class="col-sm-4" id="subcategory-wrapper" style="display:none;">
+                                                    <div class="col-12" id="subcategory-wrapper" style="display:none;">
                                                         <label for="subcategory">Subcategory <span
                                                                 class="text-danger">*</span></label>
                                                         <select name="" id="select-subcategory"
@@ -235,8 +483,7 @@
                                                     </div>
 
                                                     <!-- Sub-subcategory -->
-                                                    <div class="col-sm-4" id="sub-subcategory-wrapper"
-                                                        style="display:none;">
+                                                    <div class="col-12" id="sub-subcategory-wrapper" style="display:none;">
                                                         <label for="sub-subcategory">Sub Subcategory</label>
                                                         <select id="select-sub-subcategory" class="input-filed w-100">
                                                             <option value="">Select Sub Subcategory</option>
@@ -249,15 +496,21 @@
 
                                                     <div class="col-12">
                                                         <p class="text-sm text-muted" id="category-breadcrumb"></p>
-                                                        @error('category')
-                                                            <small class="text-danger">{{ $message }}</small>
-                                                        @enderror
+                                                        <div class="invalid-feedback @error('category') d-block @enderror">
+                                                            @error('category')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </div>
                                                     </div>
 
+                                                    <!-- Custom Fields Container -->
+                                                    <div id="custom-fields-container" class="mt-3"></div>
+
                                                     <!-- Condition -->
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-12">
                                                         <label for="condition">Item Condition</label>
-                                                        <select name="condition" id="condition" class="input-filed w-100">
+                                                        <select name="condition" id="condition"
+                                                            class="input-filed w-100">
                                                             <option value="">Select Condition</option>
                                                             @foreach ($conditions as $condition)
                                                                 <option value="{{ $condition->id }}"
@@ -266,25 +519,11 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
-                                                    </div>
-
-                                                    <!-- City -->
-                                                    <div class="col-sm-6">
-                                                        <label for="city">City</label>
-                                                        <select name="city" id="city" class="input-filed w-100">
-                                                            <option value="">Select City</option>
-                                                            @foreach ($cities as $city)
-                                                                <option value="{{ $city->id }}"
-                                                                    {{ old('city') == $city->id ? 'selected' : '' }}>
-                                                                    {{ $city->name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
+                                                        <div class="invalid-feedback"></div>
                                                     </div>
                                                 </div>
 
-                                                <!-- Custom Fields Container -->
-                                                <div id="custom-fields-container" class="mt-3"></div>
+
                                             </div>
 
                                             <!-- Description -->
@@ -295,9 +534,11 @@
                                                 <textarea name="description" id="description" rows="6"
                                                     class="input-filed w-100 textarea--form summernote @error('description') is-invalid @enderror"
                                                     placeholder="Enter a Description">{{ old('description') }}</textarea>
-                                                @error('description')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
+                                                <div class="invalid-feedback @error('description') d-block @enderror">
+                                                    @error('description')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -312,9 +553,11 @@
                                                         value="{{ old('price') }}"
                                                         class="input-filed w-100 mb-3 @error('price') is-invalid @enderror"
                                                         placeholder="0.00" step="0.01">
-                                                    @error('price')
-                                                        <small class="text-danger">{{ $message }}</small>
-                                                    @enderror
+                                                    <div class="invalid-feedback @error('price') d-block @enderror">
+                                                        @error('price')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </div>
                                                     <label class="negotiable">
                                                         <input type="checkbox" class="custom-check-box" name="negotiable"
                                                             id="negotiable" {{ old('negotiable') ? 'checked' : '' }}>
@@ -329,11 +572,13 @@
                                                         class="text-danger">*</span></label>
                                                 <input type="email" name="contact_email" id="contact_email"
                                                     value="{{ old('contact_email', auth()->check() ? auth()->user()->email : '') }}"
-                                                    class="input-filed w-100 mb-3 @error('contact_email') is-invalid @enderror"
+                                                    class="input-filed w-100 @error('contact_email') is-invalid @enderror"
                                                     placeholder="Email Address">
-                                                @error('contact_email')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
+                                                <div class="invalid-feedback @error('contact_email') d-block @enderror">
+                                                    @error('contact_email')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
                                             </div>
 
                                             <!-- Phone -->
@@ -344,14 +589,15 @@
                                                         {{ old('hide_phone_number') ? 'checked' : '' }}>
                                                     <span class="black-font"> Hide My Phone Number</span>
                                                 </label>
-                                                <div class="input-group mt-3">
-                                                    <input class="input-filed w-100" type="tel" name="phone"
-                                                        value="{{ old('phone') }}" id="phone"
-                                                        placeholder="Type Phone"
-                                                        class="@error('contact_phone') is-invalid @enderror">
-                                                    @error('contact_phone')
-                                                        <small class="text-danger">{{ $message }}</small>
-                                                    @enderror
+                                                <div class="mt-3">
+                                                    <input class="input-filed w-100 @error('phone') is-invalid @enderror"
+                                                        type="tel" name="phone" value="{{ old('phone') }}"
+                                                        id="phone" placeholder="Type Phone">
+                                                    <div class="invalid-feedback @error('phone') d-block @enderror">
+                                                        @error('phone')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -359,25 +605,42 @@
                                             <div class="box-shadow1 p-24 mt-3">
                                                 <label for="thumbnail_image">Featured Image <span
                                                         class="text-danger">*</span></label>
-                                                <input type="file" name="thumbnail_image" id="thumbnail_image"
-                                                    class="input-filed w-100 @error('thumbnail_image') is-invalid @enderror"
-                                                    accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
-                                                <small class="text-muted">image format: jpg,jpeg,png,gif,webp | max:
-                                                    5MB</small>
+                                                <div class="custom-file-input">
+                                                    <input type="file" name="thumbnail_image" id="thumbnail_image"
+                                                        class="@error('thumbnail_image') is-invalid @enderror"
+                                                        accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
+                                                    <label for="thumbnail_image" class="custom-file-label">
+                                                        <i class="fas fa-cloud-upload-alt"></i>
+                                                        <span>Choose Featured Image</span>
+                                                    </label>
+                                                    <div class="file-name" id="thumbnail-file-name"></div>
+                                                </div>
+                                                <small class="text-muted d-block mt-2">image format: jpg,jpeg,png,gif,webp
+                                                    | max: 5MB</small>
+                                                <div class="invalid-feedback @error('thumbnail_image') d-block @enderror">
+                                                    @error('thumbnail_image')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
                                                 <div id="thumbnail-preview" class="mt-2"></div>
-                                                @error('thumbnail_image')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
                                             </div>
 
                                             <!-- Gallery Images -->
                                             <div class="box-shadow1 p-24 mt-3">
                                                 <label for="gallery_images">Gallery Images</label>
-                                                <input type="file" name="gallery_images[]" id="gallery_images"
-                                                    class="input-filed w-100" multiple
-                                                    accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
-                                                <small class="text-muted">You can select multiple images</small>
-                                                <div id="gallery-preview" class="mt-2 d-flex flex-wrap gap-2"></div>
+                                                <div class="custom-file-input">
+                                                    <input type="file" name="gallery_images[]" id="gallery_images"
+                                                        multiple
+                                                        accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
+                                                    <label for="gallery_images" class="custom-file-label">
+                                                        <i class="fas fa-images"></i>
+                                                        <span>Choose Gallery Images</span>
+                                                    </label>
+                                                    <div class="file-name" id="gallery-file-name"></div>
+                                                </div>
+                                                <small class="text-muted d-block mt-2">You can select multiple images (max:
+                                                    5MB each)</small>
+                                                <div id="gallery-preview" class="mt-3"></div>
                                             </div>
 
                                             <!-- Continue Button -->
@@ -402,35 +665,57 @@
                                 <div class="row">
                                     <div class="col-xl-2"></div>
                                     <div class="col-xl-6">
-                                        <!-- Address -->
+                                        <!-- Location Information -->
                                         <div class="address box-shadow1 p-24">
-                                            <div class="location-map mt-3">
-                                                <label class="infoTitle">Google Map Location
-                                                    <small class="text-info">Search your location, pick a location</small>
-                                                </label>
-                                                <div class="input-form input-form2">
-                                                    <div class="map-warper dark-support rounded overflow-hidden">
-                                                        <input id="pac-input" class="controls rounded" type="text"
-                                                            placeholder="Search your location" />
-                                                        <div id="map_canvas" style="height: 480px"></div>
-                                                    </div>
+                                            <h5 class="mb-3">Location Information</h5>
+                                            <div class="row g-3">
+                                                <!-- Country -->
+                                                <div class="col-12">
+                                                    <label for="country">Country <span
+                                                            class="text-danger">*</span></label>
+                                                    <select name="country" id="country" class="select2-ajax w-100"
+                                                        required>
+                                                        <option value="">Select Country</option>
+                                                    </select>
+                                                    <div class="invalid-feedback"></div>
                                                 </div>
-                                            </div>
-                                            <div class="address-text mt-3">
-                                                <input type="hidden" name="latitude" id="latitude">
-                                                <input type="hidden" name="longitude" id="longitude">
-                                                <label for="user_address">Address</label>
-                                                <input type="text" class="w-100 input-filed" name="address"
-                                                    id="user_address" value="{{ old('address') }}"
-                                                    placeholder="Address">
+
+                                                <!-- State -->
+                                                <div class="col-12">
+                                                    <label for="state">State <span class="text-danger">*</span></label>
+                                                    <select name="state" id="state" class="select2-ajax w-100"
+                                                        required disabled>
+                                                        <option value="">Select State</option>
+                                                    </select>
+                                                    <div class="invalid-feedback"></div>
+                                                </div>
+
+                                                <!-- City -->
+                                                <div class="col-12">
+                                                    <label for="city">City <span class="text-danger">*</span></label>
+                                                    <select name="city" id="city" class="select2-ajax w-100"
+                                                        required disabled>
+                                                        <option value="">Select City</option>
+                                                    </select>
+                                                    <div class="invalid-feedback"></div>
+                                                </div>
+
+                                                <!-- Address -->
+                                                <div class="col-12">
+                                                    <label for="address">Address</label>
+                                                    <textarea class="w-100 input-filed" name="address" id="address" rows="3"
+                                                        placeholder="Enter your detailed address">{{ old('address') }}</textarea>
+                                                    <div class="invalid-feedback"></div>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <!-- Video URL -->
                                         <div class="video box-shadow1 p-24 mt-3 mb-3">
-                                            <label for="video_url">Video Url</label>
+                                            <label for="video_url">Video URL</label>
                                             <input type="text" class="input-filed w-100" name="video_url"
                                                 id="video_url" value="{{ old('video_url') }}" placeholder="YouTube URL">
+                                            <div class="invalid-feedback"></div>
                                         </div>
                                     </div>
 
@@ -466,106 +751,6 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Meta Section -->
-                                            <div class="box-shadow1 tags p-24 mt-3">
-                                                <div class="row">
-                                                    <div class="col-xxl-12 col-lg-12">
-                                                        <div
-                                                            class="collapse_wrapper dashboard__card style_one bg__white padding-20 radius-10">
-                                                            <div class="collapse_wrapper__header mb-3">
-                                                                <h5 class="collapse_wrapper__header__title">Meta Section
-                                                                </h5>
-                                                            </div>
-                                                            <div class="tab_wrapper style_seven">
-                                                                <nav>
-                                                                    <div class="nav nav-tabs flex-nowrap" id="nav-tab8"
-                                                                        role="tablist">
-                                                                        <a class="nav-link active" id="nav-21-tab"
-                                                                            data-bs-toggle="tab" href="#blog_meta"
-                                                                            role="tab" aria-controls="nav-21"
-                                                                            aria-selected="true">Blog Meta</a>
-                                                                        <a class="nav-link" id="nav-22-tab"
-                                                                            data-bs-toggle="tab" href="#facebook_meta"
-                                                                            role="tab" aria-controls="nav-22"
-                                                                            aria-selected="false">Facebook Meta</a>
-                                                                        <a class="nav-link" id="nav-23-tab"
-                                                                            data-bs-toggle="tab" href="#twitter_meta"
-                                                                            role="tab" aria-controls="nav-23"
-                                                                            aria-selected="false">Twitter Meta</a>
-                                                                    </div>
-                                                                </nav>
-                                                                <div class="tab-content mt-4" id="nav-tabContent8">
-                                                                    <div class="tab-pane fade show active" id="blog_meta"
-                                                                        role="tabpanel" aria-labelledby="nav-21-tab">
-                                                                        <div class="form__input__single">
-                                                                            <label for="meta_title"
-                                                                                class="form__input__single__label">Meta
-                                                                                Title</label><br>
-                                                                            <input type="text" class="form__control"
-                                                                                name="meta_title" id="meta_title"
-                                                                                value="{{ old('meta_title') }}"
-                                                                                placeholder="Title">
-                                                                        </div>
-                                                                        <div class="form__input__single">
-                                                                            <label for="meta_tags"
-                                                                                class="form__input__single__label">Meta
-                                                                                Tags</label>
-                                                                            <input type="text" class="form__control"
-                                                                                name="meta_tags" id="meta_tags"
-                                                                                value="{{ old('meta_tags') }}"
-                                                                                data-role="tagsinput" placeholder="Tag">
-                                                                        </div>
-                                                                        <div class="form__input__single">
-                                                                            <label for="meta_description"
-                                                                                class="form__input__single__label">Meta
-                                                                                Description</label>
-                                                                            <textarea class="form__control" name="meta_description" cols="30" rows="10">{{ old('meta_description') }}</textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="tab-pane fade" id="facebook_meta"
-                                                                        role="tabpanel" aria-labelledby="nav-22-tab">
-                                                                        <div class="form__input__single">
-                                                                            <label
-                                                                                class="form__input__single__label">Facebook
-                                                                                Meta Title</label>
-                                                                            <input type="text" class="form__control"
-                                                                                data-role="tagsinput"
-                                                                                name="facebook_meta_tags"
-                                                                                value="{{ old('facebook_meta_tags') }}">
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="form__input__single col-md-12">
-                                                                                <label
-                                                                                    class="form__input__single__label">Facebook
-                                                                                    Meta Description</label>
-                                                                                <textarea name="facebook_meta_description" class="form__control max-height-140" cols="20" rows="4">{{ old('facebook_meta_description') }}</textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="tab-pane fade" id="twitter_meta"
-                                                                        role="tabpanel" aria-labelledby="nav-22-tab">
-                                                                        <div class="form__input__single">
-                                                                            <label
-                                                                                class="form__input__single__label">Twitter
-                                                                                Meta Title</label>
-                                                                            <input type="text" class="form__control"
-                                                                                data-role="tagsinput"
-                                                                                name="twitter_meta_tags"
-                                                                                value="{{ old('twitter_meta_tags') }}">
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="form__input__single col-md-12">
-                                                                                <label>Twitter Meta Description</label>
-                                                                                <textarea name="twitter_meta_description" class="form__control max-height-140" cols="20" rows="4">{{ old('twitter_meta_description') }}</textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                             <!-- Guest User Info (shown when not logged in) -->
                                             @guest
@@ -623,16 +808,26 @@
                                                         <a href="{{ url('/terms-and-conditions') }}" target="_blank"
                                                             class="text-primary"> Terms and Conditions </a>
                                                     </label>
+                                                    <div
+                                                        class="invalid-feedback @error('terms_conditions') d-block @enderror">
+                                                        @error('terms_conditions')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </div>
                                                 </div>
                                             </div>
+
+                                            <!-- Form Messages -->
+                                            <div id="form-messages" class="mt-3"></div>
 
                                             <!-- Previous / Submit -->
                                             <div class="continue-btn mt-3">
                                                 <div class="btn-wrapper mb-10 d-flex justify-content-end gap-3">
                                                     <button class="red-btn w-100 d-block" id="prevBtn"
                                                         type="button">Previous</button>
-                                                    <button class="red-btn w-100 d-block" id="submitBtn"
-                                                        type="submit">Submit Listing</button>
+                                                    <button class="red-btn w-100 d-block" id="submitBtn" type="submit">
+                                                        <span class="btn-text">Submit Listing</span>
+                                                    </button>
                                                 </div>
                                             </div>
 
@@ -650,18 +845,194 @@
         </form>
 
     </div>
+
+    <!-- Form Loader -->
+    <div id="form-loader">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 @endsection
 @section('js')
     <script src="{{ asset('public/web-assets/backend/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            // Initialize Select2
+            // ============================================
+            // LocalStorage - Save and Restore Form Data
+            // ============================================
+            const formStorageKey = 'ad_post_form_data';
+
+            // Restore form data from localStorage
+            function restoreFormData() {
+                try {
+                    const savedData = localStorage.getItem(formStorageKey);
+                    if (savedData) {
+                        const formData = JSON.parse(savedData);
+
+                        // Restore text inputs
+                        Object.keys(formData).forEach(function(key) {
+                            const input = $(`[name="${key}"]`);
+                            if (input.length && formData[key]) {
+                                if (input.is(':checkbox')) {
+                                    input.prop('checked', formData[key] === true || formData[key] === 'on');
+                                } else if (input.is(':radio')) {
+                                    $(`[name="${key}"][value="${formData[key]}"]`).prop('checked', true);
+                                } else if (!input.is(':file')) {
+                                    input.val(formData[key]);
+                                }
+                            }
+                        });
+
+                        // Restore Summernote description
+                        if (formData.description && $('.summernote').length) {
+                            $('.summernote').summernote('code', formData.description);
+                        }
+
+                        console.log('Form data restored from localStorage');
+                    }
+                } catch (error) {
+                    console.error('Error restoring form data:', error);
+                }
+            }
+
+            // Save form data to localStorage
+            function saveFormData() {
+                try {
+                    const formData = {};
+
+                    // Save all text inputs, textareas, and selects
+                    $('#ad-post-form').find('input, textarea, select').each(function() {
+                        const $input = $(this);
+                        const name = $input.attr('name');
+
+                        if (name && !$input.is(':file')) {
+                            if ($input.is(':checkbox')) {
+                                formData[name] = $input.is(':checked');
+                            } else if ($input.is(':radio')) {
+                                if ($input.is(':checked')) {
+                                    formData[name] = $input.val();
+                                }
+                            } else {
+                                formData[name] = $input.val();
+                            }
+                        }
+                    });
+
+                    // Save Summernote description
+                    if ($('.summernote').length) {
+                        formData.description = $('.summernote').summernote('code');
+                    }
+
+                    localStorage.setItem(formStorageKey, JSON.stringify(formData));
+                } catch (error) {
+                    console.error('Error saving form data:', error);
+                }
+            }
+
+            // Clear localStorage
+            function clearFormData() {
+                localStorage.removeItem(formStorageKey);
+                console.log('Form data cleared from localStorage');
+            }
+
+            // Auto-save form data on input change (with debounce)
+            let saveTimeout;
+            $('#ad-post-form').on('input change', 'input, textarea, select', function() {
+                clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(function() {
+                    saveFormData();
+                }, 1000); // Save after 1 second of inactivity
+            });
+
+            // Initialize Select2 for tags
             if ($.fn.select2) {
                 $('.select2_activation').select2({
                     tags: true,
                     tokenSeparators: [',']
                 });
             }
+
+            // Initialize Select2 for Country with ajax
+            $('#country').select2({
+                ajax: {
+                    url: "{{ route('ad.countries') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            search: params.term
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: 'Select Country',
+                minimumInputLength: 0,
+                allowClear: true
+            });
+
+            // Initialize Select2 for State with ajax
+            $('#state').select2({
+                ajax: {
+                    url: "{{ route('ad.states') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            search: params.term,
+                            country_id: $('#country').val()
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: 'Select State',
+                minimumInputLength: 0,
+                allowClear: true
+            });
+
+            // Initialize Select2 for City with ajax
+            $('#city').select2({
+                ajax: {
+                    url: "{{ route('ad.cities') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            search: params.term,
+                            state_id: $('#state').val()
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: 'Select City',
+                minimumInputLength: 0,
+                allowClear: true,
+            });
+
+            // Handle Country change - enable state and reset
+            $('#country').on('change', function() {
+                $('#state').prop('disabled', false).val(null).trigger('change');
+                $('#city').prop('disabled', true).val(null).trigger('change');
+            });
+
+            // Handle State change - enable city and reset
+            $('#state').on('change', function() {
+                $('#city').prop('disabled', false).val(null).trigger('change');
+            });
 
             // Initialize Summernote
             $('.summernote').summernote({
@@ -677,6 +1048,9 @@
                     ["view", ["fullscreen", "help"]],
                 ],
             });
+
+            // Restore form data from localStorage after initializations
+            restoreFormData();
 
             // ============================================
             // Multi-level Category Selection
@@ -879,34 +1253,109 @@
             showTab(currentTab);
 
             $('#nextBtn').on('click', function() {
-                // Basic validation before moving to next step
-                const title = $('#title').val();
-                const category = $('#final-category').val();
-                const description = $('#description').val() || ($('.summernote').length ? $('.summernote')
-                    .summernote('code') : '');
-                const price = $('#price').val();
+                // Validate step 1 fields before proceeding
+                let isValid = true;
+                const errors = [];
 
+                // Clear previous errors
+                $('.invalid-feedback').removeClass('d-block').text('');
+                $('.is-invalid').removeClass('is-invalid');
+
+                // Validate title
+                const title = $('#title').val().trim();
                 if (!title) {
-                    alert('Please enter an item name.');
-                    $('#title').focus();
-                    return;
-                }
-                if (!category) {
-                    alert('Please select a category.');
-                    return;
-                }
-                if (!price) {
-                    alert('Please enter a price.');
-                    $('#price').focus();
-                    return;
+                    isValid = false;
+                    $('#title').addClass('is-invalid');
+                    $('#title').siblings('.invalid-feedback').text('Item name is required').addClass(
+                        'd-block');
+                    errors.push('title');
                 }
 
-                currentTab = 1;
-                showTab(currentTab);
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+                // Validate category
+                const category = $('#final-category').val();
+                if (!category) {
+                    isValid = false;
+                    $('#final-category').addClass('is-invalid');
+                    $('#category-breadcrumb').siblings('.invalid-feedback').text('Please select a category')
+                        .addClass('d-block');
+                    errors.push('category');
+                }
+
+                // Validate description
+                const description = $('.summernote').summernote('code').replace(/<[^>]*>/g, '').trim();
+                if (!description || description.length < 150) {
+                    isValid = false;
+                    $('#description').addClass('is-invalid');
+                    $('#description').siblings('.invalid-feedback').text(
+                        !description ? 'Description is required' :
+                        'Description must be at least 150 characters'
+                    ).addClass('d-block');
+                    errors.push('description');
+                }
+
+                // Validate price
+                const price = $('#price').val();
+                if (!price || parseFloat(price) < 0) {
+                    isValid = false;
+                    $('#price').addClass('is-invalid');
+                    $('#price').siblings('.invalid-feedback').text(
+                        !price ? 'Price is required' : 'Price cannot be negative'
+                    ).addClass('d-block');
+                    errors.push('price');
+                }
+
+                // Validate contact email
+                const email = $('#contact_email').val().trim();
+                if (!email) {
+                    isValid = false;
+                    $('#contact_email').addClass('is-invalid');
+                    $('#contact_email').siblings('.invalid-feedback').text('Contact email is required')
+                        .addClass('d-block');
+                    errors.push('contact_email');
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    isValid = false;
+                    $('#contact_email').addClass('is-invalid');
+                    $('#contact_email').siblings('.invalid-feedback').text(
+                        'Please provide a valid email address').addClass('d-block');
+                    errors.push('contact_email');
+                }
+
+                // Validate phone
+                const phone = $('#phone').val().trim();
+                if (!phone) {
+                    isValid = false;
+                    $('#phone').addClass('is-invalid');
+                    $('#phone').siblings('.invalid-feedback').text('Phone number is required').addClass(
+                        'd-block');
+                    errors.push('phone');
+                }
+
+                // Validate thumbnail image
+                const thumbnailFile = $('#thumbnail_image')[0].files[0];
+                if (!thumbnailFile) {
+                    isValid = false;
+                    $('#thumbnail_image').addClass('is-invalid');
+                    $('#thumbnail_image').siblings('.invalid-feedback').text('Featured image is required')
+                        .addClass('d-block');
+                    errors.push('thumbnail_image');
+                }
+
+                if (isValid) {
+                    currentTab = 1;
+                    showTab(currentTab);
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    // Scroll to first error
+                    const firstError = $('.is-invalid:first');
+                    if (firstError.length) {
+                        $('html, body').animate({
+                            scrollTop: firstError.offset().top - 100
+                        }, 500);
+                    }
+                }
             });
 
             $('#prevBtn').on('click', function() {
@@ -919,33 +1368,267 @@
             });
 
             // ============================================
-            // Image Preview
+            // Custom File Input - Display File Names
             // ============================================
+            const maxFileSize = 5 * 1024 * 1024; // 5MB in bytes
+
             $('#thumbnail_image').on('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
+                    // Check file size
+                    if (file.size > maxFileSize) {
+                        alert(`File size (${(file.size / 1024 / 1024).toFixed(2)}MB) exceeds the maximum allowed size of 5MB. Please choose a smaller file.`);
+                        this.value = '';
+                        $('#thumbnail-file-name').text('');
+                        $('#thumbnail-preview').html('');
+                        return;
+                    }
+
+                    // Display file name and size
+                    $('#thumbnail-file-name').text(`Selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
+
+                    // Show preview
                     const reader = new FileReader();
                     reader.onload = function(ev) {
                         $('#thumbnail-preview').html(
-                            `<img src="${ev.target.result}" style="max-width:200px;max-height:200px;border-radius:6px;object-fit:cover;">`
+                            `<img src="${ev.target.result}" style="max-width:200px;max-height:200px;border-radius:6px;object-fit:cover;border:2px solid #e3e3e3;">`
                         );
                     };
                     reader.readAsDataURL(file);
+                } else {
+                    $('#thumbnail-file-name').text('');
+                    $('#thumbnail-preview').html('');
                 }
             });
 
+            // Gallery images with remove functionality
+            let galleryFiles = [];
+
             $('#gallery_images').on('change', function(e) {
+                const files = Array.from(e.target.files);
+                const maxTotalSize = 50 * 1024 * 1024; // 50MB total limit
+                let invalidFiles = [];
+                let validFiles = [];
+
+                // Check each file size
+                files.forEach(file => {
+                    if (file.size > maxFileSize) {
+                        invalidFiles.push(`${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
+                    } else {
+                        validFiles.push(file);
+                    }
+                });
+
+                // Show error for invalid files
+                if (invalidFiles.length > 0) {
+                    alert(`The following files exceed 5MB and were not added:\n\n${invalidFiles.join('\n')}\n\nPlease choose smaller files.`);
+                }
+
+                // Check total size including existing files
+                if (validFiles.length > 0) {
+                    let totalSize = 0;
+                    galleryFiles.forEach(f => totalSize += f.size);
+                    validFiles.forEach(f => totalSize += f.size);
+
+                    if (totalSize > maxTotalSize) {
+                        alert(`Total file size (${(totalSize / 1024 / 1024).toFixed(2)}MB) exceeds the maximum allowed total size of 50MB. Please remove some images or choose smaller files.`);
+                        this.value = '';
+                        return;
+                    }
+
+                    // Add valid files to galleryFiles array
+                    validFiles.forEach(file => {
+                        galleryFiles.push(file);
+                    });
+
+                    // Update preview
+                    updateGalleryPreview();
+                }
+
+                // Clear the input so the same file can be selected again if needed
+                this.value = '';
+            });
+
+            function updateGalleryPreview() {
                 const preview = $('#gallery-preview');
                 preview.html('');
-                Array.from(e.target.files).forEach(function(file) {
+
+                galleryFiles.forEach(function(file, index) {
                     const reader = new FileReader();
                     reader.onload = function(ev) {
-                        preview.append(
-                            `<img src="${ev.target.result}" style="width:80px;height:80px;border-radius:6px;object-fit:cover;">`
-                        );
+                        const wrapper = $(`
+                            <div class="gallery-image-wrapper" data-index="${index}">
+                                <img src="${ev.target.result}">
+                                <span class="remove-gallery-image" data-index="${index}">×</span>
+                            </div>
+                        `);
+                        preview.append(wrapper);
                     };
                     reader.readAsDataURL(file);
                 });
+
+                // Update file count and total size
+                if (galleryFiles.length > 0) {
+                    let totalSize = 0;
+                    galleryFiles.forEach(f => totalSize += f.size);
+                    $('#gallery-file-name').text(
+                        `${galleryFiles.length} image${galleryFiles.length > 1 ? 's' : ''} selected (Total: ${(totalSize / 1024 / 1024).toFixed(2)}MB)`
+                    );
+                } else {
+                    $('#gallery-file-name').text('');
+                }
+            }
+
+            // Remove gallery image
+            $(document).on('click', '.remove-gallery-image', function() {
+                const index = $(this).data('index');
+
+                // Remove from array
+                galleryFiles.splice(index, 1);
+
+                // Update preview
+                updateGalleryPreview();
+            });
+
+            // ============================================
+            // Ajax Form Submission
+            // ============================================
+            $('#ad-post-form').on('submit', function(e) {
+                e.preventDefault();
+
+                // Clear previous errors and messages
+                $('.invalid-feedback').removeClass('d-block').text('');
+                $('.is-invalid').removeClass('is-invalid');
+                $('#form-messages').html('');
+
+                // Add loading state to submit button
+                const $submitBtn = $('#submitBtn');
+                $submitBtn.addClass('btn-loading').prop('disabled', true);
+
+                // Prepare form data
+                const formData = new FormData(this);
+
+                // Remove default gallery images and add from galleryFiles array
+                formData.delete('gallery_images[]');
+                galleryFiles.forEach(function(file) {
+                    formData.append('gallery_images[]', file);
+                });
+
+                $.ajax({
+                    url: "{{ route('ad.store') }}",
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        // Remove loading state
+                        $submitBtn.removeClass('btn-loading').prop('disabled', false);
+
+                        if (response.success) {
+                            // Clear localStorage on successful submission
+                            clearFormData();
+
+                            // Show success message
+                            $('#form-messages').html(
+                                `<div class="success-message">${response.message}</div>`
+                            );
+
+                            // Scroll to top to show message
+                            $('html, body').animate({
+                                scrollTop: 0
+                            }, 300);
+
+                            // Redirect to ad details page after a short delay
+                            if (response.redirect_url) {
+                                setTimeout(function() {
+                                    window.location.href = response.redirect_url;
+                                }, 1500);
+                            }
+                        }
+                    },
+                    error: function(xhr) {
+                        // Remove loading state
+                        $submitBtn.removeClass('btn-loading').prop('disabled', false);
+
+                        if (xhr.status === 422) {
+                            // Validation errors
+                            const errors = xhr.responseJSON.errors;
+                            let errorCount = 0;
+
+                            // Display errors below each field
+                            $.each(errors, function(field, messages) {
+                                errorCount++;
+                                const input = $(`[name="${field}"]`);
+                                const errorContainer = input.siblings(
+                                    '.invalid-feedback');
+
+                                if (errorContainer.length === 0) {
+                                    // If no error container exists, create one
+                                    input.after(
+                                        `<div class="invalid-feedback">${messages[0]}</div>`
+                                    );
+                                    input.next('.invalid-feedback').addClass('d-block');
+                                } else {
+                                    errorContainer.text(messages[0]).addClass(
+                                        'd-block');
+                                }
+
+                                // Add is-invalid class
+                                input.addClass('is-invalid');
+
+                                // For Select2, add class to the container
+                                if (input.hasClass('select2-ajax') || input.hasClass(
+                                        'select2_activation')) {
+                                    input.next('.select2-container').find(
+                                            '.select2-selection')
+                                        .addClass('is-invalid');
+                                }
+                            });
+
+                            // Show error message at top
+                            $('#form-messages').html(
+                                `<div class="error-message">Please fix ${errorCount} validation error${errorCount > 1 ? 's' : ''} below and try again.</div>`
+                            );
+
+                            // Scroll to first error
+                            const firstError = $('.is-invalid:first');
+                            if (firstError.length) {
+                                $('html, body').animate({
+                                    scrollTop: firstError.offset().top - 100
+                                }, 500);
+                            } else {
+                                // If no specific error found, scroll to top
+                                $('html, body').animate({
+                                    scrollTop: 0
+                                }, 300);
+                            }
+                        } else {
+                            // Other errors
+                            const message = xhr.responseJSON?.message ||
+                                'An error occurred while submitting your ad. Please try again.';
+
+                            $('#form-messages').html(
+                                `<div class="error-message">${message}</div>`
+                            );
+
+                            // Scroll to top to show message
+                            $('html, body').animate({
+                                scrollTop: 0
+                            }, 300);
+                        }
+                    }
+                });
+            });
+
+            // Remove error styling on input change
+            $('input, select, textarea').on('change input', function() {
+                $(this).removeClass('is-invalid');
+                $(this).siblings('.invalid-feedback').removeClass('d-block');
+
+                // For Select2
+                if ($(this).hasClass('select2-ajax') || $(this).hasClass('select2_activation')) {
+                    $(this).next('.select2-container').find('.select2-selection').removeClass('is-invalid');
+                }
             });
         });
     </script>
