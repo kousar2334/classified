@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 @section('meta')
-    <title>Listing 1- {{ get_setting('site_name') }}</title>
+    <title>Listing mb-3- {{ get_setting('site_name') }}</title>
     <!-- page css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css">
     <style>
@@ -394,57 +394,43 @@
                             <div class="catagoriesWraper mb-4">
                                 <div class="catagories w-100">
                                     <h5 class="cateTitle mb-2 postdateTitle">Categories</h5>
-                                    <input type="hidden" name="cat" id="selected_category"
-                                        value="{{ request('cat') }}">
-                                    <input type="hidden" name="subcat" id="selected_subcategory"
-                                        value="{{ request('subcat') }}">
-                                    <input type="hidden" name="child_cat" id="selected_child_category"
-                                        value="{{ request('child_cat') }}">
+                                    <input type="hidden" name="cat_id" id="selected_category_id"
+                                        value="{{ request('cat_id') }}">
 
-                                    <!-- Parent Category List -->
-                                    <div id="parent-category-section">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <span class="text-muted small">Select Category</span>
+                                    <!-- Category Section -->
+                                    <div id="category-section">
+                                        <!-- Back button (hidden for root level) -->
+                                        <div id="back-button-container" class="mb-2" style="display: none;">
+                                            <a href="javascript:void(0)" id="back-button" class="text-primary small">
+                                                <i class="las la-arrow-left"></i> <span id="back-button-text">Back to
+                                                    Categories</span>
+                                            </a>
                                         </div>
-                                        <ul class="category-list" id="parent-category-list">
+
+                                        <!-- Selected Category Display (when has children) -->
+                                        @if ($selectedCategory && $selectedCategoryId)
+                                            <div id="selected-category-display" style="margin-left: 12px;">
+                                                <strong style="color: var(--main-color-one); font-size: 16px;">
+                                                    <i class="las la-folder-open" style="margin-right: 5px;"></i>
+                                                    {{ $selectedCategory->title }}
+                                                </strong>
+                                            </div>
+                                        @endif
+
+                                        <!-- Category List -->
+                                        <ul class="category-list" id="category-list">
                                             @foreach ($categories as $category)
-                                                <li class="category-item {{ request('cat') == $category->id && !request('subcat') ? 'active' : '' }}"
+                                                <li class="category-item {{ request('cat_id') == $category->id ? 'active' : '' }}"
                                                     data-category-id="{{ $category->id }}"
-                                                    data-category-name="{{ $category->title }}">
+                                                    data-category-name="{{ $category->title }}"
+                                                    data-parent-id="{{ $category->parent_id ?? '' }}"
+                                                    data-parent-name="{{ $category->parent_title ?? '' }}">
                                                     <a href="javascript:void(0)" class="category-link">
                                                         <i class="las la-angle-right"></i>
                                                         {{ $category->title }}
                                                     </a>
                                                 </li>
                                             @endforeach
-                                        </ul>
-                                    </div>
-
-                                    <!-- Subcategory List -->
-                                    <div id="subcategory-section" style="display: none;">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <a href="javascript:void(0)" id="back-to-parent-categories"
-                                                class="text-primary small">
-                                                <i class="las la-arrow-left"></i> Back to Categories
-                                            </a>
-                                            <span class="text-muted small" id="selected-category-name"></span>
-                                        </div>
-                                        <ul class="category-list" id="subcategory-list">
-                                            <!-- Subcategories will be loaded here -->
-                                        </ul>
-                                    </div>
-
-                                    <!-- Child Category List -->
-                                    <div id="child-category-section" style="display: none;">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <a href="javascript:void(0)" id="back-to-subcategories"
-                                                class="text-primary small">
-                                                <i class="las la-arrow-left"></i> Back to Subcategories
-                                            </a>
-                                            <span class="text-muted small" id="selected-subcategory-name"></span>
-                                        </div>
-                                        <ul class="category-list" id="child-category-list">
-                                            <!-- Child categories will be loaded here -->
                                         </ul>
                                     </div>
                                 </div>
@@ -582,8 +568,18 @@
                                         <div class="SearchWrapper d-flex justify-content-between align-items-center p-2">
 
                                             <div class="content-title">
-                                                <h4>All Ads</h4>
-                                                <p>{{ $ads->total() }} Ads found</p>
+                                                <h4>
+                                                    @if ($breadcrumbChildCategory)
+                                                        {{ $breadcrumbChildCategory->title }}
+                                                    @elseif($breadcrumbSubcategory)
+                                                        {{ $breadcrumbSubcategory->title }}
+                                                    @elseif($breadcrumbCategory)
+                                                        {{ $breadcrumbCategory->title }}
+                                                    @else
+                                                        All Ads
+                                                    @endif
+                                                </h4>
+                                                <p>{{ $ads->total() }} {{ $ads->total() == 1 ? 'Ad' : 'Ads' }} found</p>
                                             </div>
                                             <div class="sort-by-wrapper">
                                                 <select id="search_by_sorting" class="form-select">
@@ -655,120 +651,176 @@
                 const STATES_ENDPOINT = '/ad/states';
                 const CITIES_ENDPOINT = '/ad/cities';
 
-                // ========== Category Hierarchical Selection ==========
+                // ========== Category Navigation System ==========
 
-                // Handle parent category click
-                $(document).on('click', '#parent-category-list .category-link', function(e) {
+                let categoryHierarchy = {}; // Store parent relationships as we navigate
+
+                // Handle category click
+                $(document).on('click', '#category-list .category-link', function(e) {
                     e.preventDefault();
                     const $item = $(this).closest('.category-item');
                     const categoryId = $item.data('category-id');
                     const categoryName = $item.data('category-name');
+                    const parentId = $item.data('parent-id');
+                    const parentName = $item.data('parent-name');
 
-                    // Load subcategories for this category
-                    $.get(SUBCATEGORY_ENDPOINT, {
-                        parent_id: categoryId
-                    }, function(data) {
-                        const $subcategoryList = $('#subcategory-list');
-                        $subcategoryList.empty();
+                    // Store parent relationship for back navigation
+                    if (parentId) {
+                        categoryHierarchy[categoryId] = {
+                            parentId: parentId,
+                            parentName: parentName
+                        };
+                    }
 
-                        if (data.length > 0) {
-                            data.forEach(function(subcat) {
-                                const isActive = '{{ request('subcat') }}' == subcat
-                                    .id ? 'active' : '';
-                                $subcategoryList.append(`
-                                    <li class="category-item ${isActive}" data-subcategory-id="${subcat.id}" data-subcategory-name="${subcat.title}">
-                                        <a href="javascript:void(0)" class="category-link subcategory-link">
-                                            <i class="las la-angle-right"></i>
-                                            ${subcat.title}
-                                        </a>
-                                    </li>
-                                `);
-                            });
-
-                            // Show subcategory section
-                            $('#parent-category-section').hide();
-                            $('#subcategory-section').show();
-                            $('#selected-category-name').text(categoryName);
-                            $('#selected_category').val(categoryId);
-                        } else {
-                            // No subcategories - directly apply category filter
-                            $('#selected_category').val(categoryId);
-                            $('#selected_subcategory').val('');
-                            $('#selected_child_category').val('');
-                            $('#search_listings_form').submit();
-                        }
-                    });
-                });
-
-                // Handle subcategory click
-                $(document).on('click', '.subcategory-link', function(e) {
-                    e.preventDefault();
-                    const $item = $(this).closest('.category-item');
-                    const subcategoryId = $item.data('subcategory-id');
-                    const subcategoryName = $item.data('subcategory-name');
-
-                    // Load child categories for this subcategory
-                    $.get(SUBCATEGORY_ENDPOINT, {
-                        parent_id: subcategoryId
-                    }, function(data) {
-                        const $childCategoryList = $('#child-category-list');
-                        $childCategoryList.empty();
-
-                        if (data.length > 0) {
-                            data.forEach(function(childCat) {
-                                const isActive = '{{ request('child_cat') }}' ==
-                                    childCat.id ? 'active' : '';
-                                $childCategoryList.append(`
-                                    <li class="category-item ${isActive}" data-child-category-id="${childCat.id}">
-                                        <a href="javascript:void(0)" class="category-link child-category-link">
-                                            <i class="las la-angle-right"></i>
-                                            ${childCat.title}
-                                        </a>
-                                    </li>
-                                `);
-                            });
-
-                            // Show child category section
-                            $('#subcategory-section').hide();
-                            $('#child-category-section').show();
-                            $('#selected-subcategory-name').text(subcategoryName);
-                            $('#selected_subcategory').val(subcategoryId);
-                        } else {
-                            // No child categories - directly apply subcategory filter
-                            $('#selected_subcategory').val(subcategoryId);
-                            $('#selected_child_category').val('');
-                            $('#search_listings_form').submit();
-                        }
-                    });
-                });
-
-                // Handle child category click
-                $(document).on('click', '.child-category-link', function(e) {
-                    e.preventDefault();
-                    const $item = $(this).closest('.category-item');
-                    const childCategoryId = $item.data('child-category-id');
-
-                    $('.category-item').removeClass('active');
-                    $item.addClass('active');
-
-                    $('#selected_child_category').val(childCategoryId);
+                    // Set selected category and submit form
+                    $('#selected_category_id').val(categoryId);
                     $('#search_listings_form').submit();
                 });
 
-                // Back to parent categories
-                $('#back-to-parent-categories').on('click', function() {
-                    $('#subcategory-section').hide();
-                    $('#parent-category-section').show();
-                    $('#selected_subcategory').val('');
-                    $('#selected_child_category').val('');
+                // Handle back button click
+                $('#back-button').on('click', function() {
+                    const selectedCategoryId = '{{ request('cat_id') }}';
+                    const parentInfo = categoryHierarchy[selectedCategoryId];
+
+                    if (parentInfo && parentInfo.parentId) {
+                        // Go to parent category
+                        $('#selected_category_id').val(parentInfo.parentId);
+                    } else {
+                        // Go to root (clear category filter)
+                        $('#selected_category_id').val('');
+                    }
+                    $('#search_listings_form').submit();
                 });
 
-                // Back to subcategories
-                $('#back-to-subcategories').on('click', function() {
-                    $('#child-category-section').hide();
-                    $('#subcategory-section').show();
-                    $('#selected_child_category').val('');
+                // Load and display categories on page load
+                function loadCategories() {
+                    const selectedCategoryId = '{{ request('cat_id') }}';
+
+                    if (!selectedCategoryId) {
+                        // No category selected - already showing root categories from backend
+                        $('#back-button-container').hide();
+                        return;
+                    }
+
+                    // Try to load children of selected category
+                    $.get(SUBCATEGORY_ENDPOINT, {
+                        parent_id: selectedCategoryId
+                    }, function(children) {
+                        const $categoryList = $('#category-list');
+
+                        if (children.length > 0) {
+                            // Selected category HAS children - show them
+                            $categoryList.empty();
+                            // Remove any existing selected category display
+                            $('#selected-category-display').remove();
+
+                            // Extract parent info from first child (all children share same parent)
+                            const currentCategoryTitle = children[0].parent_title ||
+                                'Selected Category';
+                            const currentCategoryParentId = children[0].parent_id || null;
+                            const currentCategoryGrandparentTitle = children[0].grandparent_title ||
+                                null;
+
+                            // Show selected category display
+                            let selectedCategoryHtml = `
+                                <div id="selected-category-display" style="margin-left: 12px;">
+                                    <strong style="color: var(--main-color-one); font-size: 16px;">
+                                        <i class="las la-folder-open" style="margin-right: 5px;"></i>
+                                        ${currentCategoryTitle}
+                                    </strong>
+                                </div>
+                            `;
+                            $('#back-button-container').after(selectedCategoryHtml);
+
+                            children.forEach(function(child) {
+                                $categoryList.append(`
+                                    <li class="category-item"
+                                        data-category-id="${child.id}"
+                                        data-category-name="${child.title}"
+                                        data-parent-id="${selectedCategoryId}"
+                                        data-parent-name="${currentCategoryTitle}">
+                                        <a href="javascript:void(0)" class="category-link">
+                                            <i class="las la-angle-right"></i>
+                                            ${child.title}
+                                        </a>
+                                    </li>
+                                `);
+
+                                // Store parent relationship for each child
+                                categoryHierarchy[child.id] = {
+                                    parentId: selectedCategoryId,
+                                    parentName: currentCategoryTitle
+                                };
+                            });
+
+                            // Store current category's parent relationship for back navigation
+                            if (currentCategoryParentId) {
+                                categoryHierarchy[selectedCategoryId] = {
+                                    parentId: currentCategoryParentId,
+                                    parentName: currentCategoryGrandparentTitle || 'Categories'
+                                };
+                                $('#back-button-text').text('Back to ' +
+                                    currentCategoryGrandparentTitle);
+                            } else {
+                                // Current category is at root level
+                                categoryHierarchy[selectedCategoryId] = {
+                                    parentId: null,
+                                    parentName: 'Categories'
+                                };
+                                $('#back-button-text').text('Back to Categories');
+                            }
+
+                            $('#back-button-container').show();
+                        } else {
+                            // Selected category has NO children - keep showing current level with selected active
+                            // Remove selected category display if exists
+                            $('#selected-category-display').remove();
+
+                            $('#category-list .category-item').removeClass('active');
+                            $(`.category-item[data-category-id="${selectedCategoryId}"]`).addClass(
+                                'active');
+
+                            // Get parent info from the list item
+                            const $selectedItem = $(
+                                `.category-item[data-category-id="${selectedCategoryId}"]`);
+                            const parentId = $selectedItem.data('parent-id');
+                            const parentName = $selectedItem.data('parent-name');
+
+                            if (parentName) {
+                                $('#back-button-text').text('Back to ' + parentName);
+
+                                // Store for back navigation
+                                if (!categoryHierarchy[selectedCategoryId]) {
+                                    categoryHierarchy[selectedCategoryId] = {
+                                        parentId: parentId,
+                                        parentName: parentName
+                                    };
+                                }
+                            } else {
+                                $('#back-button-text').text('Back to Categories');
+                            }
+
+                            $('#back-button-container').show();
+                        }
+                    });
+                }
+
+                // Store parent relationships from initial page load
+                $('#category-list .category-item').each(function() {
+                    const catId = $(this).data('category-id');
+                    const parentId = $(this).data('parent-id');
+                    const parentName = $(this).data('parent-name');
+
+                    if (parentId) {
+                        categoryHierarchy[catId] = {
+                            parentId: parentId,
+                            parentName: parentName
+                        };
+                    }
                 });
+
+                // Initialize categories on page load
+                loadCategories();
 
                 // ========== Location Hierarchical Selection ==========
 

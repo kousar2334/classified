@@ -180,21 +180,83 @@ class AdController extends Controller
 
     public function getSubcategories(Request $request)
     {
+        $parentCategory = null;
+        if ($request->parent_id) {
+            $parentCategory = AdsCategory::find($request->parent_id);
+        }
+
         $subcategories = AdsCategory::where('parent', $request->parent_id)
             ->where('status', config('settings.general_status.active'))
             ->orderBy('id', 'ASC')
-            ->get(['id', 'title']);
+            ->get(['id', 'title', 'parent'])
+            ->map(function ($cat) use ($parentCategory) {
+                return [
+                    'id' => $cat->id,
+                    'title' => $cat->title,
+                    'parent_id' => $parentCategory ? $parentCategory->parent : null,
+                    'parent_title' => $parentCategory ? $parentCategory->title : null,
+                    'grandparent_title' => $parentCategory && $parentCategory->parent
+                        ? AdsCategory::find($parentCategory->parent)->title ?? null
+                        : null
+                ];
+            });
 
         return response()->json($subcategories);
     }
 
     public function adListingPage(Request $request, $category_slug = null)
     {
-        // Load parent categories for filter dropdown
-        $categories = AdsCategory::whereNull('parent')
-            ->where('status', config('settings.general_status.active'))
-            ->orderBy('id', 'ASC')
-            ->get(['id', 'title']);
+        // Determine which categories to load (root or children based on cat_id)
+        $selectedCategoryId = $request->cat_id ?? null;
+        $selectedCategory = null;
+
+        if ($selectedCategoryId) {
+            $selectedCategory = AdsCategory::with('parentCategory')
+                ->where('status', config('settings.general_status.active'))
+                ->find($selectedCategoryId);
+
+            // Check if selected category has children
+            $hasChildren = AdsCategory::where('parent', $selectedCategoryId)
+                ->where('status', config('settings.general_status.active'))
+                ->exists();
+
+            if ($hasChildren) {
+                // Load children of selected category
+                $categories = AdsCategory::where('parent', $selectedCategoryId)
+                    ->where('status', config('settings.general_status.active'))
+                    ->orderBy('id', 'ASC')
+                    ->get(['id', 'title', 'parent'])
+                    ->map(function ($cat) use ($selectedCategory) {
+                        $cat->parent_id = $cat->parent;
+                        $cat->parent_title = $selectedCategory->title ?? '';
+                        return $cat;
+                    });
+            } else {
+                // Load siblings (same parent level)
+                $categories = AdsCategory::where('parent', $selectedCategory->parent ?? null)
+                    ->where('status', config('settings.general_status.active'))
+                    ->orderBy('id', 'ASC')
+                    ->get(['id', 'title', 'parent'])
+                    ->map(function ($cat) use ($selectedCategory) {
+                        $cat->parent_id = $cat->parent;
+                        if ($cat->parent && $selectedCategory->parentCategory) {
+                            $cat->parent_title = $selectedCategory->parentCategory->title ?? '';
+                        }
+                        return $cat;
+                    });
+            }
+        } else {
+            // Load root categories (no parent)
+            $categories = AdsCategory::whereNull('parent')
+                ->where('status', config('settings.general_status.active'))
+                ->orderBy('id', 'ASC')
+                ->get(['id', 'title', 'parent'])
+                ->map(function ($cat) {
+                    $cat->parent_id = null;
+                    $cat->parent_title = null;
+                    return $cat;
+                });
+        }
 
         // Load conditions for filter
         $conditions = AdsCondition::where('status', config('settings.general_status.active'))
@@ -202,35 +264,22 @@ class AdController extends Controller
             ->get(['id', 'title']);
 
         // If category slug provided, find the category
-        $selectedCategory = null;
-        if ($category_slug) {
+        if ($category_slug && !$selectedCategory) {
             $selectedCategory = AdsCategory::where('permalink', $category_slug)
                 ->where('status', config('settings.general_status.active'))
                 ->first();
         }
 
-        // Get selected category/subcategory/child category for breadcrumb
+        // Build breadcrumb trail for selected category
         $breadcrumbCategory = null;
         $breadcrumbSubcategory = null;
         $breadcrumbChildCategory = null;
 
-        if ($request->has('child_cat') && $request->child_cat != '') {
-            $breadcrumbChildCategory = AdsCategory::find($request->child_cat);
-            if ($breadcrumbChildCategory) {
-                $breadcrumbSubcategory = AdsCategory::find($breadcrumbChildCategory->parent);
-                if ($breadcrumbSubcategory) {
-                    $breadcrumbCategory = AdsCategory::find($breadcrumbSubcategory->parent);
-                }
-            }
-        } elseif ($request->has('subcat') && $request->subcat != '') {
-            $breadcrumbSubcategory = AdsCategory::find($request->subcat);
-            if ($breadcrumbSubcategory) {
-                $breadcrumbCategory = AdsCategory::find($breadcrumbSubcategory->parent);
-            }
-        } elseif ($request->has('cat') && $request->cat != '') {
-            $breadcrumbCategory = AdsCategory::find($request->cat);
-        } elseif ($selectedCategory) {
-            $breadcrumbCategory = $selectedCategory;
+        if ($selectedCategory) {
+            $breadcrumbTrail = $this->buildCategoryBreadcrumb($selectedCategory);
+            $breadcrumbCategory = $breadcrumbTrail['category'] ?? null;
+            $breadcrumbSubcategory = $breadcrumbTrail['subcategory'] ?? null;
+            $breadcrumbChildCategory = $breadcrumbTrail['child'] ?? null;
         }
 
         // Get selected location for breadcrumb
@@ -269,21 +318,11 @@ class AdController extends Controller
             });
         }
 
-        // Filter by category
-        if ($request->has('cat') && $request->cat != '') {
-            $query->where('category_id', $request->cat);
+        // Filter by category (cat_id)
+        if ($request->has('cat_id') && $request->cat_id != '') {
+            $query->where('category_id', $request->cat_id);
         } elseif ($selectedCategory) {
-            $query->where('category', $selectedCategory->id);
-        }
-
-        // Filter by subcategory
-        if ($request->has('subcat') && $request->subcat != '') {
-            $query->where('category_id', $request->subcat);
-        }
-
-        // Filter by child category
-        if ($request->has('child_cat') && $request->child_cat != '') {
-            $query->where('category_id', $request->child_cat);
+            $query->where('category_id', $selectedCategory->id);
         }
 
         // Filter by price range
@@ -346,13 +385,12 @@ class AdController extends Controller
         // Paginate results
         $ads = $query->paginate(12)->appends($request->except('page'));
 
-        // dd($breadcrumbSubcategory);
-
         return view('frontend.pages.ad.listing', compact(
             'categories',
             'conditions',
             'category_slug',
             'selectedCategory',
+            'selectedCategoryId',
             'ads',
             'breadcrumbCategory',
             'breadcrumbSubcategory',
@@ -416,5 +454,54 @@ class AdController extends Controller
             ->get(['id', 'name as text']);
 
         return response()->json($cities);
+    }
+
+    /**
+     * Build breadcrumb trail for a category by traversing up the hierarchy
+     */
+    private function buildCategoryBreadcrumb($category)
+    {
+        $breadcrumb = [
+            'category' => null,
+            'subcategory' => null,
+            'child' => null
+        ];
+
+        if (!$category) {
+            return $breadcrumb;
+        }
+
+        // Determine depth level by traversing up the hierarchy
+        $current = $category;
+        $level = 0;
+        $hierarchy = [$current];
+
+        while ($current->parent) {
+            $parent = AdsCategory::find($current->parent);
+            if ($parent) {
+                $hierarchy[] = $parent;
+                $current = $parent;
+                $level++;
+            } else {
+                break;
+            }
+        }
+
+        // Reverse to get root -> leaf order
+        $hierarchy = array_reverse($hierarchy);
+
+        // Assign to breadcrumb based on depth
+        if (count($hierarchy) == 1) {
+            $breadcrumb['category'] = $hierarchy[0];
+        } elseif (count($hierarchy) == 2) {
+            $breadcrumb['category'] = $hierarchy[0];
+            $breadcrumb['subcategory'] = $hierarchy[1];
+        } elseif (count($hierarchy) >= 3) {
+            $breadcrumb['category'] = $hierarchy[0];
+            $breadcrumb['subcategory'] = $hierarchy[1];
+            $breadcrumb['child'] = $hierarchy[2];
+        }
+
+        return $breadcrumb;
     }
 }
