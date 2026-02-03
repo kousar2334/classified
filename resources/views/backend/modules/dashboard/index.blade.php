@@ -63,6 +63,32 @@
                 </div>
             </div>
 
+            <!-- Charts Row -->
+            <div class="row" style="display: flex; flex-wrap: wrap;">
+                <!-- Monthly Ads Chart -->
+                <div class="col-md-8 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ translation('Monthly Ad Posts (Last 12 Months)') }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="monthlyAdsChart" style="height: 300px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pie Chart -->
+                <div class="col-md-4 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ translation('Overview Stats') }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="overviewPieChart" style="height: 300px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Main row -->
             <div class="row">
                 <!-- Latest Ads -->
@@ -128,7 +154,8 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4" class="text-center">{{ translation('No members found') }}</td>
+                                            <td colspan="4" class="text-center">{{ translation('No members found') }}
+                                            </td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -141,4 +168,68 @@
     </section>
 @endsection
 @section('page-script')
+    <script src="{{ asset('public/web-assets/backend/plugins/chart.js/chart.umd.min.js') }}"></script>
+    <script>
+        $(function() {
+            var ctx = document.getElementById('overviewPieChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: [
+                        '{{ translation('Ads') }}',
+                        '{{ translation('Members') }}',
+                        '{{ translation('Blogs') }}',
+                        '{{ translation('Pages') }}'
+                    ],
+                    datasets: [{
+                        data: [{{ $total_ads }}, {{ $total_members }}, {{ $total_blogs }},
+                            {{ $total_page }}
+                        ],
+                        backgroundColor: ['#17a2b8', '#28a745', '#ffc107', '#dc3545']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            var ctx2 = document.getElementById('monthlyAdsChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: {!! json_encode($monthly_labels) !!},
+                    datasets: [{
+                        label: '{{ translation('Ads Posted') }}',
+                        data: {!! json_encode($monthly_data) !!},
+                        backgroundColor: '#17a2b8',
+                        borderColor: '#138496',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

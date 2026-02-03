@@ -293,6 +293,57 @@
             color: var(--main-color-one);
             font-weight: 500;
         }
+
+        /* Fix dollar sign vertical alignment (override translationY typo in main-style.css) */
+        .cateSidebar1 .catagoriesWraper .priceRangeWraper .site_currency_symbol {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+            font-size: 14px;
+            color: #555;
+            z-index: 1;
+        }
+
+        .cateSidebar1 .catagoriesWraper .priceRangeWraper input {
+            padding-left: 20px;
+        }
+
+        /* Price range slider styles */
+        .price_range_setup {
+            margin-top: 16px;
+            margin-bottom: 8px;
+        }
+
+        .price_range_setup .noUi-horizontal {
+            height: 6px;
+            border: none;
+            box-shadow: none;
+            background: #e2e8f0;
+            border-radius: 3px;
+        }
+
+        .price_range_setup .noUi-connect {
+            background: var(--main-color-one);
+        }
+
+        .price_range_setup .noUi-handle {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--main-color-one);
+            border: 2px solid #fff;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            top: -7px;
+            right: -9px;
+        }
+
+        .price_range_setup .noUi-handle::before,
+        .price_range_setup .noUi-handle::after {
+            display: none;
+        }
     </style>
 @endsection
 @section('content')
@@ -531,19 +582,21 @@
                                         <div class="field">
                                             <div class="min_price_range priceRangeWraper">
                                                 <span class="site_currency_symbol">$</span>
-                                                <input type="number" class="input-min">
+                                                <input type="number" class="input-min"
+                                                    value="{{ request('min_price', 0) }}">
                                             </div>
                                         </div>
                                         <div class="separator">-</div>
                                         <div class="field">
                                             <div class="max_price_range priceRangeWraper">
                                                 <span class="site_currency_symbol">$</span>
-                                                <input type="number" class="input-max">
+                                                <input type="number" class="input-max"
+                                                    value="{{ request('max_price', 50000) }}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="price_range_setup">
-                                        <div class="progress"></div>
+                                        <div id="price-slider"></div>
                                     </div>
                                     <!-- cancel and apply button start -->
                                     <div class="cancel_apply_section_start mt-3">
@@ -699,12 +752,52 @@
     </div>
 @endsection
 @section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
     <script>
         (function($) {
             "use strict";
 
             $(document).ready(function() {
                 const SUBCATEGORY_ENDPOINT = '/ad/subcategories';
+
+                // ========== Price Range Slider ==========
+                const priceSliderEl = document.getElementById('price-slider');
+                if (priceSliderEl) {
+                    const minVal = parseInt($('.input-min').val()) || 0;
+                    const maxVal = parseInt($('.input-max').val()) || 50000;
+
+                    noUiSlider.create(priceSliderEl, {
+                        start: [minVal, maxVal],
+                        connect: true,
+                        range: {
+                            'min': 0,
+                            'max': 50000
+                        },
+                        step: 100,
+                        format: {
+                            to: function(value) {
+                                return Math.round(value);
+                            },
+                            from: function(value) {
+                                return Number(value);
+                            }
+                        }
+                    });
+
+                    // Sync slider to inputs
+                    priceSliderEl.noUiSlider.on('update', function(values) {
+                        $('.input-min').val(values[0]);
+                        $('.input-max').val(values[1]);
+                    });
+
+                    // Sync inputs to slider
+                    $('.input-min').on('change', function() {
+                        priceSliderEl.noUiSlider.set([$(this).val(), null]);
+                    });
+                    $('.input-max').on('change', function() {
+                        priceSliderEl.noUiSlider.set([null, $(this).val()]);
+                    });
+                }
                 const COUNTRIES_ENDPOINT = '/ad/countries';
                 const STATES_ENDPOINT = '/ad/states';
                 const CITIES_ENDPOINT = '/ad/cities';

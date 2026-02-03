@@ -14,8 +14,11 @@ use App\Models\AdsTag;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\State;
+use App\Models\User;
+use App\Notifications\NewAdPosted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class AdController extends Controller
@@ -138,6 +141,10 @@ class AdController extends Controller
             }
 
             DB::commit();
+
+            // Notify admin users about the new ad
+            $admins = User::where('type', config('settings.user_type.admin'))->get();
+            Notification::send($admins, new NewAdPosted($ad));
 
             // Check if it's an AJAX request
             if ($request->ajax()) {
