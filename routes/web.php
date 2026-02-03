@@ -33,8 +33,7 @@ Route::get('/ad/countries', [AdController::class, 'getCountries'])->name('ad.cou
 Route::get('/ad/states', [AdController::class, 'getStates'])->name('ad.states');
 Route::get('/ad/cities', [AdController::class, 'getCities'])->name('ad.cities');
 Route::get('listings/{category_slug?}', [AdController::class, 'adListingPage'])->name('ad.listing.page');
-Route::get('/ad/details/{slug}', [AdController::class, 'adDetailsPage'])->name('ad.details.page');
-Route::post('/ad/details/{slug}', [AdController::class, 'adDetailsPage'])->name('ad.details.page');
+Route::get('/listings/details/{slug}', [AdController::class, 'adDetailsPage'])->name('ad.details.page');
 
 //Location Routes
 Route::get('/state/list', [LocationController::class, 'stateListofCountry'])->name('location.country.states.options');

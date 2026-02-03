@@ -42,26 +42,28 @@ class AdController extends Controller
     public function storeAd(AdPostingRequest $request)
     {
 
+        // dd($request);
         try {
             DB::beginTransaction();
 
             $ad = new Ad();
             $ad->user_id = auth()->check() ? auth()->id() : null;
+
             $ad->title = xss_clean($request->title);
             $ad->description = xss_clean($request->description);
-            $ad->category = $request->category;
-            $ad->country = $request->country;
-            $ad->state = $request->state;
-            $ad->city = $request->city;
-            $ad->address = xss_clean($request->address);
-            $ad->item_condition = $request->condition;
+            $ad->category_id = $request->category;
+            $ad->city_id = $request->city;
+            $ad->condition_id = $request->condition;
             $ad->price = $request->price;
             $ad->is_negotiable = $request->has('negotiable') ? config('settings.general_status.active') : config('settings.general_status.in_active');
+            $ad->country_id = $request->country;
+            $ad->state_id = $request->state;
+            $ad->address = xss_clean($request->address);
+            $ad->video_url = $request->video_url;
             $ad->contact_email = xss_clean($request->contact_email);
             $ad->contact_phone = xss_clean($request->phone);
             $ad->contact_is_hide = $request->has('hide_phone_number') ? config('settings.general_status.active') : config('settings.general_status.in_active');
             $ad->is_featured = $request->has('is_featured') ? config('settings.general_status.active') : config('settings.general_status.in_active');
-            $ad->video_url = $request->video_url;
             $ad->status = config('settings.general_status.active');
             $ad->payment_status = config('settings.general_status.active');
             $ad->cost = 0;
@@ -129,7 +131,7 @@ class AdController extends Controller
                 foreach ($request->file('gallery_images') as $image) {
                     $savedImage = saveFileInStorage($image);
                     $galleryImage = new AdGalleryImage();
-                    $galleryImage->image_id = $savedImage;
+                    $galleryImage->image_path = $savedImage;
                     $galleryImage->ad_id = $ad->id;
                     $galleryImage->save();
                 }
@@ -142,11 +144,11 @@ class AdController extends Controller
                 return response()->json([
                     'success' => true,
                     'message' => 'Ad posted successfully!',
-                    'redirect_url' => route('ad.details.page', Str::slug($ad->title) . '/' . $ad->uid)
+                    'redirect_url' => route('ad.details.page', ['slug' => $ad->uid]),
                 ]);
             }
 
-            return redirect()->route('ad.details.page', Str::slug($ad->title) . '/' . $ad->uid)
+            return redirect()->route('ad.details.page', ['slug' => $ad->uid])
                 ->with('success', 'Ad posted successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
