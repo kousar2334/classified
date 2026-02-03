@@ -24,7 +24,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/member/dashboard', [MemberAuthController::class, 'memberDashboard'])->name('member.dashboard');
 });
 
-//Ad Routes
+//Listing Routes
 Route::get('/post/listing', [AdController::class, 'addPostPage'])->name('ad.post.page');
 Route::post('/post/ad', [AdController::class, 'storeAd'])->name('ad.store');
 Route::get('/ad/subcategories', [AdController::class, 'getSubcategories'])->name('ad.subcategories');

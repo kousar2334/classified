@@ -14,42 +14,16 @@ use App\Models\AdsCategory;
 use App\Models\AdsCondition;
 use App\Models\AdsCustomField;
 use App\Repository\AdRepository;
-use App\Http\ApiResource;
-
-\AdCollection;
-
 use App\Http\Requests\AdPostingRequest;
-use App\Http\ApiResource;
-
-\AdsTagCollection;
-
-use App\Http\ApiResource;
-
-\SingleAdResource;
-
-use App\Http\ApiResource;
-
-\AdCategoryResource;
-
-use App\Http\ApiResource;
-
-\AdCategoryCollection;
-
-use App\Http\ApiResource;
-
-\AdsConditionCollection;
-
-use App\Http\ApiResource;
-
-\MegaCategoryCollection;
-
-use App\Http\ApiResource;
-
-\AdsCustomFieldCollection;
-
-use App\Http\ApiResource;
-
-\CustomerEditableAdResource;
+use App\Http\ApiResource\AdCollection;
+use App\Http\ApiResource\AdsTagCollection;
+use App\Http\ApiResource\SingleAdResource;
+use App\Http\ApiResource\AdCategoryResource;
+use App\Http\ApiResource\AdCategoryCollection;
+use App\Http\ApiResource\AdsConditionCollection;
+use App\Http\ApiResource\MegaCategoryCollection;
+use App\Http\ApiResource\AdsCustomFieldCollection;
+use App\Http\ApiResource\CustomerEditableAdResource;
 
 class AdsController extends ApiController
 {
@@ -449,9 +423,33 @@ class AdsController extends ApiController
             $query = $query->where('city', $request['search_location']);
         }
 
-        // if ($request->has('search_key') && $request['search_key'] != '') {
-        //     $query = $query->orWhere('title', 'like', '%' . $request['search_key'] . '%');
-        // }
+        // Search by title/description
+        if ($request->has('search_key') && $request['search_key'] != '') {
+            $query = $query->where(function($q) use ($request) {
+                $q->where('title', 'like', '%' . $request['search_key'] . '%')
+                  ->orWhere('description', 'like', '%' . $request['search_key'] . '%');
+            });
+        }
+
+        // Filter by date posted
+        if ($request->has('date_posted') && $request['date_posted'] != '') {
+            $now = now();
+
+            switch ($request['date_posted']) {
+                case 'today':
+                    $query = $query->whereDate('created_at', $now->toDateString());
+                    break;
+                case 'yesterday':
+                    $query = $query->whereDate('created_at', $now->subDay()->toDateString());
+                    break;
+                case 'last_week':
+                    $query = $query->whereBetween('created_at', [
+                        $now->subWeek()->startOfDay(),
+                        now()->endOfDay()
+                    ]);
+                    break;
+            }
+        }
 
         //Sorting items
         if ($request->has('sorting') && $request['sorting'] != '') {

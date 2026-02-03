@@ -148,7 +148,6 @@ class AdController extends Controller
 
             return redirect()->route('ad.details.page', Str::slug($ad->title) . '/' . $ad->uid)
                 ->with('success', 'Ad posted successfully!');
-
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -187,9 +186,179 @@ class AdController extends Controller
         return response()->json($subcategories);
     }
 
-    public function adListingPage($category_slug = null)
+    public function adListingPage(Request $request, $category_slug = null)
     {
-        return view('frontend.pages.ad.listing', compact('category_slug'));
+        // Load parent categories for filter dropdown
+        $categories = AdsCategory::whereNull('parent')
+            ->where('status', config('settings.general_status.active'))
+            ->orderBy('id', 'ASC')
+            ->get(['id', 'title']);
+
+        // Load conditions for filter
+        $conditions = AdsCondition::where('status', config('settings.general_status.active'))
+            ->orderBy('id', 'ASC')
+            ->get(['id', 'title']);
+
+        // If category slug provided, find the category
+        $selectedCategory = null;
+        if ($category_slug) {
+            $selectedCategory = AdsCategory::where('permalink', $category_slug)
+                ->where('status', config('settings.general_status.active'))
+                ->first();
+        }
+
+        // Get selected category/subcategory/child category for breadcrumb
+        $breadcrumbCategory = null;
+        $breadcrumbSubcategory = null;
+        $breadcrumbChildCategory = null;
+
+        if ($request->has('child_cat') && $request->child_cat != '') {
+            $breadcrumbChildCategory = AdsCategory::find($request->child_cat);
+            if ($breadcrumbChildCategory) {
+                $breadcrumbSubcategory = AdsCategory::find($breadcrumbChildCategory->parent);
+                if ($breadcrumbSubcategory) {
+                    $breadcrumbCategory = AdsCategory::find($breadcrumbSubcategory->parent);
+                }
+            }
+        } elseif ($request->has('subcat') && $request->subcat != '') {
+            $breadcrumbSubcategory = AdsCategory::find($request->subcat);
+            if ($breadcrumbSubcategory) {
+                $breadcrumbCategory = AdsCategory::find($breadcrumbSubcategory->parent);
+            }
+        } elseif ($request->has('cat') && $request->cat != '') {
+            $breadcrumbCategory = AdsCategory::find($request->cat);
+        } elseif ($selectedCategory) {
+            $breadcrumbCategory = $selectedCategory;
+        }
+
+        // Get selected location for breadcrumb
+        $breadcrumbCountry = null;
+        $breadcrumbState = null;
+        $breadcrumbCity = null;
+
+        if ($request->has('city') && $request->city != '') {
+            $breadcrumbCity = City::find($request->city);
+            if ($breadcrumbCity) {
+                $breadcrumbState = State::find($breadcrumbCity->state_id);
+                if ($breadcrumbState) {
+                    $breadcrumbCountry = Country::find($breadcrumbState->country_id);
+                }
+            }
+        } elseif ($request->has('state') && $request->state != '') {
+            $breadcrumbState = State::find($request->state);
+            if ($breadcrumbState) {
+                $breadcrumbCountry = Country::find($breadcrumbState->country_id);
+            }
+        } elseif ($request->has('country') && $request->country != '') {
+            $breadcrumbCountry = Country::find($request->country);
+        }
+
+        // Build query for ads
+        $query = Ad::with(['categoryInfo', 'cityInfo'])
+            ->where('status', config('settings.general_status.active'))
+            ->where('payment_status', config('settings.general_status.active'));
+
+        // Filter by search query
+        if ($request->has('q') && $request->q != '') {
+            $searchQuery = $request->q;
+            $query->where(function ($q) use ($searchQuery) {
+                $q->where('title', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('description', 'like', '%' . $searchQuery . '%');
+            });
+        }
+
+        // Filter by category
+        if ($request->has('cat') && $request->cat != '') {
+            $query->where('category', $request->cat);
+        } elseif ($selectedCategory) {
+            $query->where('category', $selectedCategory->id);
+        }
+
+        // Filter by subcategory
+        if ($request->has('subcat') && $request->subcat != '') {
+            $query->where('category', $request->subcat);
+        }
+
+        // Filter by child category
+        if ($request->has('child_cat') && $request->child_cat != '') {
+            $query->where('category', $request->child_cat);
+        }
+
+        // Filter by price range
+        if ($request->has('min_price') && $request->has('max_price')) {
+            $minPrice = $request->min_price;
+            $maxPrice = $request->max_price;
+            if ($minPrice != '' && $maxPrice != '') {
+                $query->whereBetween('price', [$minPrice, $maxPrice]);
+            }
+        }
+
+        // Filter by condition
+        if ($request->has('condition') && $request->condition != '') {
+            $query->where('item_condition', $request->condition);
+        }
+
+        // Filter by type (featured/top_listing)
+        if ($request->has('type') && $request->type == 'featured') {
+            $query->where('is_featured', config('settings.general_status.active'));
+        }
+
+        // Filter by date posted
+        if ($request->has('date_posted') && $request->date_posted != '') {
+            $now = now();
+            switch ($request->date_posted) {
+                case 'today':
+                    $query->whereDate('created_at', $now->toDateString());
+                    break;
+                case 'yesterday':
+                    $query->whereDate('created_at', $now->subDay()->toDateString());
+                    break;
+                case 'last_week':
+                    $query->whereBetween('created_at', [
+                        $now->subWeek()->startOfDay(),
+                        now()->endOfDay()
+                    ]);
+                    break;
+            }
+        }
+
+        // Sorting
+        if ($request->has('sortby') && $request->sortby != '') {
+            switch ($request->sortby) {
+                case 'latest_listing':
+                    $query->orderBy('created_at', 'DESC');
+                    break;
+                case 'lowest_price':
+                    $query->orderBy('price', 'ASC');
+                    break;
+                case 'highest_price':
+                    $query->orderBy('price', 'DESC');
+                    break;
+                default:
+                    $query->orderBy('created_at', 'DESC');
+            }
+        } else {
+            $query->orderBy('created_at', 'DESC');
+        }
+
+        // Paginate results
+        $ads = $query->paginate(12)->appends($request->except('page'));
+
+        // dd($breadcrumbSubcategory);
+
+        return view('frontend.pages.ad.listing', compact(
+            'categories',
+            'conditions',
+            'category_slug',
+            'selectedCategory',
+            'ads',
+            'breadcrumbCategory',
+            'breadcrumbSubcategory',
+            'breadcrumbChildCategory',
+            'breadcrumbCountry',
+            'breadcrumbState',
+            'breadcrumbCity'
+        ));
     }
 
     public function adDetailsPage($slug)
