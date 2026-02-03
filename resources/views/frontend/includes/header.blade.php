@@ -1,3 +1,85 @@
+ <style>
+     .navbar-area .header-cart .dropdown-menu li {
+         line-height: normal;
+     }
+
+     .navbar-area .header-cart .dropdown-menu .dropdown-item {
+         padding: 8px 16px;
+         font-size: 14px;
+         color: #212529;
+     }
+
+     .navbar-area .header-cart .dropdown-menu .dropdown-item:hover {
+         background-color: #f0f0f0;
+     }
+
+     @media (max-width: 991.98px) {
+         .navbar-area .click_show_icon {
+             -webkit-transform: translateY(-50%);
+             transform: translateY(-50%);
+         }
+
+         .navbar-area .nav-container .responsive-mobile-menu {
+             display: flex;
+             align-items: center;
+             justify-content: space-between;
+         }
+
+         .navbar-area .nav-container .responsive-mobile-menu .click-mobile-menu {
+             display: flex;
+             align-items: center;
+             gap: 10px;
+         }
+
+         .navbar-area .nav-container .responsive-mobile-menu .navbar-toggler {
+             position: static;
+             -webkit-transform: none;
+             transform: none;
+         }
+
+         .navbar-area .nav-container .responsive-mobile-menu .click_show_icon {
+             position: static;
+             -webkit-transform: none;
+             transform: none;
+         }
+
+         .navbar-area .nav-container .nav-right-content {
+             width: 100%;
+         }
+
+         .navbar-area .header-cart {
+             flex-wrap: wrap;
+             width: 100%;
+             gap: 8px;
+         }
+
+         .navbar-area .header-cart .single {
+             margin-left: 0;
+         }
+
+         .navbar-area .header-cart .single .btn-wrapper .cmn-btn1 {
+             padding: 8px 14px;
+             font-size: 13px;
+         }
+
+         .navbar-area .header-cart .single .btn-wrapper .cmn-btn1 i {
+             font-size: 18px;
+         }
+
+         .navbar-area .header-cart .nav-item.dropdown {
+             margin-left: 0;
+         }
+
+         .navbar-area .header-cart .nav-item.dropdown .cmn-btn.sign-in {
+             padding: 8px 14px;
+             font-size: 13px;
+         }
+
+         .navbar-area .header-cart .dropdown-menu {
+             position: absolute;
+         }
+     }
+ </style>
  <header class="header-style-01">
      <nav class="navbar navbar-area headerBg4 navbar-expand-lg plr">
          <div class="container nav-container">
@@ -8,7 +90,7 @@
                      </a>
                  </div>
                  <div class="click-mobile-menu">
-                     <a href="index.html#0" class="click_show_icon"><i class="las la-ellipsis-v"></i> </a>
+                     <a href="javascript:void(0)" class="click_show_icon"><i class="las la-ellipsis-v"></i> </a>
                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                          data-bs-target="#bizcoxx_main_menu" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="navbar-toggler-icon"></span>
@@ -70,25 +152,22 @@
                              </a>
                          </div>
                      @else
-                         <div class="btn-wrapper">
-                             <li class="nav-item dropdown">
-                                 <a class="nav-link dropdown-toggle" href="#" role="button"
-                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                     {{ auth()->user()->name }}
-                                 </a>
-                                 <ul class="dropdown-menu">
-                                     <li>
-                                         <a class="dropdown-item" href="{{ route('member.dashboard') }}">Dashboard</a>
-                                     </li>
-
-                                     <li>
-                                         <a class="dropdown-item" href="{{ route('member.logout') }}">Logout</a>
-                                     </li>
-                                 </ul>
-                             </li>
-                         </div>
+                         <li class="single nav-item dropdown">
+                             <a class="cmn-btn sign-in dropdown-toggle" href="#" role="button"
+                                 data-bs-toggle="dropdown" aria-expanded="false">
+                                 {{ auth()->user()->name }}
+                             </a>
+                             <ul class="dropdown-menu dropdown-menu-end">
+                                 <li>
+                                     <a class="dropdown-item" href="{{ route('member.dashboard') }}">Dashboard</a>
+                                 </li>
+                                 <li>
+                                     <a class="dropdown-item" href="{{ route('member.logout') }}">Logout</a>
+                                 </li>
+                             </ul>
+                         </li>
                      @endif
-                     </li>
+
                      <li class="single">
                          <div class="btn-wrapper">
                              <a href="{{ route('ad.post.page') }}" class="cmn-btn1 popup-modal">
