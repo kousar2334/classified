@@ -362,22 +362,20 @@
                             </a>
                         </div>
                     @endif
-
-                    <!-- Sort By Dropdown -->
-                    <div class="sort-by-wrapper mb-3">
-                        <select id="search_by_sorting" class="form-select">
-                            <option value="">Sort By</option>
-                            <option value="latest_listing" {{ request('sortby') == 'latest_listing' ? 'selected' : '' }}>
-                                Latest Listing
-                            </option>
-                            <option value="lowest_price" {{ request('sortby') == 'lowest_price' ? 'selected' : '' }}>Lowest
-                                Price
-                            </option>
-                            <option value="highest_price" {{ request('sortby') == 'highest_price' ? 'selected' : '' }}>
-                                Highest Price
-                            </option>
-                        </select>
+                    <!--Search any title filter start -->
+                    <div class="catagoriesWraper mb-4">
+                        <div class="catagories w-100">
+                            <div class="single-category-service">
+                                <div class="single-select">
+                                    <input type="text" class="search-input form-control" id="search_by_query"
+                                        placeholder="Listing search" name="q" value="{{ request('q') }}">
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <!--Search any title filter end -->
+                    <!-- Sort By Dropdown -->
+
                     <form id="search_listings_form" method="GET"
                         action="{{ route('ad.listing.page', $category_slug ?? '') }}">
                         <!-- Hidden inputs for filter state -->
@@ -581,32 +579,31 @@
                             <div class="viewItems">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="SearchWrapper d-flex justify-content-between align-items-center">
-                                            <!--Search any title filter start -->
-                                            <div class="catagoriesWraper mb-4">
-                                                <div class="catagories w-100">
-                                                    <div class="single-category-service">
-                                                        <div class="single-select">
-                                                            <input type="text" class="search-input form-control"
-                                                                id="search_by_query" placeholder="Listing search"
-                                                                name="q" value="{{ request('q') }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Search any title filter end -->
+                                        <div class="SearchWrapper d-flex justify-content-between align-items-center p-2">
+
                                             <div class="content-title">
-                                                <h4>{{ $ads->total() }} Results</h4>
+                                                <h4>All Ads</h4>
+                                                <p>{{ $ads->total() }} Ads found</p>
                                             </div>
-                                            {{-- <!-- Custom Tab -->
-                                            <div class="views align-items-center">
-                                                <div class="sidebar-btn d-lg-none d-block">
-                                                    <a href="javascript:void(0)"><i class="fa-solid fa-bars"></i></a>
-                                                </div>
-                                            </div> --}}
-
-
+                                            <div class="sort-by-wrapper">
+                                                <select id="search_by_sorting" class="form-select">
+                                                    <option value="">Sort By</option>
+                                                    <option value="latest_listing"
+                                                        {{ request('sortby') == 'latest_listing' ? 'selected' : '' }}>
+                                                        Latest Listing
+                                                    </option>
+                                                    <option value="lowest_price"
+                                                        {{ request('sortby') == 'lowest_price' ? 'selected' : '' }}>Lowest
+                                                        Price
+                                                    </option>
+                                                    <option value="highest_price"
+                                                        {{ request('sortby') == 'highest_price' ? 'selected' : '' }}>
+                                                        Highest Price
+                                                    </option>
+                                                </select>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>

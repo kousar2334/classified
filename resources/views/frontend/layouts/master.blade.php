@@ -3,7 +3,7 @@
 
 @include('frontend.includes.head')
 
-<body class="new-style">
+<body class="main-body">
 
     @include('frontend.includes.header')
     @yield('content')
