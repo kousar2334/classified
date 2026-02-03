@@ -257,6 +257,42 @@
         .sort-by-wrapper select:hover {
             border-color: var(--main-color-one);
         }
+
+        /* Filter Radio Button Styles */
+        .filter-radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-radio-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            margin: 0;
+            font-weight: normal;
+        }
+
+        .filter-radio-label:hover {
+            background-color: #f0f0f0;
+        }
+
+        .filter-radio-label input[type="radio"] {
+            accent-color: var(--main-color-one);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .filter-radio-label input[type="radio"]:checked+span {
+            color: var(--main-color-one);
+            font-weight: 500;
+        }
     </style>
 @endsection
 @section('content')
@@ -521,35 +557,57 @@
                             <div class="catagoriesWraper mb-4">
                                 <div class="catagories">
                                     <h5 class="cateTitle mb-2 postdateTitle">Types</h5>
-                                    <ul class="postdate">
-                                        <li><a href="javascript:void(0)" id="featured">Featured</a></li>
-                                        <li><a href="javascript:void(0)" id="top_listing">Top Listing</a></li>
-                                    </ul>
+                                    <div class="filter-radio-group">
+                                        <label class="filter-radio-label">
+                                            <input type="radio" name="type_radio" value="featured"
+                                                {{ request('type') == 'featured' ? 'checked' : '' }}>
+                                            <span>Featured</span>
+                                        </label>
+                                        <label class="filter-radio-label">
+                                            <input type="radio" name="type_radio" value="top_listing"
+                                                {{ request('type') == 'top_listing' ? 'checked' : '' }}>
+                                            <span>Top Listing</span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="catagoriesWraper mb-4">
                                 <div class="catagories">
                                     <h5 class="cateTitle mb-2 postdateTitle">Condition</h5>
-                                    <ul class="postdate">
+                                    <div class="filter-radio-group">
                                         @foreach ($conditions as $condition)
-                                            <li class="{{ request('condition') == $condition->id ? 'active' : '' }}">
-                                                <a href="javascript:void(0)" class="condition-filter"
-                                                    data-condition-id="{{ $condition->id }}">{{ $condition->title }}</a>
-                                            </li>
+                                            <label class="filter-radio-label">
+                                                <input type="radio" name="condition_radio"
+                                                    value="{{ $condition->id }}"
+                                                    {{ request('condition') == $condition->id ? 'checked' : '' }}>
+                                                <span>{{ $condition->title }}</span>
+                                            </label>
                                         @endforeach
-                                    </ul>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="catagoriesWraper mb-4">
                                 <div class="catagories">
                                     <h5 class="cateTitle mb-2 postdateTitle">Date Posted</h5>
-                                    <ul class="postdate">
-                                        <li><a href="javascript:void(0)" id="today">Today</a></li>
-                                        <li><a href="javascript:void(0)" id="yesterday">Yesterday</a></li>
-                                        <li><a href="javascript:void(0)" id="last_week">Last Week</a></li>
-                                    </ul>
+                                    <div class="filter-radio-group">
+                                        <label class="filter-radio-label">
+                                            <input type="radio" name="date_posted_radio" value="today"
+                                                {{ request('date_posted') == 'today' ? 'checked' : '' }}>
+                                            <span>Today</span>
+                                        </label>
+                                        <label class="filter-radio-label">
+                                            <input type="radio" name="date_posted_radio" value="yesterday"
+                                                {{ request('date_posted') == 'yesterday' ? 'checked' : '' }}>
+                                            <span>Yesterday</span>
+                                        </label>
+                                        <label class="filter-radio-label">
+                                            <input type="radio" name="date_posted_radio" value="last_week"
+                                                {{ request('date_posted') == 'last_week' ? 'checked' : '' }}>
+                                            <span>Last Week</span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1084,38 +1142,20 @@
                 });
 
                 // Condition Filter
-                $(document).on('click', '.condition-filter', function(e) {
-                    e.preventDefault();
-                    const conditionId = $(this).data('condition-id');
-
-                    $('#condition').val(conditionId);
-                    $('.condition-filter').parent().removeClass('active');
-                    $(this).parent().addClass('active');
-
+                $('input[name="condition_radio"]').on('change', function() {
+                    $('#condition').val($(this).val());
                     $('#search_listings_form').submit();
                 });
 
                 // Type Filter
-                $('#featured, #top_listing').on('click', function(e) {
-                    e.preventDefault();
-                    const type = $(this).attr('id');
-
-                    $('#type').val(type);
-                    $('#featured, #top_listing').parent().removeClass('active');
-                    $(this).parent().addClass('active');
-
+                $('input[name="type_radio"]').on('change', function() {
+                    $('#type').val($(this).val());
                     $('#search_listings_form').submit();
                 });
 
                 // Date Posted Filter
-                $('#today, #yesterday, #last_week').on('click', function(e) {
-                    e.preventDefault();
-                    const datePosted = $(this).attr('id');
-
-                    $('#date_posted').val(datePosted);
-                    $('#today, #yesterday, #last_week').parent().removeClass('active');
-                    $(this).parent().addClass('active');
-
+                $('input[name="date_posted_radio"]').on('change', function() {
+                    $('#date_posted').val($(this).val());
                     $('#search_listings_form').submit();
                 });
 
@@ -1126,16 +1166,7 @@
                     $('#search_listings_form').submit();
                 });
 
-                // Highlight active filters on page load
-                const currentType = '{{ request('type') }}';
-                const currentDatePosted = '{{ request('date_posted') }}';
-
-                if (currentType) {
-                    $('#' + currentType).parent().addClass('active');
-                }
-                if (currentDatePosted) {
-                    $('#' + currentDatePosted).parent().addClass('active');
-                }
+                // Active filter states are handled by checked attribute on radio buttons
 
             });
         })(jQuery);
