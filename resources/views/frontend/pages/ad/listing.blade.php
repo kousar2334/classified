@@ -260,8 +260,8 @@
     </style>
 @endsection
 @section('content')
-    <div class="container-1920 plr1">
-        <nav aria-label="breadcrumb" class="frontend-breadcrumb-wrap breadcrumb-nav-part">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="frontend-breadcrumb-wrap mt-3 mb-5">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('ad.listing.page') }}">Listings</a></li>
@@ -331,8 +331,8 @@
         </nav>
     </div>
 
-    <div class="all-listing" data-padding-top="50" data-padding-bottom="100">
-        <div class="container-1920 plr1">
+    <div class="all-listing">
+        <div class="container">
             <!--Sidebar Icon-->
             <div class="sidebar-btn d-none">
                 <a href="javascript:void(0)"><i class="las la-bars"></i></a>
@@ -341,6 +341,43 @@
             <div class="catabody-wraper">
                 <!-- Left Content -->
                 <div class="cateLeftContent">
+                    @if (request()->hasAny([
+                            'q',
+                            'cat',
+                            'subcat',
+                            'child_cat',
+                            'country',
+                            'state',
+                            'city',
+                            'min_price',
+                            'max_price',
+                            'condition',
+                            'type',
+                            'date_posted',
+                            'sortby',
+                        ]))
+                        <div class="reset-btn cmn-filter-btn">
+                            <a href="{{ route('ad.listing.page', $category_slug ?? '') }}">
+                                <i class="las la-undo-alt"></i> Reset Filter
+                            </a>
+                        </div>
+                    @endif
+
+                    <!-- Sort By Dropdown -->
+                    <div class="sort-by-wrapper mb-3">
+                        <select id="search_by_sorting" class="form-select">
+                            <option value="">Sort By</option>
+                            <option value="latest_listing" {{ request('sortby') == 'latest_listing' ? 'selected' : '' }}>
+                                Latest Listing
+                            </option>
+                            <option value="lowest_price" {{ request('sortby') == 'lowest_price' ? 'selected' : '' }}>Lowest
+                                Price
+                            </option>
+                            <option value="highest_price" {{ request('sortby') == 'highest_price' ? 'selected' : '' }}>
+                                Highest Price
+                            </option>
+                        </select>
+                    </div>
                     <form id="search_listings_form" method="GET"
                         action="{{ route('ad.listing.page', $category_slug ?? '') }}">
                         <!-- Hidden inputs for filter state -->
@@ -353,18 +390,7 @@
 
                         <div class="cateSidebar1">
 
-                            <!--Search any title filter start -->
-                            <div class="catagoriesWraper mb-4">
-                                <div class="catagories w-100">
-                                    <div class="single-category-service">
-                                        <div class="single-select">
-                                            <input type="text" class="search-input form-control" id="search_by_query"
-                                                placeholder="Listing search" name="q" value="{{ request('q') }}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Search any title filter end -->
+
 
                             <!-- All Categories -->
                             <div class="catagoriesWraper mb-4">
@@ -556,62 +582,30 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="SearchWrapper d-flex justify-content-between align-items-center">
-                                            <!-- Custom Tab -->
+                                            <!--Search any title filter start -->
+                                            <div class="catagoriesWraper mb-4">
+                                                <div class="catagories w-100">
+                                                    <div class="single-category-service">
+                                                        <div class="single-select">
+                                                            <input type="text" class="search-input form-control"
+                                                                id="search_by_query" placeholder="Listing search"
+                                                                name="q" value="{{ request('q') }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--Search any title filter end -->
+                                            <div class="content-title">
+                                                <h4>{{ $ads->total() }} Results</h4>
+                                            </div>
+                                            {{-- <!-- Custom Tab -->
                                             <div class="views align-items-center">
                                                 <div class="sidebar-btn d-lg-none d-block">
                                                     <a href="javascript:void(0)"><i class="fa-solid fa-bars"></i></a>
                                                 </div>
-                                                @if (request()->hasAny([
-                                                        'q',
-                                                        'cat',
-                                                        'subcat',
-                                                        'child_cat',
-                                                        'country',
-                                                        'state',
-                                                        'city',
-                                                        'min_price',
-                                                        'max_price',
-                                                        'condition',
-                                                        'type',
-                                                        'date_posted',
-                                                        'sortby',
-                                                    ]))
-                                                    <div class="reset-btn cmn-filter-btn">
-                                                        <a href="{{ route('ad.listing.page', $category_slug ?? '') }}">
-                                                            <i class="las la-undo-alt"></i> Reset Filter
-                                                        </a>
-                                                    </div>
-                                                @endif
-                                                <div class="listing-btn">
-                                                    <button class="customTab  active "
-                                                        data-toggle-target=".customTab-content-1" id="card_grid">
-                                                        <i class="las la-th-large fs-4"></i>
-                                                    </button>
-                                                    <button class="customTab " data-toggle-target=".customTab-content-2"
-                                                        id="card_list">
-                                                        <i class="las la-th-list fs-4"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
+                                            </div> --}}
 
-                                            <!-- Sort By Dropdown -->
-                                            <div class="sort-by-wrapper">
-                                                <select id="search_by_sorting" class="form-select">
-                                                    <option value="">Sort By</option>
-                                                    <option value="latest_listing"
-                                                        {{ request('sortby') == 'latest_listing' ? 'selected' : '' }}>
-                                                        Latest Listing
-                                                    </option>
-                                                    <option value="lowest_price"
-                                                        {{ request('sortby') == 'lowest_price' ? 'selected' : '' }}>Lowest
-                                                        Price
-                                                    </option>
-                                                    <option value="highest_price"
-                                                        {{ request('sortby') == 'highest_price' ? 'selected' : '' }}>
-                                                        Highest Price
-                                                    </option>
-                                                </select>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>

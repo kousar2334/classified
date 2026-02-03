@@ -10641,7 +10641,7 @@ object {
 .new-style .singleFeatureCard .featurebody {
     padding: 10px;
     border-radius: 0 0 10px 10px;
-    height: 168px;
+    height: 150px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

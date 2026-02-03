@@ -1,6 +1,6 @@
  <header class="header-style-01">
      <nav class="navbar navbar-area headerBg4 navbar-expand-lg plr">
-         <div class="container-fluid container-1920 container-two nav-container">
+         <div class="container nav-container">
              <div class="responsive-mobile-menu">
                  <div class="logo-wrapper">
                      <a href="{{ url('/') }}" class="logo">
