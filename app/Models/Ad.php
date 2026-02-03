@@ -15,7 +15,12 @@ class Ad extends Model
 
     public function cityInfo(): HasOne
     {
-        return $this->hasOne(City::class, 'id', 'city');
+        return $this->hasOne(City::class, 'id', 'city_id');
+    }
+
+    public function stateInfo(): HasOne
+    {
+        return $this->hasOne(State::class, 'id', 'state_id');
     }
 
     public function galleryImages(): HasMany

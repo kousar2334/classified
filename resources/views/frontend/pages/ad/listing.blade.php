@@ -61,6 +61,16 @@
             background: #ddd;
         }
 
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        .slider-kilometer .slider-range {
+            height: 8px;
+            background: #ddd;
+        }
+
         .noUi-handle:after,
         .noUi-handle:before {
             display: none;
@@ -129,19 +139,6 @@
             pointer-events: auto;
             -moz-appearance: none;
             box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .singleFeatureCard.inside_google_map_card {
-            max-width: 200px !important;
-            height: 181px !important;
-        }
-
-        .singleFeatureCard.inside_google_map_card .main-card-image {
-            height: 111px !important;
-        }
-
-        .new-style .singleFeatureCard.inside_google_map_card .featurebody {
-            height: auto !important;
         }
 
         /* Category and Location List Styles */
@@ -259,59 +256,6 @@
 
         .sort-by-wrapper select:hover {
             border-color: var(--main-color-one);
-        }
-
-        /* Price range dollar sign positioning */
-        .priceRangeWraper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .priceRangeWraper .site_currency_symbol {
-            position: absolute;
-            left: 12px;
-            color: #666;
-            font-size: 14px;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .priceRangeWraper input[type="number"] {
-            padding-left: 28px !important;
-        }
-
-        /* ViewItems box styling */
-        .viewItems {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
-        .viewItems-header {
-            background: linear-gradient(135deg, var(--main-color-one) 0%, #0056b3 100%);
-            padding: 20px 25px;
-            border-bottom: 3px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .viewItems-title {
-            color: #fff;
-            font-size: 22px;
-            font-weight: 600;
-            margin: 0;
-            letter-spacing: 0.5px;
-        }
-
-        .SearchWrapper {
-            padding: 20px 25px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .gridView {
-            padding: 25px;
         }
     </style>
 @endsection
@@ -609,9 +553,6 @@
                     <div class="cateRightContentWraper">
                         <div class="content-part">
                             <div class="viewItems">
-                                <div class="viewItems-header">
-                                    <h4 class="viewItems-title">Browse Listings</h4>
-                                </div>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="SearchWrapper d-flex justify-content-between align-items-center">
@@ -680,80 +621,16 @@
                                 <div class="gridViews">
                                     <div class="singleFeatureCardWraper d-flex" id="ads-container">
                                         @forelse($ads as $ad)
-                                            <div class="singleFeatureCard">
-                                                <div class="featureImg">
-                                                    <div class="favourite-icon">
-                                                        <a href="javascript:void(0)" class="click_to_favorite_add_remove"
-                                                            data-listing_id="{{ $ad->id }}">
-                                                            <i class="lar la-heart icon favorite_add_icon"></i>
-                                                        </a>
-                                                    </div>
-                                                    <a href="{{ route('ad.details.page', $ad->uid) }}"
-                                                        class="main-card-image">
-                                                        <img src="{{ $ad->thumbnail_image ? asset($ad->thumbnail_image) : asset('public/uploads/media-uploader/no-image.png') }}"
-                                                            alt="{{ $ad->title }}" />
-                                                    </a>
-                                                </div>
-                                                <div class="featurebody">
-                                                    <div class="card-body-top">
-                                                        <h4>
-                                                            <a href="{{ route('ad.details.page', $ad->uid) }}"
-                                                                class="featureTittle head4 twoLine">{{ $ad->title }}</a>
-                                                        </h4>
-                                                    </div>
-
-                                                    <p class="featureCap d-flex align-items-center gap-1">
-                                                        <svg width="16" height="17" viewBox="0 0 16 17"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M5.99984 7.83332C5.99984 8.36376 6.21055 8.87246 6.58562 9.24754C6.9607 9.62261 7.4694 9.83332 7.99984 9.83332C8.53027 9.83332 9.03898 9.62261 9.41405 9.24754C9.78912 8.87246 9.99984 8.36376 9.99984 7.83332C9.99984 7.30289 9.78912 6.79418 9.41405 6.41911C9.03898 6.04404 8.53027 5.83332 7.99984 5.83332C7.4694 5.83332 6.9607 6.04404 6.58562 6.41911C6.21055 6.79418 5.99984 7.30289 5.99984 7.83332Z"
-                                                                stroke="#64748B" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M11.7712 11.6047L8.94251 14.4333C8.6925 14.6831 8.35356 14.8234 8.00017 14.8234C7.64678 14.8234 7.30785 14.6831 7.05784 14.4333L4.22851 11.6047C3.48265 10.8588 2.97473 9.90845 2.76896 8.8739C2.5632 7.83934 2.66883 6.767 3.07251 5.79247C3.47618 4.81795 4.15977 3.98501 5.03683 3.39899C5.91388 2.81297 6.94502 2.50018 7.99984 2.50018C9.05466 2.50018 10.0858 2.81297 10.9629 3.39899C11.8399 3.98501 12.5235 4.81795 12.9272 5.79247C13.3308 6.767 13.4365 7.83934 13.2307 8.8739C13.0249 9.90845 12.517 10.8588 11.7712 11.6047Z"
-                                                                stroke="#64748B" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                        </svg>
-                                                        <span
-                                                            class="oneLine">{{ $ad->cityInfo->name ?? 'Unknown Location' }}</span>
-                                                    </p>
-
-                                                    @if ($ad->is_featured == config('settings.general_status.active'))
-                                                        <div class="btn-wrapper">
-                                                            <span class="pro-btn2">
-                                                                <svg width="7" height="10" viewBox="0 0 7 10"
-                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path d="M4 0V3.88889H7L3 10V6.11111H0L4 0Z"
-                                                                        fill="white" />
-                                                                </svg> FEATURED
-                                                            </span>
-                                                        </div>
-                                                    @endif
-
-                                                    <span
-                                                        class="featurePricing d-flex justify-content-between align-items-center">
-                                                        <span class="money">${{ number_format($ad->price, 2) }}</span>
-                                                        <span class="date">
-                                                            {{ $ad->created_at->diffForHumans() }}
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            </div>
+                                            <x-single-listing :d="$ad" />
                                         @empty
-                                            <div class="text-center py-5 w-100">
-                                                <i class="las la-inbox" style="font-size: 80px; color: #ccc;"></i>
-                                                <h4 class="mt-3">No ads found</h4>
-                                                <p class="text-muted">Try adjusting your filters to find what you're
-                                                    looking for.</p>
-                                            </div>
+                                            <x-empty-result title="No Ads found"
+                                                message="Try adjusting your filters to find what you're looking for" />
                                         @endforelse
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-
-
                     </div>
 
                     <!-- Pagination -->
@@ -961,7 +838,9 @@
                                             $cityList.empty();
 
                                             cities.forEach(function(city) {
-                                                const isActive = selectedCityId == city.id ? 'active' : '';
+                                                const isActive =
+                                                    selectedCityId == city.id ?
+                                                    'active' : '';
                                                 $cityList.append(`
                                                     <li class="location-item ${isActive}" data-city-id="${city.id}">
                                                         <a href="javascript:void(0)" class="location-link city-link">
@@ -996,7 +875,8 @@
                                     $stateList.empty();
 
                                     states.forEach(function(state) {
-                                        const isActive = selectedStateId == state.id ? 'active' : '';
+                                        const isActive = selectedStateId == state.id ?
+                                            'active' : '';
                                         $stateList.append(`
                                             <li class="location-item ${isActive}" data-state-id="${state.id}" data-state-name="${state.text}">
                                                 <a href="javascript:void(0)" class="location-link state-link">

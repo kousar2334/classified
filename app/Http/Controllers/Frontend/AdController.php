@@ -256,7 +256,7 @@ class AdController extends Controller
         }
 
         // Build query for ads
-        $query = Ad::with(['categoryInfo', 'cityInfo'])
+        $query = Ad::with(['categoryInfo', 'cityInfo', 'stateInfo'])
             ->where('status', config('settings.general_status.active'))
             ->where('payment_status', config('settings.general_status.active'));
 
@@ -271,19 +271,19 @@ class AdController extends Controller
 
         // Filter by category
         if ($request->has('cat') && $request->cat != '') {
-            $query->where('category', $request->cat);
+            $query->where('category_id', $request->cat);
         } elseif ($selectedCategory) {
             $query->where('category', $selectedCategory->id);
         }
 
         // Filter by subcategory
         if ($request->has('subcat') && $request->subcat != '') {
-            $query->where('category', $request->subcat);
+            $query->where('category_id', $request->subcat);
         }
 
         // Filter by child category
         if ($request->has('child_cat') && $request->child_cat != '') {
-            $query->where('category', $request->child_cat);
+            $query->where('category_id', $request->child_cat);
         }
 
         // Filter by price range
@@ -297,7 +297,7 @@ class AdController extends Controller
 
         // Filter by condition
         if ($request->has('condition') && $request->condition != '') {
-            $query->where('item_condition', $request->condition);
+            $query->where('condition_id', $request->condition);
         }
 
         // Filter by type (featured/top_listing)

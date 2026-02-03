@@ -3,395 +3,6 @@
     <title>Post ad 1- {{ get_setting('site_name') }}</title>
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/summernote/summernote-bs4.min.css') }}">
-    <style>
-        .select2-container .select2-selection--single {
-            background-color: var(--white-bg);
-            border: 1px solid #e3e3e3;
-            border-radius: 4px;
-            position: relative;
-            height: auto;
-            padding: 10px;
-        }
-
-        .select2-container--default .select2-selection--single .select2-selection__arrow {
-            height: 100%;
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            width: 20px;
-        }
-
-        .select2-container--default .select2-selection--single .select2-selection__arrow b {
-            border-color: #888 transparent transparent transparent;
-            border-style: solid;
-            border-width: 5px 4px 0 4px;
-            height: 0;
-            left: 50%;
-            margin-left: -4px;
-            margin-top: -2px;
-            position: absolute;
-            top: 50%;
-            width: 0;
-        }
-
-        span.select2.select2-container.select2-container--default.select2-container--focus {
-            width: 100% !important;
-        }
-
-        .select-itms span.select2 {
-            width: 100% !important;
-        }
-
-        .close {
-            border: none;
-        }
-
-        .dashboard-switch-single {
-            font-size: 20px;
-        }
-
-        .swal_delete_button {
-            color: #da0000 !important;
-        }
-
-        .select2-container--default .select2-selection--multiple {
-            border: 1px solid #e3e3e3;
-        }
-
-        .select2-container--default.select2-container--focus .select2-selection--multiple {
-            border: 1px solid #e3e3e3;
-        }
-
-        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-            font-size: 23px;
-        }
-
-        .select2-selection__choice__display {
-            font-size: 15px;
-            color: #000;
-            font-weight: 400;
-        }
-
-        label.infoTitle.position-absolute {
-            top: 0;
-            background-color: whitesmoke;
-            left: 0;
-            padding: 10px 15px;
-        }
-
-        .checkBox.position-absolute {
-            right: 0;
-            top: 0;
-            background-color: whitesmoke;
-            padding: 10px 15px;
-        }
-
-        input.effectBorder.checkBox__input {
-            border: 2px solid #a3a3a3;
-        }
-
-        button.btn.btn-info.media_upload_form_btn {
-            background-color: rgb(239, 246, 255);
-            border: none;
-            color: rgb(59, 130, 246);
-            outline: none;
-            box-shadow: none;
-            margin: auto;
-        }
-
-        .new_image_add_listing .attachment-preview {
-            width: 200px;
-            height: 200px;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .new_image_add_listing .attachment-preview .thumbnail .centered img {
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-            transform: translation(-50%, -50%);
-        }
-
-        .new_image_gallery_add_listing .attachment-preview {
-            width: 100px;
-            height: 100px;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .new_image_gallery_add_listing .attachment-preview .thumbnail .centered img {
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-            transform: translation(-50%, -50%);
-        }
-
-        .media-upload-btn-wrapper .img-wrap .rmv-span {
-            padding: 0;
-        }
-
-        .input-group .form-control.is-valid,
-        .input-group .form-select.is-valid,
-        .was-validated .input-group .form-control:valid,
-        .was-validated .input-group .form-select:valid {
-            z-index: 0 !important;
-        }
-
-        #custom-fields-container .custom-field-group {
-            margin-bottom: 15px;
-        }
-
-        #custom-fields-container .custom-field-group label {
-            font-weight: 500;
-            margin-bottom: 5px;
-            display: block;
-        }
-
-        .invalid-feedback {
-            display: none;
-            width: 100%;
-            margin-top: 0.25rem;
-            font-size: 0.875em;
-            color: #dc3545;
-        }
-
-        .invalid-feedback.d-block {
-            display: block !important;
-        }
-
-        .is-invalid {
-            border-color: #dc3545 !important;
-        }
-
-        .is-invalid:focus {
-            border-color: #dc3545 !important;
-            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
-        }
-
-        .select2-container--default .select2-selection--single.is-invalid,
-        .select2-container--default .select2-selection--multiple.is-invalid {
-            border-color: #dc3545 !important;
-        }
-
-        .box-shadow1 {
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            border-radius: 8px;
-            background: #fff;
-        }
-
-        .input-filed {
-            border: 1px solid #e3e3e3;
-            padding: 12px 15px;
-            border-radius: 6px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .input-filed:focus {
-            border-color: #007bff;
-            outline: none;
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.1);
-        }
-
-        label {
-            font-weight: 500;
-            margin-bottom: 8px;
-            display: block;
-            color: #333;
-        }
-
-        #form-loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-        #form-loader.active {
-            display: flex;
-        }
-
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-            border: 0.3em solid #f3f3f3;
-            border-top: 0.3em solid #007bff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .btn-loading {
-            position: relative;
-            pointer-events: none;
-            opacity: 0.7;
-        }
-
-        .btn-loading .btn-text {
-            visibility: hidden;
-        }
-
-        .btn-loading::after {
-            content: "";
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            top: 50%;
-            left: 50%;
-            margin-left: -8px;
-            margin-top: -8px;
-            border: 2px solid #ffffff;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 0.6s linear infinite;
-        }
-
-        .error-message {
-            display: block;
-            padding: 12px 16px;
-            margin-bottom: 15px;
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        .success-message {
-            display: block;
-            padding: 12px 16px;
-            margin-bottom: 15px;
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        /* Custom File Input Styling */
-        .custom-file-input {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-
-        .custom-file-input input[type="file"] {
-            position: absolute;
-            left: -9999px;
-            opacity: 0;
-        }
-
-        .custom-file-label {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .custom-file-label:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-
-        .custom-file-label i {
-            font-size: 18px;
-        }
-
-        .file-name {
-            margin-top: 8px;
-            font-size: 13px;
-            color: #666;
-            font-style: italic;
-        }
-
-        /* Gallery Image Preview */
-        .gallery-image-wrapper {
-            position: relative;
-            display: inline-block;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-
-        .gallery-image-wrapper img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 6px;
-            border: 2px solid #e3e3e3;
-        }
-
-        .remove-gallery-image {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #dc3545;
-            color: white;
-            border: 2px solid white;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .remove-gallery-image:hover {
-            background: #c82333;
-            transform: scale(1.1);
-        }
-
-        /* Category Breadcrumb Styling */
-        #category-breadcrumb {
-            background: var(--main-color-one);
-            color: white !important;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            display: inline-block;
-            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-
-        #category-breadcrumb:empty {
-            display: none;
-        }
-
-        #category-breadcrumb::before {
-            content: "📁 ";
-            margin-right: 5px;
-        }
-    </style>
 @endsection
 @section('content')
     <div class="add-listing-wrapper mt-5 mb-5">
@@ -509,8 +120,7 @@
                                                     <!-- Condition -->
                                                     <div class="col-sm-12">
                                                         <label for="condition">Item Condition</label>
-                                                        <select name="condition" id="condition"
-                                                            class="input-filed w-100">
+                                                        <select name="condition" id="condition" class="input-filed w-100">
                                                             <option value="">Select Condition</option>
                                                             @foreach ($conditions as $condition)
                                                                 <option value="{{ $condition->id }}"
@@ -1377,7 +987,9 @@
                 if (file) {
                     // Check file size
                     if (file.size > maxFileSize) {
-                        alert(`File size (${(file.size / 1024 / 1024).toFixed(2)}MB) exceeds the maximum allowed size of 5MB. Please choose a smaller file.`);
+                        alert(
+                            `File size (${(file.size / 1024 / 1024).toFixed(2)}MB) exceeds the maximum allowed size of 5MB. Please choose a smaller file.`
+                            );
                         this.value = '';
                         $('#thumbnail-file-name').text('');
                         $('#thumbnail-preview').html('');
@@ -1385,7 +997,8 @@
                     }
 
                     // Display file name and size
-                    $('#thumbnail-file-name').text(`Selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
+                    $('#thumbnail-file-name').text(
+                        `Selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
 
                     // Show preview
                     const reader = new FileReader();
@@ -1413,7 +1026,8 @@
                 // Check each file size
                 files.forEach(file => {
                     if (file.size > maxFileSize) {
-                        invalidFiles.push(`${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
+                        invalidFiles.push(
+                            `${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
                     } else {
                         validFiles.push(file);
                     }
@@ -1421,7 +1035,9 @@
 
                 // Show error for invalid files
                 if (invalidFiles.length > 0) {
-                    alert(`The following files exceed 5MB and were not added:\n\n${invalidFiles.join('\n')}\n\nPlease choose smaller files.`);
+                    alert(
+                        `The following files exceed 5MB and were not added:\n\n${invalidFiles.join('\n')}\n\nPlease choose smaller files.`
+                        );
                 }
 
                 // Check total size including existing files
@@ -1431,7 +1047,9 @@
                     validFiles.forEach(f => totalSize += f.size);
 
                     if (totalSize > maxTotalSize) {
-                        alert(`Total file size (${(totalSize / 1024 / 1024).toFixed(2)}MB) exceeds the maximum allowed total size of 50MB. Please remove some images or choose smaller files.`);
+                        alert(
+                            `Total file size (${(totalSize / 1024 / 1024).toFixed(2)}MB) exceeds the maximum allowed total size of 50MB. Please remove some images or choose smaller files.`
+                            );
                         this.value = '';
                         return;
                     }
