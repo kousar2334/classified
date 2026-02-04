@@ -364,6 +364,120 @@
         #search_by_query_btn:hover {
             opacity: 0.85;
         }
+
+        /* Sidebar toggle button */
+        .sidebar-btn a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            color: var(--main-color-one);
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .sidebar-btn a:hover {
+            border-color: var(--main-color-one);
+            background-color: var(--main-color-one);
+            color: #fff;
+        }
+
+        /* SearchWrapper layout */
+        .SearchWrapper .search-top-row {
+            width: 100%;
+        }
+
+        .SearchWrapper .content-title h4 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .SearchWrapper .content-title p {
+            font-size: 13px;
+            color: #667085;
+            margin: 0;
+        }
+
+        .SearchWrapper .sort-by-wrapper .form-select {
+            width: max-content;
+            font-size: 14px;
+        }
+
+        @media only screen and (max-width: 991.92px) {
+            .SearchWrapper .sort-by-wrapper {
+                width: 100%;
+            }
+
+            .SearchWrapper .sort-by-wrapper .form-select {
+                width: 100%;
+            }
+        }
+
+        /* Mobile sidebar overlay */
+        @media only screen and (max-width: 991.92px) {
+            .main-body .catabody-wraper .cateLeftContent {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 300px;
+                height: 100vh;
+                max-height: 100vh;
+                overflow-y: auto;
+                background: #fff;
+                z-index: 1050;
+                padding: 20px;
+                box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+                border-radius: 0;
+                transition: left 0.3s ease;
+            }
+
+            .main-body .catabody-wraper .cateLeftContent.show {
+                left: 0;
+            }
+
+            /* Backdrop overlay */
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1040;
+            }
+
+            .sidebar-overlay.show {
+                display: block;
+            }
+
+            /* Close button inside sidebar */
+            .sidebar-close-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 32px;
+                height: 32px;
+                border: 1px solid #e2e8f0;
+                border-radius: 50%;
+                background: none;
+                font-size: 18px;
+                color: #333;
+                cursor: pointer;
+                margin-left: auto;
+                margin-bottom: 15px;
+            }
+
+            .sidebar-close-btn:hover {
+                background: #f1f5f9;
+                border-color: var(--main-color-one);
+                color: var(--main-color-one);
+            }
+
+        }
     </style>
 @endsection
 @section('content')
@@ -440,14 +554,15 @@
 
     <div class="all-listing">
         <div class="container">
-            <!--Sidebar Icon-->
-            <div class="sidebar-btn d-none">
-                <a href="javascript:void(0)"><i class="las la-bars"></i></a>
-            </div>
+            <!-- Sidebar backdrop overlay -->
+            <div class="sidebar-overlay" id="sidebar_overlay"></div>
 
             <div class="catabody-wraper">
                 <!-- Left Content -->
                 <div class="cateLeftContent">
+                    <button type="button" class="sidebar-close-btn d-lg-none" id="sidebar_close_btn">
+                        <i class="las la-times"></i>
+                    </button>
                     @if (request()->hasAny([
                             'q',
                             'cat',
@@ -700,23 +815,28 @@
                             <div class="viewItems">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="SearchWrapper d-flex justify-content-between align-items-center p-2">
-
-                                            <div class="content-title">
-                                                <h4>
-                                                    @if ($breadcrumbChildCategory)
-                                                        {{ $breadcrumbChildCategory->title }}
-                                                    @elseif($breadcrumbSubcategory)
-                                                        {{ $breadcrumbSubcategory->title }}
-                                                    @elseif($breadcrumbCategory)
-                                                        {{ $breadcrumbCategory->title }}
-                                                    @else
-                                                        All Ads
-                                                    @endif
-                                                </h4>
-                                                <p>{{ $ads->total() }} {{ $ads->total() == 1 ? 'Ad' : 'Ads' }} found</p>
+                                        <div class="SearchWrapper p-2">
+                                            <div class="search-top-row d-flex justify-content-between align-items-center">
+                                                <div class="content-title">
+                                                    <h4>
+                                                        @if ($breadcrumbChildCategory)
+                                                            {{ $breadcrumbChildCategory->title }}
+                                                        @elseif($breadcrumbSubcategory)
+                                                            {{ $breadcrumbSubcategory->title }}
+                                                        @elseif($breadcrumbCategory)
+                                                            {{ $breadcrumbCategory->title }}
+                                                        @else
+                                                            All Ads
+                                                        @endif
+                                                    </h4>
+                                                    <p class="mb-0">{{ $ads->total() }}
+                                                        {{ $ads->total() == 1 ? 'Ad' : 'Ads' }} found</p>
+                                                </div>
+                                                <div class="sidebar-btn d-lg-none">
+                                                    <a href="javascript:void(0)"><i class="las la-bars"></i></a>
+                                                </div>
                                             </div>
-                                            <div class="sort-by-wrapper">
+                                            <div class="sort-by-wrapper mt-2">
                                                 <select id="search_by_sorting" class="form-select">
                                                     <option value="">Sort By</option>
                                                     <option value="latest_listing"

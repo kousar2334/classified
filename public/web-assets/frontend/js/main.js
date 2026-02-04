@@ -425,9 +425,18 @@
                 }
             });
 
-            //sidebar btn
+            //sidebar btn - open
             $(".sidebar-btn a").on('click', function(){
-                $(".cateLeftContent").toggleClass("show");
+                $(".cateLeftContent").addClass("show");
+                $("#sidebar_overlay").addClass("show");
+                $("body").css("overflow", "hidden");
+            });
+
+            // sidebar close btn & overlay - close
+            $("#sidebar_close_btn, #sidebar_overlay").on('click', function(){
+                $(".cateLeftContent").removeClass("show");
+                $("#sidebar_overlay").removeClass("show");
+                $("body").css("overflow", "");
             });
 
         $(".profile-setting .sidebar-btn").on('click', function(){
