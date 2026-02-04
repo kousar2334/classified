@@ -402,6 +402,7 @@ class AdController extends Controller
 
         // Paginate results
         $ads = $query->paginate(12)->appends($request->except('page'));
+        // dd($ads);
 
         return view('frontend.pages.ad.listing', compact(
             'categories',

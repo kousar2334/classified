@@ -148,7 +148,7 @@
                                     data-wow-delay="0.1s">
                                     <div class="categoriIcon text-center">
                                         <a href="{{ route('ad.listing.page', $category->permalink) }}" class="title">
-                                            <img src="{{ getFilePath($category->image) }}"
+                                            <img src="{{ asset(getFilePath($category->icon)) }}"
                                                 alt="{{ $category->title }}" />
                                         </a>
                                     </div>

@@ -6,7 +6,7 @@
             </a>
         </div>
         <a href="{{ route('ad.details.page', $ad->uid) }}" class="main-card-image">
-            <img src="{{ getFilePath($ad->thumbnail_image) }}" alt="{{ $ad->title }}" />
+            <img src="{{ asset(getFilePath($ad->thumbnail_image)) }}" alt="{{ $ad->title }}" />
         </a>
     </div>
     <div class="featurebody">
