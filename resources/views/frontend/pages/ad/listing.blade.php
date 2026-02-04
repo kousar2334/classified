@@ -344,6 +344,26 @@
         .price_range_setup .noUi-handle::after {
             display: none;
         }
+
+        /* Search input button */
+        #search_by_query_btn {
+            z-index: 2;
+            width: 40px;
+            height: 100%;
+            right: 0;
+            top: 0;
+            transform: none;
+            background-color: var(--main-color-one);
+            color: #fff;
+            border-radius: 0 5px 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #search_by_query_btn:hover {
+            opacity: 0.85;
+        }
     </style>
 @endsection
 @section('content')
@@ -443,9 +463,9 @@
                             'date_posted',
                             'sortby',
                         ]))
-                        <div class="reset-btn cmn-filter-btn">
-                            <a href="{{ route('ad.listing.page', $category_slug ?? '') }}">
-                                <i class="las la-undo-alt"></i> Reset Filter
+                        <div class="reset-btn cmn-filter-btn mb-3">
+                            <a href="{{ route('ad.listing.page', $category_slug ?? '') }}" class="btn btn-primary w-100">
+                                <i class="las la-undo-alt"></i> {{ translation('Reset Filters') }}
                             </a>
                         </div>
                     @endif
@@ -453,9 +473,12 @@
                     <div class="catagoriesWraper mb-4">
                         <div class="catagories w-100">
                             <div class="single-category-service">
-                                <div class="single-select">
-                                    <input type="text" class="search-input form-control" id="search_by_query"
-                                        placeholder="Listing search" name="q" value="{{ request('q') }}">
+                                <div class="single-select position-relative">
+                                    <input type="text" class="search-input form-control pe-5" id="search_by_query"
+                                        placeholder="Search here you want" value="{{ request('q') }}">
+                                    <button type="button" id="search_by_query_btn" class="btn position-absolute border-0">
+                                        <i class="las la-search"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -466,6 +489,7 @@
                     <form id="search_listings_form" method="GET"
                         action="{{ route('ad.listing.page', $category_slug ?? '') }}">
                         <!-- Hidden inputs for filter state -->
+                        <input type="hidden" name="q" id="search_q_hidden" value="{{ request('q') }}">
                         <input type="hidden" name="min_price" id="min_price" value="{{ request('min_price') }}">
                         <input type="hidden" name="max_price" id="max_price" value="{{ request('max_price') }}">
                         <input type="hidden" name="condition" id="condition" value="{{ request('condition') }}">
@@ -1223,15 +1247,6 @@
                 });
 
                 // ========== Other Filters (keeping existing functionality) ==========
-
-                // Search with debounce
-                let searchTimeout;
-                $('#search_by_query').on('keyup', function() {
-                    clearTimeout(searchTimeout);
-                    searchTimeout = setTimeout(function() {
-                        $('#search_listings_form').submit();
-                    }, 800);
-                });
 
                 // Price Range Filter
                 $('#price_wise_filter_apply').on('click', function() {
