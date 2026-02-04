@@ -79,7 +79,7 @@
                                     </tbody>
                                 </table>
                                 <div class="pgination px-3">
-                                    {!! $tips->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5-custom') !!}
+                                    {!! $tips->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5') !!}
                                 </div>
                             </div>
                         </div>
@@ -181,7 +181,7 @@
                     success: function(response) {
                         if (response.success) {
                             toastr.success(
-                            '{{ translation('Safety tips created successfully') }}');
+                                '{{ translation('Safety tips created successfully') }}');
                             location.reload();
                         } else {
                             toastr.error('{{ translation('Safety tips create failed') }}');

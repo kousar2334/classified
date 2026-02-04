@@ -179,7 +179,7 @@
                             </tbody>
                         </table>
                         <div class="pgination px-3">
-                            {!! $ads->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5-custom') !!}
+                            {!! $ads->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5') !!}
                         </div>
                     </div>
                 </div>
@@ -213,7 +213,7 @@
         </div>
     </div>
     <!--Delete Modal-->
-    @include('core::base.media.partial.media_modal')
+
 @endsection
 @section('page-script')
     <!--Select2-->

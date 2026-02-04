@@ -96,7 +96,7 @@
                                                     class="img-90-70" alt="{{ $ad->title }}">
                                             </td>
                                             <td>
-                                                <span class="ad-title">{{ $ad->translation('title') }}</span>
+                                                <span class="ad-title">{{ $ad->title }}</span>
                                             </td>
                                             <td>
                                                 <p class="mb-0"><span
@@ -112,12 +112,8 @@
                                                     @endif
                                                 </p>
                                                 <p class="mb-0"><span class="bold">{{ translation('Price :') }}</span>
-                                                    {!! currencyExchange($ad->price) !!}
+                                                    {{ $ad->price }}
                                                 </p>
-                                            </td>
-
-                                            <td>
-                                                {!! currencyExchange($ad->cost) !!}
                                             </td>
                                             <td>
                                                 @if ($ad->cost > 0)
@@ -180,7 +176,7 @@
                             </tbody>
                         </table>
                         <div class="pgination px-3">
-                            {!! $ads->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5-custom') !!}
+                            {!! $ads->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5') !!}
                         </div>
                     </div>
                 </div>
@@ -214,7 +210,7 @@
         </div>
     </div>
     <!--Delete Modal-->
-    @include('core::base.media.partial.media_modal')
+
 @endsection
 @section('page-script')
     <!--Select2-->

@@ -365,7 +365,7 @@
         <!--End Form submit area-->
 
     </form>
-    @include('core::base.media.partial.media_modal')
+
 @endsection
 @section('page-script')
     <!--Select2-->

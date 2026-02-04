@@ -22,6 +22,10 @@ class Ad extends Model
     {
         return $this->hasOne(State::class, 'id', 'state_id');
     }
+    public function countryInfo(): HasOne
+    {
+        return $this->hasOne(Country::class, 'id', 'country_id');
+    }
 
     public function galleryImages(): HasMany
     {

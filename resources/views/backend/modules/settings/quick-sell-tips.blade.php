@@ -79,7 +79,7 @@
                                     </tbody>
                                 </table>
                                 <div class="pgination px-3">
-                                    {!! $tips->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5-custom') !!}
+                                    {!! $tips->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5') !!}
                                 </div>
                             </div>
                         </div>

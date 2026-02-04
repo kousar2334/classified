@@ -20,9 +20,7 @@ class AdRepository
      */
     public function adLists($request, $is_featured = false)
     {
-        $query = Ad::with(['userInfo', 'ad_translations', 'categoryInfo' => function ($q) {
-            $q->with(['category_translations']);
-        }]);
+        $query = Ad::with(['userInfo', 'categoryInfo', 'cityInfo', 'stateInfo', 'countryInfo', 'userInfo']);
 
         if ($request->has('status') && $request['status'] != null) {
             $query = $query->where('status', $request['status']);

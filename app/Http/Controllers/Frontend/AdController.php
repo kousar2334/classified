@@ -351,6 +351,17 @@ class AdController extends Controller
             $query->where('is_featured', config('settings.general_status.active'));
         }
 
+        // Filter by location
+        if ($request->has('country') && $request->country != '') {
+            $query->where('country_id', $request->country);
+        }
+        if ($request->has('state') && $request->state != '') {
+            $query->where('state_id', $request->state);
+        }
+        if ($request->has('city') && $request->city != '') {
+            $query->where('city_id', $request->city);
+        }
+
         // Filter by date posted
         if ($request->has('date_posted') && $request->date_posted != '') {
             $now = now();

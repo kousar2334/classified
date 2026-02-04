@@ -151,7 +151,7 @@
                                 </table>
                                 @if ($members->hasPages())
                                     <div class="pgination px-3">
-                                        {!! $members->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5-custom') !!}
+                                        {!! $members->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5') !!}
                                     </div>
                                 @endif
                             </div>
