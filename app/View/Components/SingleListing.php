@@ -12,9 +12,9 @@ class SingleListing extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($d)
+    public function __construct($ad)
     {
-        $this->ad = $d;
+        $this->ad = $ad;
     }
 
     /**

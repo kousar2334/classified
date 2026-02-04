@@ -863,7 +863,7 @@
                                 <div class="gridViews">
                                     <div class="singleFeatureCardWraper d-flex" id="ads-container">
                                         @forelse($ads as $ad)
-                                            <x-single-listing :d="$ad" />
+                                            <x-single-listing :ad="$ad" />
                                         @empty
                                             <x-empty-result title="No Ads found"
                                                 message="Try adjusting your filters to find what you're looking for" />
