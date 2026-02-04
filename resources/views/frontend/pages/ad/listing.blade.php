@@ -1009,70 +1009,138 @@
                     const selectedStateId = '{{ request('state') }}';
                     const selectedCityId = '{{ request('city') }}';
 
-                    if (selectedCityId && selectedStateId && selectedCountryId) {
-                        // Load country, then state, then city
-                        $.get(COUNTRIES_ENDPOINT, function(countries) {
-                            const country = countries.find(c => c.id == selectedCountryId);
-                            if (country) {
-                                $('#selected-country-name').text(country.text);
-                                $('#selected_country').val(selectedCountryId);
+                    // Always load countries first so back navigation works
+                    loadCountries(function() {
+                        if (selectedCityId && selectedStateId && selectedCountryId) {
+                            // Restore city view
+                            $.get(COUNTRIES_ENDPOINT, function(countries) {
+                                const country = countries.find(c => c.id == selectedCountryId);
+                                if (country) {
+                                    $('#selected-country-name').text(country.text);
+                                }
+                            });
 
-                                $.get(STATES_ENDPOINT, {
-                                    country_id: selectedCountryId
-                                }, function(states) {
-                                    const state = states.find(s => s.id == selectedStateId);
-                                    if (state) {
-                                        $('#selected-state-name').text(state.text);
-                                        $('#selected_state').val(selectedStateId);
-
-                                        $.get(CITIES_ENDPOINT, {
-                                            state_id: selectedStateId
-                                        }, function(cities) {
-                                            const $cityList = $('#city-list');
-                                            $cityList.empty();
-
-                                            cities.forEach(function(city) {
-                                                const isActive =
-                                                    selectedCityId == city.id ?
-                                                    'active' : '';
-                                                $cityList.append(`
-                                                    <li class="location-item ${isActive}" data-city-id="${city.id}">
-                                                        <a href="javascript:void(0)" class="location-link city-link">
-                                                            <i class="las la-map-marker"></i>
-                                                            ${city.text}
-                                                        </a>
-                                                    </li>
-                                                `);
-                                            });
-
-                                            // Show city section
-                                            $('#country-section').hide();
-                                            $('#state-section').hide();
-                                            $('#city-section').show();
-                                        });
-                                    }
+                            $.get(STATES_ENDPOINT, {
+                                country_id: selectedCountryId
+                            }, function(states) {
+                                // Populate state list for back navigation
+                                const $stateList = $('#state-list');
+                                $stateList.empty();
+                                states.forEach(function(state) {
+                                    const isActive = selectedStateId == state.id ?
+                                        'active' : '';
+                                    $stateList.append(`
+                                        <li class="location-item ${isActive}" data-state-id="${state.id}" data-state-name="${state.text}">
+                                            <a href="javascript:void(0)" class="location-link state-link">
+                                                <i class="las la-angle-right"></i>
+                                                ${state.text}
+                                            </a>
+                                        </li>
+                                    `);
                                 });
-                            }
-                        });
-                    } else if (selectedStateId && selectedCountryId) {
-                        // Load country and state
-                        $.get(COUNTRIES_ENDPOINT, function(countries) {
-                            const country = countries.find(c => c.id == selectedCountryId);
-                            if (country) {
-                                $('#selected-country-name').text(country.text);
-                                $('#selected_country').val(selectedCountryId);
 
-                                $.get(STATES_ENDPOINT, {
-                                    country_id: selectedCountryId
-                                }, function(states) {
+                                const state = states.find(s => s.id == selectedStateId);
+                                if (state) {
+                                    $('#selected-state-name').text(state.text);
+                                }
+                            });
+
+                            $.get(CITIES_ENDPOINT, {
+                                state_id: selectedStateId
+                            }, function(cities) {
+                                const $cityList = $('#city-list');
+                                $cityList.empty();
+                                cities.forEach(function(city) {
+                                    const isActive = selectedCityId == city.id ?
+                                        'active' : '';
+                                    $cityList.append(`
+                                        <li class="location-item ${isActive}" data-city-id="${city.id}">
+                                            <a href="javascript:void(0)" class="location-link city-link">
+                                                <i class="las la-map-marker"></i>
+                                                ${city.text}
+                                            </a>
+                                        </li>
+                                    `);
+                                });
+
+                                $('#country-section').hide();
+                                $('#state-section').hide();
+                                $('#city-section').show();
+                            });
+
+                        } else if (selectedStateId && selectedCountryId) {
+                            // Restore city view for selected state
+                            $.get(COUNTRIES_ENDPOINT, function(countries) {
+                                const country = countries.find(c => c.id == selectedCountryId);
+                                if (country) {
+                                    $('#selected-country-name').text(country.text);
+                                }
+                            });
+
+                            // Populate state list for back navigation
+                            $.get(STATES_ENDPOINT, {
+                                country_id: selectedCountryId
+                            }, function(states) {
+                                const $stateList = $('#state-list');
+                                $stateList.empty();
+                                states.forEach(function(state) {
+                                    const isActive = selectedStateId == state.id ?
+                                        'active' : '';
+                                    $stateList.append(`
+                                        <li class="location-item ${isActive}" data-state-id="${state.id}" data-state-name="${state.text}">
+                                            <a href="javascript:void(0)" class="location-link state-link">
+                                                <i class="las la-angle-right"></i>
+                                                ${state.text}
+                                            </a>
+                                        </li>
+                                    `);
+                                });
+
+                                const state = states.find(s => s.id == selectedStateId);
+                                if (state) {
+                                    $('#selected-state-name').text(state.text);
+                                }
+                            });
+
+                            // Check if selected state has cities
+                            $.get(CITIES_ENDPOINT, {
+                                state_id: selectedStateId
+                            }, function(cities) {
+                                if (cities.length > 0) {
+                                    const $cityList = $('#city-list');
+                                    $cityList.empty();
+                                    cities.forEach(function(city) {
+                                        $cityList.append(`
+                                            <li class="location-item" data-city-id="${city.id}">
+                                                <a href="javascript:void(0)" class="location-link city-link">
+                                                    <i class="las la-map-marker"></i>
+                                                    ${city.text}
+                                                </a>
+                                            </li>
+                                        `);
+                                    });
+
+                                    $('#country-section').hide();
+                                    $('#state-section').hide();
+                                    $('#city-section').show();
+                                } else {
+                                    // No cities - show states with selected one active
+                                    $('#country-section').hide();
+                                    $('#state-section').show();
+                                }
+                            });
+
+                        } else if (selectedCountryId) {
+                            // Check if selected country has states
+                            $.get(STATES_ENDPOINT, {
+                                country_id: selectedCountryId
+                            }, function(states) {
+                                if (states.length > 0) {
                                     const $stateList = $('#state-list');
                                     $stateList.empty();
-
                                     states.forEach(function(state) {
-                                        const isActive = selectedStateId == state.id ?
-                                            'active' : '';
                                         $stateList.append(`
-                                            <li class="location-item ${isActive}" data-state-id="${state.id}" data-state-name="${state.text}">
+                                            <li class="location-item" data-state-id="${state.id}" data-state-name="${state.text}">
                                                 <a href="javascript:void(0)" class="location-link state-link">
                                                     <i class="las la-angle-right"></i>
                                                     ${state.text}
@@ -1081,107 +1149,49 @@
                                         `);
                                     });
 
-                                    // Show state section
+                                    $.get(COUNTRIES_ENDPOINT, function(countries) {
+                                        const country = countries.find(c => c.id ==
+                                            selectedCountryId);
+                                        if (country) {
+                                            $('#selected-country-name').text(country
+                                                .text);
+                                        }
+                                    });
+
                                     $('#country-section').hide();
                                     $('#state-section').show();
-                                });
-                            }
-                        });
-                    } else if (selectedCountryId) {
-                        // Just load countries (they will be marked as active by the loadCountries function)
-                        loadCountries();
-                    } else {
-                        // Load countries normally
-                        loadCountries();
-                    }
+                                }
+                                // If no states, countries are already shown with active state from loadCountries
+                            });
+                        }
+                        // If no location selected, countries are already loaded and shown
+                    });
                 }
 
                 // Load countries on page load and restore filter
                 restoreLocationFilter();
 
-                // Handle country click
+                // Handle country click - always filter by country
                 $(document).on('click', '.country-link', function(e) {
                     e.preventDefault();
                     const $item = $(this).closest('.location-item');
                     const countryId = $item.data('country-id');
-                    const countryName = $item.data('country-name');
 
-                    // Load states for this country
-                    $.get(STATES_ENDPOINT, {
-                        country_id: countryId
-                    }, function(data) {
-                        const $stateList = $('#state-list');
-                        $stateList.empty();
-
-                        if (data.length > 0) {
-                            data.forEach(function(state) {
-                                const isActive = '{{ request('state') }}' == state.id ?
-                                    'active' : '';
-                                $stateList.append(`
-                                    <li class="location-item ${isActive}" data-state-id="${state.id}" data-state-name="${state.text}">
-                                        <a href="javascript:void(0)" class="location-link state-link">
-                                            <i class="las la-angle-right"></i>
-                                            ${state.text}
-                                        </a>
-                                    </li>
-                                `);
-                            });
-
-                            // Show state section
-                            $('#country-section').hide();
-                            $('#state-section').show();
-                            $('#selected-country-name').text(countryName);
-                            $('#selected_country').val(countryId);
-                        } else {
-                            // No states - directly apply country filter
-                            $('#selected_country').val(countryId);
-                            $('#selected_state').val('');
-                            $('#selected_city').val('');
-                            $('#search_listings_form').submit();
-                        }
-                    });
+                    $('#selected_country').val(countryId);
+                    $('#selected_state').val('');
+                    $('#selected_city').val('');
+                    $('#search_listings_form').submit();
                 });
 
-                // Handle state click
+                // Handle state click - always filter by state
                 $(document).on('click', '.state-link', function(e) {
                     e.preventDefault();
                     const $item = $(this).closest('.location-item');
                     const stateId = $item.data('state-id');
-                    const stateName = $item.data('state-name');
 
-                    // Load cities for this state
-                    $.get(CITIES_ENDPOINT, {
-                        state_id: stateId
-                    }, function(data) {
-                        const $cityList = $('#city-list');
-                        $cityList.empty();
-
-                        if (data.length > 0) {
-                            data.forEach(function(city) {
-                                const isActive = '{{ request('city') }}' == city.id ?
-                                    'active' : '';
-                                $cityList.append(`
-                                    <li class="location-item ${isActive}" data-city-id="${city.id}">
-                                        <a href="javascript:void(0)" class="location-link city-link">
-                                            <i class="las la-map-marker"></i>
-                                            ${city.text}
-                                        </a>
-                                    </li>
-                                `);
-                            });
-
-                            // Show city section
-                            $('#state-section').hide();
-                            $('#city-section').show();
-                            $('#selected-state-name').text(stateName);
-                            $('#selected_state').val(stateId);
-                        } else {
-                            // No cities - directly apply state filter
-                            $('#selected_state').val(stateId);
-                            $('#selected_city').val('');
-                            $('#search_listings_form').submit();
-                        }
-                    });
+                    $('#selected_state').val(stateId);
+                    $('#selected_city').val('');
+                    $('#search_listings_form').submit();
                 });
 
                 // Handle city click
@@ -1197,19 +1207,19 @@
                     $('#search_listings_form').submit();
                 });
 
-                // Back to countries
+                // Back to countries - clear all location filters and reload
                 $('#back-to-countries').on('click', function() {
-                    $('#state-section').hide();
-                    $('#country-section').show();
+                    $('#selected_country').val('');
                     $('#selected_state').val('');
                     $('#selected_city').val('');
+                    $('#search_listings_form').submit();
                 });
 
-                // Back to states
+                // Back to states - clear state/city and reload with country only
                 $('#back-to-states').on('click', function() {
-                    $('#city-section').hide();
-                    $('#state-section').show();
+                    $('#selected_state').val('');
                     $('#selected_city').val('');
+                    $('#search_listings_form').submit();
                 });
 
                 // ========== Other Filters (keeping existing functionality) ==========
