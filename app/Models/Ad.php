@@ -38,7 +38,7 @@ class Ad extends Model
 
     public function categoryInfo(): HasOne
     {
-        return $this->hasOne(AdsCategory::class, 'id', 'category');
+        return $this->hasOne(AdsCategory::class, 'id', 'category_id');
     }
 
     public function userInfo(): HasOne
@@ -51,6 +51,10 @@ class Ad extends Model
         return $this->hasOne(AdsCondition::class, 'id', 'item_condition');
     }
 
+    function location()
+    {
+        return (!is_null($this->cityInfo) && !is_null($this->stateInfo) && !is_null($this->countryInfo)) ? $this->cityInfo->name . ', ' . $this->stateInfo->name . ', ' . $this->countryInfo->name : null;
+    }
     public function customFields()
     {
         return json_decode($this->custom_field, true);
