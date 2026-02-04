@@ -48,7 +48,7 @@ class Ad extends Model
 
     public function condition(): HasOne
     {
-        return $this->hasOne(AdsCondition::class, 'id', 'item_condition');
+        return $this->hasOne(AdsCondition::class, 'id', 'condition_id');
     }
 
     function location()

@@ -421,7 +421,43 @@ class AdController extends Controller
 
     public function adDetailsPage($slug)
     {
-        return view('frontend.pages.ad.details', compact('slug'));
+        $ad = Ad::with([
+            'categoryInfo',
+            'cityInfo',
+            'stateInfo',
+            'countryInfo',
+            'galleryImages',
+            'tags',
+            'condition',
+            'userInfo' => function ($q) {
+                $q->withCount(['ads' => function ($q2) {
+                    $q2->where('status', config('settings.general_status.active'));
+                }]);
+            },
+        ])
+            ->where('uid', $slug)
+            ->where('status', config('settings.general_status.active'))
+            ->firstOrFail();
+
+        // Pre-load custom field models to avoid N+1 in the view
+        $customFields = $ad->customFields();
+        $fieldModels = collect();
+        if ($customFields && count($customFields) > 0) {
+            $fieldIds = collect($customFields)->pluck('flied_id')->filter()->values();
+            $fieldModels = AdsCustomField::whereIn('id', $fieldIds)->get()->keyBy('id');
+        }
+
+        // Get relevant ads from the same category
+        $relevantAds = Ad::with(['categoryInfo', 'cityInfo', 'stateInfo'])
+            ->where('status', config('settings.general_status.active'))
+            ->where('payment_status', config('settings.general_status.active'))
+            ->where('id', '!=', $ad->id)
+            ->where('category_id', $ad->category_id)
+            ->orderBy('created_at', 'DESC')
+            ->limit(4)
+            ->get();
+
+        return view('frontend.pages.ad.details', compact('ad', 'relevantAds', 'customFields', 'fieldModels'));
     }
 
     public function getCountries(Request $request)
