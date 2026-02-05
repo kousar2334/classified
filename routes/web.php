@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\LocationController;
 use App\Http\Controllers\Frontend\MemberAuthController;
 
 Route::get('/', [PageController::class, 'homePage'])->name('home');
+Route::get('/pricing-plans', [PageController::class, 'pricingPlans'])->name('pricing.plans');
 
 //Auth Routes
 Route::group(['middleware' => ['guest']], function () {

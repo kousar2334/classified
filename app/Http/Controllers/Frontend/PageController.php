@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Ad;
 use App\Models\AdsCategory;
+use App\Models\PricingPlan;
 
 class PageController extends Controller
 {
@@ -74,11 +75,31 @@ class PageController extends Controller
             }
         }
 
+        // Fetch active pricing plans
+        $pricingPlans = PricingPlan::where('status', $activeStatus)
+            ->orderBy('price', 'ASC')
+            ->get();
+
         return view('frontend.pages.home', compact(
             'categories',
             'topListings',
             'recentListings',
-            'categoryWiseListings'
+            'categoryWiseListings',
+            'pricingPlans'
         ));
+    }
+
+    /**
+     * Display the pricing plans page
+     */
+    public function pricingPlans()
+    {
+        $activeStatus = config('settings.general_status.active');
+
+        $pricingPlans = PricingPlan::where('status', $activeStatus)
+            ->orderBy('price', 'ASC')
+            ->get();
+
+        return view('frontend.pages.pricing-plans', compact('pricingPlans'));
     }
 }

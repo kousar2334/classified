@@ -22,6 +22,7 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\CustomFieldController;
 use App\Http\Controllers\Backend\SiteSettingController;
 use App\Http\Controllers\Backend\NotificationController;
+use App\Http\Controllers\Backend\PricingPlanController;
 use App\Http\Controllers\Backend\ClassifiedSettingController;
 
 Route::prefix('admin')->group(function () {
@@ -196,6 +197,17 @@ Route::prefix('admin')->group(function () {
         Route::post('business-stats', [DashboardController::class, 'businessStats'])->name('business.stats');
         Route::post('ad--posting-stats', [DashboardController::class, 'adStats'])->name('reports.ad.chart');
         Route::post('member-registration-stats', [DashboardController::class, 'memberStats'])->name('reports.member.chart');
+        /**
+         * Pricing Plans Module
+         */
+        Route::group(['prefix' => 'pricing-plans'], function () {
+            Route::get('/', [PricingPlanController::class, 'plans'])->name('admin.pricing.plans.list');
+            Route::post('store', [PricingPlanController::class, 'planStore'])->name('admin.pricing.plans.store');
+            Route::post('edit', [PricingPlanController::class, 'planEdit'])->name('admin.pricing.plans.edit');
+            Route::post('update', [PricingPlanController::class, 'planUpdate'])->name('admin.pricing.plans.update');
+            Route::post('delete', [PricingPlanController::class, 'planDelete'])->name('admin.pricing.plans.delete');
+        });
+
         /**
          * Member Module
          */

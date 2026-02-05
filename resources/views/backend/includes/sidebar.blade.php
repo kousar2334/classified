@@ -47,6 +47,17 @@
                     </a>
                 </li>
 
+                <!--Pricing Plans Module-->
+                <li class="nav-item">
+                    <a href="{{ route('admin.pricing.plans.list') }}"
+                        class="nav-link {{ Request::routeIs(['admin.pricing.plans.list']) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tags"></i>
+                        <p>
+                            {{ translation('Pricing Plans') }}
+                        </p>
+                    </a>
+                </li>
+
                 <!--Listings Module-->
                 <li
                     class="nav-item {{ Request::routeIs(['classified.ads.list.featured', 'classified.ads.list', 'classified.ads.custom.field.options', 'classified.ads.custom.field.list', 'classified.ads.tag.list', 'classified.ads.condition.list', 'classified.ads.categories.list']) ? 'menu-open ' : '' }}">
