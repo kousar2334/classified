@@ -258,6 +258,10 @@ Route::prefix('admin')->group(function () {
             Route::post('/update', [AdsController::class, 'updateAd'])->name('classified.ads.update');
             Route::post('/delete', [AdsController::class, 'deleteAd'])->name('classified.ads.delete');
 
+            // AJAX routes for location dropdowns
+            Route::get('/get-states', [AdsController::class, 'getStates'])->name('classified.ads.get.states');
+            Route::get('/get-cities', [AdsController::class, 'getCities'])->name('classified.ads.get.cities');
+
             //Category module
             Route::group(['prefix' => 'categories'], function () {
                 Route::get('/', [CategoryController::class, 'categories'])->name('classified.ads.categories.list');

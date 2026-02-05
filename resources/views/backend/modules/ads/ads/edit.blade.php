@@ -1,388 +1,502 @@
 @php
-    $lang = request()->get('lang');
+    $links = [
+        [
+            'title' => 'Ads',
+            'route' => 'classified.ads.list',
+            'active' => false,
+        ],
+        [
+            'title' => 'Edit Ad',
+            'route' => '',
+            'active' => true,
+        ],
+    ];
 @endphp
-
 @extends('backend.layouts.dashboard_layout')
-@section('title')
+@section('page-title')
     {{ translation('Edit Ad') }}
 @endsection
 @section('page-style')
-    <link rel="stylesheet" href="{{ asset('/public/web-assets/backend/plugins/select2/select2.min.css') }}">
-    <link href="{{ asset('/public/web-assets/backend/plugins/summernote/summernote-lite.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('public/web-assets/backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/summernote/summernote-bs4.min.css') }}">
 @endsection
 @section('page-content')
-    <form action="{{ route('classified.ads.update') }}" method="POST" class="row">
-        @csrf
-        <div class="col-lg-8">
-            <div class="mb-3">
-                <p class="alert alert-info">You are editing <strong>"{{ getLanguageNameByCode($lang) }}"</strong>
-                    version
-                </p>
-            </div>
-            <!--Language Switcher-->
-            <ul class="nav nav-tabs nav-fill border-light border-0">
-                @foreach (getAllLanguages() as $key => $language)
-                    <li class="nav-item">
-                        <a class="nav-link @if ($language->code == $lang) active border-0 @else bg-light @endif py-3"
-                            href="{{ route('classified.ads.edit', ['id' => $ad_details->id, 'lang' => $language->code]) }}">
-                            <img src="{{ asset('/public/web-assets/backend/img/flags') . '/' . $language->code . '.png' }}"
-                                width="20px">
-                            <span>{{ $language->name }}</span>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-            <!--End Language Switcher--->
+    <x-admin-page-header title="Ad Information" :links="$links" />
+    <section class="content">
+        <div class="container-fluid">
+            <form method="POST" action="{{ route('classified.ads.update') }}">
+                @csrf
+                <input type="hidden" name="id" value="{{ $ad_details->id }}">
+                <div class="row">
+                    <div class="col-lg-9 col-12">
+                        <!-- Basic Information -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">{{ translation('Basic Information') }}</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>{{ translation('Title') }}</label>
+                                    <input type="text" name="title" class="form-control"
+                                        value="{{ $ad_details->title }}" placeholder="{{ translation('Enter title') }}">
+                                    @if ($errors->has('title'))
+                                        <div class="error text-danger mb-0 invalid-input">
+                                            {{ $errors->first('title') }}</div>
+                                    @endif
+                                </div>
 
-            <div class="card mb-30">
-                <div class="card-header bg-white border-bottom2 py-3">
-                    <h4>{{ translation('Ad Information') }}</h4>
-                </div>
-                <div class="card-body">
-                    <input type="hidden" name="id" value="{{ $ad_details->id }}">
-                    <input type="hidden" name="lang" value="{{ $lang }}">
+                                <div class="form-group">
+                                    <label>{{ translation('Category') }}</label>
+                                    <select class="category-select form-control" name="category">
+                                        @if ($ad_details->categoryInfo != null)
+                                            <option value="{{ $ad_details->category_id }}" selected>
+                                                {{ $ad_details->categoryInfo->title }}
+                                            </option>
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('category'))
+                                        <div class="error text-danger mb-0 invalid-input">
+                                            {{ $errors->first('category') }}</div>
+                                    @endif
+                                </div>
 
-                    <div class="form-row mb-20">
-                        <div class="col-sm-3">
-                            <label class="font-14 bold black">{{ translation('Title') }} </label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" name="title" class="form-control"
-                                value="{{ $ad_details->translation('title', $lang) }}"
-                                placeholder="{{ translation('Type Enter') }}">
-                            @if ($errors->has('title'))
-                                <div class="invalid-input">{{ $errors->first('title') }}</div>
-                            @endif
-                        </div>
-                    </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{{ translation('Condition') }}</label>
+                                            <select class="form-control" name="condition">
+                                                <option value="">{{ translation('Select Condition') }}</option>
+                                                @foreach ($conditions as $condition)
+                                                    <option value="{{ $condition->id }}" @selected($ad_details->condition_id == $condition->id)>
+                                                        {{ $condition->title }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('condition'))
+                                                <div class="error text-danger mb-0 invalid-input">
+                                                    {{ $errors->first('condition') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{{ translation('Price') }}</label>
+                                            <div class="input-group">
+                                                <input type="number" name="price" value="{{ $ad_details->price }}"
+                                                    class="form-control" placeholder="0.00" step="0.01">
+                                                <div class="input-group-append">
+                                                    <div class="input-group-text">
+                                                        <input type="checkbox" name="is_negotiable"
+                                                            @checked($ad_details->is_negotiable == config('settings.general_status.active'))>
+                                                        <small class="ml-1">{{ translation('Negotiable') }}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @if ($errors->has('price'))
+                                                <div class="error text-danger mb-0 invalid-input">
+                                                    {{ $errors->first('price') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <div class="form-row mb-20 {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
-                        <div class="col-sm-3">
-                            <label class="font-14 bold black ">{{ translation('Category') }} </label>
-                        </div>
-                        <div class="col-sm-9">
-                            <select class="category form-control" name="category">
-                                @if ($ad_details->categoryInfo != null)
-                                    <option value="{{ $ad_details->category }}" selected>
-                                        {{ $ad_details->categoryInfo->translation('title') }}
-                                    </option>
-                                @endif
-                            </select>
-                            @if ($errors->has('category'))
-                                <div class="invalid-input">{{ $errors->first('category') }}</div>
-                            @endif
-                        </div>
-                    </div>
+                                <div class="form-group">
+                                    <label>{{ translation('Description') }}</label>
+                                    <textarea id="contentSummernote" name="description">{{ $ad_details->description }}</textarea>
+                                    @if ($errors->has('description'))
+                                        <div class="error text-danger mb-0 invalid-input">
+                                            {{ $errors->first('description') }}</div>
+                                    @endif
+                                </div>
 
-                    <div class="form-row mb-20 {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
-                        <div class="col-sm-3">
-                            <label class="font-14 bold black">{{ translation('Condition') }} </label>
-                        </div>
-                        <div class="col-sm-9">
-                            <select class="form-control" name="condition">
-                                @foreach ($conditions as $condition)
-                                    <option value="{{ $condition->id }}" @selected($ad_details->item_condition == $condition->id)>
-                                        {{ $condition->translation('title', $lang) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has('condition'))
-                                <div class="invalid-input">{{ $errors->first('condition') }}</div>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-row mb-20 {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
-                        <div class="col-sm-3">
-                            <label class="font-14 bold black">{{ translation('Price') }} </label>
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="input-group addon">
-                                <input type="number" name="price" value="{{ $ad_details->price }}"
-                                    class="form-control style--two" placeholder="0.00">
-                                <div class="input-group-append">
-                                    <span class="input-group-text black">
-                                        <input id="negotiable" name="is_negotiable" @checked($ad_details->is_negotiable == config('settings.general_status.active'))
-                                            type="checkbox" />
-                                        <small>{{ translation('Negotiable') }}</small>
-                                    </span>
+                                <div class="form-group">
+                                    <label>{{ translation('Video URL') }}</label>
+                                    <input type="text" class="form-control" name="video_url"
+                                        value="{{ $ad_details->video_url }}"
+                                        placeholder="{{ translation('Enter YouTube link') }}">
+                                    @if ($errors->has('video_url'))
+                                        <div class="error text-danger mb-0 invalid-input">
+                                            {{ $errors->first('video_url') }}</div>
+                                    @endif
                                 </div>
                             </div>
-                            @if ($errors->has('price'))
-                                <div class="invalid-input">{{ $errors->first('price') }}</div>
-                            @endif
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="card mb-30">
-                <div class="card-header bg-white border-bottom2 py-3">
-                    <h4>{{ translation('Ad Description') }}</h4>
-                </div>
-                <div class="card-body">
-                    <div class="form-row mb-20">
-                        <div class="form-group col-lg-12">
-                            <textarea class="form-control" id="ad_description" name="description">{{ $ad_details->translation('description', $lang) }}</textarea>
-                            @if ($errors->has('description'))
-                                <div class="invalid-input">{{ $errors->first('description') }}</div>
-                            @endif
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="card mb-30 {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
-                <div class="card-header bg-white border-bottom2 py-3">
-                    <h4>{{ translation('Images') }}</h4>
-                </div>
-                <div class="card-body">
-                    <div class="form-row mb-20">
-                        <div class="col-sm-3">
-                            <label class="font-14 bold black mb-0">{{ translation('Thumbnail Image') }} </label>
-                            <p>240x160</p>
-                        </div>
-                        <div class="col-sm-">
-                            @include('core::base.includes.media.media_input', [
-                                'input' => 'thumbnail_image',
-                                'data' => $ad_details->thumbnail_image,
-                            ])
-                            @if ($errors->has('thumbnail_image'))
-                                <div class="invalid-input">{{ $errors->first('thumbnail_image') }}</div>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-row mb-20 product-gallery-images">
-                        <div class="col-sm-3">
-                            <label class="font-14 bold black mb-0">{{ translation('Gallery Images') }} </label>
-                            <p>825x550</p>
-                        </div>
-                        <div class="col-sm-9">
-                            @php
-                                $galleryImages = $ad_details->galleryImages->pluck('image_id')->toArray();
-                            @endphp
-                            @include('core::base.includes.media.media_input_multi_select', [
-                                'input' => 'gallery_images',
-                                'data' => implode(',', $galleryImages),
-                                'indicator' => 1,
-                                'container_id' => '#multi_input_1',
-                            ])
-                            @if ($errors->has('gallery_images'))
-                                <div class="invalid-input">{{ $errors->first('gallery_images') }}
+                        <!-- Location Information -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">{{ translation('Location Information') }}</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ translation('Country') }}</label>
+                                            <select class="form-control" name="country" id="country-select">
+                                                <option value="">{{ translation('Select Country') }}</option>
+                                                @foreach ($countries as $country)
+                                                    <option value="{{ $country->id }}" @selected($ad_details->country_id == $country->id)>
+                                                        {{ $country->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('country'))
+                                                <div class="error text-danger mb-0 invalid-input">
+                                                    {{ $errors->first('country') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ translation('State') }}</label>
+                                            <select class="form-control" name="state" id="state-select">
+                                                <option value="">{{ translation('Select State') }}</option>
+                                                @foreach ($states as $state)
+                                                    <option value="{{ $state->id }}" @selected($ad_details->state_id == $state->id)>
+                                                        {{ $state->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('state'))
+                                                <div class="error text-danger mb-0 invalid-input">
+                                                    {{ $errors->first('state') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>{{ translation('City') }}</label>
+                                            <select class="form-control" name="city" id="city-select">
+                                                <option value="">{{ translation('Select City') }}</option>
+                                                @foreach ($cities as $city)
+                                                    <option value="{{ $city->id }}" @selected($ad_details->city_id == $city->id)>
+                                                        {{ $city->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('city'))
+                                                <div class="error text-danger mb-0 invalid-input">
+                                                    {{ $errors->first('city') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="card mb-30 {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
-                <div class="card-header bg-white border-bottom2 py-3">
-                    <h4>{{ translation('Custom Fields') }}</h4>
-                </div>
-                <div class="card-body">
-                    @foreach ($ad_details->customFields() as $cf)
-                        @php
-                            $field = \Plugin\ClassiLooksCore\Models\AdsCustomField::with([
-                                'custom_field_translations',
-                                'options',
-                            ])->find($cf['flied_id']);
-                        @endphp
-                        @if ($field != null)
-                            <div class="form-row mb-20">
-                                <div class="col-sm-3">
-                                    <label class="font-14 bold black">{{ $field->translation('title', $lang) }} </label>
+                                <div class="form-group">
+                                    <label>{{ translation('Address') }}</label>
+                                    <textarea name="address" class="form-control" rows="2" placeholder="{{ translation('Enter detailed address') }}">{{ $ad_details->address }}</textarea>
+                                    @if ($errors->has('address'))
+                                        <div class="error text-danger mb-0 invalid-input">
+                                            {{ $errors->first('address') }}</div>
+                                    @endif
                                 </div>
-                                <div class="col-sm-9">
-                                    @if ($cf['type'] == config('settings.input_types.text'))
-                                        <input type="text" name="custom_field[{{ $field->id }}]" class="form-control"
-                                            value="{{ $cf['value'] }}"
-                                            placeholder="{{ translation('Type ') }} {{ $field->translation('title', $lang) }}">
-                                    @endif
-                                    @if ($cf['type'] == config('settings.input_types.number'))
-                                        <input type="number" name="custom_field[{{ $field->id }}]"
-                                            class="form-control" value="{{ $cf['value'] }}"
-                                            placeholder="{{ translation('Type ') }} {{ $field->translation('title', $lang) }}">
-                                    @endif
-                                    @if ($cf['type'] == config('settings.input_types.text_area'))
-                                        <textarea name="custom_field[{{ $field->id }}]" class="form-control">{{ $cf['value'] }}</textarea>
-                                    @endif
-                                    @if ($cf['type'] == config('settings.input_types.date'))
-                                        <input type="date" name="custom_field[{{ $field->id }}]"
-                                            class="form-control" value="{{ $cf['value'] }}"
-                                            placeholder="{{ translation('Type ') }} {{ $field->translation('title', $lang) }}">
-                                    @endif
-                                    @if ($cf['type'] == config('settings.input_types.select'))
-                                        <select name="custom_field[{{ $field->id }}]" class="form-control">
-                                            @foreach ($field->options as $option)
-                                                <option value="{{ $option->id }}" @selected($option->id == $cf['value'])>
-                                                    {{ $option->translation('value', $lang) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    @endif
-                                    @if ($cf['type'] == config('settings.input_types.radio'))
-                                        @foreach ($field->options as $option)
-                                            <label class="mr-2">
-                                                <input type="radio" name="custom_field[{{ $field->id }}]"
-                                                    value="{{ $option->id }}" @checked($option->id == $cf['value']) />
-                                                {{ $option->translation('value', $lang) }}
-                                            </label>
-                                        @endforeach
-                                    @endif
 
-                                    @if ($cf['type'] == config('settings.input_types.checkbox'))
-                                        @foreach ($field->options as $option)
-                                            <label class="mr-2">
-                                                <input type="checkbox" name="custom_field[{{ $field->id }}][]"
-                                                    value="{{ $option->id }}" @checked(in_array($option->id, $cf['value'])) />
-                                                {{ $option->translation('value', $lang) }}
-                                            </label>
-                                        @endforeach
-                                    @endif
-                                    @if ($cf['type'] == config('settings.input_types.file'))
-                                        @include('core::base.includes.media.media_input', [
-                                            'input' => 'customfile_' . $field->id,
-                                            'data' => $cf['value'],
-                                        ])
-                                    @endif
+                                @if ($ad_details->cityInfo != null)
+                                    <div class="form-group">
+                                        <iframe width="100%" height="200" frameborder="0"
+                                            style="border-radius: 4px;"
+                                            src="https://www.google.com/maps/embed/v1/place?q={{ $ad_details->cityInfo->name }}&key=AIzaSyBz0OQItk9_cip0UiVTR7NL9lL9oR5VR_Q"
+                                            allowfullscreen>
+                                        </iframe>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
 
-                                    @if ($errors->has('title'))
-                                        <div class="invalid-input">{{ $errors->first('title') }}</div>
-                                    @endif
+                        <!-- Contact Information -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">{{ translation('Contact Information') }}</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{{ translation('Contact Email') }}</label>
+                                            <input type="email" name="contact_email" class="form-control"
+                                                value="{{ $ad_details->contact_email }}"
+                                                placeholder="{{ translation('Enter email') }}">
+                                            @if ($errors->has('contact_email'))
+                                                <div class="error text-danger mb-0 invalid-input">
+                                                    {{ $errors->first('contact_email') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{{ translation('Contact Phone') }}</label>
+                                            <input type="text" name="contact_phone" class="form-control"
+                                                value="{{ $ad_details->contact_phone }}"
+                                                placeholder="{{ translation('Enter phone') }}">
+                                            @if ($errors->has('contact_phone'))
+                                                <div class="error text-danger mb-0 invalid-input">
+                                                    {{ $errors->first('contact_phone') }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ translation('Hide Phone Number') }}</label>
+                                    <div
+                                        class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="checkbox" name="contact_is_hide" class="custom-control-input"
+                                            id="phoneVisibleSwitch" @checked($ad_details->contact_is_hide == config('settings.general_status.active'))>
+                                        <label class="custom-control-label" for="phoneVisibleSwitch"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Custom Fields -->
+                        @if ($ad_details->customFields() && count($ad_details->customFields()) > 0)
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{ translation('Custom Fields') }}</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        @foreach ($ad_details->customFields() as $cf)
+                                            @php
+                                                $field = \App\Models\AdsCustomField::with(['options'])->find(
+                                                    $cf['flied_id'],
+                                                );
+                                            @endphp
+                                            @if ($field != null)
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>{{ $field->title }}</label>
+                                                        @if ($cf['type'] == config('settings.input_types.text'))
+                                                            <input type="text"
+                                                                name="custom_field[{{ $field->id }}]"
+                                                                class="form-control" value="{{ $cf['value'] }}"
+                                                                placeholder="{{ translation('Enter') }} {{ $field->title }}">
+                                                        @endif
+                                                        @if ($cf['type'] == config('settings.input_types.number'))
+                                                            <input type="number"
+                                                                name="custom_field[{{ $field->id }}]"
+                                                                class="form-control" value="{{ $cf['value'] }}"
+                                                                placeholder="{{ translation('Enter') }} {{ $field->title }}">
+                                                        @endif
+                                                        @if ($cf['type'] == config('settings.input_types.text_area'))
+                                                            <textarea name="custom_field[{{ $field->id }}]" class="form-control" rows="2">{{ $cf['value'] }}</textarea>
+                                                        @endif
+                                                        @if ($cf['type'] == config('settings.input_types.date'))
+                                                            <input type="date"
+                                                                name="custom_field[{{ $field->id }}]"
+                                                                class="form-control" value="{{ $cf['value'] }}">
+                                                        @endif
+                                                        @if ($cf['type'] == config('settings.input_types.select'))
+                                                            <select name="custom_field[{{ $field->id }}]"
+                                                                class="form-control">
+                                                                <option value="">{{ translation('Select') }}
+                                                                </option>
+                                                                @foreach ($field->options as $option)
+                                                                    <option value="{{ $option->id }}"
+                                                                        @selected($option->id == $cf['value'])>
+                                                                        {{ $option->value }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        @endif
+                                                        @if ($cf['type'] == config('settings.input_types.radio'))
+                                                            <div>
+                                                                @foreach ($field->options as $option)
+                                                                    <div
+                                                                        class="custom-control custom-radio custom-control-inline">
+                                                                        <input type="radio"
+                                                                            id="cf_{{ $field->id }}_{{ $option->id }}"
+                                                                            name="custom_field[{{ $field->id }}]"
+                                                                            class="custom-control-input"
+                                                                            value="{{ $option->id }}"
+                                                                            @checked($option->id == $cf['value'])>
+                                                                        <label class="custom-control-label"
+                                                                            for="cf_{{ $field->id }}_{{ $option->id }}">{{ $option->value }}</label>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        @endif
+                                                        @if ($cf['type'] == config('settings.input_types.checkbox'))
+                                                            <div>
+                                                                @foreach ($field->options as $option)
+                                                                    <div
+                                                                        class="custom-control custom-checkbox custom-control-inline">
+                                                                        <input type="checkbox"
+                                                                            id="cf_{{ $field->id }}_{{ $option->id }}"
+                                                                            name="custom_field[{{ $field->id }}][]"
+                                                                            class="custom-control-input"
+                                                                            value="{{ $option->id }}"
+                                                                            @checked(is_array($cf['value']) && in_array($option->id, $cf['value']))>
+                                                                        <label class="custom-control-label"
+                                                                            for="cf_{{ $field->id }}_{{ $option->id }}">{{ $option->value }}</label>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        @endif
+                                                        @if ($cf['type'] == config('settings.input_types.file'))
+                                                            <x-media name="customfile_{{ $field->id }}"
+                                                                :value="$cf['value']"></x-media>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         @endif
-                    @endforeach
-                </div>
-            </div>
+                    </div>
 
+                    <!-- Sidebar -->
+                    <div class="col-lg-3 col-12">
+                        <!-- Status & Actions -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>{{ translation('Featured Ad') }}</label>
+                                    <div
+                                        class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="checkbox" name="is_featured" class="custom-control-input"
+                                            id="featuredSwitch" @checked($ad_details->is_featured == config('settings.general_status.active'))>
+                                        <label class="custom-control-label" for="featuredSwitch"></label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{{ translation('Thumbnail Image') }}</label>
+                                    <x-media name="thumbnail_image" :value="$ad_details->thumbnail_image"></x-media>
+                                    @if ($errors->has('thumbnail_image'))
+                                        <div class="error text-danger mb-0 invalid-input">
+                                            {{ $errors->first('thumbnail_image') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{{ translation('Gallery Images') }}</label>
+                                    @php
+                                        $galleryImages = $ad_details->galleryImages
+                                            ? $ad_details->galleryImages->pluck('image_id')->implode(',')
+                                            : '';
+                                    @endphp
+                                    {{-- <x-media-multi name="gallery_images" :value="$galleryImages"></x-media-multi> --}}
+                                    @if ($errors->has('gallery_images'))
+                                        <div class="error text-danger mb-0 invalid-input">
+                                            {{ $errors->first('gallery_images') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{{ translation('Tags') }}</label>
+                                    <select class="tag-select form-control" name="tags[]" multiple>
+                                        @foreach ($ad_details->tags as $tag)
+                                            <option value="{{ $tag->id }}" selected>{{ $tag->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <hr>
+
+                                <!-- Ad Status Info -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <small class="text-muted">{{ translation('Status') }}:</small>
+                                        <span
+                                            class="badge {{ $ad_details->status == config('settings.general_status.active') ? 'badge-success' : 'badge-warning' }}">
+                                            {{ $ad_details->status == config('settings.general_status.active') ? translation('Published') : translation('Pending') }}
+                                        </span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <small class="text-muted">{{ translation('Payment') }}:</small>
+                                        <span
+                                            class="badge {{ $ad_details->payment_status == config('settings.general_status.active') ? 'badge-success' : 'badge-danger' }}">
+                                            {{ $ad_details->payment_status == config('settings.general_status.active') ? translation('Paid') : translation('Unpaid') }}
+                                        </span>
+                                    </div>
+                                    @if ($ad_details->userInfo)
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <small class="text-muted">{{ translation('Owner') }}:</small>
+                                            <small>{{ $ad_details->userInfo->name }}</small>
+                                        </div>
+                                    @endif
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <small class="text-muted">{{ translation('Created') }}:</small>
+                                        <small>{{ $ad_details->created_at->format('M d, Y') }}</small>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <button type="submit" name="status"
+                                        value="{{ config('settings.general_status.in_active') }}"
+                                        class="btn btn-secondary">{{ translation('Save & Pending') }}</button>
+                                    <button type="submit" name="status"
+                                        value="{{ config('settings.general_status.active') }}"
+                                        class="btn btn-primary">{{ translation('Save & Publish') }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
-
-        <div class="col-lg-4">
-            <div class="card mb-30 {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
-                <div class="card-header bg-white border-bottom2 py-3">
-                    <div class="d-sm-flex justify-content-between align-items-center">
-                        <h4>{{ translation('Featured') }}</h4>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="form-row mb-20">
-                        <div class="col-sm-6">
-                            <label class="font-14 bold black ">{{ translation('Status') }} </label>
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="switch glow primary medium">
-                                <input type="checkbox" name="is_featured"
-                                    @if ($ad_details->is_featured == config('settings.general_status.active')) checked @endif>
-                                <span class="control"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-30 {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
-                <div class="card-header bg-white border-bottom2 py-3">
-                    <div class="d-sm-flex justify-content-between align-items-center">
-                        <h4>{{ translation('Tags') }}</h4>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="form-row mb-20 {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
-                        <div class="col-sm-12">
-                            <select class="tags form-control" name="tags[]" multiple>
-                                @foreach ($ad_details->tags as $tag)
-                                    <option value="{{ $tag->id }}" selected>
-                                        {{ $tag->title }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has('tag'))
-                                <div class="invalid-input">{{ $errors->first('tag') }}</div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-30 {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
-                <div class="card-header bg-white border-bottom2 py-3">
-                    <h4>{{ translation('Contact Info') }}</h4>
-                </div>
-                <div class="card-body">
-                    <div class="contact-card">
-                        <img src="{{ asset(getFilePath($ad_details->userInfo->image)) }}" class="img-80 img-thumbnail"
-                            alt="{{ $ad_details->userInfo->name }}">
-                        <p class="black h6 mb-0 mb-1 mt-2"><span class="bold">{{ translation('Name') }}:</span>
-                            {{ $ad_details->userInfo->name }}</p>
-                        <p class="black h6 mb-0 mb-1"><span class="bold">{{ translation('Email') }}:</span>
-                            {{ $ad_details->contact_email }}
-                        </p>
-                        <p class="black h6 mb-0 mb-1"><span class="bold">{{ translation('Phone') }}:</span>
-                            {{ $ad_details->contact_phone }}</p>
-                    </div>
-                    <div class="form-row mb-20">
-                        <div class="col-sm-6">
-                            <label class="font-14 bold black ">{{ translation('Phone Visible') }} </label>
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="switch glow primary medium">
-                                <input type="checkbox" name="contact_is_hide"
-                                    @if ($ad_details->contact_is_hide == config('settings.general_status.active')) checked @endif>
-                                <span class="control"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-30 {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
-                <div class="card-header bg-white border-bottom2 py-3">
-                    <h4>{{ translation('Location') }}</h4>
-                </div>
-                <div class="card-body p-0">
-                    @if ($ad_details->cityInfo != null)
-                        <iframe width="100%" height="250" frameborder="0"
-                            src="https://www.google.com/maps/embed/v1/place?q={{ $ad_details->cityInfo->name }}&key=AIzaSyBz0OQItk9_cip0UiVTR7NL9lL9oR5VR_Q"
-                            allowfullscreen>
-                        </iframe>
-                    @endif
-                </div>
-            </div>
-        </div>
-
-        <!--Form submit area-->
-        <div
-            class="bottom-button d-flex align-items-center justify-content-sm-end gap-10 flex-wrap justify-content-center">
-            <button type="submit" name="status" value="{{ config('settings.general_status.in_active') }}"
-                class="btn btn-dark btn-outline-info" tabindex="4">
-                {{ translation('Update & Pending') }}
-            </button>
-            <button type="submit" name="status" value="{{ config('settings.general_status.active') }}"
-                class="btn btn-outline-primary" tabindex="4">
-                {{ translation('Update & Publish') }}
-            </button>
-        </div>
-        <!--End Form submit area-->
-
-    </form>
-
+    </section>
 @endsection
 @section('page-script')
-    <!--Select2-->
-    <script src="{{ asset('/public/web-assets/backend/plugins/select2/select2.min.js') }}"></script>
-    <script src="{{ asset('/public/web-assets/backend/plugins/summernote/summernote-lite.js') }}"></script>
+    <script src="{{ asset('public/web-assets/backend/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('public/web-assets/backend/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script>
         (function($) {
             "use strict";
-            initDropzone();
-            /**
-             *  category Select
-             * 
-             */
-            $('.category').select2({
-                theme: "classic",
+            initMediaManager();
+
+            // Summernote Init
+            $('#contentSummernote').summernote({
+                tabsize: 2,
+                height: 250,
+                toolbar: [
+                    ["style", ["style"]],
+                    ["font", ["bold", "underline", "clear"]],
+                    ["color", ["color"]],
+                    ["para", ["ul", "ol", "paragraph"]],
+                    ["table", ["table"]],
+                    ["insert", ["link", "picture"]],
+                    ["view", ["fullscreen", "help"]],
+                ],
+                callbacks: {
+                    onImageUpload: function(images) {
+                        sendFile(images[0], 'contentSummernote');
+                    }
+                }
+            });
+
+            // Image insert function in summernote
+            function sendFile(image, section_id) {
+                let data = new FormData();
+                data.append("image", image);
+                data.append("_token", '{{ csrf_token() }}');
+                $.ajax({
+                    data: data,
+                    type: "POST",
+                    url: '{{ route('utility.store.editor.image') }}',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        if (data.url) {
+                            var image = $('<img>').attr('src', data.url);
+                            $('#' + section_id).summernote("insertNode", image[0]);
+                        }
+                    },
+                    error: function(data) {
+                        toastr.error('Image Insert Failed', "Error!");
+                    }
+                });
+            }
+
+            // Category Select
+            $('.category-select').select2({
+                theme: "bootstrap4",
                 placeholder: '{{ translation('Select category') }}',
-                closeOnSelect: true,
                 ajax: {
                     url: '{{ route('classified.ads.categories.options') }}',
                     dataType: 'json',
@@ -398,15 +512,11 @@
                 }
             });
 
-            /**
-             *  tags options
-             * 
-             */
-            $('.tags').select2({
-                theme: "classic",
+            // Tags Select
+            $('.tag-select').select2({
+                theme: "bootstrap4",
                 tags: true,
-                placeholder: '{{ translation('Select or insert  tags') }}',
-                closeOnSelect: true,
+                placeholder: '{{ translation('Select or create tags') }}',
                 ajax: {
                     url: '{{ route('classified.ads.tag.options') }}',
                     dataType: 'json',
@@ -422,23 +532,53 @@
                 }
             });
 
-            // SUMMERNOTE INIT
-            $('#ad_description').summernote({
-                tabsize: 2,
-                height: 200,
-                codeviewIframeFilter: false,
-                codeviewFilter: true,
-                codeviewFilterRegex: /<\/*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|ilayer|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|t(?:itle|extarea)|xml)[^>]*>|on\w+\s*=\s*"[^"]*"|on\w+\s*=\s*'[^']*'|on\w+\s*=\s*[^\s>]+/gi,
-                toolbar: [
-                    ["style", ["style"]],
-                    ['fontsize', ['fontsize']],
-                    ["font", ["bold", "underline", "clear"]],
-                    ["color", ["color"]],
-                    ["para", ["ul", "ol", "paragraph"]],
-                    ["view", ["fullscreen"]],
+            // Location dropdowns - cascading selection
+            $('#country-select').on('change', function() {
+                var countryId = $(this).val();
+                var stateSelect = $('#state-select');
+                var citySelect = $('#city-select');
 
-                ],
-                placeholder: 'Enter Description',
+                stateSelect.html('<option value="">{{ translation('Select State') }}</option>');
+                citySelect.html('<option value="">{{ translation('Select City') }}</option>');
+
+                if (countryId) {
+                    $.ajax({
+                        url: '{{ route('classified.ads.get.states') }}',
+                        type: 'GET',
+                        data: {
+                            country_id: countryId
+                        },
+                        success: function(data) {
+                            $.each(data, function(index, state) {
+                                stateSelect.append('<option value="' + state.id + '">' +
+                                    state.name + '</option>');
+                            });
+                        }
+                    });
+                }
+            });
+
+            $('#state-select').on('change', function() {
+                var stateId = $(this).val();
+                var citySelect = $('#city-select');
+
+                citySelect.html('<option value="">{{ translation('Select City') }}</option>');
+
+                if (stateId) {
+                    $.ajax({
+                        url: '{{ route('classified.ads.get.cities') }}',
+                        type: 'GET',
+                        data: {
+                            state_id: stateId
+                        },
+                        success: function(data) {
+                            $.each(data, function(index, city) {
+                                citySelect.append('<option value="' + city.id + '">' + city
+                                    .name + '</option>');
+                            });
+                        }
+                    });
+                }
             });
         })(jQuery);
     </script>

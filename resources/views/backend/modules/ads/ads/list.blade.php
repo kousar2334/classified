@@ -83,9 +83,10 @@
                                                         data-toggle="dropdown" aria-expanded="false">
                                                     </button>
                                                     <div class="dropdown-menu" role="menu">
-                                                        <button class="dropdown-item edit-item">
-                                                            {{ translation('Edit') }}
-                                                        </button>
+                                                        <a href="{{ route('classified.ads.edit', $ad->id) }}"
+                                                            class="dropdown-item">
+                                                            {{ translation('Edit') }} 1
+                                                        </a>
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item delete-item"
                                                             data-id="{{ $ad->id }}">

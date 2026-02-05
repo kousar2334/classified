@@ -10,8 +10,6 @@ use App\Models\AdsTag;
 use App\Models\AdHasTag;
 use App\Models\AdGalleryImage;
 use App\Models\AdsCustomField;
-use App\Models\AdTranslation;
-use Plugin\ClassiLooksCore\Notifications\NotificationHandler;
 
 class AdRepository
 {
@@ -101,8 +99,6 @@ class AdRepository
 
             //Store gallery image
             $this->storeGalleryImages($request, $ad->id);
-
-            NotificationHandler::sendNewAdPostingNotification($ad);
 
             DB::commit();
             if ($request['cost'] > 0) {
@@ -249,7 +245,7 @@ class AdRepository
      */
     public function adDetails($id)
     {
-        $details = Ad::with(['tags', 'categoryInfo', 'ad_translations'])->find($id);
+        $details = Ad::with(['tags', 'categoryInfo', 'galleryImages', 'countryInfo', 'stateInfo', 'cityInfo', 'userInfo'])->find($id);
 
         return $details;
     }
@@ -260,88 +256,108 @@ class AdRepository
     {
         try {
             DB::beginTransaction();
-            if ($request['lang'] != null && $request['lang'] != getDefaultLang()) {
-                $ad_translation = AdTranslation::firstOrNew(['ad_id' => $request['id'], 'lang' => $request['lang']]);
-                $ad_translation->title = $request['title'];
-                $ad_translation->description = $request['description'];
-                $ad_translation->save();
-            } else {
 
-                //Prepare custom field
-                $final_custom_input = [];
-                if ($request->has('custom_field') && $request['custom_field'] != null) {
-                    $custom_field = $request['custom_field'];
-                    foreach ($custom_field as $key => $value) {
-                        $field = AdsCustomField::find($key);
-                        if ($field != null) {
-                            $temp['flied_id'] = $key;
-                            $temp['type'] = $field->type;
-                            $temp['value'] = $value;
-                            array_push($final_custom_input, $temp);
-                        }
-                    }
-                }
-
-                foreach ($request->all() as $key => $value) {
-                    if (str_contains($key, 'customfile_')) {
-                        $key_array = explode('_', $key);
-                        $field_id = $key_array[sizeof($key_array) - 1];
-                        $field = AdsCustomField::find($field_id);
-                        if ($field != null) {
-                            $temp['flied_id'] = $field_id;
-                            $temp['type'] = $field->type;
-                            $temp['value'] = $value;
-                            array_push($final_custom_input, $temp);
-                        }
-                    }
-                }
-
-                $ad = Ad::findOrFail($request['id']);
-                $ad->title = xss_clean($request['title']);
-                $ad->description = xss_clean($request['description']);
-                $ad->category = $request['category'];
-                $ad->item_condition = $request['condition'];
-                $ad->price = $request['price'];
-                $ad->is_negotiable = $request->has('is_negotiable') ? config('settings.general_status.active') : config('settings.general_status.in_active');
-                $ad->contact_is_hide = $request->has('contact_is_hide') ? config('settings.general_status.active') : config('settings.general_status.in_active');
-                $ad->is_featured = $request->has('is_featured') ? config('settings.general_status.active') : config('settings.general_status.in_active');
-                $ad->status = $request['status'];
-                $ad->thumbnail_image = $request['thumbnail_image'];
-                $ad->custom_field = json_encode($final_custom_input);
-                $ad->save();
-
-                //Store or update ad tag
-                AdHasTag::where('ad_id', $ad->id)->delete();
-                if ($request->has('tags') && $request['tags'] != null) {
-                    foreach ($request['tags'] as $key => $tag) {
-                        $tag_info = AdsTag::find($tag);
-                        if ($tag_info != null) {
-                            $tag_id = $tag_info->id;
-                        } else {
-                            $new_tag = new AdsTag();
-                            $new_tag->title = $tag;
-                            $new_tag->save();
-                            $tag_id = $new_tag->id;
-                        }
-
-                        $ad_tag = AdHasTag::firstOrCreate(['ad_id' => $ad->id, 'tag_id' => $tag_id]);
-                        $ad_tag->save();
-                    }
-                }
-
-                //Store or update gallery image
-                AdGalleryImage::where('ad_id', $ad->id)->delete();
-                if ($request->has('gallery_images') && $request['gallery_images'] != null) {
-                    $images = explode(',', $request['gallery_images']);
-                    foreach ($images as $image) {
-                        $ad_gallery_image = new AdGalleryImage();
-                        $ad_gallery_image->image_id = $image;
-                        $ad_gallery_image->ad_id = $ad->id;
-                        $ad_gallery_image->save();
+            //Prepare custom field
+            $final_custom_input = [];
+            if ($request->has('custom_field') && $request['custom_field'] != null) {
+                $custom_field = $request['custom_field'];
+                foreach ($custom_field as $key => $value) {
+                    $field = AdsCustomField::find($key);
+                    if ($field != null) {
+                        $temp['flied_id'] = $key;
+                        $temp['type'] = $field->type;
+                        $temp['value'] = $value;
+                        array_push($final_custom_input, $temp);
                     }
                 }
             }
 
+            foreach ($request->all() as $key => $value) {
+                if (str_contains($key, 'customfile_')) {
+                    $key_array = explode('_', $key);
+                    $field_id = $key_array[sizeof($key_array) - 1];
+                    $field = AdsCustomField::find($field_id);
+                    if ($field != null) {
+                        $temp['flied_id'] = $field_id;
+                        $temp['type'] = $field->type;
+                        $temp['value'] = $value;
+                        array_push($final_custom_input, $temp);
+                    }
+                }
+            }
+
+            $ad = Ad::findOrFail($request['id']);
+            $ad->title = xss_clean($request['title']);
+            $ad->description = xss_clean($request['description']);
+            $ad->category_id = $request['category'];
+            $ad->condition_id = $request['condition'];
+            $ad->price = $request['price'];
+            $ad->is_negotiable = $request->has('is_negotiable') ? config('settings.general_status.active') : config('settings.general_status.in_active');
+            $ad->contact_is_hide = $request->has('contact_is_hide') ? config('settings.general_status.active') : config('settings.general_status.in_active');
+            $ad->is_featured = $request->has('is_featured') ? config('settings.general_status.active') : config('settings.general_status.in_active');
+            $ad->status = $request['status'];
+            $ad->thumbnail_image = $request['thumbnail_image'];
+            $ad->custom_field = json_encode($final_custom_input);
+
+            // Update location fields
+            if ($request->has('country')) {
+                $ad->country_id = $request['country'];
+            }
+            if ($request->has('state')) {
+                $ad->state_id = $request['state'];
+            }
+            if ($request->has('city')) {
+                $ad->city_id = $request['city'];
+            }
+            if ($request->has('address')) {
+                $ad->address = xss_clean($request['address']);
+            }
+
+            // Update contact fields
+            if ($request->has('contact_email')) {
+                $ad->contact_email = xss_clean($request['contact_email']);
+            }
+            if ($request->has('contact_phone')) {
+                $ad->contact_phone = xss_clean($request['contact_phone']);
+            }
+
+            // Update video URL
+            if ($request->has('video_url')) {
+                $ad->video_url = xss_clean($request['video_url']);
+            }
+
+            $ad->save();
+
+            //Store or update ad tag
+            AdHasTag::where('ad_id', $ad->id)->delete();
+            if ($request->has('tags') && $request['tags'] != null) {
+                foreach ($request['tags'] as $key => $tag) {
+                    $tag_info = AdsTag::find($tag);
+                    if ($tag_info != null) {
+                        $tag_id = $tag_info->id;
+                    } else {
+                        $new_tag = new AdsTag();
+                        $new_tag->title = $tag;
+                        $new_tag->save();
+                        $tag_id = $new_tag->id;
+                    }
+
+                    $ad_tag = AdHasTag::firstOrCreate(['ad_id' => $ad->id, 'tag_id' => $tag_id]);
+                    $ad_tag->save();
+                }
+            }
+
+            //Store or update gallery image
+            AdGalleryImage::where('ad_id', $ad->id)->delete();
+            if ($request->has('gallery_images') && $request['gallery_images'] != null) {
+                $images = explode(',', $request['gallery_images']);
+                foreach ($images as $image) {
+                    $ad_gallery_image = new AdGalleryImage();
+                    $ad_gallery_image->image_id = $image;
+                    $ad_gallery_image->ad_id = $ad->id;
+                    $ad_gallery_image->save();
+                }
+            }
 
             DB::commit();
             return true;

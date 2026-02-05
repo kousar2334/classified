@@ -110,7 +110,7 @@ class AdsController extends ApiController
      */
     public function customField(Request $request): AdsCustomFieldCollection
     {
-        $query = AdsCustomField::with(['custom_field_translations', 'options' => function ($q) {
+        $query = AdsCustomField::with(['options' => function ($q) {
             $q->with('option_translations')
                 ->where('status', config('settings.general_status.active'))
                 ->select(['id as option_id', 'field_id', 'value']);
@@ -425,9 +425,9 @@ class AdsController extends ApiController
 
         // Search by title/description
         if ($request->has('search_key') && $request['search_key'] != '') {
-            $query = $query->where(function($q) use ($request) {
+            $query = $query->where(function ($q) use ($request) {
                 $q->where('title', 'like', '%' . $request['search_key'] . '%')
-                  ->orWhere('description', 'like', '%' . $request['search_key'] . '%');
+                    ->orWhere('description', 'like', '%' . $request['search_key'] . '%');
             });
         }
 
