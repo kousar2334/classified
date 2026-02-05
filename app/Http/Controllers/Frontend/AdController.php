@@ -511,6 +511,309 @@ class AdController extends Controller
         return response()->json($cities);
     }
 
+    public function myListings(Request $request)
+    {
+        $query = Ad::with(['categoryInfo', 'cityInfo', 'stateInfo'])
+            ->where('user_id', auth()->id());
+
+        // Filter by status
+        if ($request->has('status') && $request->status != '') {
+            if ($request->status == 'active') {
+                $query->where('status', config('settings.general_status.active'));
+            } elseif ($request->status == 'inactive') {
+                $query->where('status', config('settings.general_status.in_active'));
+            } elseif ($request->status == 'sold') {
+                $query->where('is_sold', config('settings.general_status.active'));
+            }
+        }
+
+        // Search by title
+        if ($request->has('q') && $request->q != '') {
+            $query->where('title', 'like', '%' . $request->q . '%');
+        }
+
+        // Sorting
+        if ($request->has('sortby') && $request->sortby != '') {
+            switch ($request->sortby) {
+                case 'oldest':
+                    $query->orderBy('created_at', 'ASC');
+                    break;
+                case 'price_low':
+                    $query->orderBy('price', 'ASC');
+                    break;
+                case 'price_high':
+                    $query->orderBy('price', 'DESC');
+                    break;
+                default:
+                    $query->orderBy('created_at', 'DESC');
+            }
+        } else {
+            $query->orderBy('created_at', 'DESC');
+        }
+
+        $ads = $query->paginate(12)->appends($request->except('page'));
+
+        // Get counts for tabs
+        $totalCount = Ad::where('user_id', auth()->id())->count();
+        $activeCount = Ad::where('user_id', auth()->id())
+            ->where('status', config('settings.general_status.active'))
+            ->count();
+        $inactiveCount = Ad::where('user_id', auth()->id())
+            ->where('status', config('settings.general_status.in_active'))
+            ->count();
+        $soldCount = Ad::where('user_id', auth()->id())
+            ->where('is_sold', config('settings.general_status.active'))
+            ->count();
+
+        return view('frontend.pages.member.my-listings', compact(
+            'ads',
+            'totalCount',
+            'activeCount',
+            'inactiveCount',
+            'soldCount'
+        ));
+    }
+
+    public function editAd($uid)
+    {
+        $ad = Ad::with(['galleryImages', 'tags', 'categoryInfo', 'countryInfo', 'stateInfo', 'cityInfo'])
+            ->where('uid', $uid)
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
+
+        $categories = AdsCategory::whereNull('parent')
+            ->where('status', config('settings.general_status.active'))
+            ->with(['child' => function ($q) {
+                $q->where('status', config('settings.general_status.active'))
+                    ->with(['child' => function ($q2) {
+                        $q2->where('status', config('settings.general_status.active'));
+                    }]);
+            }])
+            ->orderBy('id', 'ASC')
+            ->get();
+
+        $conditions = AdsCondition::where('status', config('settings.general_status.active'))->get();
+        $tags = AdsTag::orderBy('title', 'ASC')->get();
+
+        // Build category hierarchy for pre-selection
+        $categoryHierarchy = $this->buildCategoryHierarchy($ad->category_id);
+
+        // Get selected tag IDs
+        $selectedTagIds = $ad->tags->pluck('id')->toArray();
+
+        // Parse custom field values
+        $customFieldValues = [];
+        if ($ad->custom_field) {
+            $customFields = json_decode($ad->custom_field, true);
+            if (is_array($customFields)) {
+                foreach ($customFields as $field) {
+                    if (isset($field['flied_id']) && isset($field['value'])) {
+                        $customFieldValues[$field['flied_id']] = $field['value'];
+                    }
+                }
+            }
+        }
+
+        return view('frontend.pages.ad.edit-ad', compact('ad', 'categories', 'conditions', 'tags', 'categoryHierarchy', 'selectedTagIds', 'customFieldValues'));
+    }
+
+    public function updateAd(Request $request, $uid)
+    {
+        $ad = Ad::where('uid', $uid)
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
+
+        // Validation rules
+        $rules = [
+            'title' => 'required|string|max:250',
+            'price' => 'required|numeric|min:0',
+            'description' => 'required|string|min:150',
+            'country' => 'required|integer|exists:countries,id',
+            'state' => 'required|integer|exists:states,id',
+            'city' => 'required|integer|exists:cities,id',
+            'category' => 'required|integer|exists:ads_categories,id',
+            'condition' => 'nullable|integer|exists:ads_conditions,id',
+            'thumbnail_image' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp|max:5120',
+            'gallery_images.*' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp|max:5120',
+            'contact_email' => 'required|email|max:200',
+            'phone' => 'required|string|max:100',
+            'address' => 'nullable|string|max:500',
+            'video_url' => 'nullable|url|max:500',
+        ];
+
+        $request->validate($rules);
+
+        try {
+            DB::beginTransaction();
+
+            $ad->title = xss_clean($request->title);
+            $ad->description = xss_clean($request->description);
+            $ad->category_id = $request->category;
+            $ad->city_id = $request->city;
+            $ad->condition_id = $request->condition;
+            $ad->price = $request->price;
+            $ad->is_negotiable = $request->has('negotiable') ? config('settings.general_status.active') : config('settings.general_status.in_active');
+            $ad->country_id = $request->country;
+            $ad->state_id = $request->state;
+            $ad->address = xss_clean($request->address);
+            $ad->video_url = $request->video_url;
+            $ad->contact_email = xss_clean($request->contact_email);
+            $ad->contact_phone = xss_clean($request->phone);
+            $ad->contact_is_hide = $request->has('hide_phone_number') ? config('settings.general_status.active') : config('settings.general_status.in_active');
+
+            // Handle thumbnail image
+            if ($request->hasFile('thumbnail_image')) {
+                $ad->thumbnail_image = saveFileInStorage($request->file('thumbnail_image'));
+            }
+
+            // Handle custom fields
+            $customFieldData = [];
+            if ($request->has('custom_field') && is_array($request->custom_field)) {
+                foreach ($request->custom_field as $fieldId => $value) {
+                    $field = AdsCustomField::find($fieldId);
+                    if ($field) {
+                        $customFieldData[] = [
+                            'flied_id' => $fieldId,
+                            'type' => $field->type,
+                            'value' => $value,
+                        ];
+                    }
+                }
+            }
+
+            // Handle custom file fields
+            foreach ($request->allFiles() as $key => $file) {
+                if (str_starts_with($key, 'customfile_')) {
+                    $fieldId = str_replace('customfile_', '', $key);
+                    $field = AdsCustomField::find($fieldId);
+                    if ($field) {
+                        $savedPath = saveFileInStorage($file);
+                        $customFieldData[] = [
+                            'flied_id' => $fieldId,
+                            'type' => $field->type,
+                            'value' => $savedPath,
+                        ];
+                    }
+                }
+            }
+
+            if (count($customFieldData) > 0) {
+                $ad->custom_field = json_encode($customFieldData);
+            }
+
+            $ad->save();
+
+            // Update tags - remove old and add new
+            if ($request->has('tags')) {
+                AdHasTag::where('ad_id', $ad->id)->delete();
+                foreach ($request->tags as $tag) {
+                    $tagInfo = AdsTag::find($tag);
+                    if ($tagInfo) {
+                        $tagId = $tagInfo->id;
+                    } else {
+                        $newTag = new AdsTag();
+                        $newTag->title = $tag;
+                        $newTag->save();
+                        $tagId = $newTag->id;
+                    }
+                    AdHasTag::firstOrCreate(['ad_id' => $ad->id, 'tag_id' => $tagId]);
+                }
+            }
+
+            // Handle deleted gallery images
+            if ($request->has('deleted_gallery_images')) {
+                $deletedIds = json_decode($request->deleted_gallery_images, true);
+                if (is_array($deletedIds)) {
+                    AdGalleryImage::whereIn('id', $deletedIds)->where('ad_id', $ad->id)->delete();
+                }
+            }
+
+            // Store new gallery images
+            if ($request->hasFile('gallery_images')) {
+                foreach ($request->file('gallery_images') as $image) {
+                    $savedImage = saveFileInStorage($image);
+                    $galleryImage = new AdGalleryImage();
+                    $galleryImage->image_path = $savedImage;
+                    $galleryImage->ad_id = $ad->id;
+                    $galleryImage->save();
+                }
+            }
+
+            DB::commit();
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Ad updated successfully!',
+                    'redirect_url' => route('ad.details.page', ['slug' => $ad->uid]),
+                ]);
+            }
+
+            return redirect()->route('ad.details.page', ['slug' => $ad->uid])
+                ->with('success', 'Ad updated successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to update ad. Please try again.',
+                    'error' => $e->getMessage()
+                ], 422);
+            }
+
+            return back()->withInput()->with('error', 'Failed to update ad. Please try again. ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Build category hierarchy for pre-selection in edit form
+     */
+    private function buildCategoryHierarchy($categoryId)
+    {
+        $hierarchy = [
+            'category' => null,
+            'subcategory' => null,
+            'subSubcategory' => null,
+        ];
+
+        if (!$categoryId) {
+            return $hierarchy;
+        }
+
+        $category = AdsCategory::find($categoryId);
+        if (!$category) {
+            return $hierarchy;
+        }
+
+        $chain = [$category];
+        $current = $category;
+
+        while ($current->parent) {
+            $parent = AdsCategory::find($current->parent);
+            if ($parent) {
+                $chain[] = $parent;
+                $current = $parent;
+            } else {
+                break;
+            }
+        }
+
+        $chain = array_reverse($chain);
+
+        if (count($chain) >= 1) {
+            $hierarchy['category'] = $chain[0]->id;
+        }
+        if (count($chain) >= 2) {
+            $hierarchy['subcategory'] = $chain[1]->id;
+        }
+        if (count($chain) >= 3) {
+            $hierarchy['subSubcategory'] = $chain[2]->id;
+        }
+
+        return $hierarchy;
+    }
+
     /**
      * Build breadcrumb trail for a category by traversing up the hierarchy
      */

@@ -23,6 +23,9 @@ Route::group(['middleware' => ['guest']], function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/member/logout', [MemberAuthController::class, 'memberLogout'])->name('member.logout');
     Route::get('/member/dashboard', [MemberAuthController::class, 'memberDashboard'])->name('member.dashboard');
+    Route::get('/member/my-listings', [AdController::class, 'myListings'])->name('member.my.listings');
+    Route::get('/member/ad/edit/{uid}', [AdController::class, 'editAd'])->name('member.ad.edit');
+    Route::post('/member/ad/update/{uid}', [AdController::class, 'updateAd'])->name('member.ad.update');
 });
 
 //Listing Routes
