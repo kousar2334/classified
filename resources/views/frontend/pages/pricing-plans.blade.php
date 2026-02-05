@@ -1,10 +1,10 @@
 @extends('frontend.layouts.master')
 
-@section('page-title')
-    {{ translation('Pricing Plans') }}
+@section('meta')
+    <title>Pricing Plans - {{ get_setting('site_name') }}</title>
 @endsection
 
-@section('page-content')
+@section('content')
     <!-- Breadcrumb Section -->
     <section class="breadcrumb-area" data-padding-top="50" data-padding-bottom="50">
         <div class="container-1440">
