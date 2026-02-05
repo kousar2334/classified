@@ -1,5 +1,6 @@
 @extends('frontend.layouts.master')
 @section('meta')
+    @yield('dash-meta')
     <style>
         /* heading font */
         :root {
@@ -583,21 +584,7 @@
     <div class="mobile-sidebar-overlay" onclick="toggleSidebar()"></div>
     <div class="dashboard-container plr">
         <!-- Sidebar -->
-        <aside class="dashboard-sidebar " id="dashboardSidebar">
-            <button class="mobile-menu-toggle" onclick="toggleSidebar()" style="margin: 0 1rem 1rem; display: none;">
-                ✕
-            </button>
-            <ul class="sidebar-menu bg-color-c">
-                <li><a href="#" class="active"><i>📊</i> Dashboard</a></li>
-                <li><a href="#"><i>📝</i> My Listings</a></li>
-                <li><a href="#"><i>❤️</i> Favorites</a></li>
-                <li><a href="#"><i>💬</i> Messages</a></li>
-                <li><a href="#"><i>📈</i> Analytics</a></li>
-                <li><a href="#"><i>⚙️</i> Settings</a></li>
-                <li><a href="#"><i>👤</i> Profile</a></li>
-                <li><a href="#"><i>🚪</i> Logout</a></li>
-            </ul>
-        </aside>
+        @include('frontend.includes.navbar')
 
         <!-- Main Content -->
         <main class="dashboard-main">
@@ -606,118 +593,18 @@
                 ☰ Menu
             </button>
 
-            <!-- Dashboard Header -->
-            <div class="dashboard-header">
-                <h1>Welcome back, User!</h1>
-                <p>Here's what's happening with your listings today.</p>
-            </div>
-
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-label">Total Listings</span>
-                        <div class="stat-icon blue">📦</div>
-                    </div>
-                    <div class="stat-value">24</div>
-                    <div class="stat-change positive">
-                        <span>↑</span> 12% from last month
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-label">Total Views</span>
-                        <div class="stat-icon purple">👁️</div>
-                    </div>
-                    <div class="stat-value">1,847</div>
-                    <div class="stat-change positive">
-                        <span>↑</span> 23% from last week
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-label">Messages</span>
-                        <div class="stat-icon green">💬</div>
-                    </div>
-                    <div class="stat-value">32</div>
-                    <div class="stat-change positive">
-                        <span>↑</span> 8 new messages
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-label">Favorites</span>
-                        <div class="stat-icon cyan">⭐</div>
-                    </div>
-                    <div class="stat-value">156</div>
-                    <div class="stat-change positive">
-                        <span>↑</span> 5% increase
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Grid -->
-            <div class="content-grid">
-                <!-- Recent Activity -->
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <h3 class="card-title">Recent Activity</h3>
-                        <a href="#" class="view-all">View All →</a>
-                    </div>
-                    <div class="activity-list">
-                        <div class="activity-item">
-                            <div class="activity-icon blue">👤</div>
-                            <div class="activity-content">
-                                <h4>New message from John Doe</h4>
-                                <p>Interested in your "Vintage Camera" listing</p>
-                                <div class="activity-time">2 hours ago</div>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon green">⭐</div>
-                            <div class="activity-content">
-                                <h4>Your listing was favorited</h4>
-                                <p>"Antique Wooden Chair" added to 3 favorites</p>
-                                <div class="activity-time">5 hours ago</div>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon purple">📝</div>
-                            <div class="activity-content">
-                                <h4>Listing approved</h4>
-                                <p>"Gaming Console Bundle" is now live</p>
-                                <div class="activity-time">1 day ago</div>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon cyan">👁️</div>
-                            <div class="activity-content">
-                                <h4>High view count</h4>
-                                <p>"Designer Handbag" reached 250 views</p>
-                                <div class="activity-time">2 days ago</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quick Actions -->
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <h3 class="card-title">Quick Actions</h3>
-                    </div>
-                    <div class="quick-actions">
-                        <a href="#" class="action-btn">➕ Post New Ad</a>
-                        <a href="#" class="action-btn secondary">📊 View Analytics</a>
-                        <a href="#" class="action-btn secondary">💬 Check Messages</a>
-                        <a href="#" class="action-btn secondary">⚙️ Account Settings</a>
-                    </div>
-                </div>
-            </div>
+            @yield('dashboard-content')
         </main>
     </div>
 @endsection
 @section('js')
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('dashboardSidebar');
+            const overlay = document.querySelector('.mobile-sidebar-overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+    </script>
+    @yield('dashboard-js')
 @endsection
