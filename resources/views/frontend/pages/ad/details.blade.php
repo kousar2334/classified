@@ -2,75 +2,167 @@
 @section('meta')
     <title>{{ $ad->title }} - {{ get_setting('site_name') }}</title>
     <style>
-        /* ── Message Seller Card ─────────────────────────────── */
-        .msg-seller-card {
+        /* ── Sidebar: Seller Card ─────────────────────────────── */
+        .sid-seller-card {
             background: #fff;
             border-radius: 12px;
             box-shadow: 0 2px 14px rgba(0, 0, 0, .08);
-            padding: 20px;
-            margin-bottom: 16px;
-        }
-
-        .msg-seller-card .msg-seller-label {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            color: #94a3b8;
+            padding: 18px;
             margin-bottom: 12px;
         }
 
-        .msg-seller-card .msg-primary-btn {
+        .sid-seller-top {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            padding: 13px 20px;
-            background: var(--main-color-one);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 15px;
+            gap: 14px;
+        }
+
+        .sid-avatar-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+
+        .sid-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+        }
+
+        .sid-member-label {
+            font-size: 10px;
             font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+
+        .sid-seller-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sid-seller-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+
+        .sid-verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            background: #3b82f6;
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            padding: 2px 7px;
+            border-radius: 20px;
+        }
+
+        .sid-seller-meta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .sid-dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: #94a3b8;
+            display: inline-block;
+        }
+
+        /* ── Sidebar: Contact Card ─────────────────────────────── */
+        .sid-contact-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 14px rgba(0, 0, 0, .08);
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .sid-action-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 18px;
+            text-decoration: none;
+            color: inherit;
             cursor: pointer;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            transition: background .15s;
+        }
+
+        .sid-action-row:hover {
+            background: #f8fafc;
+            color: inherit;
             text-decoration: none;
-            transition: filter .2s, transform .15s;
-            line-height: 1;
         }
 
-        .msg-seller-card .msg-primary-btn:hover {
-            filter: brightness(1.08);
-            transform: translateY(-1px);
-            color: #fff;
-        }
-
-        .msg-seller-card .msg-primary-btn:active {
-            transform: translateY(0);
-            filter: brightness(.96);
-        }
-
-        .msg-seller-card .msg-login-btn {
+        .sid-icon-wrap {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            width: 100%;
-            padding: 13px 20px;
-            background: #f0f7ff;
-            color: var(--main-color-one);
-            border: 1.5px solid var(--main-color-one);
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: background .2s, color .2s;
-            line-height: 1;
+            flex-shrink: 0;
         }
 
-        .msg-seller-card .msg-login-btn:hover {
-            background: var(--main-color-one);
-            color: #fff;
+        .sid-icon-phone {
+            background: #22c55e;
+        }
+
+        .sid-icon-chat {
+            background: #f59e0b;
+        }
+
+        .sid-icon-whatsapp {
+            background: #25d366;
+        }
+
+        .sid-action-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sid-action-text span {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .sid-action-text small {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .sid-action-arrow {
+            flex-shrink: 0;
+        }
+
+        .sid-divider {
+            height: 1px;
+            background: #f1f5f9;
+            margin: 0 18px;
         }
 
         /* ── Message modal ───────────────────────────────────── */
@@ -510,38 +602,6 @@
                             @include('frontend.pages.ad._seller_info', ['ad' => $ad, 'isMobile' => false])
                         </div>
 
-                        {{-- Message Seller --}}
-                        @if ($sellerUser && !($sellerUser->id === auth()->id()))
-                            <div class="msg-seller-card">
-                                <p class="msg-seller-label">Contact Seller</p>
-                                @auth
-                                    <button type="button" class="msg-primary-btn" data-bs-toggle="modal"
-                                        data-bs-target="#messageSellerModal">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
-                                                stroke="white" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" />
-                                        </svg>
-                                        Message Seller
-                                    </button>
-                                @else
-                                    <a href="{{ route('member.login') }}?redirect={{ urlencode(request()->url()) }}"
-                                        class="msg-login-btn">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" />
-                                        </svg>
-                                        Login to Message Seller
-                                    </a>
-                                @endauth
-                            </div>
-                        @endif
-
                         {{-- Social Share --}}
                         <div class="share-on-wraper">
                             <div class="d-flex gap-3 align-items-center mb-3">
@@ -712,17 +772,19 @@
         (function($) {
             "use strict";
             $(document).ready(function() {
-                // Show/Hide phone number
-                $(document).on('click', '#userPhoneNumberBtn, #userPhoneNumberBtnForResponsive', function(e) {
+                // Phone reveal
+                $(document).on('click', '.sid-phone-trigger, .sid-phone-triggerForResponsive', function(e) {
+                    var $row = $(this);
+                    if ($row.data('revealed')) {
+                        return true;
+                    }
                     e.preventDefault();
-                    var isResponsive = $(this).attr('id') === 'userPhoneNumberBtnForResponsive';
-                    var phoneId = isResponsive ? '#phoneNumberForResponsive' : '#phoneNumber';
-                    var defaultId = isResponsive ? '#default_phone_number_show_for_responsive' :
-                        '#default_phone_number_show';
-
-                    $(defaultId).hide();
-                    $(phoneId).show();
-                    $(this).hide();
+                    var phone = $row.data('phone');
+                    var prefix = $row.data('prefix');
+                    $row.find('.sid-phone-display' + prefix).text(phone);
+                    $row.find('.sid-phone-hint' + prefix).text('Tap to call');
+                    $row.attr('href', 'tel:' + phone);
+                    $row.data('revealed', true);
                 });
 
                 // Show More / Show Less for description
