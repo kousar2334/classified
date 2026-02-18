@@ -14,6 +14,7 @@ use App\Models\AdsTag;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\SafetyTips;
+use App\Models\SavedAd;
 use App\Models\State;
 use App\Models\User;
 use App\Notifications\NewAdPosted;
@@ -464,7 +465,29 @@ class AdController extends Controller
             ->where('status', config('settings.general_status.active'))
             ->get();
 
-        return view('frontend.pages.ad.details', compact('ad', 'relevantAds', 'customFields', 'fieldModels', 'safetyTips'));
+        // Check if the current user has saved this ad
+        $isFavourited = auth()->check()
+            ? SavedAd::where('user_id', auth()->id())->where('ad_id', $ad->id)->exists()
+            : false;
+
+        return view('frontend.pages.ad.details', compact('ad', 'relevantAds', 'customFields', 'fieldModels', 'safetyTips', 'isFavourited'));
+    }
+
+    public function toggleFavourite(Request $request)
+    {
+        $request->validate(['ad_id' => 'required|integer|exists:ads,id']);
+
+        $existing = SavedAd::where('user_id', auth()->id())
+            ->where('ad_id', $request->ad_id)
+            ->first();
+
+        if ($existing) {
+            $existing->delete();
+            return response()->json(['saved' => false, 'message' => 'Removed from favourites']);
+        }
+
+        SavedAd::create(['user_id' => auth()->id(), 'ad_id' => $request->ad_id]);
+        return response()->json(['saved' => true, 'message' => 'Added to favourites']);
     }
 
     public function getCountries(Request $request)

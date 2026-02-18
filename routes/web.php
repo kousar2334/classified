@@ -28,6 +28,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/member/ad/edit/{uid}', [AdController::class, 'editAd'])->name('member.ad.edit');
     Route::post('/member/ad/update/{uid}', [AdController::class, 'updateAd'])->name('member.ad.update');
 
+    // Favourites
+    Route::post('/ad/favourite/toggle', [AdController::class, 'toggleFavourite'])->name('ad.favourite.toggle');
+
     // Messaging
     Route::get('/member/messages', [MessageController::class, 'index'])->name('member.messages.index');
     Route::get('/member/messages/{uid}', [MessageController::class, 'show'])->name('member.messages.show');

@@ -247,13 +247,182 @@
             filter: brightness(1.08);
         }
 
-        .phone_number_hide_show {
+        /* ── Actions Card (Save, Report, Share) ─────────────── */
+        .sid-actions-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 14px rgba(0, 0, 0, .08);
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .sid-quick-actions {
             display: flex;
-            flex-direction: row-reverse;
-            font-size: 18px;
-            font-weight: 600;
-            justify-content: flex-end;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .sid-quick-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             gap: 7px;
+            padding: 14px 10px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            color: #64748b;
+            transition: background .15s, color .15s;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .sid-quick-btn:hover {
+            background: #f8fafc;
+            color: #1e293b;
+            text-decoration: none;
+        }
+
+        .sid-quick-btn i {
+            font-size: 17px;
+        }
+
+        .sid-fav-btn i {
+            color: #ef4444;
+        }
+
+        .sid-fav-btn:hover,
+        .sid-fav-btn.is-favourited {
+            color: #ef4444;
+        }
+
+        .sid-fav-btn.is-favourited i {
+            font-weight: 900;
+        }
+
+        .sid-report-btn:hover {
+            color: #ef4444;
+        }
+
+        .sid-quick-sep {
+            width: 1px;
+            background: #f1f5f9;
+            flex-shrink: 0;
+        }
+
+        .sid-share-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+        }
+
+        .sid-share-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            white-space: nowrap;
+        }
+
+        .sid-share-icons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .sid-share-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 14px;
+            color: #fff;
+            transition: transform .15s, filter .15s;
+        }
+
+        .sid-share-icon:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.12);
+            color: #fff;
+        }
+
+        .sid-share-fb {
+            background: #1877f2;
+        }
+
+        .sid-share-tw {
+            background: #000;
+        }
+
+        .sid-share-pt {
+            background: #e60023;
+        }
+
+        .sid-share-wa {
+            background: #25d366;
+        }
+
+        /* ── Responsive ──────────────────────────────────────── */
+        @media (max-width: 767px) {
+            .proDetails.section-padding2 {
+                padding-top: 20px;
+            }
+
+            .product-name-price {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .product-name {
+                font-size: 18px !important;
+            }
+
+            .price {
+                text-align: left !important;
+            }
+
+            .date-location {
+                flex-wrap: wrap;
+                gap: 4px 0;
+            }
+
+            .date-location .vartical-devider {
+                display: none;
+            }
+
+            .date-location>span {
+                display: block;
+                width: 100%;
+            }
+
+            .descriptionTop .row>div {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+
+            .sid-actions-card .sid-share-row {
+                flex-wrap: wrap;
+                padding: 12px 14px;
+            }
+
+            .sid-actions-card .sid-quick-btn {
+                font-size: 12px;
+                padding: 12px 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .descriptionTop .row>div {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
         }
 
         img.no-image {
@@ -602,44 +771,53 @@
                             @include('frontend.pages.ad._seller_info', ['ad' => $ad, 'isMobile' => false])
                         </div>
 
-                        {{-- Social Share --}}
-                        <div class="share-on-wraper">
-                            <div class="d-flex gap-3 align-items-center mb-3">
-                                <div class="text-center w-50 report-btn listing-details-page-favorite">
-                                    <div class="favourite-icon">
-                                        <a href="javascript:void(0)" class="click_to_favorite_add_remove"
-                                            data-listing_id="{{ $ad->id }}">
-                                            <i class="lar la-heart icon favorite_add_icon"></i> <span>Favourite</span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="report-btn w-50 text-center">
-                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#reportModal">
-                                        <svg width="16" height="18" viewBox="0 0 16 18" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1 10H15L10.5 5.5L15 1H1V17" stroke="#64748B" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                        <span>Report</span>
+                        {{-- Actions: Save, Report, Share --}}
+                        <div class="sid-actions-card">
+                            <div class="sid-quick-actions">
+                                <a href="javascript:void(0)"
+                                    class="sid-quick-btn sid-fav-btn click_to_favorite_add_remove {{ $isFavourited ? 'is-favourited' : '' }}"
+                                    data-listing_id="{{ $ad->id }}"
+                                    data-toggle-url="{{ route('ad.favourite.toggle') }}"
+                                    data-is-auth="{{ auth()->check() ? 'true' : 'false' }}"
+                                    data-login-url="{{ route('member.login') }}">
+                                    <i class="{{ $isFavourited ? 'las' : 'lar' }} la-heart icon favorite_add_icon"></i>
+                                    <span>{{ $isFavourited ? 'Saved' : 'Save' }}</span>
+                                </a>
+                                <div class="sid-quick-sep"></div>
+                                <a href="javascript:void(0)" class="sid-quick-btn sid-report-btn" data-bs-toggle="modal"
+                                    data-bs-target="#reportModal">
+                                    <svg width="15" height="17" viewBox="0 0 16 18" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 10H15L10.5 5.5L15 1H1V17" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>Report</span>
+                                </a>
+                            </div>
+                            <div class="sid-share-row">
+                                <span class="sid-share-label">Share</span>
+                                <div class="sid-share-icons">
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->url()) }}"
+                                        target="_blank" rel="noopener" class="sid-share-icon sid-share-fb"
+                                        title="Facebook">
+                                        <i class="lab la-facebook-f"></i>
+                                    </a>
+                                    <a href="https://twitter.com/intent/tweet?text={{ urlencode($ad->title) }}&url={{ urlencode(request()->url()) }}"
+                                        target="_blank" rel="noopener" class="sid-share-icon sid-share-tw"
+                                        title="Twitter / X">
+                                        <i class="lab la-twitter"></i>
+                                    </a>
+                                    <a href="https://pinterest.com/pin/create/button/?url={{ urlencode(request()->url()) }}&description={{ urlencode($ad->title) }}"
+                                        target="_blank" rel="noopener" class="sid-share-icon sid-share-pt"
+                                        title="Pinterest">
+                                        <i class="lab la-pinterest-p"></i>
+                                    </a>
+                                    <a href="https://api.whatsapp.com/send?text={{ urlencode($ad->title . ' ' . request()->url()) }}"
+                                        target="_blank" rel="noopener" class="sid-share-icon sid-share-wa"
+                                        title="WhatsApp">
+                                        <i class="lab la-whatsapp"></i>
                                     </a>
                                 </div>
-                            </div>
-
-                            <div class="share-on">
-                                <span class="social-icons">
-                                    <li class="list-item"><a class="facebook-bg"
-                                            href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->url()) }}"><i
-                                                class="lab la-facebook-f"></i></a></li>
-                                    <li class="list-item"><a class="twitter-bg"
-                                            href="https://twitter.com/intent/tweet?text={{ urlencode($ad->title) }}&url={{ urlencode(request()->url()) }}"><i
-                                                class="lab la-twitter"></i></a></li>
-                                    <li class="list-item"><a class="pintarest-bg"
-                                            href="https://pinterest.com/pin/create/button/?url={{ urlencode(request()->url()) }}&description={{ urlencode($ad->title) }}"><i
-                                                class="lab la-pinterest-p"></i></a></li>
-                                    <li class="list-item"><a class="instagram-bg"
-                                            href="https://api.whatsapp.com/send?text={{ urlencode($ad->title . ' ' . request()->url()) }}"><i
-                                                class="lab la-whatsapp"></i></a></li>
-                                </span>
                             </div>
                         </div>
 
@@ -818,6 +996,47 @@
                 // Re-initialize slick if not already initialized (for dynamic content)
                 $('.shop-details-gallery-slider').on('init', function() {
                     $(this).css('visibility', 'visible');
+                });
+
+                // Favourite toggle
+                $(document).on('click', '.click_to_favorite_add_remove', function(e) {
+                    e.preventDefault();
+                    var $btn = $(this);
+
+                    if (!$btn.data('is-auth')) {
+                        window.location.href = $btn.data('login-url');
+                        return;
+                    }
+
+                    var adId = $btn.data('listing_id');
+                    var url = $btn.data('toggle-url');
+
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            ad_id: adId
+                        },
+                        success: function(res) {
+                            if (res.saved) {
+                                $btn.addClass('is-favourited');
+                                $btn.find('.favorite_add_icon').removeClass('lar').addClass(
+                                    'las');
+                                $btn.find('span').text('Saved');
+                                toastr_success_js(res.message);
+                            } else {
+                                $btn.removeClass('is-favourited');
+                                $btn.find('.favorite_add_icon').removeClass('las').addClass(
+                                    'lar');
+                                $btn.find('span').text('Save');
+                                toastr_warning_js(res.message);
+                            }
+                        },
+                        error: function() {
+                            toastr_error_js('Something went wrong. Please try again.');
+                        }
+                    });
                 });
             });
         })(jQuery);
