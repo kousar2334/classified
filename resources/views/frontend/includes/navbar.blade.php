@@ -8,7 +8,9 @@
         <li><a href="{{ route('member.my.listings') }}"
                 class="{{ Request::routeIs(['member.my.listings']) ? 'active' : '' }}"><i>📝</i> My Listings</a></li>
         <li><a href="#"><i>❤️</i> Favorites</a></li>
-        <li><a href="#"><i>💬</i> Messages</a></li>
+        <li><a href="{{ route('member.messages.index') }}"
+                class="{{ Request::routeIs(['member.messages.index', 'member.messages.show']) ? 'active' : '' }}"><i>💬</i>
+                Messages</a></li>
         <li><a href="#"><i>📈</i> Analytics</a></li>
         <li><a href="#"><i>⚙️</i> Settings</a></li>
         <li><a href="#"><i>👤</i> Profile</a></li>

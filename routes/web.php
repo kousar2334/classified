@@ -5,6 +5,7 @@ use App\Http\Controllers\Frontend\AdController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\LocationController;
 use App\Http\Controllers\Frontend\MemberAuthController;
+use App\Http\Controllers\Frontend\MessageController;
 
 Route::get('/', [PageController::class, 'homePage'])->name('home');
 Route::get('/pricing-plans', [PageController::class, 'pricingPlans'])->name('pricing.plans');
@@ -26,6 +27,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/member/my-listings', [AdController::class, 'myListings'])->name('member.my.listings');
     Route::get('/member/ad/edit/{uid}', [AdController::class, 'editAd'])->name('member.ad.edit');
     Route::post('/member/ad/update/{uid}', [AdController::class, 'updateAd'])->name('member.ad.update');
+
+    // Messaging
+    Route::get('/member/messages', [MessageController::class, 'index'])->name('member.messages.index');
+    Route::get('/member/messages/{uid}', [MessageController::class, 'show'])->name('member.messages.show');
+    Route::post('/member/messages/start', [MessageController::class, 'start'])->name('member.messages.start');
+    Route::post('/member/messages/{uid}/send', [MessageController::class, 'sendMessage'])->name('member.messages.send');
 });
 
 //Listing Routes

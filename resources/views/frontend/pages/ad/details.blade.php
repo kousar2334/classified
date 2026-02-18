@@ -2,6 +2,159 @@
 @section('meta')
     <title>{{ $ad->title }} - {{ get_setting('site_name') }}</title>
     <style>
+        /* ── Message Seller Card ─────────────────────────────── */
+        .msg-seller-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 14px rgba(0, 0, 0, .08);
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .msg-seller-card .msg-seller-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 12px;
+        }
+
+        .msg-seller-card .msg-primary-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 13px 20px;
+            background: var(--main-color-one);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: filter .2s, transform .15s;
+            line-height: 1;
+        }
+
+        .msg-seller-card .msg-primary-btn:hover {
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+            color: #fff;
+        }
+
+        .msg-seller-card .msg-primary-btn:active {
+            transform: translateY(0);
+            filter: brightness(.96);
+        }
+
+        .msg-seller-card .msg-login-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 13px 20px;
+            background: #f0f7ff;
+            color: var(--main-color-one);
+            border: 1.5px solid var(--main-color-one);
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background .2s, color .2s;
+            line-height: 1;
+        }
+
+        .msg-seller-card .msg-login-btn:hover {
+            background: var(--main-color-one);
+            color: #fff;
+        }
+
+        /* ── Message modal ───────────────────────────────────── */
+        #messageSellerModal .modal-content {
+            border: none;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        #messageSellerModal .modal-header {
+            background: var(--main-color-one);
+            border-bottom: none;
+            padding: 18px 22px;
+        }
+
+        #messageSellerModal .modal-title {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        #messageSellerModal .btn-close {
+            filter: invert(1) brightness(2);
+        }
+
+        #messageSellerModal .modal-body {
+            padding: 22px;
+        }
+
+        #messageSellerModal .msg-listing-ref {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #475569;
+        }
+
+        #messageSellerModal .msg-listing-ref strong {
+            color: #1e293b;
+        }
+
+        #messageSellerModal textarea.form-control {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 14px;
+            resize: none;
+            transition: border-color .2s;
+        }
+
+        #messageSellerModal textarea.form-control:focus {
+            border-color: var(--main-color-one);
+            box-shadow: none;
+        }
+
+        #messageSellerModal .modal-footer {
+            border-top: 1px solid #f1f5f9;
+            padding: 14px 22px;
+            gap: 10px;
+        }
+
+        #messageSellerModal .modal-send-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 22px;
+            background: var(--main-color-one);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: filter .2s;
+        }
+
+        #messageSellerModal .modal-send-btn:hover {
+            filter: brightness(1.08);
+        }
+
         .phone_number_hide_show {
             display: flex;
             flex-direction: row-reverse;
@@ -100,6 +253,7 @@
 @endsection
 
 @section('content')
+    @php $sellerUser = $ad->userInfo; @endphp
     <!--Listing Details-->
     <div class="proDetails section-padding2">
         <div class="container-1310">
@@ -356,6 +510,38 @@
                             @include('frontend.pages.ad._seller_info', ['ad' => $ad, 'isMobile' => false])
                         </div>
 
+                        {{-- Message Seller --}}
+                        @if ($sellerUser && !($sellerUser->id === auth()->id()))
+                            <div class="msg-seller-card">
+                                <p class="msg-seller-label">Contact Seller</p>
+                                @auth
+                                    <button type="button" class="msg-primary-btn" data-bs-toggle="modal"
+                                        data-bs-target="#messageSellerModal">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                                                stroke="white" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                        Message Seller
+                                    </button>
+                                @else
+                                    <a href="{{ route('member.login') }}?redirect={{ urlencode(request()->url()) }}"
+                                        class="msg-login-btn">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                        Login to Message Seller
+                                    </a>
+                                @endauth
+                            </div>
+                        @endif
+
                         {{-- Social Share --}}
                         <div class="share-on-wraper">
                             <div class="d-flex gap-3 align-items-center mb-3">
@@ -398,28 +584,90 @@
                         </div>
 
                         {{-- Safety Tips --}}
-                        @if(isset($safetyTips) && $safetyTips->count() > 0)
-                        <div class="safety-tips">
-                            <h3 class="head5">{{ translation('Safety Tips') }}</h3>
-                            <div class="safety-wraper">
-                                <ol>
-                                    @foreach($safetyTips as $tip)
-                                    <li
-                                        style="display: flex; align-items: center; gap: 8px; color: rgb(15, 23, 42); font-size: 16px; line-height: 1.5;">
-                                        <i class="las la-check-circle"
-                                            style="color: var(--main-color-one); font-size: 20px;"></i>
-                                        <span>{{ $tip->translation('title') }}</span>
-                                    </li>
-                                    @endforeach
-                                </ol>
+                        @if (isset($safetyTips) && $safetyTips->count() > 0)
+                            <div class="safety-tips">
+                                <h3 class="head5">{{ translation('Safety Tips') }}</h3>
+                                <div class="safety-wraper">
+                                    <ol>
+                                        @foreach ($safetyTips as $tip)
+                                            <li
+                                                style="display: flex; align-items: center; gap: 8px; color: rgb(15, 23, 42); font-size: 16px; line-height: 1.5;">
+                                                <i class="las la-check-circle"
+                                                    style="color: var(--main-color-one); font-size: 20px;"></i>
+                                                <span>{{ $tip->translation('title') }}</span>
+                                            </li>
+                                        @endforeach
+                                    </ol>
+                                </div>
                             </div>
-                        </div>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    {{-- Message Seller Modal --}}
+    @auth
+        @if ($sellerUser && auth()->id() !== $sellerUser->id)
+            <div class="modal fade" id="messageSellerModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="d-flex align-items-center gap-2">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <h5 class="modal-title">Message {{ $sellerUser->name }}</h5>
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="{{ route('member.messages.start') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="ad_id" value="{{ $ad->id }}">
+                            <div class="modal-body">
+                                <div class="msg-listing-ref">
+                                    @if ($ad->thumbnail_image)
+                                        <img src="{{ asset(getFilePath($ad->thumbnail_image, false)) }}"
+                                            alt="{{ $ad->title }}"
+                                            style="width:40px;height:40px;object-fit:cover;border-radius:6px;flex-shrink:0;">
+                                    @endif
+                                    <div>
+                                        <div
+                                            style="font-size:11px;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.05em;">
+                                            Listing</div>
+                                        <strong>{{ Str::limit($ad->title, 55) }}</strong>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label"
+                                        style="font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;">Your
+                                        message</label>
+                                    <textarea name="message" class="form-control" rows="5"
+                                        placeholder="Hi, I am interested in your listing. Is it still available?" required maxlength="2000"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                    data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="modal-send-btn">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="white" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endauth
 
     {{-- Report Modal --}}
     <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">

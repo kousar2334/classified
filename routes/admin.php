@@ -24,6 +24,7 @@ use App\Http\Controllers\Backend\SiteSettingController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\PricingPlanController;
 use App\Http\Controllers\Backend\ClassifiedSettingController;
+use App\Http\Controllers\Backend\ConversationController;
 
 Route::prefix('admin')->group(function () {
     //Admin Auth
@@ -102,6 +103,14 @@ Route::prefix('admin')->group(function () {
         Route::group(['middleware' => 'can:Manage Message'], function () {
             Route::get('messages', [ContactUsController::class, 'messages'])->name('admin.contact.us.message.list');
             Route::post('delete/message', [ContactUsController::class, 'deleteMessage'])->name('admin.contact.us.message.delete');
+        });
+
+        /**
+         * USER CONVERSATIONS
+         */
+        Route::prefix('conversations')->group(function () {
+            Route::get('/', [ConversationController::class, 'index'])->name('admin.conversations.index');
+            Route::get('{uid}', [ConversationController::class, 'show'])->name('admin.conversations.show');
         });
 
 
