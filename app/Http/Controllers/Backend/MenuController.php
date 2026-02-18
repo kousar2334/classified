@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use App\Models\MenuItemTranslation;
-use App\Models\ProductCategory;
 use Illuminate\Http\RedirectResponse;
 
 class MenuController extends Controller
@@ -38,7 +37,7 @@ class MenuController extends Controller
 
         $pages = Page::where('status', config('settings.general_status.active'))->get();
 
-        return view('backend.modules.Appearances.menus.builder', [
+        return view('backend.modules.appearances.menus.builder', [
             'all_menus'       => $all_menus,
             'selected_menu'   => $selected_menu,
             'header_menu'     => $header_menu,
@@ -193,7 +192,6 @@ class MenuController extends Controller
                     'success' => true
                 ]);
             }
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false
