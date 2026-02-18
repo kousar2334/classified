@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Favourites
     Route::post('/ad/favourite/toggle', [AdController::class, 'toggleFavourite'])->name('ad.favourite.toggle');
+    Route::get('/member/favourites', [AdController::class, 'myFavourites'])->name('member.favourites');
 
     // Messaging
     Route::get('/member/messages', [MessageController::class, 'index'])->name('member.messages.index');

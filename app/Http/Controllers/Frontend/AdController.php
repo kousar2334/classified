@@ -473,6 +473,31 @@ class AdController extends Controller
         return view('frontend.pages.ad.details', compact('ad', 'relevantAds', 'customFields', 'fieldModels', 'safetyTips', 'isFavourited'));
     }
 
+    public function myFavourites(Request $request)
+    {
+        $query = Ad::with(['categoryInfo', 'cityInfo', 'stateInfo'])
+            ->whereIn('id', SavedAd::where('user_id', auth()->id())->pluck('ad_id'))
+            ->where('status', config('settings.general_status.active'));
+
+        if ($request->filled('q')) {
+            $query->where('title', 'like', '%' . $request->q . '%');
+        }
+
+        $sortby = $request->sortby;
+        if ($sortby === 'price_low') {
+            $query->orderBy('price', 'ASC');
+        } elseif ($sortby === 'price_high') {
+            $query->orderBy('price', 'DESC');
+        } else {
+            $query->orderBy('created_at', 'DESC');
+        }
+
+        $ads = $query->paginate(12)->appends($request->except('page'));
+        $totalCount = SavedAd::where('user_id', auth()->id())->count();
+
+        return view('frontend.pages.member.favourites', compact('ads', 'totalCount'));
+    }
+
     public function toggleFavourite(Request $request)
     {
         $request->validate(['ad_id' => 'required|integer|exists:ads,id']);
