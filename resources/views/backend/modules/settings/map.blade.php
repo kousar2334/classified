@@ -14,7 +14,7 @@
                             <h4>{{ translation('Map Settings') }}</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('plugin.classilookscore.classified.settings.update') }}" method="POST">
+                            <form action="{{ route('classified.settings.update') }}" method="POST">
                                 @csrf
                                 <div class="form-row mb-20">
                                     <div class="col-sm-4">

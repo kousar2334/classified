@@ -16,7 +16,7 @@
                         <div class="card-header align-items-center bg-white d-flex justify-content-between">
                             <h4>{{ translation('Edit Quick Sell Tips') }}</h4>
                             <a class="btn long"
-                                href="{{ route('plugin.classilookscore.classified.settings.quick.sell.tips.list') }}">{{ translation('Quick Sell Tips List') }}
+                                href="{{ route('classified.settings.quick.sell.tips.list') }}">{{ translation('Quick Sell Tips List') }}
                             </a>
                         </div>
                         <div class="card-body">
@@ -25,7 +25,7 @@
                                 @foreach (getAllLanguages() as $key => $language)
                                     <li class="nav-item">
                                         <a class="nav-link @if ($language->code == $lang) active border-0 @else bg-light @endif py-3"
-                                            href="{{ route('plugin.classilookscore.classified.settings.quick.sell.tips.edit', ['id' => $tips->id, 'lang' => $language->code]) }}">
+                                            href="{{ route('classified.settings.quick.sell.tips.edit', ['id' => $tips->id, 'lang' => $language->code]) }}">
                                             <img src="{{ asset('/public/web-assets/backend/img/flags') . '/' . $language->code . '.png' }}"
                                                 width="20px">
                                             <span>{{ $language->name }}</span>
@@ -34,8 +34,7 @@
                                 @endforeach
                             </ul>
                             <!--End Language Switcher--->
-                            <form action="{{ route('plugin.classilookscore.classified.settings.quick.sell.tips.update') }}"
-                                method="POST">
+                            <form action="{{ route('classified.settings.quick.sell.tips.update') }}" method="POST">
                                 @csrf
                                 <div class="form-row mb-20">
                                     <div class="col-sm-12">

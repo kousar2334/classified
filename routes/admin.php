@@ -230,12 +230,6 @@ Route::prefix('admin')->group(function () {
             Route::post('member/update', [ClassifiedSettingController::class, 'updateMemberSetting'])->name('classified.member.settings.update')->middleware(['can:Manage Member Settings', 'demo']);
             Route::get('ads', [ClassifiedSettingController::class, 'adsSettings'])->name('classified.settings.ads')->middleware('can:Manage Ads Settings');
             Route::get('map', [ClassifiedSettingController::class, 'mapSettings'])->name('classified.settings.map')->middleware(['can:Manage Map Settings']);
-            //Safety tips
-            Route::get('safety-tips', [ClassifiedSettingController::class, 'safetyTips'])->name('classified.settings.safety.tips.list')->middleware(['can:Manage Safety Tips']);
-            Route::post('store-safety-tips', [ClassifiedSettingController::class, 'storeSafetyTips'])->name('classified.settings.safety.tips.store')->middleware(['can:Manage Safety Tips', 'demo']);
-            Route::post('delete-safety-tips', [ClassifiedSettingController::class, 'deleteSafetyTips'])->name('classified.settings.safety.tips.delete')->middleware(['can:Manage Safety Tips', 'demo']);
-            Route::get('edit-safety-tips/{id}', [ClassifiedSettingController::class, 'editSafetyTips'])->name('classified.settings.safety.tips.edit')->middleware(['can:Manage Safety Tips']);
-            Route::post('update-safety-tips', [ClassifiedSettingController::class, 'updateSafetyTips'])->name('classified.settings.safety.tips.update')->middleware(['can:Manage Safety Tips', 'demo']);
             //Quick Sell Tips
             Route::get('quick-sell-tips', [ClassifiedSettingController::class, 'quickSellTips'])->name('classified.settings.quick.sell.tips.list')->middleware(['can:Manage Quick Sell Tips']);
             Route::post('store-quick-sell-tips', [ClassifiedSettingController::class, 'storeQuickSellTips'])->name('classified.settings.quick.sell.tips.store')->middleware(['can:Manage Quick Sell Tips', 'demo']);
@@ -248,6 +242,17 @@ Route::prefix('admin')->group(function () {
 
             Route::post('update', [ClassifiedSettingController::class, 'updateSetting'])->name('classified.settings.update')->middleware(['can:Manage Classified Settings', 'demo']);
         });
+        /**
+         * Safety Tips
+         */
+        Route::group(['prefix' => 'safety-tips'], function () {
+            Route::get('/', [ClassifiedSettingController::class, 'safetyTips'])->name('classified.settings.safety.tips.list');
+            Route::post('/store', [ClassifiedSettingController::class, 'storeSafetyTips'])->name('classified.settings.safety.tips.store');
+            Route::post('/delete', [ClassifiedSettingController::class, 'deleteSafetyTips'])->name('classified.settings.safety.tips.delete');
+            Route::get('/edit/{id}', [ClassifiedSettingController::class, 'editSafetyTips'])->name('classified.settings.safety.tips.edit');
+            Route::post('/update', [ClassifiedSettingController::class, 'updateSafetyTips'])->name('classified.settings.safety.tips.update');
+        });
+
         /**
          * Classified Ads
          */

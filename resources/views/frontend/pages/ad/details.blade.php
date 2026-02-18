@@ -398,37 +398,23 @@
                         </div>
 
                         {{-- Safety Tips --}}
+                        @if(isset($safetyTips) && $safetyTips->count() > 0)
                         <div class="safety-tips">
-                            <h3 class="head5">Safety Tips</h3>
+                            <h3 class="head5">{{ translation('Safety Tips') }}</h3>
                             <div class="safety-wraper">
                                 <ol>
+                                    @foreach($safetyTips as $tip)
                                     <li
                                         style="display: flex; align-items: center; gap: 8px; color: rgb(15, 23, 42); font-size: 16px; line-height: 1.5;">
                                         <i class="las la-check-circle"
                                             style="color: var(--main-color-one); font-size: 20px;"></i>
-                                        <span>Meet in a public place.</span>
+                                        <span>{{ $tip->translation('title') }}</span>
                                     </li>
-                                    <li
-                                        style="display: flex; align-items: center; gap: 8px; color: rgb(15, 23, 42); font-size: 16px; line-height: 1.5;">
-                                        <i class="las la-check-circle"
-                                            style="color: var(--main-color-one); font-size: 20px;"></i>
-                                        <span>Don't pay in advance.</span>
-                                    </li>
-                                    <li
-                                        style="display: flex; align-items: center; gap: 8px; color: rgb(15, 23, 42); font-size: 16px; line-height: 1.5;">
-                                        <i class="las la-check-circle"
-                                            style="color: var(--main-color-one); font-size: 20px;"></i>
-                                        <span>Verify item condition.</span>
-                                    </li>
-                                    <li
-                                        style="display: flex; align-items: center; gap: 8px; color: rgb(15, 23, 42); font-size: 16px; line-height: 1.5;">
-                                        <i class="las la-check-circle"
-                                            style="color: var(--main-color-one); font-size: 20px;"></i>
-                                        <span>Beware of too-good deals.</span>
-                                    </li>
+                                    @endforeach
                                 </ol>
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -56,11 +56,11 @@ class ClassifiedSettingController extends Controller
 
             DB::commit();
             toastNotification('success', 'Settings updated successfully', 'Success');
-            return to_route('plugin.classilookscore.classified.settings.member');
+            return to_route('classified.settings.member');
         } catch (Exception $ex) {
             DB::rollBack();
             toastNotification('error', 'Settings update failed', 'Error');
-            return to_route('plugin.classilookscore.classified.settings.member');
+            return to_route('classified.settings.member');
         }
     }
 
@@ -88,7 +88,7 @@ class ClassifiedSettingController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('backend.modules.settings.safety-tips', ['tips' => $tips]);
+        return view('backend.modules.safety-tips.index', ['tips' => $tips]);
     }
     /**
      * Will store new safety tips
@@ -121,7 +121,7 @@ class ClassifiedSettingController extends Controller
             $tips = SafetyTips::findOrFail($request['id']);
             $tips->delete();
             toastNotification('success', 'Safety tips deleted successfully', 'Success');
-            return to_route('plugin.classilookscore.classified.settings.safety.tips.list');
+            return to_route('classified.settings.safety.tips.list');
         } catch (\Exception $e) {
             toastNotification('error', 'Safety tips delete failed');
             return redirect()->back();
@@ -133,7 +133,7 @@ class ClassifiedSettingController extends Controller
     public function editSafetyTips($id, Request $request): View
     {
         $tips = SafetyTips::findOrFail($id);
-        return view('backend.modules.settings.edit-safety-tips', ['tips' => $tips]);
+        return view('backend.modules.safety-tips.edit', ['tips' => $tips]);
     }
     /**
      * Will update safety tips
@@ -142,7 +142,7 @@ class ClassifiedSettingController extends Controller
     {
         try {
             DB::beginTransaction();
-            if ($request['lang'] != null && $request['lang'] != getDefaultLang()) {
+            if ($request['lang'] != null && $request['lang'] != defaultLangCode()) {
                 $tips_translation = SafetyTipTranslation::firstOrNew(['tips_id' => $request['id'], 'lang' => $request['lang']]);
                 $tips_translation->title = $request['title'];
                 $tips_translation->save();
@@ -154,7 +154,7 @@ class ClassifiedSettingController extends Controller
             }
             DB::commit();
             toastNotification('success', 'Tips updated successfully', 'Success');
-            return to_route('plugin.classilookscore.classified.settings.safety.tips.edit', ['id' => $request['id'], 'lang' => $request['lang'] != null ? $request['lang'] : getDefaultLang()]);
+            return to_route('classified.settings.safety.tips.edit', ['id' => $request['id'], 'lang' => $request['lang'] != null ? $request['lang'] : defaultLangCode()]);
         } catch (\Exception $e) {
             DB::rollBack();
             toastNotification('error', 'Tips update failed', 'Error');
@@ -204,7 +204,7 @@ class ClassifiedSettingController extends Controller
             $tips = QuickSellTip::findOrFail($request['id']);
             $tips->delete();
             toastNotification('success', 'Quick sell tips deleted successfully', 'Success');
-            return to_route('plugin.classilookscore.classified.settings.quick.sell.tips.list');
+            return to_route('classified.settings.quick.sell.tips.list');
         } catch (\Exception $e) {
             toastNotification('error', 'Quick sell tips delete failed');
             return redirect()->back();
@@ -225,7 +225,7 @@ class ClassifiedSettingController extends Controller
     {
         try {
             DB::beginTransaction();
-            if ($request['lang'] != null && $request['lang'] != getDefaultLang()) {
+            if ($request['lang'] != null && $request['lang'] != defaultLangCode()) {
                 $tips_translation = QuickSellTipTranslation::firstOrNew(['tips_id' => $request['id'], 'lang' => $request['lang']]);
                 $tips_translation->title = $request['title'];
                 $tips_translation->save();
@@ -237,7 +237,7 @@ class ClassifiedSettingController extends Controller
             }
             DB::commit();
             toastNotification('success', 'Tips updated successfully', 'Success');
-            return to_route('plugin.classilookscore.classified.settings.quick.sell.tips.edit', ['id' => $request['id'], 'lang' => $request['lang'] != null ? $request['lang'] : getDefaultLang()]);
+            return to_route('classified.settings.quick.sell.tips.edit', ['id' => $request['id'], 'lang' => $request['lang'] != null ? $request['lang'] : defaultLangCode()]);
         } catch (\Exception $e) {
             DB::rollBack();
             toastNotification('error', 'Tips update failed', 'Error');

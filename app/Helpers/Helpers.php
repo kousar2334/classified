@@ -45,6 +45,17 @@ if (! function_exists("saveFileInStorage")) {
     }
 }
 
+
+if (!function_exists('getDefaultLang')) {
+    function getDefaultLang()
+    {
+        // $language = Language::where('is_default', 1)->first();
+        // if($language){
+        //     return $language->code;
+        // }
+        return 'en';
+    }
+}
 if (!function_exists('theme')) {
     /**
      * Set toast message

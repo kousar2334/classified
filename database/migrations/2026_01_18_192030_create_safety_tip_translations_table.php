@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('safety_tips', function (Blueprint $table) {
+        Schema::create('safety_tip_translations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tips_id')->constrained('safety_tips')->onDelete('cascade');
+            $table->string('lang', 10);
             $table->string('title');
-            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('safety_tips');
+        Schema::dropIfExists('safety_tip_translations');
     }
 };

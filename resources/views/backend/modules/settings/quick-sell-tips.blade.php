@@ -57,7 +57,7 @@
                                                             </a>
                                                             <div class="dropdown-menu dropdown-menu-right">
                                                                 <a
-                                                                    href="{{ route('plugin.classilookscore.classified.settings.quick.sell.tips.edit', ['id' => $tip->id, 'lang' => getDefaultLang()]) }}">
+                                                                    href="{{ route('classified.settings.quick.sell.tips.edit', ['id' => $tip->id, 'lang' => getDefaultLang()]) }}">
                                                                     {{ translation('Edit') }}
                                                                 </a>
                                                                 <a href="#" class="delete-tip"
@@ -144,8 +144,7 @@
                 </div>
                 <div class="modal-body text-center">
                     <p class="mt-1">{{ translation('Are you sure to delete this  tips') }}?</p>
-                    <form method="POST"
-                        action="{{ route('plugin.classilookscore.classified.settings.quick.sell.tips.delete') }}">
+                    <form method="POST" action="{{ route('classified.settings.quick.sell.tips.delete') }}">
                         @csrf
                         <input type="hidden" id="delete-id" name="id">
                         <div class="form-row d-flex justify-content-between">
@@ -177,7 +176,7 @@
                     },
                     type: "POST",
                     data: $("#new-tip-form").serialize(),
-                    url: '{{ route('plugin.classilookscore.classified.settings.quick.sell.tips.store') }}',
+                    url: '{{ route('classified.settings.quick.sell.tips.store') }}',
                     success: function(response) {
                         if (response.success) {
                             toastr.success(

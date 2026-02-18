@@ -14,7 +14,7 @@
                             <h4>{{ translation('General Settings') }}</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('plugin.classilookscore.classified.settings.update') }}" method="POST">
+                            <form action="{{ route('classified.settings.update') }}" method="POST">
                                 @csrf
                                 @php
                                     $all_pages = \Core\Models\TlPage::where(

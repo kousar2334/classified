@@ -75,7 +75,7 @@
                     data: {
                         id: id
                     },
-                    url: '{{ route('plugin.classilookscore.classified.settings.share.options.status.update') }}',
+                    url: '{{ route('classified.settings.share.options.status.update') }}',
                     success: function(response) {
                         if (response.success) {
                             toastr.success('{{ translation('Status updated successfully') }}');

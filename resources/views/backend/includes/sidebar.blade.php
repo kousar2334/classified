@@ -362,6 +362,18 @@
                         </a>
                     </li>
                 @endcan
+                <!--Safety Tips Module-->
+                <li class="nav-item">
+                    <a href="{{ route('classified.settings.safety.tips.list') }}"
+                        class="nav-link {{ Request::routeIs(['classified.settings.safety.tips.list', 'classified.settings.safety.tips.edit']) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-shield-alt"></i>
+                        <p>
+                            {{ translation('Safety Tips') }}
+                        </p>
+                    </a>
+                </li>
+                <!--End Safety Tips Module-->
+
                 <!--System Module-->
                 @canany(['Update Environment', 'Update SMTP'])
                     <li class="nav-item">

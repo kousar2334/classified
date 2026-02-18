@@ -14,8 +14,7 @@
                             <h4>{{ translation('Member Settings') }}</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('plugin.classilookscore.classified.member.settings.update') }}"
-                                method="POST">
+                            <form action="{{ route('classified.member.settings.update') }}" method="POST">
                                 @csrf
                                 <div class="align-items-center form-row mb-20">
                                     <div class="col-sm-6">

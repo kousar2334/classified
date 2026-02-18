@@ -13,6 +13,7 @@ use App\Models\AdsCustomField;
 use App\Models\AdsTag;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\SafetyTips;
 use App\Models\State;
 use App\Models\User;
 use App\Notifications\NewAdPosted;
@@ -458,7 +459,12 @@ class AdController extends Controller
             ->limit(4)
             ->get();
 
-        return view('frontend.pages.ad.details', compact('ad', 'relevantAds', 'customFields', 'fieldModels'));
+        // Get active safety tips
+        $safetyTips = SafetyTips::with(['tip_translations'])
+            ->where('status', config('settings.general_status.active'))
+            ->get();
+
+        return view('frontend.pages.ad.details', compact('ad', 'relevantAds', 'customFields', 'fieldModels', 'safetyTips'));
     }
 
     public function getCountries(Request $request)
