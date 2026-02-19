@@ -201,43 +201,33 @@
                 <!-- Main Menu -->
                 <div class="collapse navbar-collapse" id="bizcoxx_main_menu">
                     <ul class="navbar-nav">
-
-                        <li>
-                            <a href="index.html" class="menuArrow">Home</a>
-                        </li>
-                        <li>
-                            <a href="about.html">About</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('ad.listing.page') }}">Listings</a>
-                        </li>
-                        <li>
-                            <a href="membership.html">Membership</a>
-                        </li>
-                        <li class=" menu-item-has-children ">
-                            <a href="index.html#" class="menuArrow">Pages</a>
-                            <ul class="sub-menu">
-
-                                <li>
-                                    <a href="blog.html">Blog</a>
+                        @foreach ($menu_items as $item)
+                            @if ($item->children->isNotEmpty())
+                                <li class="menu-item-has-children">
+                                    <a href="{{ $item->link() }}" class="menuArrow"
+                                        @if ($item->target) target="_blank" @endif>
+                                        {{ $item->translation('title') }}
+                                    </a>
+                                    <ul class="sub-menu">
+                                        @foreach ($item->children as $child)
+                                            <li>
+                                                <a href="{{ $child->link() }}"
+                                                    @if ($child->target) target="_blank" @endif>
+                                                    {{ $child->translation('title') }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </li>
+                            @else
                                 <li>
-                                    <a href="privacy-policy.html">Privacy Policy</a>
+                                    <a href="{{ $item->link() }}"
+                                        @if ($item->target) target="_blank" @endif>
+                                        {{ $item->translation('title') }}
+                                    </a>
                                 </li>
-                                <li>
-                                    <a href="terms-and-conditions.html">Terms and Conditions</a>
-                                </li>
-                                <li>
-                                    <a href="faq.html">Faq</a>
-                                </li>
-                                <li>
-                                    <a href="safety-informations.html">Safety Informations</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="contact.html">Contact</a>
-                        </li>
+                            @endif
+                        @endforeach
                     </ul>
                 </div>
             </div>

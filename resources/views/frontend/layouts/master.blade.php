@@ -5,7 +5,7 @@
 
 <body class="main-body">
 
-    @include('frontend.includes.header')
+    <x-site-header />
     @yield('content')
     @include('frontend.includes.footer')
 
