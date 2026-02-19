@@ -27,20 +27,17 @@
         .dashboard-container {
             display: flex;
             flex: 1;
-            border-left: 1px solid var(--border);
-            border-right: 1px solid var(--border);
+            margin-top: 2rem;
         }
 
         /* ══════════════ SIDEBAR ══════════════ */
         .dashboard-sidebar {
             width: var(--sidebar-w);
             background: #fff;
-            border-right: 1px solid var(--border);
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
             position: relative;
-            /* anchor for absolute close-btn */
         }
 
         /* User profile block */
@@ -49,14 +46,14 @@
             align-items: center;
             gap: 0.75rem;
             padding: 1.25rem;
-            border-bottom: 1px solid var(--border);
+            background: #1b3a6b;
         }
 
         .sidebar-avatar {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: rgba(255, 255, 255, 0.2);
             color: #fff;
             font-size: 1.1rem;
             font-weight: 700;
@@ -64,12 +61,13 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            border: 2px solid rgba(255, 255, 255, 0.35);
         }
 
         .sidebar-user-name {
             font-size: 0.875rem;
             font-weight: 600;
-            color: var(--text-dark);
+            color: #fff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -78,8 +76,8 @@
 
         .sidebar-user-role {
             font-size: 0.72rem;
-            color: var(--text-muted);
-            margin-top: 1px;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 2px;
         }
 
         /* Section labels */
@@ -95,57 +93,51 @@
         /* Nav list */
         .sidebar-menu {
             list-style: none;
-            padding: 0 0.625rem;
             margin-bottom: 0.25rem;
         }
 
         .sidebar-menu li a {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            padding: 0.55rem 0.75rem;
+            gap: 0.75rem;
+            padding: 0.65rem 0.75rem;
             color: var(--text-muted);
+            background: var(--bg-light);
             text-decoration: none;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             font-weight: 500;
-            border-radius: 8px;
-            margin-bottom: 0.1rem;
+            margin-bottom: 0.5rem;
             transition: background 0.15s, color 0.15s;
         }
 
         .sidebar-menu li a:hover {
-            background: var(--bg-light);
-            color: var(--text-dark);
+            background: #f0f5ff;
+            color: var(--primary);
         }
 
         .sidebar-menu li a.active {
-            background: rgba(53, 146, 252, 0.1);
+            background: #e0ecff;
             color: var(--primary);
             font-weight: 600;
         }
 
-        /* Icon box */
+        /* Icon — no box, just the glyph */
         .sidebar-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 7px;
+            width: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
+            font-size: 1rem;
             flex-shrink: 0;
-            transition: background 0.15s, color 0.15s;
-            background: var(--bg-light);
             color: var(--text-muted);
+            transition: color 0.15s;
         }
 
         .sidebar-menu li a:hover .sidebar-icon {
-            background: rgba(53, 146, 252, 0.1);
             color: var(--primary);
         }
 
         .sidebar-menu li a.active .sidebar-icon {
-            background: rgba(53, 146, 252, 0.18);
             color: var(--primary);
         }
 
@@ -176,8 +168,8 @@
         /* ══════════════ MAIN AREA ══════════════ */
         .dashboard-main {
             flex: 1;
-            padding: 1.5rem 2rem;
-            background: var(--bg-light);
+            padding: 2rem 2rem 1.5rem;
+            padding-top: 0px !important;
             min-width: 0;
         }
 

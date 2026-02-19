@@ -18,10 +18,8 @@
 
     {{-- Navigation --}}
     <nav style="flex: 1; overflow-y: auto; padding-bottom: 1rem;">
-
-        <div class="sidebar-section-label">Main</div>
         <ul class="sidebar-menu">
-            <li>
+            <li class="mt-2">
                 <a href="{{ route('member.dashboard') }}"
                     class="{{ Request::routeIs('member.dashboard') ? 'active' : '' }}">
                     <span class="sidebar-icon"><i class="fa-solid fa-gauge-high"></i></span>
@@ -39,7 +37,7 @@
                 <a href="{{ route('member.favourites') }}"
                     class="{{ Request::routeIs('member.favourites') ? 'active' : '' }}">
                     <span class="sidebar-icon"><i class="fa-solid fa-heart"></i></span>
-                    Favorites
+                    Favourites
                 </a>
             </li>
             <li>
@@ -51,26 +49,15 @@
             </li>
             <li>
                 <a href="#">
-                    <span class="sidebar-icon"><i class="fa-solid fa-chart-line"></i></span>
-                    Analytics
+                    <span class="sidebar-icon"><i class="fa-solid fa-user"></i></span>
+                    Account
                 </a>
             </li>
         </ul>
 
-        <div class="sidebar-section-label">Account</div>
+        <hr class="sidebar-divider">
+
         <ul class="sidebar-menu">
-            <li>
-                <a href="#">
-                    <span class="sidebar-icon"><i class="fa-solid fa-user"></i></span>
-                    Profile
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="sidebar-icon"><i class="fa-solid fa-gear"></i></span>
-                    Settings
-                </a>
-            </li>
             <li>
                 <a href="{{ route('member.logout') }}">
                     <span class="sidebar-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
@@ -78,6 +65,5 @@
                 </a>
             </li>
         </ul>
-
     </nav>
 </aside>
