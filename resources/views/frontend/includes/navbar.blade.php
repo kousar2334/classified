@@ -1,57 +1,83 @@
 <aside class="dashboard-sidebar" id="dashboardSidebar">
-    <button class="mobile-menu-toggle" onclick="toggleSidebar()" style="margin: 0.75rem 1rem; display: none;">
-        ✕ Close
+
+    {{-- Mobile close button --}}
+    <button class="sidebar-close-btn" onclick="toggleSidebar()">
+        <i class="fa-solid fa-xmark"></i>
     </button>
 
-    <nav>
+    {{-- User profile block --}}
+    <div class="sidebar-user">
+        <div class="sidebar-avatar">
+            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+        </div>
+        <div>
+            <div class="sidebar-user-name">{{ auth()->user()->name }}</div>
+            <div class="sidebar-user-role">Member</div>
+        </div>
+    </div>
+
+    {{-- Navigation --}}
+    <nav style="flex: 1; overflow-y: auto; padding-bottom: 1rem;">
+
+        <div class="sidebar-section-label">Main</div>
         <ul class="sidebar-menu">
             <li>
                 <a href="{{ route('member.dashboard') }}"
                     class="{{ Request::routeIs('member.dashboard') ? 'active' : '' }}">
-                    <i>📊</i> Dashboard
+                    <span class="sidebar-icon"><i class="fa-solid fa-gauge-high"></i></span>
+                    Dashboard
                 </a>
             </li>
             <li>
                 <a href="{{ route('member.my.listings') }}"
                     class="{{ Request::routeIs('member.my.listings') ? 'active' : '' }}">
-                    <i>📝</i> My Listings
+                    <span class="sidebar-icon"><i class="fa-solid fa-list-ul"></i></span>
+                    My Listings
                 </a>
             </li>
             <li>
                 <a href="{{ route('member.favourites') }}"
                     class="{{ Request::routeIs('member.favourites') ? 'active' : '' }}">
-                    <i>❤️</i> Favorites
+                    <span class="sidebar-icon"><i class="fa-solid fa-heart"></i></span>
+                    Favorites
                 </a>
             </li>
             <li>
                 <a href="{{ route('member.messages.index') }}"
                     class="{{ Request::routeIs(['member.messages.index', 'member.messages.show']) ? 'active' : '' }}">
-                    <i>💬</i> Messages
+                    <span class="sidebar-icon"><i class="fa-solid fa-comments"></i></span>
+                    Messages
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <i>📈</i> Analytics
+                    <span class="sidebar-icon"><i class="fa-solid fa-chart-line"></i></span>
+                    Analytics
                 </a>
             </li>
+        </ul>
 
-            <hr class="sidebar-divider">
-
+        <div class="sidebar-section-label">Account</div>
+        <ul class="sidebar-menu">
             <li>
                 <a href="#">
-                    <i>👤</i> Profile
+                    <span class="sidebar-icon"><i class="fa-solid fa-user"></i></span>
+                    Profile
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <i>⚙️</i> Settings
+                    <span class="sidebar-icon"><i class="fa-solid fa-gear"></i></span>
+                    Settings
                 </a>
             </li>
             <li>
                 <a href="{{ route('member.logout') }}">
-                    <i>🚪</i> Logout
+                    <span class="sidebar-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+                    Logout
                 </a>
             </li>
         </ul>
+
     </nav>
 </aside>

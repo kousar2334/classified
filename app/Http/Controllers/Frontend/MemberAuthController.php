@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Ad;
+use App\Models\Chat;
+use App\Models\ChatMessage;
+use App\Models\SavedAd;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -102,6 +106,34 @@ class MemberAuthController extends Controller
 
     public function memberDashboard(Request $request)
     {
-        return view('frontend.pages.member.dashboard.index');
+        $userId = Auth::id();
+        $activeStatus = config('settings.general_status.active');
+
+        $totalListings  = Ad::where('user_id', $userId)->count();
+        $activeListings = Ad::where('user_id', $userId)->where('status', $activeStatus)->count();
+        $totalFavourites = SavedAd::where('user_id', $userId)->count();
+
+        $totalMessages = Chat::where('sender_id', $userId)
+            ->orWhere('receiver_id', $userId)
+            ->count();
+
+        $unreadMessages = ChatMessage::whereHas('chat', function ($q) use ($userId) {
+            $q->where('sender_id', $userId)->orWhere('receiver_id', $userId);
+        })->where('sender_id', '!=', $userId)->where('is_read', false)->count();
+
+        $recentListings = Ad::where('user_id', $userId)
+            ->with(['categoryInfo', 'cityInfo'])
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('frontend.pages.member.dashboard.index', compact(
+            'totalListings',
+            'activeListings',
+            'totalFavourites',
+            'totalMessages',
+            'unreadMessages',
+            'recentListings'
+        ));
     }
 }
