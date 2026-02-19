@@ -517,7 +517,7 @@
     @php $sellerUser = $ad->userInfo; @endphp
     <!--Listing Details-->
     <div class="proDetails section-padding2">
-        <div class="container-1310">
+        <div class="container">
             {{-- Breadcrumb --}}
             <div class="bradecrumb-wraper-div">
                 <div class="row mb-24">

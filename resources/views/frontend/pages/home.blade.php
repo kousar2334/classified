@@ -30,7 +30,7 @@
     <div class="home-banner" data-padding-top="100" data-padding-bottom="50"
         style="background-image: url({{ asset('/public/uploads/media-uploader/header1717328732.png') }});">
 
-        <div class="container-1920 position-relative plr">
+        <div class="container position-relative">
             <div class="letf-part-img">
                 <div class="img-wraper">
                     <div class="img1 imges">
@@ -129,7 +129,7 @@
     @if ($categories->count() > 0)
         <div class="exploreCategories" data-padding-top="50" data-padding-bottom="50"
             style="background-color: rgb(255, 255, 255)">
-            <div class="container-1440">
+            <div class="container">
                 <div class="row">
                     <div class="col-xl-8 col-lg-7 col-md-10 col-sm-10">
                         <div class="section-tittle">
@@ -173,7 +173,7 @@
     <!-- Top Listings Start -->
     @if ($topListings->count() > 0)
         <section class="featureListing" data-padding-top="50" data-padding-bottom="50" style="background-color:">
-            <div class="container-1440">
+            <div class="container">
                 <div class="titleWithBtn d-flex justify-content-between align-items-center mb-40">
                     <h2 class="head3">Top Listings</h2>
                     <form id="filter_with_listing_page_top" action="{{ route('ad.listing.page') }}" method="get">
@@ -195,7 +195,7 @@
     <!-- Category Wise Listings -->
     @foreach ($categoryWiseListings as $index => $catListing)
         <section class="featureListing" data-padding-top="50" data-padding-bottom="50" style="background-color:">
-            <div class="container-1440">
+            <div class="container">
                 <div class="titleWithBtn d-flex justify-content-between align-items-center mb-40">
                     <h2 class="head3">{{ $catListing['category']->title }}</h2>
                     <form id="filter_with_listing_page_category_wise_listing_{{ $catListing['category']->id }}"
@@ -217,7 +217,7 @@
             <!-- About/Promo Section -->
             <section class="aboutArea" data-padding-top="50" data-padding-bottom="50"
                 style="background-color:rgb(255, 255, 255)">
-                <div class="container-1440">
+                <div class="container">
                     <div class="aboutAreaWraper"
                         style="background-image: url(/public/uploads/media-uploader/group-343641717336658.png);">
                         <div class="row justify-content-between flex-lg-row flex-column-reverse gap-lg-0 gap-4">
@@ -257,7 +257,7 @@
         <!-- About/Promo Section (shown if no category listings) -->
         <section class="aboutArea" data-padding-top="50" data-padding-bottom="50"
             style="background-color:rgb(255, 255, 255)">
-            <div class="container-1440">
+            <div class="container">
                 <div class="aboutAreaWraper"
                     style="background-image: url(/public/uploads/media-uploader/group-343641717336658.png);">
                     <div class="row justify-content-between flex-lg-row flex-column-reverse gap-lg-0 gap-4">
@@ -292,8 +292,8 @@
 
     <!-- Membership Card Start-->
     @if ($pricingPlans->count() > 0)
-        <section class="pricingCard plr" data-padding-top="50" data-padding-bottom="50">
-            <div class="container-1440">
+        <section class="pricingCard" data-padding-top="50" data-padding-bottom="50">
+            <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-8 col-lg-7 col-md-10 col-sm-10">
                         <div class="section-tittle text-center mb-50">
@@ -361,7 +361,7 @@
     @if ($recentListings->count() > 0)
         <section class="featureListing" data-padding-top="50" data-padding-bottom="100"
             style="background-color:rgb(255, 255, 255)">
-            <div class="container-1440">
+            <div class="container">
                 <div class="titleWithBtn d-flex justify-content-between align-items-center mb-40">
                     <h2 class="head3">Recent Listing</h2>
                     <form id="filter_with_listing_page_recent" action="{{ route('ad.listing.page') }}" method="get">

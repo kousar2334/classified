@@ -14,31 +14,14 @@
             --bg-light: #f9fafb;
         }
 
-        /* ── Page wrapper (centers the whole dashboard) ── */
+        /* ── Page wrapper ── */
         .dash-page-wrapper {
-            max-width: 1440px;
-            margin: 0 auto;
             min-height: calc(100vh - 80px);
             display: flex;
             flex-direction: column;
-            width: 100%;
-            padding: 0 1rem;
-            box-sizing: border-box;
         }
 
-        @media (min-width: 768px) {
-            .dash-page-wrapper {
-                padding: 0 1.5rem;
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .dash-page-wrapper {
-                padding: 0 2rem;
-            }
-        }
-
-        /* ── Outer shell (sidebar + main side by side) ── */
+        /* ── Outer shell: Bootstrap container + flex row (sidebar + main) ── */
         .dashboard-container {
             display: flex;
             flex: 1;
@@ -613,13 +596,367 @@
                 padding: 0.6rem 0.875rem;
             }
         }
+
+        /* ══════════════ SHARED LISTING CARD STYLES (my-listings & favourites) ══════════════ */
+        .my-listings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .my-listings-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .filters-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9375rem;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .search-box .search-icon {
+            position: absolute;
+            left: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .sort-select {
+            padding: 0.75rem 2rem 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #fff;
+            font-size: 0.9375rem;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+        }
+
+        .sort-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .listing-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .listing-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .listing-image {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .listing-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .listing-status {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .listing-status.active {
+            background: #10b981;
+            color: #fff;
+        }
+
+        .listing-status.inactive {
+            background: #6b7280;
+            color: #fff;
+        }
+
+        .listing-status.sold {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .listing-status.featured {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #fff;
+        }
+
+        .listing-actions-overlay {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .listing-action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #374151;
+        }
+
+        .listing-action-btn:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .listing-action-btn.remove-fav:hover {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .listing-content {
+            padding: 1rem;
+        }
+
+        .listing-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .listing-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .listing-title a:hover {
+            color: var(--primary);
+        }
+
+        .listing-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .listing-meta svg {
+            flex-shrink: 0;
+        }
+
+        .listing-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 0.75rem;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .listing-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .listing-views {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+
+        .listing-date {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            margin-top: 0.5rem;
+        }
+
+        .pagination-wrapper {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .empty-listings {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .empty-listings .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-listings h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-listings p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-listings .cmn-btn1 {
+            display: inline-flex;
+        }
+
+        /* Listing-tabs (my-listings) */
+        .listing-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .listing-tab {
+            padding: 0.625rem 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #fff;
+            color: #6b7280;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .listing-tab:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .listing-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .listing-tab .count {
+            background: rgba(0, 0, 0, .1);
+            padding: 0.125rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .listing-tab.active .count {
+            background: rgba(255, 255, 255, .2);
+        }
+
+        /* Favourites count badge */
+        .fav-count-badge {
+            background: #fef2f2;
+            color: #ef4444;
+            border: 1px solid #fecaca;
+            padding: 0.375rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        /* ── Responsive: shared listing grid ── */
+        @media (max-width: 768px) {
+            .my-listings-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .listing-tabs {
+                width: 100%;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 0.5rem;
+            }
+
+            .listing-tab {
+                white-space: nowrap;
+            }
+
+            .filters-row {
+                flex-direction: column;
+            }
+
+            .search-box {
+                min-width: 100%;
+            }
+
+            .sort-select {
+                width: 100%;
+            }
+
+            .listings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 @endsection
 
 @section('content')
     <div class="mobile-sidebar-overlay" onclick="toggleSidebar()"></div>
     <div class="dash-page-wrapper">
-        <div class="dashboard-container container">
+        <div class="dashboard-container container px-0">
             @include('frontend.includes.navbar')
 
             <main class="dashboard-main">

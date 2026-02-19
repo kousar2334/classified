@@ -472,7 +472,7 @@
                     <!-- Step 2: Location & Additional -->
                     <div class="tab-pane fade step" id="media-uploads" role="tabpanel" aria-labelledby="location-tab">
                         <div class="post-your-add add-location section-padding2">
-                            <div class="container-1920 plr1">
+                            <div class="container">
                                 <div class="row">
                                     <div class="col-xl-2"></div>
                                     <div class="col-xl-6">

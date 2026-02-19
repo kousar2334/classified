@@ -271,7 +271,7 @@
                     <!-- Step 2: Location & Additional -->
                     <div class="tab-pane fade step" id="media-uploads" role="tabpanel" aria-labelledby="location-tab">
                         <div class="post-your-add add-location section-padding2">
-                            <div class="container-1920 plr1">
+                            <div class="container">
                                 <div class="row">
                                     <div class="col-xl-2"></div>
                                     <div class="col-xl-6">
@@ -989,7 +989,7 @@
                     if (file.size > maxFileSize) {
                         alert(
                             `File size (${(file.size / 1024 / 1024).toFixed(2)}MB) exceeds the maximum allowed size of 5MB. Please choose a smaller file.`
-                            );
+                        );
                         this.value = '';
                         $('#thumbnail-file-name').text('');
                         $('#thumbnail-preview').html('');
@@ -1037,7 +1037,7 @@
                 if (invalidFiles.length > 0) {
                     alert(
                         `The following files exceed 5MB and were not added:\n\n${invalidFiles.join('\n')}\n\nPlease choose smaller files.`
-                        );
+                    );
                 }
 
                 // Check total size including existing files
@@ -1049,7 +1049,7 @@
                     if (totalSize > maxTotalSize) {
                         alert(
                             `Total file size (${(totalSize / 1024 / 1024).toFixed(2)}MB) exceeds the maximum allowed total size of 50MB. Please remove some images or choose smaller files.`
-                            );
+                        );
                         this.value = '';
                         return;
                     }

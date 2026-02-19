@@ -7,7 +7,7 @@
 @section('content')
     <!-- Breadcrumb Section -->
     <section class="breadcrumb-area" data-padding-top="50" data-padding-bottom="50">
-        <div class="container-1440">
+        <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="breadcrumb-content text-center">
@@ -26,8 +26,8 @@
     </section>
 
     <!-- Pricing Cards Section -->
-    <section class="pricingCard plr" data-padding-top="50" data-padding-bottom="100">
-        <div class="container-1440">
+    <section class="pricingCard" data-padding-top="50" data-padding-bottom="100">
+        <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-8 col-lg-7 col-md-10 col-sm-10">
                     <div class="section-tittle text-center mb-50">

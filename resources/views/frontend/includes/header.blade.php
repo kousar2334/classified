@@ -181,7 +181,7 @@
     }
 </style>
 <header class="header-style-01">
-    <nav class="navbar navbar-area headerBg4 navbar-expand-lg plr">
+    <nav class="navbar navbar-area headerBg4 navbar-expand-lg">
         <div class="container nav-container">
             <div class="responsive-mobile-menu">
                 <div class="logo-wrapper">
