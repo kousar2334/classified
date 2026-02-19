@@ -13158,7 +13158,7 @@ object {
 }
 
 .main-body .select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 1.1;
+    line-height: 30px;
     padding: 0;
 }
 
@@ -20121,24 +20121,7 @@ object {
             font-size: 14px;
             line-height: 20px;
             font-weight: 500;
-            color: #334155;
             margin-bottom: 8px;
-        }
-
-        .input-filed {
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            padding: 6px 14px;
-            font-size: 14px;
-            box-shadow: 0 1px 2px #1018280d;
-
-            &::placeholder {
-                color: #64748b;
-            }
-
-            &.nice-select {
-                color: #64748b;
-            }
         }
 
         .right-sidebar {
@@ -22543,26 +22526,7 @@ button.btn.btn-info.media_upload_form_btn {
     background: #fff;
 }
 
-.input-filed {
-    border: 1px solid #e3e3e3;
-    padding: 12px 15px;
-    border-radius: 6px;
-    font-size: 15px;
-    transition: all 0.3s ease;
-}
 
-.input-filed:focus {
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.1);
-}
-
-label {
-    font-weight: 500;
-    margin-bottom: 8px;
-    display: block;
-    color: #333;
-}
 
 #form-loader {
     position: fixed;
@@ -23826,53 +23790,50 @@ span.popup_contents__close.popup_close i {
 
 /* ================================================================
    Unified Input Style — .input-style
-   Apply to: input[text/email/password/number/tel/date], select, textarea
-   Replaces: .input-filed, .auth-input
    ================================================================ */
-.input-style,
-.input-filed,
-.auth-input {
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.input-style {
     width: 100%;
-    padding: 11px 14px;
-    border: 1.5px solid #e5e7eb;
-    border-radius: 9px;
+    padding: 10px 14px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
     font-size: 14px;
     color: #1a1a2e;
-    background: #fafafa;
+    background: #fff;
     transition: border-color 0.2s, box-shadow 0.2s;
     outline: none;
     display: block;
 }
 
-.input-style:focus,
-.input-filed:focus,
-.auth-input:focus {
+.input-style:focus {
     border-color: var(--main-color-one, #3592fc);
     box-shadow: 0 0 0 3px rgba(53, 146, 252, 0.12);
     background: #fff;
 }
 
-.input-style::placeholder,
-.input-filed::placeholder,
-.auth-input::placeholder {
+.input-style::placeholder {
     color: #b0b8c1;
 }
 
-.input-style.is-invalid,
-.input-filed.is-invalid,
-.auth-input.is-invalid {
+.input-style.is-invalid {
     border-color: #ef4444;
     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
-textarea.input-style,
-textarea.input-filed {
+textarea.input-style {
     resize: vertical;
     min-height: 100px;
 }
 
-select.input-style,
-select.input-filed {
+select.input-style {
     cursor: pointer;
     appearance: auto;
 }

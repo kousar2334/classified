@@ -47,27 +47,27 @@
                 @endif
                 @csrf
 
-                <div class="auth-form-group">
-                    <label class="auth-label">Email or Phone</label>
+                <div class="form-group mb-20">
+                    <label>Email or Phone</label>
                     <input type="text" name="username" class="input-style" placeholder="Enter your email or phone"
                         value="{{ old('username') }}">
                     @if ($errors->has('username'))
-                        <p class="auth-error">{{ $errors->first('username') }}</p>
+                        <p class="invalid-feedback d-block">{{ $errors->first('username') }}</p>
                     @endif
                 </div>
 
-                <div class="auth-form-group">
+                <div class="form-group mb-20">
                     <div class="auth-label-row">
-                        <label class="auth-label">Password</label>
+                        <label>Password</label>
                         <a href="{{ route('member.forgot.password') }}" class="auth-forgot-link">Forgot password?</a>
                     </div>
                     <input type="password" name="password" class="input-style" placeholder="Enter your password">
                     @if ($errors->has('password'))
-                        <p class="auth-error">{{ $errors->first('password') }}</p>
+                        <p class="invalid-feedback d-block">{{ $errors->first('password') }}</p>
                     @endif
                 </div>
 
-                <div class="auth-form-group">
+                <div class="form-group">
                     <label class="auth-checkbox-label">
                         <input type="checkbox" name="remember" id="remember">
                         <span>Remember me</span>

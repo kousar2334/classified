@@ -12,7 +12,7 @@
 
             {{-- Social Login --}}
             <div class="social-login-group">
-                <a href="{{ route('member.social.login', 'google') ?? '#' }}" class="social-btn social-btn-google">
+                <a href="{{ route('member.social.login', 'google') ?? '#' }}" class="social-btn social-btn-google mb-20">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 48 48">
                         <path fill="#EA4335"
                             d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
@@ -43,57 +43,56 @@
             {{-- Register Form --}}
             <form action="{{ route('member.register.submit') }}" method="post">
                 @csrf
-                <div class="auth-form-row">
-                    <div class="auth-form-group">
-                        <label class="auth-label">Full Name</label>
-                        <input type="text" class="input-style" name="name" placeholder="Enter your name"
-                            value="{{ old('name') }}">
-                        @if ($errors->has('name'))
-                            <p class="auth-error">{{ $errors->first('name') }}</p>
-                        @endif
-                    </div>
 
-                    <div class="auth-form-group">
-                        <label class="auth-label">Email Address</label>
-                        <input type="email" class="input-style" name="email" placeholder="Enter your email"
-                            value="{{ old('email') }}">
-                        @if ($errors->has('email'))
-                            <p class="auth-error">{{ $errors->first('email') }}</p>
-                        @endif
-                    </div>
-
-                    <div class="auth-form-group">
-                        <label class="auth-label">Phone Number</label>
-                        <input type="text" class="input-style" name="phone" placeholder="Enter your phone"
-                            value="{{ old('phone') }}">
-                        @if ($errors->has('phone'))
-                            <p class="auth-error">{{ $errors->first('phone') }}</p>
-                        @endif
-                    </div>
-
-                    <div class="auth-form-group">
-                        <label class="auth-label">Password</label>
-                        <input type="password" class="input-style" name="password" placeholder="Create a password">
-                        @if ($errors->has('password'))
-                            <p class="auth-error">{{ $errors->first('password') }}</p>
-                        @endif
-                    </div>
-
-                    <div class="auth-form-group">
-                        <label class="auth-label">Confirm Password</label>
-                        <input type="password" class="input-style" name="password_confirmation"
-                            placeholder="Confirm your password">
-                    </div>
+                <div class="form-group mb-20">
+                    <label>Full Name</label>
+                    <input type="text" class="input-style" name="name" placeholder="Enter your name"
+                        value="{{ old('name') }}">
+                    @if ($errors->has('name'))
+                        <p class="invalid-feedback d-block">{{ $errors->first('name') }}</p>
+                    @endif
                 </div>
 
-                <div class="auth-form-group">
+                <div class="form-group mb-20">
+                    <label>Email Address</label>
+                    <input type="email" class="input-style" name="email" placeholder="Enter your email"
+                        value="{{ old('email') }}">
+                    @if ($errors->has('email'))
+                        <p class="invalid-feedback d-block">{{ $errors->first('email') }}</p>
+                    @endif
+                </div>
+
+                <div class="form-group mb-20">
+                    <label>Phone Number</label>
+                    <input type="text" class="input-style" name="phone" placeholder="Enter your phone"
+                        value="{{ old('phone') }}">
+                    @if ($errors->has('phone'))
+                        <p class="invalid-feedback d-block">{{ $errors->first('phone') }}</p>
+                    @endif
+                </div>
+
+                <div class="form-group mb-20">
+                    <label>Password</label>
+                    <input type="password" class="input-style" name="password" placeholder="Create a password">
+                    @if ($errors->has('password'))
+                        <p class="invalid-feedback d-block">{{ $errors->first('password') }}</p>
+                    @endif
+                </div>
+
+                <div class="form-group mb-20">
+                    <label>Confirm Password</label>
+                    <input type="password" class="input-style" name="password_confirmation"
+                        placeholder="Confirm your password">
+                </div>
+
+                <div class="form-group mb-20">
                     <label class="auth-checkbox-label">
                         <input type="checkbox" name="terms_conditions" id="terms_conditions">
                         <span>I agree to the <a href="terms-and-conditions.html" target="_blank" class="auth-link">Terms and
                                 Conditions</a></span>
                     </label>
                     @if ($errors->has('terms_conditions'))
-                        <p class="auth-error">{{ $errors->first('terms_conditions') }}</p>
+                        <p class="invalid-feedback d-block">{{ $errors->first('terms_conditions') }}</p>
                     @endif
                 </div>
 
