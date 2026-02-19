@@ -150,11 +150,9 @@
 @endsection
 
 @section('dashboard-content')
-    <div class="messages-page section-padding2">
-        <div class="container-1310">
-            <div class="dashboard-wrapper">
-                <div class="dashboard-content">
-                    <div class="msg-card">
+    <div class="dashboard-wrapper">
+        <div class="dashboard-content">
+            <div class="msg-card">
                         <div class="msg-card-header">
                             <h5>💬 My Messages</h5>
                             <span class="text-muted" style="font-size:13px;">{{ $chats->total() }} conversation(s)</span>
@@ -210,9 +208,7 @@
                                 {{ $chats->links() }}
                             </div>
                         @endif
-                    </div>
                 </div>
             </div>
         </div>
-    </div>
 @endsection

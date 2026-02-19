@@ -115,10 +115,12 @@
     </div>
     <!--Banner part End-->
     <!--Google Adds-->
-    <div class="google-adds" data-padding-top="100" data-padding-bottom="50">
-        <div class="text-center single-banner-ads ads-banner-box" id="home_advertisement_store">
-            <input type="hidden" id="add_id" value="2">
-            <a href="#"><img src="/public/uploads/media-uploader/image-161717309429.png" alt="" /></a>
+    <div class="google-adds" data-padding-top="50" data-padding-bottom="50">
+        <div class="container">
+            <div class="text-center single-banner-ads ads-banner-box" id="home_advertisement_store">
+                <input type="hidden" id="add_id" value="2">
+                <a href="#"><img src="/public/uploads/media-uploader/image-161717309429.png" alt="" /></a>
+            </div>
         </div>
     </div>
     <!--Google Adds-->

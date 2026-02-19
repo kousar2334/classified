@@ -21,6 +21,21 @@
             min-height: calc(100vh - 80px);
             display: flex;
             flex-direction: column;
+            width: 100%;
+            padding: 0 1rem;
+            box-sizing: border-box;
+        }
+
+        @media (min-width: 768px) {
+            .dash-page-wrapper {
+                padding: 0 1.5rem;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .dash-page-wrapper {
+                padding: 0 2rem;
+            }
         }
 
         /* ── Outer shell (sidebar + main side by side) ── */
@@ -604,7 +619,7 @@
 @section('content')
     <div class="mobile-sidebar-overlay" onclick="toggleSidebar()"></div>
     <div class="dash-page-wrapper">
-        <div class="dashboard-container">
+        <div class="dashboard-container container">
             @include('frontend.includes.navbar')
 
             <main class="dashboard-main">
