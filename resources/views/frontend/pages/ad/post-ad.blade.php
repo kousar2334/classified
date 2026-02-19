@@ -42,108 +42,103 @@
                         aria-labelledby="listing-info-tab">
                         <div class="post-your-add">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="mt-3 mb-2"></div>
-                                    </div>
-                                </div>
                                 <div class="row g-4">
                                     <div class="col-lg-8">
                                         <div class="post-add-wraper">
                                             <!-- Item Name -->
-                                            <div class="item-name box-shadow1 p-24">
-                                                <label for="title">Item Name <span class="text-danger">*</span></label>
-                                                <input type="text" name="title" id="title"
-                                                    value="{{ old('title') }}"
-                                                    class="input-style w-100 @error('title') is-invalid @enderror"
-                                                    placeholder="Item Name">
-                                                <div class="invalid-feedback @error('title') d-block @enderror">
-                                                    @error('title')
-                                                        {{ $message }}
-                                                    @enderror
+                                            <div class="box-shadow1 p-24">
+                                                <div class="form-group">
+                                                    <label for="title">Item Name
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <input type="text" name="title" id="title"
+                                                        value="{{ old('title') }}"
+                                                        class="input-style @error('title') is-invalid @enderror"
+                                                        placeholder="Item Name">
+
+                                                    <div class="invalid-feedback @error('title') d-block @enderror">
+                                                        @error('title')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </div>
                                                 </div>
                                             </div>
 
                                             <!-- About Item -->
-                                            <div class="about-item box-shadow1 p-24 mt-4">
+                                            <div class="box-shadow1 p-24 mt-4">
                                                 <h3 class="head4">About Item</h3>
-                                                <div class="row g-3 mt-3">
-                                                    <!-- Category -->
-                                                    <div class="col-12">
-                                                        <label for="category">Category <span
-                                                                class="text-danger">*</span></label>
-                                                        <select name="" id="select-category"
-                                                            class="input-style w-100">
-                                                            <option value="">Select Category</option>
-                                                            @foreach ($categories as $category)
-                                                                <option value="{{ $category->id }}">{{ $category->title }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
+                                                <!-- Category -->
+                                                <div class="form-group mb-20">
+                                                    <label for="category">Category
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <select name="" id="select-category" class="input-style">
+                                                        <option value="">Select Category</option>
+                                                        @foreach ($categories as $category)
+                                                            <option value="{{ $category->id }}">{{ $category->title }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
 
-                                                    <!-- Subcategory -->
-                                                    <div class="col-12" id="subcategory-wrapper" style="display:none;">
-                                                        <label for="subcategory">Subcategory <span
-                                                                class="text-danger">*</span></label>
-                                                        <select name="" id="select-subcategory"
-                                                            class="input-style w-100">
-                                                            <option value="">Select Subcategory</option>
-                                                        </select>
-                                                    </div>
+                                                <!-- Subcategory -->
+                                                <div class="form-group mb-20" id="subcategory-wrapper"
+                                                    style="display:none;">
+                                                    <label for="subcategory">Subcategory
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <select name="" id="select-subcategory"
+                                                        class="input-style w-100">
+                                                        <option value="">Select Subcategory</option>
+                                                    </select>
+                                                </div>
 
-                                                    <!-- Sub-subcategory -->
-                                                    <div class="col-12" id="sub-subcategory-wrapper" style="display:none;">
-                                                        <label for="sub-subcategory">Sub Subcategory</label>
-                                                        <select id="select-sub-subcategory" class="input-style w-100">
-                                                            <option value="">Select Sub Subcategory</option>
-                                                        </select>
-                                                    </div>
+                                                <!-- Sub-subcategory -->
+                                                <div class="form-group mb-20" id="sub-subcategory-wrapper"
+                                                    style="display:none;">
+                                                    <label for="sub-subcategory">Sub Subcategory</label>
+                                                    <select id="select-sub-subcategory" class="input-style w-100">
+                                                        <option value="">Select Sub Subcategory</option>
+                                                    </select>
+                                                </div>
 
-                                                    <!-- Hidden field to store the final selected category -->
-                                                    <input type="hidden" name="category" id="final-category"
-                                                        value="{{ old('category') }}">
+                                                <!-- Hidden field to store the final selected category -->
+                                                <input type="hidden" name="category" id="final-category"
+                                                    value="{{ old('category') }}">
 
-                                                    <div class="col-12">
-                                                        <p class="text-sm text-muted" id="category-breadcrumb"></p>
-                                                        <div class="invalid-feedback @error('category') d-block @enderror">
-                                                            @error('category')
-                                                                {{ $message }}
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Custom Fields Container -->
-                                                    <div id="custom-fields-container" class="mt-3"></div>
-
-                                                    <!-- Condition -->
-                                                    <div class="col-sm-12">
-                                                        <label for="condition">Item Condition</label>
-                                                        <select name="condition" id="condition" class="input-style w-100">
-                                                            <option value="">Select Condition</option>
-                                                            @foreach ($conditions as $condition)
-                                                                <option value="{{ $condition->id }}"
-                                                                    {{ old('condition') == $condition->id ? 'selected' : '' }}>
-                                                                    {{ $condition->title }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                        <div class="invalid-feedback"></div>
+                                                <div class="form-group mb-20">
+                                                    <p class="text-sm text-muted" id="category-breadcrumb"></p>
+                                                    <div class="invalid-feedback @error('category') d-block @enderror">
+                                                        @error('category')
+                                                            {{ $message }}
+                                                        @enderror
                                                     </div>
                                                 </div>
 
+                                                <!-- Custom Fields Container -->
+                                                <div id="custom-fields-container" class="mt-3"></div>
+
+                                                <!-- Condition -->
+                                                <div class="form-group mb-20">
+                                                    <label for="condition">Item Condition</label>
+                                                    <select name="condition" id="condition" class="input-style">
+                                                        <option value="">Select Condition</option>
+                                                        @foreach ($conditions as $condition)
+                                                            <option value="{{ $condition->id }}"
+                                                                {{ old('condition') == $condition->id ? 'selected' : '' }}>
+                                                                {{ $condition->title }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
 
                                             </div>
 
                                             <!-- Description -->
                                             <div class="description box-shadow1 p-24 mt-4">
-                                                <label for="description">Description <span class="text-danger">*</span>
-                                                    <span class="text-danger">(minimum 150 characters.)</span>
-                                                </label>
+                                                <label for="description">Description</label>
                                                 <textarea name="description" id="description" rows="6"
-                                                    class="input-style w-100 textarea--form summernote @error('description') is-invalid @enderror"
-                                                    placeholder="Enter a Description">{{ old('description') }}</textarea>
+                                                    class="input-style summernote @error('description') is-invalid @enderror" placeholder="Enter a Description">{{ old('description') }}</textarea>
                                                 <div class="invalid-feedback @error('description') d-block @enderror">
                                                     @error('description')
                                                         {{ $message }}
@@ -778,15 +773,15 @@
                             switch (parseInt(field.type)) {
                                 case {{ config('settings.input_types.text') }}:
                                     html +=
-                                        `<input type="text" name="custom_field[${field.id}]" class="input-style w-100" value="${field.default_value || ''}" ${required}>`;
+                                        `<input type="text" name="custom_field[${field.id}]" class="input-style" placeholder="Enter ${field.title}" value="${field.default_value || ''}" ${required}>`;
                                     break;
                                 case {{ config('settings.input_types.number') }}:
                                     html +=
-                                        `<input type="number" name="custom_field[${field.id}]" class="input-style w-100" value="${field.default_value || ''}" ${required}>`;
+                                        `<input type="number" name="custom_field[${field.id}]" class="input-style" placeholder="Enter ${field.title}" value="${field.default_value || ''}" ${required}>`;
                                     break;
                                 case {{ config('settings.input_types.select') }}:
                                     html +=
-                                        `<select name="custom_field[${field.id}]" class="input-style w-100" ${required}>`;
+                                        `<select name="custom_field[${field.id}]" class="input-style" ${required}>`;
                                     html += '<option value="">Select</option>';
                                     if (field.options) {
                                         field.options.forEach(function(opt) {
@@ -798,7 +793,7 @@
                                     break;
                                 case {{ config('settings.input_types.text_area') }}:
                                     html +=
-                                        `<textarea name="custom_field[${field.id}]" class="input-style w-100" rows="3" ${required}>${field.default_value || ''}</textarea>`;
+                                        `<textarea name="custom_field[${field.id}]" class="input-style" placeholder="Write ${field.title}" rows="3" ${required}>${field.default_value || ''}</textarea>`;
                                     break;
                                 case {{ config('settings.input_types.checkbox') }}:
                                     if (field.options) {
