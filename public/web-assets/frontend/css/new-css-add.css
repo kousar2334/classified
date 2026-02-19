@@ -1,13 +1,120 @@
+/* NavWrapper left align */
+.NavWrapper {
+    justify-content: flex-start;
+    flex: 1;
+}
+
+/* ── Sticky header animation ── */
+@keyframes headerSlideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+header.header-style-01.sticky-bar {
+    animation: headerSlideDown 0.35s ease forwards;
+}
+
+header.header-style-01.sticky-bar .headerBg4 {
+    background: var(--color-4, #eef7ff);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ── Post your ad button fix ── */
+.nav-post-btn .cmn-btn1 {
+    white-space: nowrap;
+    padding: 9px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    gap: 6px;
+}
+
+.nav-post-btn .cmn-btn1 i {
+    font-size: 18px;
+    margin-right: 0;
+}
+
+/* Post your ad button inside navbar-collapse */
+.navbar-collapse .nav-post-btn {
+    display: flex;
+    align-items: center;
+    margin-left: 12px;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-collapse .nav-post-btn {
+        margin-left: 0;
+        padding: 10px 15px;
+    }
+
+    .navbar-collapse .nav-post-btn .cmn-btn1 {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Mobile user icon in header row */
+.click-mobile-menu .mobile-user-dropdown {
+    align-items: center;
+}
+
+.click-mobile-menu .mobile-user-dropdown .user-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    color: #333;
+    text-decoration: none;
+    padding: 4px;
+}
+
+.click-mobile-menu .mobile-user-dropdown .user-trigger .user-icon {
+    font-size: 28px;
+    line-height: 1;
+    color: #333;
+}
+
+.click-mobile-menu .mobile-user-dropdown .user-trigger .caret-icon {
+    font-size: 12px;
+}
+
+.click-mobile-menu .mobile-user-dropdown .user-trigger.dropdown-toggle::after {
+    display: none;
+}
+
+.click-mobile-menu .mobile-user-dropdown .user-dropdown {
+    position: absolute !important;
+    right: 0;
+    left: auto;
+}
+
+/* Mobile sign-in button in header row */
+.click-mobile-menu .mobile-sign-in {
+    font-size: 13px;
+    padding: 6px 14px;
+    margin-right: 6px;
+}
+
 /*hr vi css*/
 span.social-icons {
     display: flex;
     font-size: 25px;
     gap: 8px;
 }
+
 /*new review css add*/
 i.fa-star {
     color: var(--color-6);
 }
+
 .user_img_review {
     width: 60px;
     height: 60px;
@@ -23,7 +130,8 @@ div#review {
 }
 
 .single-input {
-    margin-bottom: 20px; /* Adjust spacing as needed */
+    margin-bottom: 20px;
+    /* Adjust spacing as needed */
 }
 
 .label_title {
@@ -31,26 +139,31 @@ div#review {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 5px;
-    color: #333; /* Adjust color as needed */
+    color: #333;
+    /* Adjust color as needed */
 }
 
 .textarea-input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc; /* Adjust border color as needed */
+    border: 1px solid #ccc;
+    /* Adjust border color as needed */
     border-radius: 10px;
     font-size: 14px;
-    resize: vertical; /* Allow vertical resizing */
+    resize: vertical;
+    /* Allow vertical resizing */
 }
 
 .textarea-input::placeholder {
-    color: #999; /* Adjust placeholder color as needed */
+    color: #999;
+    /* Adjust placeholder color as needed */
 }
 
 .modal-btn-wraper {
     display: flex;
     gap: 10px;
     justify-content: end;
+
     .modal-btn {
         font-size: 14px;
         line-height: 24px;
@@ -59,6 +172,7 @@ div#review {
         border: 1px solid #e2e8f0;
         border-radius: 6px;
         color: #64748b;
+
         &.submit {
             color: #fff;
             background: var(--main-color-one);
@@ -72,9 +186,11 @@ div#review {
     border-radius: 50%;
     overflow: hidden;
     border: none;
+
     .img-inner-wrap {
         margin: 0;
     }
+
     .attachment-preview {
         height: 60px;
         width: 60px;
@@ -84,7 +200,8 @@ div#review {
 .seller-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure the image covers the entire container */
+    object-fit: cover;
+    /* Ensure the image covers the entire container */
 }
 
 .new-reviews i.fas.fa-star {
@@ -137,6 +254,7 @@ span.search_wrapper_icon i {
     padding: 12px;
     padding-right: 0px;
 }
+
 .single-profile-settings-header-flex {
     display: flex;
     justify-content: space-between;
@@ -161,6 +279,7 @@ span.search_wrapper_icon i {
     border: 1px solid rgb(161 161 161) !important;
     position: unset !important;
 }
+
 /*listing add page css end*/
 
 span.select2.select2-container.select2-container--default {
@@ -177,7 +296,8 @@ span.popup_contents__close.popup_close i {
 }
 
 .content-wrapper {
-    width: 100%; /* Adjust width as needed */
+    width: 100%;
+    /* Adjust width as needed */
     overflow: hidden;
 }
 
@@ -214,45 +334,67 @@ span.popup_contents__close.popup_close i {
     cursor: pointer;
     opacity: 0;
 }
+
 .attach_files_title {
     font-size: 18px !important;
 }
+
 /* for live chat css end */
 
 /*google map home page search css start*/
 .card {
-    border: 1px solid #ccc; /* Add border for the card */
-    border-radius: 8px; /* Add rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
-    transition: box-shadow 0.3s ease; /* Add transition for smooth hover effect */
+    border: 1px solid #ccc;
+    /* Add border for the card */
+    border-radius: 8px;
+    /* Add rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Add shadow for depth */
+    transition: box-shadow 0.3s ease;
+    /* Add transition for smooth hover effect */
 }
 
 .card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* Increase shadow on hover */
 }
+
 .search_thumb {
-    width: 100px; /* Set width */
-    height: 100px; /* Set height */
-    background-size: cover; /* Ensure the image covers the entire area */
-    background-position: center; /* Center the image */
-    border-radius: 6px; /* Add rounded corners */
+    width: 100px;
+    /* Set width */
+    height: 100px;
+    /* Set height */
+    background-size: cover;
+    /* Ensure the image covers the entire area */
+    background-position: center;
+    /* Center the image */
+    border-radius: 6px;
+    /* Add rounded corners */
 }
+
 .search-text-item {
-    display: block; /* Ensure text appears below the thumbnail */
-    margin-top: 8px; /* Add some space between thumbnail and text */
-    font-size: 16px; /* Adjust font size */
-    color: #333; /* Set text color */
+    display: block;
+    /* Ensure text appears below the thumbnail */
+    margin-top: 8px;
+    /* Add some space between thumbnail and text */
+    font-size: 16px;
+    /* Adjust font size */
+    color: #333;
+    /* Set text color */
 }
 
 .search-text-item span {
-    font-weight: bold; /* Make the price bold for emphasis */
-    color: #007bff; /* Set price color */
+    font-weight: bold;
+    /* Make the price bold for emphasis */
+    color: #007bff;
+    /* Set price color */
 }
+
 /*=========*/
 
 .search-with-any-texts {
     position: relative;
 }
+
 .search-with-any-texts .search_with_text_section .card-body {
     position: absolute;
     left: 0;
@@ -291,6 +433,7 @@ span.popup_contents__close.popup_close i {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }

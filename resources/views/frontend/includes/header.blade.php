@@ -1,6 +1,6 @@
 <header class="header-style-01">
     <nav class="navbar navbar-area headerBg4 navbar-expand-lg">
-        <div class="container nav-container">
+        <div class="container nav-container gap-lg-4">
             <div class="responsive-mobile-menu">
                 <div class="logo-wrapper">
                     <a href="{{ url('/') }}" class="logo">
@@ -8,7 +8,40 @@
                     </a>
                 </div>
                 <div class="click-mobile-menu">
-                    <a href="javascript:void(0)" class="click_show_icon"><i class="las la-ellipsis-v"></i> </a>
+                    {{-- Mobile: user account or sign in (visible only on mobile) --}}
+                    @if (auth()->user() == null)
+                        <a href="{{ route('member.login') }}" class="cmn-btn sign-in mobile-sign-in d-flex d-lg-none">
+                            Sign In
+                        </a>
+                    @else
+                        <div class="nav-item dropdown mobile-user-dropdown d-flex d-lg-none">
+                            <a class="user-trigger dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="las la-user-circle user-icon"></i>
+                                <i class="las la-angle-down caret-icon"></i>
+                            </a>
+                            <ul class="dropdown-menu user-dropdown dropdown-menu-end">
+                                <li>
+                                    <span class="dropdown-header">My Account</span>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('member.dashboard') }}">
+                                        <i class="las la-tachometer-alt"></i>
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item logout-item" href="{{ route('member.logout') }}">
+                                        <i class="las la-sign-out-alt"></i>
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    @endif
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#bizcoxx_main_menu" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -47,10 +80,15 @@
                             @endif
                         @endforeach
                     </ul>
+                    <div class="btn-wrapper nav-post-btn">
+                        <a href="{{ route('ad.post.page') }}" class="cmn-btn1 popup-modal">
+                            <i class="las la-plus-circle"></i><span>Post your ad</span>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <!-- Menu Right -->
-            <div class="nav-right-content">
+            <!-- Menu Right - desktop only -->
+            <div class="nav-right-content d-none d-lg-flex">
                 <ul class="header-cart">
 
                     @if (auth()->user() == null)
@@ -91,14 +129,6 @@
                             </ul>
                         </li>
                     @endif
-
-                    <li class="single">
-                        <div class="btn-wrapper">
-                            <a href="{{ route('ad.post.page') }}" class="cmn-btn1 popup-modal">
-                                <i class="las la-plus-circle"></i><span class="text">Post your ad</span>
-                            </a>
-                        </div>
-                    </li>
 
                 </ul>
             </div>

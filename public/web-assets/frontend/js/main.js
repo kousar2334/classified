@@ -61,17 +61,25 @@
         });
       
         /*-----------------------------------
-           On Click Open Navbar right contents 
-        -----------------------------------*/
-        $(document).on('click', '.click_show_icon', function() {
-            $(".nav-right-content").toggleClass("active");
-        });
-
-        /*-----------------------------------
             Navbar Toggler Icon
         ------------------------------*/
         $(document).on('click', '.navbar-toggler', function() {
             $(this).toggleClass("active")
+        });
+
+        /*-----------------------------------
+            Sticky Header on Scroll
+        -----------------------------------*/
+        var $header = $('header.header-style-01');
+        $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 100) {
+                if (!$header.hasClass('sticky-bar')) {
+                    $header.removeClass('sticky-bar')[0].offsetHeight; // force reflow to replay animation
+                    $header.addClass('sticky-bar');
+                }
+            } else {
+                $header.removeClass('sticky-bar');
+            }
         });
 
         /*-----------------------------------

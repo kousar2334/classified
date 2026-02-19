@@ -8852,7 +8852,7 @@ object {
 }
 
 .main-body .nav-right-content .sign-in {
-    border-radius: 100px;
+    border-radius: 8px;
     padding: 12px 35px;
     border: 1px solid var(--main-color-one);
     background: transparent;
