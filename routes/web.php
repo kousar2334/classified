@@ -19,6 +19,10 @@ Route::group(['middleware' => ['guest']], function () {
 
     Route::get('forgot-password', [MemberAuthController::class, 'forgotPasswordPage'])->name('member.forgot.password');
     Route::post('forgot-password', [MemberAuthController::class, 'forgotPassword'])->name('member.forgot.password.submit');
+
+    // Social Login
+    Route::get('/member/social/{provider}', [MemberAuthController::class, 'socialLogin'])->name('member.social.login');
+    Route::get('/member/social/{provider}/callback', [MemberAuthController::class, 'socialCallback'])->name('member.social.callback');
 });
 
 Route::group(['middleware' => ['auth']], function () {

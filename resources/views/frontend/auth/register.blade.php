@@ -1,106 +1,111 @@
 @extends('frontend.layouts.master')
 @section('meta')
-    <title>Register -{{ get_setting('site_name') }}</title>
+    <title>Register - {{ get_setting('site_name') }}</title>
 @endsection
 @section('content')
-    <div class="loginArea section-padding2">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-7 col-lg-5 p-0  order-lg-1 order-1 loginLeft-img">
-                    <div class="loginLeft-img">
-                        <div class="login-cap">
-                            <h3 class="tittle">Buy &amp; sell anything</h3>
-                            <p class="pera">Buy &amp; sell anything with ease. Enjoy a seamless experience and connect with
-                                buyers and sellers in just a few clicks.</p>
-                        </div>
-                        <div class="login-img">
-                            <img src="/public/uploads/media-uploader/login1708750583.png" alt="" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-5 col-lg-7 order-lg-1 order-0 login-Wrapper">
-                    <div class="header mb-3 text-center">
-                        <h2>Registration</h2>
-                    </div>
-                    <form action="{{ route('member.register.submit') }}" method="post">
-                        @csrf
-                        <div class="row">
-                            <div class="form-group mb-20">
-                                <label class="label_title">Name</label>
-                                <input type="text" class="form-control" name="name" placeholder="Enter Name"
-                                    value="{{ old('name') }}">
-                                @if ($errors->has('name'))
-                                    <p class="d-block invalid-feedback text-danger">{{ $errors->first('name') }}</p>
-                                @endif
-                            </div>
-
-                            <div class="form-group mb-20">
-                                <label class="label_title">Email</label>
-                                <input type="email" class="form-control" name="email" placeholder="Enter Email"
-                                    value="{{ old('email') }}">
-                                @if ($errors->has('email'))
-                                    <p class="d-block invalid-feedback text-danger">{{ $errors->first('email') }}</p>
-                                @endif
-                            </div>
-
-                            <div class="form-group mb-20">
-                                <label class="label_title">Phone</label>
-                                <input type="text" class="form-control" name="phone" placeholder="Enter Phone"
-                                    value="{{ old('phone') }}">
-                                @if ($errors->has('phone'))
-                                    <p class="d-block invalid-feedback text-danger">{{ $errors->first('phone') }}</p>
-                                @endif
-                            </div>
-
-                            <div class="form-group mb-20">
-                                <label class="label_title">Password</label>
-                                <input type="password" class="form-control" name="password" placeholder="Enter Password">
-                                @if ($errors->has('password'))
-                                    <p class="d-block invalid-feedback text-danger">{{ $errors->first('password') }}</p>
-                                @endif
-                            </div>
-
-                            <div class="form-group mb-20">
-                                <label class="label_title">Confirm Password</label>
-                                <input type="password" class="form-control" name="password_confirmation"
-                                    placeholder="Confirm Password">
-
-                            </div>
-
-                            <!-- Terms and Conditions -->
-                            <div class="col-lg-12 col-md-12 mb-20">
-                                <label class="checkWrap2 mb-0 terms-conditions"> I agree with the
-                                    <a href="terms-and-conditions.html" target="_blank" class="text-primary"> Terms and
-                                        Conditions </a>
-                                    <input class="effectBorder check-input" type="checkbox" name="terms_conditions"
-                                        id="terms_conditions">
-                                    <span class="checkmark"></span>
-                                </label>
-                                @if ($errors->has('terms_conditions'))
-                                    <p class="d-block invalid-feedback text-danger">{{ $errors->first('terms_conditions') }}
-                                    </p>
-                                @endif
-                            </div>
-
-                            <div class="col-sm-12 mt-2">
-                                <div class="btn-wrapper text-center">
-                                    <button type="submit"
-                                        class="cmn-btn4 w-100 user-register-form sign_up_now_button">Register
-                                        <span id="user_register_load_spinner"></span>
-                                    </button>
-                                    <!--social login -->
-
-                                    <p class="sinUp my-2">
-                                        <span>Already have an account? </span>
-                                        <a href="{{ route('member.login') }}" class="singApp">Login</a>
-                                    </p>
-
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+    <div class="auth-page-wrapper">
+        <div class="auth-card auth-card-wide">
+            <div class="auth-card-header text-center">
+                <h2 class="auth-title">Create Account</h2>
+                <p class="auth-subtitle">Join us today and get started</p>
             </div>
+
+            {{-- Social Login --}}
+            <div class="social-login-group">
+                <a href="{{ route('member.social.login', 'google') ?? '#' }}" class="social-btn social-btn-google">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 48 48">
+                        <path fill="#EA4335"
+                            d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+                        <path fill="#4285F4"
+                            d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                        <path fill="#FBBC05"
+                            d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                        <path fill="#34A853"
+                            d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                        <path fill="none" d="M0 0h48v48H0z" />
+                    </svg>
+                    Sign up with Google
+                </a>
+                <a href="{{ route('member.social.login', 'facebook') ?? '#' }}" class="social-btn social-btn-facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                        fill="#fff">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                    Sign up with Facebook
+                </a>
+            </div>
+
+            <div class="auth-divider">
+                <span>or register with email</span>
+            </div>
+
+            {{-- Register Form --}}
+            <form action="{{ route('member.register.submit') }}" method="post">
+                @csrf
+                <div class="auth-form-row">
+                    <div class="auth-form-group">
+                        <label class="auth-label">Full Name</label>
+                        <input type="text" class="auth-input" name="name" placeholder="Enter your name"
+                            value="{{ old('name') }}">
+                        @if ($errors->has('name'))
+                            <p class="auth-error">{{ $errors->first('name') }}</p>
+                        @endif
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label class="auth-label">Email Address</label>
+                        <input type="email" class="auth-input" name="email" placeholder="Enter your email"
+                            value="{{ old('email') }}">
+                        @if ($errors->has('email'))
+                            <p class="auth-error">{{ $errors->first('email') }}</p>
+                        @endif
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label class="auth-label">Phone Number</label>
+                        <input type="text" class="auth-input" name="phone" placeholder="Enter your phone"
+                            value="{{ old('phone') }}">
+                        @if ($errors->has('phone'))
+                            <p class="auth-error">{{ $errors->first('phone') }}</p>
+                        @endif
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label class="auth-label">Password</label>
+                        <input type="password" class="auth-input" name="password" placeholder="Create a password">
+                        @if ($errors->has('password'))
+                            <p class="auth-error">{{ $errors->first('password') }}</p>
+                        @endif
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label class="auth-label">Confirm Password</label>
+                        <input type="password" class="auth-input" name="password_confirmation"
+                            placeholder="Confirm your password">
+                    </div>
+                </div>
+
+                <div class="auth-form-group">
+                    <label class="auth-checkbox-label">
+                        <input type="checkbox" name="terms_conditions" id="terms_conditions">
+                        <span>I agree to the <a href="terms-and-conditions.html" target="_blank" class="auth-link">Terms and
+                                Conditions</a></span>
+                    </label>
+                    @if ($errors->has('terms_conditions'))
+                        <p class="auth-error">{{ $errors->first('terms_conditions') }}</p>
+                    @endif
+                </div>
+
+                <button type="submit" class="auth-submit-btn user-register-form sign_up_now_button">
+                    Create Account <span id="user_register_load_spinner"></span>
+                </button>
+            </form>
+
+            <p class="auth-switch-text">
+                Already have an account?
+                <a href="{{ route('member.login') }}" class="auth-switch-link">Sign in</a>
+            </p>
         </div>
     </div>
 @endsection

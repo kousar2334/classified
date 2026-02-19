@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\ValidationException;
+use Laravel\Socialite\Facades\Socialite;
 
 class MemberAuthController extends Controller
 {
@@ -102,6 +103,49 @@ class MemberAuthController extends Controller
     public function forgotPasswordPage()
     {
         return view('frontend.auth.forgot-password');
+    }
+
+    public function socialLogin(string $provider): RedirectResponse
+    {
+        abort_unless(in_array($provider, ['google', 'facebook']), 404);
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function socialCallback(string $provider): RedirectResponse
+    {
+        abort_unless(in_array($provider, ['google', 'facebook']), 404);
+
+        try {
+            $socialUser = Socialite::driver($provider)->user();
+        } catch (\Exception $e) {
+            toastNotification('error', 'Social login failed. Please try again.', 'Error');
+            return to_route('member.login');
+        }
+
+        $user = User::where('email', $socialUser->getEmail())->first();
+
+        if (!$user) {
+            $user = User::create([
+                'name'              => $socialUser->getName() ?? $socialUser->getNickname() ?? 'User',
+                'email'             => $socialUser->getEmail(),
+                'password'          => Hash::make(str()->random(24)),
+                'type'              => config('settings.user_type.member'),
+                'status'            => config('settings.general_status.active'),
+                'social_provider'   => $provider,
+                'social_id'         => $socialUser->getId(),
+            ]);
+        }
+
+        if ($user->status != config('settings.general_status.active')) {
+            toastNotification('error', 'Your account is not active. Please contact administration.', 'Error');
+            return to_route('member.login');
+        }
+
+        Auth::login($user, true);
+        request()->session()->regenerate();
+
+        toastNotification('success', 'Login Successfully', 'Success');
+        return to_route('member.dashboard');
     }
 
     public function memberDashboard(Request $request)
