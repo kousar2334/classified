@@ -46,7 +46,7 @@
                 <div class="auth-form-row">
                     <div class="auth-form-group">
                         <label class="auth-label">Full Name</label>
-                        <input type="text" class="auth-input" name="name" placeholder="Enter your name"
+                        <input type="text" class="input-style" name="name" placeholder="Enter your name"
                             value="{{ old('name') }}">
                         @if ($errors->has('name'))
                             <p class="auth-error">{{ $errors->first('name') }}</p>
@@ -55,7 +55,7 @@
 
                     <div class="auth-form-group">
                         <label class="auth-label">Email Address</label>
-                        <input type="email" class="auth-input" name="email" placeholder="Enter your email"
+                        <input type="email" class="input-style" name="email" placeholder="Enter your email"
                             value="{{ old('email') }}">
                         @if ($errors->has('email'))
                             <p class="auth-error">{{ $errors->first('email') }}</p>
@@ -64,7 +64,7 @@
 
                     <div class="auth-form-group">
                         <label class="auth-label">Phone Number</label>
-                        <input type="text" class="auth-input" name="phone" placeholder="Enter your phone"
+                        <input type="text" class="input-style" name="phone" placeholder="Enter your phone"
                             value="{{ old('phone') }}">
                         @if ($errors->has('phone'))
                             <p class="auth-error">{{ $errors->first('phone') }}</p>
@@ -73,7 +73,7 @@
 
                     <div class="auth-form-group">
                         <label class="auth-label">Password</label>
-                        <input type="password" class="auth-input" name="password" placeholder="Create a password">
+                        <input type="password" class="input-style" name="password" placeholder="Create a password">
                         @if ($errors->has('password'))
                             <p class="auth-error">{{ $errors->first('password') }}</p>
                         @endif
@@ -81,7 +81,7 @@
 
                     <div class="auth-form-group">
                         <label class="auth-label">Confirm Password</label>
-                        <input type="password" class="auth-input" name="password_confirmation"
+                        <input type="password" class="input-style" name="password_confirmation"
                             placeholder="Confirm your password">
                     </div>
                 </div>

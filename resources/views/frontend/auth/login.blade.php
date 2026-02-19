@@ -49,7 +49,7 @@
 
                 <div class="auth-form-group">
                     <label class="auth-label">Email or Phone</label>
-                    <input type="text" name="username" class="auth-input" placeholder="Enter your email or phone"
+                    <input type="text" name="username" class="input-style" placeholder="Enter your email or phone"
                         value="{{ old('username') }}">
                     @if ($errors->has('username'))
                         <p class="auth-error">{{ $errors->first('username') }}</p>
@@ -61,7 +61,7 @@
                         <label class="auth-label">Password</label>
                         <a href="{{ route('member.forgot.password') }}" class="auth-forgot-link">Forgot password?</a>
                     </div>
-                    <input type="password" name="password" class="auth-input" placeholder="Enter your password">
+                    <input type="password" name="password" class="input-style" placeholder="Enter your password">
                     @if ($errors->has('password'))
                         <p class="auth-error">{{ $errors->first('password') }}</p>
                     @endif

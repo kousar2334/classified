@@ -27,12 +27,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/bootstrap.css') }}">
+
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/plugin.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/main-style.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/new-css-add.css') }}">
-    <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/dynamic-style.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/helpers.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/common/css/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/jquery.ihavecookies.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/all.min.css') }}">

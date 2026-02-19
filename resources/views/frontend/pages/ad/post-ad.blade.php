@@ -55,7 +55,7 @@
                                                 <label for="title">Item Name <span class="text-danger">*</span></label>
                                                 <input type="text" name="title" id="title"
                                                     value="{{ old('title') }}"
-                                                    class="input-filed w-100 @error('title') is-invalid @enderror"
+                                                    class="input-style w-100 @error('title') is-invalid @enderror"
                                                     placeholder="Item Name">
                                                 <div class="invalid-feedback @error('title') d-block @enderror">
                                                     @error('title')
@@ -73,7 +73,7 @@
                                                         <label for="category">Category <span
                                                                 class="text-danger">*</span></label>
                                                         <select name="" id="select-category"
-                                                            class="input-filed w-100">
+                                                            class="input-style w-100">
                                                             <option value="">Select Category</option>
                                                             @foreach ($categories as $category)
                                                                 <option value="{{ $category->id }}">{{ $category->title }}
@@ -88,7 +88,7 @@
                                                         <label for="subcategory">Subcategory <span
                                                                 class="text-danger">*</span></label>
                                                         <select name="" id="select-subcategory"
-                                                            class="input-filed w-100">
+                                                            class="input-style w-100">
                                                             <option value="">Select Subcategory</option>
                                                         </select>
                                                     </div>
@@ -96,7 +96,7 @@
                                                     <!-- Sub-subcategory -->
                                                     <div class="col-12" id="sub-subcategory-wrapper" style="display:none;">
                                                         <label for="sub-subcategory">Sub Subcategory</label>
-                                                        <select id="select-sub-subcategory" class="input-filed w-100">
+                                                        <select id="select-sub-subcategory" class="input-style w-100">
                                                             <option value="">Select Sub Subcategory</option>
                                                         </select>
                                                     </div>
@@ -120,7 +120,7 @@
                                                     <!-- Condition -->
                                                     <div class="col-sm-12">
                                                         <label for="condition">Item Condition</label>
-                                                        <select name="condition" id="condition" class="input-filed w-100">
+                                                        <select name="condition" id="condition" class="input-style w-100">
                                                             <option value="">Select Condition</option>
                                                             @foreach ($conditions as $condition)
                                                                 <option value="{{ $condition->id }}"
@@ -142,7 +142,7 @@
                                                     <span class="text-danger">(minimum 150 characters.)</span>
                                                 </label>
                                                 <textarea name="description" id="description" rows="6"
-                                                    class="input-filed w-100 textarea--form summernote @error('description') is-invalid @enderror"
+                                                    class="input-style w-100 textarea--form summernote @error('description') is-invalid @enderror"
                                                     placeholder="Enter a Description">{{ old('description') }}</textarea>
                                                 <div class="invalid-feedback @error('description') d-block @enderror">
                                                     @error('description')
@@ -161,7 +161,7 @@
                                                     <label for="price">Price <span class="text-danger">*</span></label>
                                                     <input type="number" name="price" id="price"
                                                         value="{{ old('price') }}"
-                                                        class="input-filed w-100 mb-3 @error('price') is-invalid @enderror"
+                                                        class="input-style w-100 mb-3 @error('price') is-invalid @enderror"
                                                         placeholder="0.00" step="0.01">
                                                     <div class="invalid-feedback @error('price') d-block @enderror">
                                                         @error('price')
@@ -182,7 +182,7 @@
                                                         class="text-danger">*</span></label>
                                                 <input type="email" name="contact_email" id="contact_email"
                                                     value="{{ old('contact_email', auth()->check() ? auth()->user()->email : '') }}"
-                                                    class="input-filed w-100 @error('contact_email') is-invalid @enderror"
+                                                    class="input-style w-100 @error('contact_email') is-invalid @enderror"
                                                     placeholder="Email Address">
                                                 <div class="invalid-feedback @error('contact_email') d-block @enderror">
                                                     @error('contact_email')
@@ -200,7 +200,7 @@
                                                     <span class="black-font"> Hide My Phone Number</span>
                                                 </label>
                                                 <div class="mt-3">
-                                                    <input class="input-filed w-100 @error('phone') is-invalid @enderror"
+                                                    <input class="input-style w-100 @error('phone') is-invalid @enderror"
                                                         type="tel" name="phone" value="{{ old('phone') }}"
                                                         id="phone" placeholder="Type Phone">
                                                     <div class="invalid-feedback @error('phone') d-block @enderror">
@@ -313,7 +313,7 @@
                                                 <!-- Address -->
                                                 <div class="col-12">
                                                     <label for="address">Address</label>
-                                                    <textarea class="w-100 input-filed" name="address" id="address" rows="3"
+                                                    <textarea class="w-100 input-style" name="address" id="address" rows="3"
                                                         placeholder="Enter your detailed address">{{ old('address') }}</textarea>
                                                     <div class="invalid-feedback"></div>
                                                 </div>
@@ -323,7 +323,7 @@
                                         <!-- Video URL -->
                                         <div class="video box-shadow1 p-24 mt-3 mb-3">
                                             <label for="video_url">Video URL</label>
-                                            <input type="text" class="input-filed w-100" name="video_url"
+                                            <input type="text" class="input-style w-100" name="video_url"
                                                 id="video_url" value="{{ old('video_url') }}" placeholder="YouTube URL">
                                             <div class="invalid-feedback"></div>
                                         </div>
@@ -369,28 +369,28 @@
                                                     <div class="mt-3">
                                                         <label for="guest_first_name" class="infoTitle">First Name <span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="text" class="input-filed w-100"
+                                                        <input type="text" class="input-style w-100"
                                                             name="guest_first_name" id="guest_first_name"
                                                             value="{{ old('guest_first_name') }}" placeholder="First Name">
                                                     </div>
                                                     <div class="mt-3">
                                                         <label for="guest_last_name" class="infoTitle">Last Name <span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="text" class="input-filed w-100"
+                                                        <input type="text" class="input-style w-100"
                                                             name="guest_last_name" id="guest_last_name"
                                                             value="{{ old('guest_last_name') }}" placeholder="Last Name">
                                                     </div>
                                                     <div class="mt-3">
                                                         <label for="guest_email" class="infoTitle">Email <span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="email" class="input-filed w-100" name="guest_email"
+                                                        <input type="email" class="input-style w-100" name="guest_email"
                                                             id="guest_email" value="{{ old('guest_email') }}"
                                                             placeholder="Email">
                                                     </div>
                                                     <div class="mt-3">
                                                         <label for="guest_phone" class="infoTitle">Phone Number <span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="tel" class="input-filed w-100" name="guest_phone"
+                                                        <input type="tel" class="input-style w-100" name="guest_phone"
                                                             id="guest_phone" value="{{ old('guest_phone') }}"
                                                             placeholder="Phone">
                                                     </div>
@@ -778,15 +778,15 @@
                             switch (parseInt(field.type)) {
                                 case {{ config('settings.input_types.text') }}:
                                     html +=
-                                        `<input type="text" name="custom_field[${field.id}]" class="input-filed w-100" value="${field.default_value || ''}" ${required}>`;
+                                        `<input type="text" name="custom_field[${field.id}]" class="input-style w-100" value="${field.default_value || ''}" ${required}>`;
                                     break;
                                 case {{ config('settings.input_types.number') }}:
                                     html +=
-                                        `<input type="number" name="custom_field[${field.id}]" class="input-filed w-100" value="${field.default_value || ''}" ${required}>`;
+                                        `<input type="number" name="custom_field[${field.id}]" class="input-style w-100" value="${field.default_value || ''}" ${required}>`;
                                     break;
                                 case {{ config('settings.input_types.select') }}:
                                     html +=
-                                        `<select name="custom_field[${field.id}]" class="input-filed w-100" ${required}>`;
+                                        `<select name="custom_field[${field.id}]" class="input-style w-100" ${required}>`;
                                     html += '<option value="">Select</option>';
                                     if (field.options) {
                                         field.options.forEach(function(opt) {
@@ -798,7 +798,7 @@
                                     break;
                                 case {{ config('settings.input_types.text_area') }}:
                                     html +=
-                                        `<textarea name="custom_field[${field.id}]" class="input-filed w-100" rows="3" ${required}>${field.default_value || ''}</textarea>`;
+                                        `<textarea name="custom_field[${field.id}]" class="input-style w-100" rows="3" ${required}>${field.default_value || ''}</textarea>`;
                                     break;
                                 case {{ config('settings.input_types.checkbox') }}:
                                     if (field.options) {
@@ -822,11 +822,11 @@
                                     break;
                                 case {{ config('settings.input_types.file') }}:
                                     html +=
-                                        `<input type="file" name="customfile_${field.id}" class="input-filed w-100" ${required}>`;
+                                        `<input type="file" name="customfile_${field.id}" class="input-style w-100" ${required}>`;
                                     break;
                                 case {{ config('settings.input_types.date') }}:
                                     html +=
-                                        `<input type="date" name="custom_field[${field.id}]" class="input-filed w-100" value="${field.default_value || ''}" ${required}>`;
+                                        `<input type="date" name="custom_field[${field.id}]" class="input-style w-100" value="${field.default_value || ''}" ${required}>`;
                                     break;
                             }
 

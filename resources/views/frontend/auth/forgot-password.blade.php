@@ -14,7 +14,7 @@
                         <div class="col-lg-12">
                             <label class="infoTitle"> Email </label>
                             <div class="input-form input-form2">
-                                <input type="text" name="email" placeholder="Enter email">
+                                <input type="text" name="email" class="input-style w-100" placeholder="Enter email">
                             </div>
                         </div>
                         <div class="btn-wrapper mb-10">
