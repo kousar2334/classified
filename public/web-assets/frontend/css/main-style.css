@@ -21392,6 +21392,65 @@ object {
     }
 }
 
+/* ============================================
+   Custom Checkbox — flat selectors
+   The original rules inside .main-body { } use CSS nesting (&::after,
+   &:checked) which is not supported in all browsers, causing broken
+   checkbox display. These flat selectors use the same specificity
+   (.main-body .custom-check-box) but appear LATER in the cascade,
+   so they correctly override the broken nested block.
+   ============================================ */
+.main-body .custom-check-box[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border: 2px solid #d1d5db;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    position: relative;
+    vertical-align: middle;
+    top: -1px;
+    transition: background .15s, border-color .15s;
+    display: inline-block;
+}
+
+.main-body .custom-check-box[type="checkbox"]:checked {
+    background: var(--main-color-one, #3b82f6);
+    border-color: var(--main-color-one, #3b82f6);
+}
+
+.main-body .custom-check-box[type="checkbox"]::after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 9px;
+    border: 2px solid #fff;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+}
+
+.main-body .custom-check-box[type="checkbox"]:checked::after {
+    display: block;
+}
+
+/* Label row alignment for checkbox + text */
+.main-body label.negotiable,
+.main-body label.hide-number,
+.main-body label.terms-conditions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
 .frontend-breadcrumb-wrap {
     background-color: var(--color-4);
     padding: 12px 11px;
