@@ -60,108 +60,107 @@
                                 </div>
                                 <div class="row g-4">
                                     <div class="col-lg-8">
-                                        <div class="post-add-wraper">
-                                            <!-- Item Name -->
-                                            <div class="item-name box-shadow1 p-24">
-                                                <label for="title">Item Name <span class="text-danger">*</span></label>
-                                                <input type="text" name="title" id="title"
-                                                    value="{{ old('title', $ad->title) }}"
-                                                    class="input-style w-100 @error('title') is-invalid @enderror"
-                                                    placeholder="Item Name">
-                                                <div class="invalid-feedback @error('title') d-block @enderror">
-                                                    @error('title')
-                                                        {{ $message }}
-                                                    @enderror
-                                                </div>
+                                        <div class="card mb-30">
+                                            <div class="card-header">
+                                                <h6 class="card-title">Item Details</h6>
                                             </div>
-
-                                            <!-- About Item -->
-                                            <div class="about-item box-shadow1 p-24 mt-4">
-                                                <h3 class="head4">About Item</h3>
-                                                <div class="row g-3 mt-3">
-                                                    <!-- Category -->
-                                                    <div class="col-12">
-                                                        <label for="category">Category <span
-                                                                class="text-danger">*</span></label>
-                                                        <select name="" id="select-category"
-                                                            class="input-style w-100">
-                                                            <option value="">Select Category</option>
-                                                            @foreach ($categories as $category)
-                                                                <option value="{{ $category->id }}"
-                                                                    {{ $categoryHierarchy['category'] == $category->id ? 'selected' : '' }}>
-                                                                    {{ $category->title }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-
-                                                    <!-- Subcategory -->
-                                                    <div class="col-12" id="subcategory-wrapper"
-                                                        style="{{ $categoryHierarchy['subcategory'] ? '' : 'display:none;' }}">
-                                                        <label for="subcategory">Subcategory <span
-                                                                class="text-danger">*</span></label>
-                                                        <select name="" id="select-subcategory"
-                                                            class="input-style w-100">
-                                                            <option value="">Select Subcategory</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <!-- Sub-subcategory -->
-                                                    <div class="col-12" id="sub-subcategory-wrapper"
-                                                        style="{{ $categoryHierarchy['subSubcategory'] ? '' : 'display:none;' }}">
-                                                        <label for="sub-subcategory">Sub Subcategory</label>
-                                                        <select id="select-sub-subcategory" class="input-style w-100">
-                                                            <option value="">Select Sub Subcategory</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <!-- Hidden field to store the final selected category -->
-                                                    <input type="hidden" name="category" id="final-category"
-                                                        value="{{ old('category', $ad->category_id) }}">
-
-                                                    <div class="col-12">
-                                                        <p class="text-sm text-muted" id="category-breadcrumb"></p>
-                                                        <div class="invalid-feedback @error('category') d-block @enderror">
-                                                            @error('category')
-                                                                {{ $message }}
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Custom Fields Container -->
-                                                    <div id="custom-fields-container" class="mt-3"></div>
-
-                                                    <!-- Condition -->
-                                                    <div class="col-sm-12">
-                                                        <label for="condition">Item Condition</label>
-                                                        <select name="condition" id="condition"
-                                                            class="input-style w-100">
-                                                            <option value="">Select Condition</option>
-                                                            @foreach ($conditions as $condition)
-                                                                <option value="{{ $condition->id }}"
-                                                                    {{ old('condition', $ad->condition_id) == $condition->id ? 'selected' : '' }}>
-                                                                    {{ $condition->title }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                        <div class="invalid-feedback"></div>
+                                            <div class="card-body">
+                                                <!-- Item Name -->
+                                                <div class="form-group mb-20">
+                                                    <label for="title">Item Name <span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="text" name="title" id="title"
+                                                        value="{{ old('title', $ad->title) }}"
+                                                        class="input-style w-100 @error('title') is-invalid @enderror"
+                                                        placeholder="Item Name">
+                                                    <div class="invalid-feedback @error('title') d-block @enderror">
+                                                        @error('title')
+                                                            {{ $message }}
+                                                        @enderror
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <!-- Description -->
-                                            <div class="description box-shadow1 p-24 mt-4">
-                                                <label for="description">Description <span class="text-danger">*</span>
-                                                    <span class="text-danger">(minimum 150 characters.)</span>
-                                                </label>
-                                                <textarea name="description" id="description" rows="6"
-                                                    class="input-style w-100 textarea--form summernote @error('description') is-invalid @enderror"
-                                                    placeholder="Enter a Description">{{ old('description', $ad->description) }}</textarea>
-                                                <div class="invalid-feedback @error('description') d-block @enderror">
-                                                    @error('description')
-                                                        {{ $message }}
-                                                    @enderror
+                                                <!-- Category -->
+                                                <div class="form-group mb-20">
+                                                    <label for="category">Category <span
+                                                            class="text-danger">*</span></label>
+                                                    <select name="" id="select-category" class="input-style w-100">
+                                                        <option value="">Select Category</option>
+                                                        @foreach ($categories as $category)
+                                                            <option value="{{ $category->id }}"
+                                                                {{ $categoryHierarchy['category'] == $category->id ? 'selected' : '' }}>
+                                                                {{ $category->title }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="invalid-feedback"></div>
+                                                </div>
+
+                                                <!-- Subcategory -->
+                                                <div class="form-group mb-20" id="subcategory-wrapper"
+                                                    style="{{ $categoryHierarchy['subcategory'] ? '' : 'display:none;' }}">
+                                                    <label for="subcategory">Subcategory <span
+                                                            class="text-danger">*</span></label>
+                                                    <select name="" id="select-subcategory"
+                                                        class="input-style w-100">
+                                                        <option value="">Select Subcategory</option>
+                                                    </select>
+                                                </div>
+
+                                                <!-- Sub-subcategory -->
+                                                <div class="form-group mb-20" id="sub-subcategory-wrapper"
+                                                    style="{{ $categoryHierarchy['subSubcategory'] ? '' : 'display:none;' }}">
+                                                    <label for="sub-subcategory">Sub Subcategory</label>
+                                                    <select id="select-sub-subcategory" class="input-style w-100">
+                                                        <option value="">Select Sub Subcategory</option>
+                                                    </select>
+                                                </div>
+
+                                                <!-- Hidden field to store the final selected category -->
+                                                <input type="hidden" name="category" id="final-category"
+                                                    value="{{ old('category', $ad->category_id) }}">
+
+                                                <div class="form-group mb-20">
+                                                    <p class="text-sm text-muted" id="category-breadcrumb"></p>
+                                                    <div class="invalid-feedback @error('category') d-block @enderror">
+                                                        @error('category')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
+                                                <!-- Custom Fields Container -->
+                                                <div id="custom-fields-container" class="mt-3"></div>
+
+                                                <!-- Condition -->
+                                                <div class="form-group mb-20">
+                                                    <label for="condition">Item Condition</label>
+                                                    <select name="condition" id="condition" class="input-style w-100">
+                                                        <option value="">Select Condition</option>
+                                                        @foreach ($conditions as $condition)
+                                                            <option value="{{ $condition->id }}"
+                                                                {{ old('condition', $ad->condition_id) == $condition->id ? 'selected' : '' }}>
+                                                                {{ $condition->title }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="invalid-feedback"></div>
+                                                </div>
+
+                                                <!-- Description -->
+                                                <div class="form-group">
+                                                    <label for="description">Description <span
+                                                            class="text-danger">*</span>
+                                                        <span class="text-danger">(minimum 150 characters.)</span>
+                                                    </label>
+                                                    <textarea name="description" id="description" rows="6"
+                                                        class="input-style w-100 textarea--form summernote @error('description') is-invalid @enderror"
+                                                        placeholder="Enter a Description">{{ old('description', $ad->description) }}</textarea>
+                                                    <div class="invalid-feedback @error('description') d-block @enderror">
+                                                        @error('description')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -170,167 +169,195 @@
                                     <div class="col-lg-4">
                                         <div class="right-sidebar">
                                             <!-- Price -->
-                                            <div class="box-shadow1 price p-24">
-                                                <div class="price-wraper">
-                                                    <label for="price">Price <span class="text-danger">*</span></label>
-                                                    <input type="number" name="price" id="price"
-                                                        value="{{ old('price', $ad->price) }}"
-                                                        class="input-style w-100 mb-3 @error('price') is-invalid @enderror"
-                                                        placeholder="0.00" step="0.01">
-                                                    <div class="invalid-feedback @error('price') d-block @enderror">
-                                                        @error('price')
-                                                            {{ $message }}
-                                                        @enderror
+                                            <div class="card mb-30">
+                                                <div class="card-header">
+                                                    <h6 class="card-title">Price</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label for="price">Price <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="number" name="price" id="price"
+                                                            value="{{ old('price', $ad->price) }}"
+                                                            class="input-style w-100 mb-3 @error('price') is-invalid @enderror"
+                                                            placeholder="0.00" step="0.01">
+                                                        <div class="invalid-feedback @error('price') d-block @enderror">
+                                                            @error('price')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </div>
+                                                        <label class="negotiable">
+                                                            <input type="checkbox" class="custom-check-box"
+                                                                name="negotiable" id="negotiable"
+                                                                {{ old('negotiable', $ad->is_negotiable == config('settings.general_status.active')) ? 'checked' : '' }}>
+                                                            <span class="ms-2">Negotiable</span>
+                                                        </label>
                                                     </div>
-                                                    <label class="negotiable">
-                                                        <input type="checkbox" class="custom-check-box" name="negotiable"
-                                                            id="negotiable"
-                                                            {{ old('negotiable', $ad->is_negotiable == config('settings.general_status.active')) ? 'checked' : '' }}>
-                                                        <span class="ms-2">Negotiable</span>
-                                                    </label>
                                                 </div>
                                             </div>
 
                                             <!-- Contact -->
-                                            <div class="box-shadow1 p-24 mt-3">
-                                                <label for="contact_email">Contact Email <span
-                                                        class="text-danger">*</span></label>
-                                                <input type="email" name="contact_email" id="contact_email"
-                                                    value="{{ old('contact_email', $ad->contact_email) }}"
-                                                    class="input-style w-100 @error('contact_email') is-invalid @enderror"
-                                                    placeholder="Email Address">
-                                                <div class="invalid-feedback @error('contact_email') d-block @enderror">
-                                                    @error('contact_email')
-                                                        {{ $message }}
-                                                    @enderror
+                                            <div class="card mb-30">
+                                                <div class="card-header">
+                                                    <h6 class="card-title">Contact</h6>
                                                 </div>
-                                            </div>
-
-                                            <!-- Phone -->
-                                            <div class="box-shadow1 hode-phone-number p-24 mt-3">
-                                                <label class="hide-number">
-                                                    <input type="checkbox" class="custom-check-box"
-                                                        name="hide_phone_number"
-                                                        {{ old('hide_phone_number', $ad->contact_is_hide == config('settings.general_status.active')) ? 'checked' : '' }}>
-                                                    <span class="black-font"> Hide My Phone Number</span>
-                                                </label>
-                                                <div class="mt-3">
-                                                    <input class="input-style w-100 @error('phone') is-invalid @enderror"
-                                                        type="tel" name="phone"
-                                                        value="{{ old('phone', $ad->contact_phone) }}" id="phone"
-                                                        placeholder="Type Phone">
-                                                    <div class="invalid-feedback @error('phone') d-block @enderror">
-                                                        @error('phone')
-                                                            {{ $message }}
-                                                        @enderror
+                                                <div class="card-body">
+                                                    <div class="form-group mb-20">
+                                                        <label for="contact_email">Contact Email <span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="email" name="contact_email" id="contact_email"
+                                                            value="{{ old('contact_email', $ad->contact_email) }}"
+                                                            class="input-style w-100 @error('contact_email') is-invalid @enderror"
+                                                            placeholder="Email Address">
+                                                        <div
+                                                            class="invalid-feedback @error('contact_email') d-block @enderror">
+                                                            @error('contact_email')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Thumbnail Image -->
-                                            <div class="box-shadow1 p-24 mt-3">
-                                                <label>Featured Image</label>
-                                                <div class="thumbnail-slot {{ $ad->thumbnail_image ? 'has-image' : '' }}"
-                                                    id="thumbnail-slot">
-                                                    <div class="slot-placeholder"
-                                                        {{ $ad->thumbnail_image ? 'style=display:none;' : '' }}>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="1.5"
-                                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                        </svg>
-                                                        <span>Choose Featured Image</span>
-                                                    </div>
-                                                    <div class="slot-image" id="thumbnail-slot-image"
-                                                        {{ $ad->thumbnail_image ? '' : 'style=display:none;' }}>
-                                                        @if ($ad->thumbnail_image)
-                                                            <img src="{{ asset(getFilePath($ad->thumbnail_image)) }}"
-                                                                alt="">
-                                                        @else
-                                                            <img src="" alt="">
-                                                        @endif
-                                                        <button type="button" class="slot-remove" id="thumbnail-remove"
-                                                            title="Remove">×</button>
-                                                    </div>
-                                                    <input type="file" name="thumbnail_image" id="thumbnail_image"
-                                                        class="slot-file-input @error('thumbnail_image') is-invalid @enderror"
-                                                        accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
-                                                </div>
-                                                <small class="text-muted d-block mt-2">Leave empty to keep current image |
-                                                    max: 5MB</small>
-                                                <div class="invalid-feedback @error('thumbnail_image') d-block @enderror">
-                                                    @error('thumbnail_image')
-                                                        {{ $message }}
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-                                            <!-- Gallery Images -->
-                                            <div class="box-shadow1 p-24 mt-3">
-                                                @php
-                                                    $existingImages = $ad->galleryImages ?? collect();
-                                                @endphp
-                                                <div class="gallery-slots-label">
-                                                    <span>Gallery Images</span>
-                                                    @if ($galleryImageLimit > 0)
-                                                        <span class="slot-count-badge">{{ $galleryImageLimit }}
-                                                            photos</span>
-                                                    @endif
-                                                </div>
-
-                                                @if ($galleryImageLimit > 0)
-                                                    <div class="gallery-slots-grid" id="gallery-slots-grid">
-                                                        @for ($i = 0; $i < $galleryImageLimit; $i++)
-                                                            @php $existingImage = $existingImages->get($i); @endphp
-                                                            <div class="gallery-slot {{ $existingImage ? 'has-image' : '' }}"
-                                                                data-slot="{{ $i }}"
-                                                                @if ($existingImage) data-existing-id="{{ $existingImage->id }}" @endif>
-                                                                <div class="slot-placeholder"
-                                                                    {{ $existingImage ? 'style=display:none;' : '' }}>
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                                        viewBox="0 0 24 24" stroke="currentColor">
-                                                                        <path stroke-linecap="round"
-                                                                            stroke-linejoin="round" stroke-width="1.5"
-                                                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                                    </svg>
-                                                                    <span>Add Photo</span>
-                                                                </div>
-                                                                <div class="slot-image"
-                                                                    {{ $existingImage ? '' : 'style=display:none;' }}>
-                                                                    @if ($existingImage)
-                                                                        <img src="{{ asset(getFilePath($existingImage->image_path)) }}"
-                                                                            alt="">
-                                                                    @else
-                                                                        <img src="" alt="">
-                                                                    @endif
-                                                                    <button type="button" class="slot-remove"
-                                                                        title="Remove">×</button>
-                                                                </div>
-                                                                <span class="slot-number">{{ $i + 1 }}</span>
-                                                                <input type="file" class="slot-file-input"
-                                                                    accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
+                                                    <div class="form-group">
+                                                        <label class="hide-number">
+                                                            <input type="checkbox" class="custom-check-box"
+                                                                name="hide_phone_number"
+                                                                {{ old('hide_phone_number', $ad->contact_is_hide == config('settings.general_status.active')) ? 'checked' : '' }}>
+                                                            <span class="black-font"> Hide My Phone Number</span>
+                                                        </label>
+                                                        <div class="mt-3">
+                                                            <input
+                                                                class="input-style w-100 @error('phone') is-invalid @enderror"
+                                                                type="tel" name="phone"
+                                                                value="{{ old('phone', $ad->contact_phone) }}"
+                                                                id="phone" placeholder="Type Phone">
+                                                            <div
+                                                                class="invalid-feedback @error('phone') d-block @enderror">
+                                                                @error('phone')
+                                                                    {{ $message }}
+                                                                @enderror
                                                             </div>
-                                                        @endfor
+                                                        </div>
                                                     </div>
-                                                    <small class="text-muted d-block mt-2">Click a box to add or replace a
-                                                        photo &bull; max 5MB each</small>
-                                                @else
-                                                    <div class="gallery-no-plan-notice">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                        </svg>
-                                                        <span>Your current plan does not include gallery images. <a
-                                                                href="{{ url('/membership') }}">Upgrade your plan</a> to
-                                                            upload gallery photos.</span>
-                                                    </div>
-                                                @endif
+                                                </div>
+                                            </div>
 
-                                                <input type="hidden" name="deleted_gallery_images"
-                                                    id="deleted_gallery_images" value="[]">
+                                            <!-- Media Uploads -->
+                                            <div class="card mb-30">
+                                                <div class="card-header">
+                                                    <h6 class="card-title">Media Uploads</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <!-- Thumbnail Image -->
+                                                    <div class="form-group mb-20">
+                                                        <label>Featured Image</label>
+                                                        <div class="thumbnail-slot {{ $ad->thumbnail_image ? 'has-image' : '' }}"
+                                                            id="thumbnail-slot">
+                                                            <div class="slot-placeholder"
+                                                                {{ $ad->thumbnail_image ? 'style=display:none;' : '' }}>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                        stroke-width="1.5"
+                                                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                                </svg>
+                                                                <span>Choose Featured Image</span>
+                                                            </div>
+                                                            <div class="slot-image" id="thumbnail-slot-image"
+                                                                {{ $ad->thumbnail_image ? '' : 'style=display:none;' }}>
+                                                                @if ($ad->thumbnail_image)
+                                                                    <img src="{{ asset(getFilePath($ad->thumbnail_image)) }}"
+                                                                        alt="">
+                                                                @else
+                                                                    <img src="" alt="">
+                                                                @endif
+                                                                <button type="button" class="slot-remove"
+                                                                    id="thumbnail-remove" title="Remove">×</button>
+                                                            </div>
+                                                            <input type="file" name="thumbnail_image"
+                                                                id="thumbnail_image"
+                                                                class="slot-file-input @error('thumbnail_image') is-invalid @enderror"
+                                                                accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
+                                                        </div>
+                                                        <small class="text-muted d-block mt-2">Leave empty to keep current
+                                                            image | max: 5MB</small>
+                                                        <div
+                                                            class="invalid-feedback @error('thumbnail_image') d-block @enderror">
+                                                            @error('thumbnail_image')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Gallery Images -->
+                                                    <div class="form-group">
+                                                        @php
+                                                            $existingImages = $ad->galleryImages ?? collect();
+                                                        @endphp
+                                                        <div class="gallery-slots-label">
+                                                            <span>Gallery Images</span>
+                                                            @if ($galleryImageLimit > 0)
+                                                                <span class="slot-count-badge">{{ $galleryImageLimit }}
+                                                                    photos</span>
+                                                            @endif
+                                                        </div>
+
+                                                        @if ($galleryImageLimit > 0)
+                                                            <div class="gallery-slots-grid" id="gallery-slots-grid">
+                                                                @for ($i = 0; $i < $galleryImageLimit; $i++)
+                                                                    @php $existingImage = $existingImages->get($i); @endphp
+                                                                    <div class="gallery-slot {{ $existingImage ? 'has-image' : '' }}"
+                                                                        data-slot="{{ $i }}"
+                                                                        @if ($existingImage) data-existing-id="{{ $existingImage->id }}" @endif>
+                                                                        <div class="slot-placeholder"
+                                                                            {{ $existingImage ? 'style=display:none;' : '' }}>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                fill="none" viewBox="0 0 24 24"
+                                                                                stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="1.5"
+                                                                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                                            </svg>
+                                                                            <span>Add Photo</span>
+                                                                        </div>
+                                                                        <div class="slot-image"
+                                                                            {{ $existingImage ? '' : 'style=display:none;' }}>
+                                                                            @if ($existingImage)
+                                                                                <img src="{{ asset(getFilePath($existingImage->image_path)) }}"
+                                                                                    alt="">
+                                                                            @else
+                                                                                <img src="" alt="">
+                                                                            @endif
+                                                                            <button type="button" class="slot-remove"
+                                                                                title="Remove">×</button>
+                                                                        </div>
+                                                                        <span
+                                                                            class="slot-number">{{ $i + 1 }}</span>
+                                                                        <input type="file" class="slot-file-input"
+                                                                            accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
+                                                                    </div>
+                                                                @endfor
+                                                            </div>
+                                                            <small class="text-muted d-block mt-2">Click a box to add or
+                                                                replace a photo &bull; max 5MB each</small>
+                                                        @else
+                                                            <div class="gallery-no-plan-notice">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                        stroke-width="2"
+                                                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                </svg>
+                                                                <span>Your current plan does not include gallery images. <a
+                                                                        href="{{ url('/membership') }}">Upgrade your
+                                                                        plan</a> to
+                                                                    upload gallery photos.</span>
+                                                            </div>
+                                                        @endif
+
+                                                        <input type="hidden" name="deleted_gallery_images"
+                                                            id="deleted_gallery_images" value="[]">
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <!-- Continue Button -->
@@ -350,17 +377,18 @@
 
                     <!-- Step 2: Location & Additional -->
                     <div class="tab-pane fade step" id="media-uploads" role="tabpanel" aria-labelledby="location-tab">
-                        <div class="post-your-add add-location section-padding2">
+                        <div class="post-your-add">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col-xl-2"></div>
-                                    <div class="col-xl-6">
+                                <div class="row g-4">
+                                    <div class="col-lg-8">
                                         <!-- Location Information -->
-                                        <div class="address box-shadow1 p-24">
-                                            <h5 class="mb-3">Location Information</h5>
-                                            <div class="row g-3">
+                                        <div class="card mb-30">
+                                            <div class="card-header">
+                                                <h6 class="card-title">Location Information</h6>
+                                            </div>
+                                            <div class="card-body">
                                                 <!-- Country -->
-                                                <div class="col-12">
+                                                <div class="form-group mb-20">
                                                     <label for="country">Country <span
                                                             class="text-danger">*</span></label>
                                                     <select name="country" id="country" class="select2-ajax w-100"
@@ -375,7 +403,7 @@
                                                 </div>
 
                                                 <!-- State -->
-                                                <div class="col-12">
+                                                <div class="form-group mb-20">
                                                     <label for="state">State <span class="text-danger">*</span></label>
                                                     <select name="state" id="state" class="select2-ajax w-100"
                                                         required>
@@ -389,7 +417,7 @@
                                                 </div>
 
                                                 <!-- City -->
-                                                <div class="col-12">
+                                                <div class="form-group mb-20">
                                                     <label for="city">City <span class="text-danger">*</span></label>
                                                     <select name="city" id="city" class="select2-ajax w-100"
                                                         required>
@@ -403,7 +431,7 @@
                                                 </div>
 
                                                 <!-- Address -->
-                                                <div class="col-12">
+                                                <div class="form-group">
                                                     <label for="address">Address</label>
                                                     <textarea class="w-100 input-style" name="address" id="address" rows="3"
                                                         placeholder="Enter your detailed address">{{ old('address', $ad->address) }}</textarea>
@@ -413,31 +441,44 @@
                                         </div>
 
                                         <!-- Video URL -->
-                                        <div class="video box-shadow1 p-24 mt-3 mb-3">
-                                            <label for="video_url">Video URL</label>
-                                            <input type="text" class="input-style w-100" name="video_url"
-                                                id="video_url" value="{{ old('video_url', $ad->video_url) }}"
-                                                placeholder="YouTube URL">
-                                            <div class="invalid-feedback"></div>
+                                        <div class="card mb-30">
+                                            <div class="card-header">
+                                                <h6 class="card-title">Video</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="video_url">Video URL</label>
+                                                    <input type="text" class="input-style w-100" name="video_url"
+                                                        id="video_url" value="{{ old('video_url', $ad->video_url) }}"
+                                                        placeholder="YouTube URL">
+                                                    <div class="invalid-feedback"></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-3">
+                                    <div class="col-lg-4">
                                         <div class="right-sidebar">
                                             <!-- Tags -->
-                                            <div class="box-shadow1 tags p-24 mt-3">
-                                                <label for="tags">Tags</label>
-                                                <div class="select-itms">
-                                                    <select name="tags[]" id="tags" class="select2_activation"
-                                                        multiple>
-                                                        @foreach ($tags as $tag)
-                                                            <option value="{{ $tag->id }}"
-                                                                {{ in_array($tag->id, $selectedTagIds) ? 'selected' : '' }}>
-                                                                {{ $tag->title }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    <small>Select your tags or type a new tag name</small>
+                                            <div class="card mb-30">
+                                                <div class="card-header">
+                                                    <h6 class="card-title">Tags</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <div class="select-itms">
+                                                            <select name="tags[]" id="tags"
+                                                                class="select2_activation" multiple>
+                                                                @foreach ($tags as $tag)
+                                                                    <option value="{{ $tag->id }}"
+                                                                        {{ in_array($tag->id, $selectedTagIds) ? 'selected' : '' }}>
+                                                                        {{ $tag->title }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <small>Select your tags or type a new tag name</small>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -447,9 +488,10 @@
                                             <!-- Previous / Submit -->
                                             <div class="continue-btn mt-3">
                                                 <div class="btn-wrapper mb-10 d-flex justify-content-end gap-3">
-                                                    <button class="red-btn w-100 d-block" id="prevBtn"
-                                                        type="button">Previous</button>
-                                                    <button class="red-btn w-100 d-block" id="submitBtn" type="submit">
+                                                    <button class="red-btn w-100 d-block" style="border: none"
+                                                        id="prevBtn" type="button">Previous</button>
+                                                    <button class="red-btn w-100 d-block" style="border: none"
+                                                        id="submitBtn" type="submit">
                                                         <span class="btn-text">Update Listing</span>
                                                     </button>
                                                 </div>
@@ -457,7 +499,6 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-xl-1"></div>
                                 </div>
                             </div>
                         </div>

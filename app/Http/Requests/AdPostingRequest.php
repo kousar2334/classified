@@ -17,7 +17,7 @@ class AdPostingRequest extends FormRequest
         return [
             'title' => 'required|string|max:250',
             'price' => 'required|numeric|min:0',
-            'description' => 'required|string|min:150',
+            'description' => 'required|string|min:50',
             'country' => 'required|integer|exists:countries,id',
             'state' => 'required|integer|exists:states,id',
             'city' => 'required|integer|exists:cities,id',
@@ -48,7 +48,7 @@ class AdPostingRequest extends FormRequest
             'price.numeric' => translation('Price must be a valid number', session()->get('api_local')),
             'price.min' => translation('Price cannot be negative', session()->get('api_local')),
             'description.required' => translation('Description is required', session()->get('api_local')),
-            'description.min' => translation('Description must be at least 150 characters', session()->get('api_local')),
+            'description.min' => translation('Description must be at least 50 characters', session()->get('api_local')),
             'country.required' => translation('Please select a country', session()->get('api_local')),
             'country.exists' => translation('Selected country is invalid', session()->get('api_local')),
             'state.required' => translation('Please select a state', session()->get('api_local')),

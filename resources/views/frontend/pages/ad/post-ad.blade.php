@@ -320,17 +320,18 @@
 
                     <!-- Step 2: Location & Additional -->
                     <div class="tab-pane fade step" id="media-uploads" role="tabpanel" aria-labelledby="location-tab">
-                        <div class="post-your-add add-location section-padding2">
+                        <div class="post-your-add">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col-xl-2"></div>
-                                    <div class="col-xl-6">
+                                <div class="row g-4">
+                                    <div class="col-lg-8">
                                         <!-- Location Information -->
-                                        <div class="address box-shadow1 p-24">
-                                            <h5 class="mb-3">Location Information</h5>
-                                            <div class="row g-3">
+                                        <div class="card mb-30">
+                                            <div class="card-header">
+                                                <h6 class="card-title">Location Information</h6>
+                                            </div>
+                                            <div class="card-body">
                                                 <!-- Country -->
-                                                <div class="col-12">
+                                                <div class="form-group mb-20">
                                                     <label for="country">Country <span
                                                             class="text-danger">*</span></label>
                                                     <select name="country" id="country" class="select2-ajax w-100"
@@ -341,7 +342,7 @@
                                                 </div>
 
                                                 <!-- State -->
-                                                <div class="col-12">
+                                                <div class="form-group mb-20">
                                                     <label for="state">State <span class="text-danger">*</span></label>
                                                     <select name="state" id="state" class="select2-ajax w-100"
                                                         required disabled>
@@ -351,7 +352,7 @@
                                                 </div>
 
                                                 <!-- City -->
-                                                <div class="col-12">
+                                                <div class="form-group mb-20">
                                                     <label for="city">City <span class="text-danger">*</span></label>
                                                     <select name="city" id="city" class="select2-ajax w-100"
                                                         required disabled>
@@ -361,7 +362,7 @@
                                                 </div>
 
                                                 <!-- Address -->
-                                                <div class="col-12">
+                                                <div class="form-group">
                                                     <label for="address">Address</label>
                                                     <textarea class="w-100 input-style" name="address" id="address" rows="3"
                                                         placeholder="Enter your detailed address">{{ old('address') }}</textarea>
@@ -371,109 +372,144 @@
                                         </div>
 
                                         <!-- Video URL -->
-                                        <div class="video box-shadow1 p-24 mt-3 mb-3">
-                                            <label for="video_url">Video URL</label>
-                                            <input type="text" class="input-style w-100" name="video_url"
-                                                id="video_url" value="{{ old('video_url') }}" placeholder="YouTube URL">
-                                            <div class="invalid-feedback"></div>
+                                        <div class="card mb-30">
+                                            <div class="card-header">
+                                                <h6 class="card-title">Video</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="video_url">Video URL</label>
+                                                    <input type="text" class="input-style w-100" name="video_url"
+                                                        id="video_url" value="{{ old('video_url') }}"
+                                                        placeholder="YouTube URL">
+                                                    <div class="invalid-feedback"></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-3">
+                                    <div class="col-lg-4">
                                         <div class="right-sidebar">
                                             <!-- Featured Ad -->
-                                            <div class="box-shadow1 feature p-24">
-                                                <label>
-                                                    <input type="checkbox" name="is_featured" id="is_featured"
-                                                        value="1" class="custom-check-box feature_disable_color"
-                                                        {{ old('is_featured') ? 'checked' : '' }}>
-                                                    <span class="ms-2">Feature This Ad</span>
-                                                </label>
-                                                <p>To feature this ad, you will need to subscribe to a
-                                                    <a href="{{ url('/membership') }}">paid membership</a>
-                                                </p>
-                                            </div>
-
-                                            <!-- Tags -->
-                                            <div class="box-shadow1 tags p-24 mt-3">
-                                                <label for="tags">Tags</label>
-                                                <div class="select-itms">
-                                                    <select name="tags[]" id="tags" class="select2_activation"
-                                                        multiple>
-                                                        @foreach ($tags as $tag)
-                                                            <option value="{{ $tag->id }}"
-                                                                {{ is_array(old('tags')) && in_array($tag->id, old('tags')) ? 'selected' : '' }}>
-                                                                {{ $tag->title }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    <small>Select your tags or type a new tag name</small>
+                                            <div class="card mb-30">
+                                                <div class="card-header">
+                                                    <h6 class="card-title">Feature This Ad</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label>
+                                                            <input type="checkbox" name="is_featured" id="is_featured"
+                                                                value="1"
+                                                                class="custom-check-box feature_disable_color"
+                                                                {{ old('is_featured') ? 'checked' : '' }}>
+                                                            <span class="ms-2">Feature This Ad</span>
+                                                        </label>
+                                                        <p class="mt-2 mb-0">To feature this ad, you will need to subscribe
+                                                            to a
+                                                            <a href="{{ url('/membership') }}">paid membership</a>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
 
+                                            <!-- Tags -->
+                                            <div class="card mb-30">
+                                                <div class="card-header">
+                                                    <h6 class="card-title">Tags</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <div class="select-itms">
+                                                            <select name="tags[]" id="tags"
+                                                                class="select2_activation" multiple>
+                                                                @foreach ($tags as $tag)
+                                                                    <option value="{{ $tag->id }}"
+                                                                        {{ is_array(old('tags')) && in_array($tag->id, old('tags')) ? 'selected' : '' }}>
+                                                                        {{ $tag->title }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <small>Select your tags or type a new tag name</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             <!-- Guest User Info (shown when not logged in) -->
                                             @guest
-                                                <div class="box-shadow1 hode-phone-number p-24 mt-3">
-                                                    <label>User Information</label>
-                                                    <div class="mt-3">
-                                                        <label for="guest_first_name" class="infoTitle">First Name <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" class="input-style w-100"
-                                                            name="guest_first_name" id="guest_first_name"
-                                                            value="{{ old('guest_first_name') }}" placeholder="First Name">
+                                                <div class="card mb-30">
+                                                    <div class="card-header">
+                                                        <h6 class="card-title">User Information</h6>
                                                     </div>
-                                                    <div class="mt-3">
-                                                        <label for="guest_last_name" class="infoTitle">Last Name <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" class="input-style w-100"
-                                                            name="guest_last_name" id="guest_last_name"
-                                                            value="{{ old('guest_last_name') }}" placeholder="Last Name">
-                                                    </div>
-                                                    <div class="mt-3">
-                                                        <label for="guest_email" class="infoTitle">Email <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="email" class="input-style w-100" name="guest_email"
-                                                            id="guest_email" value="{{ old('guest_email') }}"
-                                                            placeholder="Email">
-                                                    </div>
-                                                    <div class="mt-3">
-                                                        <label for="guest_phone" class="infoTitle">Phone Number <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="tel" class="input-style w-100" name="guest_phone"
-                                                            id="guest_phone" value="{{ old('guest_phone') }}"
-                                                            placeholder="Phone">
-                                                    </div>
-                                                    <div id="guest_error_message" class="d-flex flex-column gap-2 mt-2 mb-2">
-                                                    </div>
-                                                    <div class="feature">
-                                                        <label>
-                                                            <input type="checkbox" name="guest_register_request"
-                                                                id="guest_register_request" value="1"
-                                                                class="custom-check-box">
-                                                            <span class="ms-2 title-para text-primary">I confirm the above info
-                                                                and am excited to register!</span>
-                                                        </label>
+                                                    <div class="card-body">
+                                                        <div class="form-group mb-20">
+                                                            <label for="guest_first_name">First Name <span
+                                                                    class="text-danger">*</span></label>
+                                                            <input type="text" class="input-style w-100"
+                                                                name="guest_first_name" id="guest_first_name"
+                                                                value="{{ old('guest_first_name') }}"
+                                                                placeholder="First Name">
+                                                        </div>
+                                                        <div class="form-group mb-20">
+                                                            <label for="guest_last_name">Last Name <span
+                                                                    class="text-danger">*</span></label>
+                                                            <input type="text" class="input-style w-100"
+                                                                name="guest_last_name" id="guest_last_name"
+                                                                value="{{ old('guest_last_name') }}" placeholder="Last Name">
+                                                        </div>
+                                                        <div class="form-group mb-20">
+                                                            <label for="guest_email">Email <span
+                                                                    class="text-danger">*</span></label>
+                                                            <input type="email" class="input-style w-100"
+                                                                name="guest_email" id="guest_email"
+                                                                value="{{ old('guest_email') }}" placeholder="Email">
+                                                        </div>
+                                                        <div class="form-group mb-20">
+                                                            <label for="guest_phone">Phone Number <span
+                                                                    class="text-danger">*</span></label>
+                                                            <input type="tel" class="input-style w-100"
+                                                                name="guest_phone" id="guest_phone"
+                                                                value="{{ old('guest_phone') }}" placeholder="Phone">
+                                                        </div>
+                                                        <div id="guest_error_message" class="d-flex flex-column gap-2 mb-2">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>
+                                                                <input type="checkbox" name="guest_register_request"
+                                                                    id="guest_register_request" value="1"
+                                                                    class="custom-check-box">
+                                                                <span class="ms-2 title-para text-primary">I confirm the above
+                                                                    info
+                                                                    and am excited to register!</span>
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             @endguest
 
                                             <!-- Terms and Conditions -->
-                                            <div class="box-shadow1 p-24 mt-3">
-                                                <div class="feature">
-                                                    <label class="terms-conditions">
-                                                        <input class="custom-check-box" type="checkbox"
-                                                            name="terms_conditions" id="terms_conditions" value="1">
-                                                        <span>I agree with the
-                                                            <a href="{{ url('/terms-and-conditions') }}" target="_blank"
-                                                                class="text-primary">Terms and Conditions</a>
-                                                        </span>
-                                                    </label>
-                                                    <div
-                                                        class="invalid-feedback @error('terms_conditions') d-block @enderror">
-                                                        @error('terms_conditions')
-                                                            {{ $message }}
-                                                        @enderror
+                                            <div class="card mb-30">
+                                                <div class="card-header">
+                                                    <h6 class="card-title">Terms &amp; Conditions</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label class="terms-conditions">
+                                                            <input class="custom-check-box" type="checkbox"
+                                                                name="terms_conditions" id="terms_conditions"
+                                                                value="1">
+                                                            <span>I agree with the
+                                                                <a href="{{ url('/terms-and-conditions') }}"
+                                                                    target="_blank" class="text-primary">Terms and
+                                                                    Conditions</a>
+                                                            </span>
+                                                        </label>
+                                                        <div
+                                                            class="invalid-feedback @error('terms_conditions') d-block @enderror">
+                                                            @error('terms_conditions')
+                                                                {{ $message }}
+                                                            @enderror
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -484,9 +520,10 @@
                                             <!-- Previous / Submit -->
                                             <div class="continue-btn mt-3">
                                                 <div class="btn-wrapper mb-10 d-flex justify-content-end gap-3">
-                                                    <button class="red-btn w-100 d-block" id="prevBtn"
-                                                        type="button">Previous</button>
-                                                    <button class="red-btn w-100 d-block" id="submitBtn" type="submit">
+                                                    <button class="red-btn w-100 d-block" style="border: none"
+                                                        id="prevBtn" type="button">Previous</button>
+                                                    <button class="red-btn w-100 d-block" style="border: none"
+                                                        id="submitBtn" type="submit">
                                                         <span class="btn-text">Submit Listing</span>
                                                     </button>
                                                 </div>
@@ -494,7 +531,6 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-xl-1"></div>
                                 </div>
                             </div>
                         </div>
