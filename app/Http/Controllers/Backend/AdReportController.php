@@ -4,25 +4,30 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdReport;
+use App\Models\ReportReason;
 use Illuminate\Http\Request;
 
 class AdReportController extends Controller
 {
     public function index(Request $request)
     {
-        $reports = AdReport::with(['ad', 'user'])
-            ->when($request->filled('reason'), fn($q) => $q->where('reason', $request->reason))
+        $reports = AdReport::with(['ad', 'user', 'reason.reason_translations'])
+            ->when($request->filled('reason_id'), fn($q) => $q->where('reason_id', $request->reason_id))
             ->when($request->filled('status'), fn($q) => $q->where('status', $request->status))
             ->latest()
             ->paginate(20);
 
-        return view('backend.modules.ads.reports.list', compact('reports'));
+        $reasons = ReportReason::with('reason_translations')
+            ->where('status', config('settings.general_status.active'))
+            ->orderBy('id')
+            ->get();
+
+        return view('backend.modules.ads.reports.list', compact('reports', 'reasons'));
     }
 
     public function delete(Request $request)
     {
-        $report = AdReport::findOrFail($request->id);
-        $report->delete();
+        AdReport::findOrFail($request->id)->delete();
 
         toastNotification('success', 'Report deleted successfully', 'Success');
         return redirect()->back();

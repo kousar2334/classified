@@ -1,18 +1,11 @@
 @php
     $links = [['title' => 'Ad Reports', 'route' => 'classified.ads.reports.list', 'active' => false]];
-    $reasons = [
-        'spam' => 'Spam',
-        'inappropriate' => 'Inappropriate content',
-        'fraud' => 'Fraud / Scam',
-        'duplicate' => 'Duplicate listing',
-        'other' => 'Other',
-    ];
     $statuses = [0 => 'Pending', 1 => 'Reviewed', 2 => 'Dismissed'];
     $statusBadges = [0 => 'badge-warning', 1 => 'badge-success', 2 => 'badge-secondary'];
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    Ad Reports
+    {{ translation('Ad Reports') }}
 @endsection
 @section('page-content')
     <x-admin-page-header title="Ad Reports" :links="$links" />
@@ -25,31 +18,32 @@
                     <form method="GET" action="{{ route('classified.ads.reports.list') }}"
                         class="form-inline flex-wrap gap-2">
                         <div class="form-group mr-2 mb-2">
-                            <label class="mr-1">Reason</label>
-                            <select name="reason" class="form-control form-control-sm">
-                                <option value="">All Reasons</option>
-                                @foreach ($reasons as $val => $label)
-                                    <option value="{{ $val }}" {{ request('reason') == $val ? 'selected' : '' }}>
-                                        {{ $label }}
+                            <label class="mr-1">{{ translation('Reason') }}</label>
+                            <select name="reason_id" class="form-control form-control-sm">
+                                <option value="">{{ translation('All Reasons') }}</option>
+                                @foreach ($reasons as $reason)
+                                    <option value="{{ $reason->id }}"
+                                        {{ request('reason_id') == $reason->id ? 'selected' : '' }}>
+                                        {{ $reason->translation('title') }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group mr-2 mb-2">
-                            <label class="mr-1">Status</label>
+                            <label class="mr-1">{{ translation('Status') }}</label>
                             <select name="status" class="form-control form-control-sm">
-                                <option value="">All Statuses</option>
+                                <option value="">{{ translation('All Statuses') }}</option>
                                 @foreach ($statuses as $val => $label)
                                     <option value="{{ $val }}"
                                         {{ request('status') !== null && request('status') == $val ? 'selected' : '' }}>
-                                        {{ $label }}
+                                        {{ translation($label) }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-sm mb-2">Filter</button>
+                        <button type="submit" class="btn btn-primary btn-sm mb-2">{{ translation('Filter') }}</button>
                         <a href="{{ route('classified.ads.reports.list') }}"
-                            class="btn btn-secondary btn-sm mb-2 ml-1">Reset</a>
+                            class="btn btn-secondary btn-sm mb-2 ml-1">{{ translation('Reset') }}</a>
                     </form>
                 </div>
             </div>
@@ -86,20 +80,20 @@
                                                         {{ Str::limit($report->ad->title, 40) }}
                                                     </a>
                                                 @else
-                                                    <span class="text-muted">Ad deleted</span>
+                                                    <span class="text-muted">{{ translation('Ad deleted') }}</span>
                                                 @endif
                                             </td>
-                                            <td>{{ $report->user?->name ?? 'Guest' }}</td>
+                                            <td>{{ $report->user?->name ?? translation('Guest') }}</td>
                                             <td>
                                                 <span class="badge badge-info">
-                                                    {{ $reasons[$report->reason] ?? ucfirst($report->reason) }}
+                                                    {{ $report->reason ? $report->reason->translation('title') : '—' }}
                                                 </span>
                                             </td>
                                             <td>{{ $report->message ? Str::limit($report->message, 60) : '—' }}</td>
                                             <td>
                                                 <span
                                                     class="badge {{ $statusBadges[$report->status] ?? 'badge-warning' }}">
-                                                    {{ $statuses[$report->status] ?? 'Pending' }}
+                                                    {{ translation($statuses[$report->status] ?? 'Pending') }}
                                                 </span>
                                             </td>
                                             <td>{{ $report->created_at->format('d M Y') }}</td>
@@ -114,19 +108,19 @@
                                                         @if ($report->status != 1)
                                                             <button class="dropdown-item update-status-btn"
                                                                 data-id="{{ $report->id }}" data-status="1">
-                                                                Mark as Reviewed
+                                                                {{ translation('Mark as Reviewed') }}
                                                             </button>
                                                         @endif
                                                         @if ($report->status != 2)
                                                             <button class="dropdown-item update-status-btn"
                                                                 data-id="{{ $report->id }}" data-status="2">
-                                                                Dismiss
+                                                                {{ translation('Dismiss') }}
                                                             </button>
                                                         @endif
                                                         @if ($report->status != 0)
                                                             <button class="dropdown-item update-status-btn"
                                                                 data-id="{{ $report->id }}" data-status="0">
-                                                                Mark as Pending
+                                                                {{ translation('Mark as Pending') }}
                                                             </button>
                                                         @endif
                                                         <div class="dropdown-divider"></div>

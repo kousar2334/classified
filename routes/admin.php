@@ -25,6 +25,7 @@ use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\PricingPlanController;
 use App\Http\Controllers\Backend\ClassifiedSettingController;
 use App\Http\Controllers\Backend\AdReportController;
+use App\Http\Controllers\Backend\ReportReasonController;
 use App\Http\Controllers\Backend\ConversationController;
 
 Route::prefix('admin')->group(function () {
@@ -330,6 +331,15 @@ Route::prefix('admin')->group(function () {
                 Route::get('/', [AdReportController::class, 'index'])->name('classified.ads.reports.list');
                 Route::post('delete', [AdReportController::class, 'delete'])->name('classified.ads.reports.delete');
                 Route::post('status', [AdReportController::class, 'updateStatus'])->name('classified.ads.reports.status');
+            });
+
+            //Report Reasons module
+            Route::group(['prefix' => 'report-reasons'], function () {
+                Route::get('/', [ReportReasonController::class, 'index'])->name('classified.ads.report.reasons.list');
+                Route::post('store', [ReportReasonController::class, 'store'])->name('classified.ads.report.reasons.store');
+                Route::get('edit/{id}', [ReportReasonController::class, 'edit'])->name('classified.ads.report.reasons.edit');
+                Route::post('update', [ReportReasonController::class, 'update'])->name('classified.ads.report.reasons.update');
+                Route::post('delete', [ReportReasonController::class, 'delete'])->name('classified.ads.report.reasons.delete');
             });
         });
         /**

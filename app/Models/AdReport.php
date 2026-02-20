@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AdReport extends Model
 {
-    protected $fillable = ['ad_id', 'user_id', 'reason', 'message', 'status'];
+    protected $fillable = ['ad_id', 'user_id', 'reason_id', 'message', 'status'];
 
     public function ad(): BelongsTo
     {
@@ -17,5 +17,10 @@ class AdReport extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function reason(): BelongsTo
+    {
+        return $this->belongsTo(ReportReason::class, 'reason_id');
     }
 }

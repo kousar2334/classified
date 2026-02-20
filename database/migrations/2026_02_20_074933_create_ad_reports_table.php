@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('ad_id')->constrained('ads')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->string('reason', 100);
+            $table->foreignId('reason_id')->nullable()->constrained('report_reasons')->onDelete('set null');
             $table->text('message')->nullable();
             $table->tinyInteger('status')->default(0)->comment('0=pending, 1=reviewed, 2=dismissed');
             $table->timestamps();

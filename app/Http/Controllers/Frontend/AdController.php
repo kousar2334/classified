@@ -13,6 +13,7 @@ use App\Models\AdsCustomField;
 use App\Models\AdsTag;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\ReportReason;
 use App\Models\SafetyTips;
 use App\Models\AdReport;
 use App\Models\SavedAd;
@@ -466,12 +467,18 @@ class AdController extends Controller
             ->where('status', config('settings.general_status.active'))
             ->get();
 
+        // Get active report reasons
+        $reportReasons = ReportReason::with('reason_translations')
+            ->where('status', config('settings.general_status.active'))
+            ->orderBy('id', 'ASC')
+            ->get();
+
         // Check if the current user has saved this ad
         $isFavourited = auth()->check()
             ? SavedAd::where('user_id', auth()->id())->where('ad_id', $ad->id)->exists()
             : false;
 
-        return view('frontend.pages.ad.details', compact('ad', 'relevantAds', 'customFields', 'fieldModels', 'safetyTips', 'isFavourited'));
+        return view('frontend.pages.ad.details', compact('ad', 'relevantAds', 'customFields', 'fieldModels', 'safetyTips', 'reportReasons', 'isFavourited'));
     }
 
     public function myFavourites(Request $request)
@@ -921,9 +928,9 @@ class AdController extends Controller
     public function reportAd(Request $request)
     {
         $request->validate([
-            'ad_id'  => 'required|exists:ads,id',
-            'reason' => 'required|in:spam,inappropriate,fraud,duplicate,other',
-            'message' => 'nullable|string|max:1000',
+            'ad_id'     => 'required|exists:ads,id',
+            'reason_id' => 'required|exists:report_reasons,id',
+            'message'   => 'nullable|string|max:1000',
         ]);
 
         $alreadyReported = AdReport::where('ad_id', $request->ad_id)
@@ -935,10 +942,10 @@ class AdController extends Controller
         }
 
         AdReport::create([
-            'ad_id'   => $request->ad_id,
-            'user_id' => auth()->id(),
-            'reason'  => $request->reason,
-            'message' => $request->message,
+            'ad_id'     => $request->ad_id,
+            'user_id'   => auth()->id(),
+            'reason_id' => $request->reason_id,
+            'message'   => $request->message,
         ]);
 
         return response()->json(['message' => 'Report submitted successfully. Thank you!']);

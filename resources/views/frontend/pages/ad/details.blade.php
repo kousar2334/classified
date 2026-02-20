@@ -922,12 +922,12 @@
                         <input type="hidden" name="ad_id" value="{{ $ad->id }}">
                         <div class="mb-3">
                             <label for="reportReason" class="form-label">Reason</label>
-                            <select class="form-select" id="reportReason" name="reason">
-                                <option value="spam">Spam</option>
-                                <option value="inappropriate">Inappropriate content</option>
-                                <option value="fraud">Fraud / Scam</option>
-                                <option value="duplicate">Duplicate listing</option>
-                                <option value="other">Other</option>
+                            <select class="form-select" id="reportReason" name="reason_id">
+                                @forelse ($reportReasons as $reason)
+                                    <option value="{{ $reason->id }}">{{ $reason->translation('title') }}</option>
+                                @empty
+                                    <option value="" disabled>No reasons available</option>
+                                @endforelse
                             </select>
                         </div>
                         <div class="mb-3">
@@ -1019,7 +1019,7 @@
                         data: {
                             _token: '{{ csrf_token() }}',
                             ad_id: $('input[name="ad_id"]').val(),
-                            reason: $('#reportReason').val(),
+                            reason_id: $('#reportReason').val(),
                             message: $('#reportMessage').val(),
                         },
                         success: function(res) {
