@@ -785,10 +785,8 @@
                                 </a>
                                 <div class="sid-quick-sep"></div>
                                 <a href="javascript:void(0)" class="sid-quick-btn sid-report-btn"
-                                    data-is-auth="{{ auth()->check() ? 'true' : 'false' }}"
-                                    data-login-url="{{ route('member.login') }}"
-                                    data-bs-toggle="{{ auth()->check() ? 'modal' : '' }}"
-                                    data-bs-target="{{ auth()->check() ? '#reportModal' : '' }}">
+                                    data-is-auth="{{ auth()->check() ? '1' : '0' }}"
+                                    data-login-url="{{ route('member.login') }}">
                                     <svg width="15" height="17" viewBox="0 0 16 18" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path d="M1 10H15L10.5 5.5L15 1H1V17" stroke="currentColor" stroke-width="2"
@@ -1001,9 +999,11 @@
                     $(this).css('visibility', 'visible');
                 });
 
-                // Report button - redirect to login if not authenticated
+                // Report button - redirect to login if not authenticated, else open modal
                 $(document).on('click', '.sid-report-btn', function() {
-                    if ($(this).data('is-auth') !== 'true') {
+                    if ($(this).attr('data-is-auth') === '1') {
+                        $('#reportModal').modal('show');
+                    } else {
                         window.location.href = $(this).data('login-url');
                     }
                 });
