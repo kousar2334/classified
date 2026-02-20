@@ -36,6 +36,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/ad/favourite/toggle', [AdController::class, 'toggleFavourite'])->name('ad.favourite.toggle');
     Route::get('/member/favourites', [AdController::class, 'myFavourites'])->name('member.favourites');
 
+    // Reports
+    Route::post('/ad/report', [AdController::class, 'reportAd'])->name('ad.report');
+
     // Messaging
     Route::get('/member/messages', [MessageController::class, 'index'])->name('member.messages.index');
     Route::get('/member/messages/{uid}', [MessageController::class, 'show'])->name('member.messages.show');

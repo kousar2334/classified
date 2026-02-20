@@ -1,0 +1,211 @@
+@php
+    $links = [['title' => 'Ad Reports', 'route' => 'classified.ads.reports.list', 'active' => false]];
+    $reasons = [
+        'spam' => 'Spam',
+        'inappropriate' => 'Inappropriate content',
+        'fraud' => 'Fraud / Scam',
+        'duplicate' => 'Duplicate listing',
+        'other' => 'Other',
+    ];
+    $statuses = [0 => 'Pending', 1 => 'Reviewed', 2 => 'Dismissed'];
+    $statusBadges = [0 => 'badge-warning', 1 => 'badge-success', 2 => 'badge-secondary'];
+@endphp
+@extends('backend.layouts.dashboard_layout')
+@section('page-title')
+    Ad Reports
+@endsection
+@section('page-content')
+    <x-admin-page-header title="Ad Reports" :links="$links" />
+    <section class="content">
+        <div class="container-fluid">
+
+            {{-- Filters --}}
+            <div class="card card-outline card-primary mb-3">
+                <div class="card-body">
+                    <form method="GET" action="{{ route('classified.ads.reports.list') }}"
+                        class="form-inline flex-wrap gap-2">
+                        <div class="form-group mr-2 mb-2">
+                            <label class="mr-1">Reason</label>
+                            <select name="reason" class="form-control form-control-sm">
+                                <option value="">All Reasons</option>
+                                @foreach ($reasons as $val => $label)
+                                    <option value="{{ $val }}" {{ request('reason') == $val ? 'selected' : '' }}>
+                                        {{ $label }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group mr-2 mb-2">
+                            <label class="mr-1">Status</label>
+                            <select name="status" class="form-control form-control-sm">
+                                <option value="">All Statuses</option>
+                                @foreach ($statuses as $val => $label)
+                                    <option value="{{ $val }}"
+                                        {{ request('status') !== null && request('status') == $val ? 'selected' : '' }}>
+                                        {{ $label }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm mb-2">Filter</button>
+                        <a href="{{ route('classified.ads.reports.list') }}"
+                            class="btn btn-secondary btn-sm mb-2 ml-1">Reset</a>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h3 class="card-title">{{ translation('Reported Ads') }}</h3>
+                            <span class="badge badge-danger">{{ $reports->total() }} {{ translation('Reports') }}</span>
+                        </div>
+                        <div class="card-body p-0">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>{{ translation('#') }}</th>
+                                        <th>{{ translation('Ad') }}</th>
+                                        <th>{{ translation('Reported By') }}</th>
+                                        <th>{{ translation('Reason') }}</th>
+                                        <th>{{ translation('Message') }}</th>
+                                        <th>{{ translation('Status') }}</th>
+                                        <th>{{ translation('Date') }}</th>
+                                        <th class="text-right">{{ translation('Actions') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($reports as $key => $report)
+                                        <tr>
+                                            <td>{{ $reports->firstItem() + $key }}</td>
+                                            <td>
+                                                @if ($report->ad)
+                                                    <a href="{{ route('ad.details.page', $report->ad->uid) }}"
+                                                        target="_blank">
+                                                        {{ Str::limit($report->ad->title, 40) }}
+                                                    </a>
+                                                @else
+                                                    <span class="text-muted">Ad deleted</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $report->user?->name ?? 'Guest' }}</td>
+                                            <td>
+                                                <span class="badge badge-info">
+                                                    {{ $reasons[$report->reason] ?? ucfirst($report->reason) }}
+                                                </span>
+                                            </td>
+                                            <td>{{ $report->message ? Str::limit($report->message, 60) : '—' }}</td>
+                                            <td>
+                                                <span
+                                                    class="badge {{ $statusBadges[$report->status] ?? 'badge-warning' }}">
+                                                    {{ $statuses[$report->status] ?? 'Pending' }}
+                                                </span>
+                                            </td>
+                                            <td>{{ $report->created_at->format('d M Y') }}</td>
+                                            <td class="text-right">
+                                                <div class="btn-group">
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-default">{{ translation('Action') }}</button>
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-default dropdown-toggle dropdown-hover dropdown-icon"
+                                                        data-toggle="dropdown" aria-expanded="false"></button>
+                                                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                                        @if ($report->status != 1)
+                                                            <button class="dropdown-item update-status-btn"
+                                                                data-id="{{ $report->id }}" data-status="1">
+                                                                Mark as Reviewed
+                                                            </button>
+                                                        @endif
+                                                        @if ($report->status != 2)
+                                                            <button class="dropdown-item update-status-btn"
+                                                                data-id="{{ $report->id }}" data-status="2">
+                                                                Dismiss
+                                                            </button>
+                                                        @endif
+                                                        @if ($report->status != 0)
+                                                            <button class="dropdown-item update-status-btn"
+                                                                data-id="{{ $report->id }}" data-status="0">
+                                                                Mark as Pending
+                                                            </button>
+                                                        @endif
+                                                        <div class="dropdown-divider"></div>
+                                                        <button class="dropdown-item text-danger delete-report-btn"
+                                                            data-id="{{ $report->id }}">
+                                                            {{ translation('Delete') }}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="8">
+                                                <div class="text-center py-3">{{ translation('No reports found') }}</div>
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                            @if ($reports->hasPages())
+                                <div class="p-3">
+                                    {{ $reports->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Delete Confirmation Modal --}}
+        <div class="modal fade" id="delete-report-modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p class="mt-1 h6 my-2">{{ translation('Are you sure to delete this report?') }}</p>
+                        <form method="POST" action="{{ route('classified.ads.reports.delete') }}">
+                            @csrf
+                            <input type="hidden" id="delete-report-id" name="id">
+                            <button type="button" class="btn mt-2 btn-danger"
+                                data-dismiss="modal">{{ translation('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Status Update Form (hidden) --}}
+        <form id="status-update-form" method="POST" action="{{ route('classified.ads.reports.status') }}"
+            style="display:none;">
+            @csrf
+            <input type="hidden" id="status-report-id" name="id">
+            <input type="hidden" id="status-report-value" name="status">
+        </form>
+    </section>
+@endsection
+@section('page-script')
+    <script>
+        (function($) {
+            "use strict";
+
+            $('.delete-report-btn').on('click', function() {
+                $('#delete-report-id').val($(this).data('id'));
+                $('#delete-report-modal').modal('show');
+            });
+
+            $('.update-status-btn').on('click', function() {
+                $('#status-report-id').val($(this).data('id'));
+                $('#status-report-value').val($(this).data('status'));
+                $('#status-update-form').submit();
+            });
+        })(jQuery);
+    </script>
+@endsection

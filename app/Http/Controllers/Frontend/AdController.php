@@ -14,6 +14,7 @@ use App\Models\AdsTag;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\SafetyTips;
+use App\Models\AdReport;
 use App\Models\SavedAd;
 use App\Models\State;
 use App\Models\User;
@@ -915,5 +916,31 @@ class AdController extends Controller
         }
 
         return $breadcrumb;
+    }
+
+    public function reportAd(Request $request)
+    {
+        $request->validate([
+            'ad_id'  => 'required|exists:ads,id',
+            'reason' => 'required|in:spam,inappropriate,fraud,duplicate,other',
+            'message' => 'nullable|string|max:1000',
+        ]);
+
+        $alreadyReported = AdReport::where('ad_id', $request->ad_id)
+            ->where('user_id', auth()->id())
+            ->exists();
+
+        if ($alreadyReported) {
+            return response()->json(['message' => 'You have already reported this ad.'], 409);
+        }
+
+        AdReport::create([
+            'ad_id'   => $request->ad_id,
+            'user_id' => auth()->id(),
+            'reason'  => $request->reason,
+            'message' => $request->message,
+        ]);
+
+        return response()->json(['message' => 'Report submitted successfully. Thank you!']);
     }
 }

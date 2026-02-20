@@ -784,8 +784,11 @@
                                     <span>{{ $isFavourited ? 'Saved' : 'Save' }}</span>
                                 </a>
                                 <div class="sid-quick-sep"></div>
-                                <a href="javascript:void(0)" class="sid-quick-btn sid-report-btn" data-bs-toggle="modal"
-                                    data-bs-target="#reportModal">
+                                <a href="javascript:void(0)" class="sid-quick-btn sid-report-btn"
+                                    data-is-auth="{{ auth()->check() ? 'true' : 'false' }}"
+                                    data-login-url="{{ route('member.login') }}"
+                                    data-bs-toggle="{{ auth()->check() ? 'modal' : '' }}"
+                                    data-bs-target="{{ auth()->check() ? '#reportModal' : '' }}">
                                     <svg width="15" height="17" viewBox="0 0 16 18" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path d="M1 10H15L10.5 5.5L15 1H1V17" stroke="currentColor" stroke-width="2"
@@ -996,6 +999,42 @@
                 // Re-initialize slick if not already initialized (for dynamic content)
                 $('.shop-details-gallery-slider').on('init', function() {
                     $(this).css('visibility', 'visible');
+                });
+
+                // Report button - redirect to login if not authenticated
+                $(document).on('click', '.sid-report-btn', function() {
+                    if ($(this).data('is-auth') !== 'true') {
+                        window.location.href = $(this).data('login-url');
+                    }
+                });
+
+                // Report form submission
+                $('#submitReport').on('click', function() {
+                    var $btn = $(this);
+                    $btn.prop('disabled', true).text('Submitting...');
+
+                    $.ajax({
+                        url: '{{ route('ad.report') }}',
+                        method: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            ad_id: $('input[name="ad_id"]').val(),
+                            reason: $('#reportReason').val(),
+                            message: $('#reportMessage').val(),
+                        },
+                        success: function(res) {
+                            $('#reportModal').modal('hide');
+                            toastr_success_js(res.message);
+                            $btn.prop('disabled', false).text('Submit Report');
+                        },
+                        error: function(xhr) {
+                            var msg = xhr.responseJSON && xhr.responseJSON.message ?
+                                xhr.responseJSON.message :
+                                'Something went wrong. Please try again.';
+                            toastr_error_js(msg);
+                            $btn.prop('disabled', false).text('Submit Report');
+                        }
+                    });
                 });
 
                 // Favourite toggle

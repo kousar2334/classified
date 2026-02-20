@@ -24,6 +24,7 @@ use App\Http\Controllers\Backend\SiteSettingController;
 use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\PricingPlanController;
 use App\Http\Controllers\Backend\ClassifiedSettingController;
+use App\Http\Controllers\Backend\AdReportController;
 use App\Http\Controllers\Backend\ConversationController;
 
 Route::prefix('admin')->group(function () {
@@ -322,6 +323,13 @@ Route::prefix('admin')->group(function () {
                 Route::post('options/edit', [CustomFieldController::class, 'customFieldOptionEdit'])->name('classified.ads.custom.field.options.edit');
                 Route::post('options/update', [CustomFieldController::class, 'customFieldOptionUpdate'])->name('classified.ads.custom.field.options.update');
                 Route::post('options/bulk-action', [CustomFieldController::class, 'customFieldOptionBulkAction'])->name('classified.ads.custom.field.options.bulk.action');
+            });
+
+            //Ad Reports module
+            Route::group(['prefix' => 'reports'], function () {
+                Route::get('/', [AdReportController::class, 'index'])->name('classified.ads.reports.list');
+                Route::post('delete', [AdReportController::class, 'delete'])->name('classified.ads.reports.delete');
+                Route::post('status', [AdReportController::class, 'updateStatus'])->name('classified.ads.reports.status');
             });
         });
         /**
