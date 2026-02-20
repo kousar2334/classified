@@ -27,6 +27,7 @@ use App\Http\Controllers\Backend\ClassifiedSettingController;
 use App\Http\Controllers\Backend\AdReportController;
 use App\Http\Controllers\Backend\ReportReasonController;
 use App\Http\Controllers\Backend\ConversationController;
+use App\Http\Controllers\Backend\SubscriptionController;
 
 Route::prefix('admin')->group(function () {
     //Admin Auth
@@ -217,6 +218,13 @@ Route::prefix('admin')->group(function () {
             Route::post('edit', [PricingPlanController::class, 'planEdit'])->name('admin.pricing.plans.edit');
             Route::post('update', [PricingPlanController::class, 'planUpdate'])->name('admin.pricing.plans.update');
             Route::post('delete', [PricingPlanController::class, 'planDelete'])->name('admin.pricing.plans.delete');
+        });
+
+        /**
+         * Subscriptions Module
+         */
+        Route::group(['prefix' => 'subscriptions'], function () {
+            Route::get('/', [SubscriptionController::class, 'index'])->name('admin.subscriptions.list');
         });
 
         /**

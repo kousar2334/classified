@@ -19,6 +19,7 @@ use App\Models\AdReport;
 use App\Models\SavedAd;
 use App\Models\State;
 use App\Models\User;
+use App\Models\UserSubscription;
 use App\Notifications\NewAdPosted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -48,8 +49,63 @@ class AdController extends Controller
 
     public function storeAd(AdPostingRequest $request)
     {
+        // Check subscription plan limits when user is logged in
+        if (auth()->check()) {
+            $userId = auth()->id();
 
-        // dd($request);
+            $activeSub = UserSubscription::with('plan')
+                ->where('user_id', $userId)
+                ->where('status', 'active')
+                ->where('expires_at', '>', now())
+                ->first();
+
+            if (!$activeSub) {
+                $errorMsg = 'You need an active subscription to post ads. <a href="' . route('pricing.plans') . '">Choose a plan</a>.';
+                if ($request->ajax()) {
+                    return response()->json(['success' => false, 'message' => strip_tags($errorMsg)], 403);
+                }
+                return back()->with('error', $errorMsg);
+            }
+
+            $plan = $activeSub->plan;
+
+            // Check total listing limit
+            $currentAdCount = Ad::where('user_id', $userId)->count();
+            if ($plan->listing_quantity > 0 && $currentAdCount >= $plan->listing_quantity) {
+                $errorMsg = 'You have reached your plan limit of ' . $plan->listing_quantity . ' listings. <a href="' . route('pricing.plans') . '">Upgrade your plan</a>.';
+                if ($request->ajax()) {
+                    return response()->json(['success' => false, 'message' => strip_tags($errorMsg)], 403);
+                }
+                return back()->with('error', $errorMsg);
+            }
+
+            // Check featured listing limit
+            if ($request->has('is_featured')) {
+                $currentFeaturedCount = Ad::where('user_id', $userId)
+                    ->where('is_featured', config('settings.general_status.active'))
+                    ->count();
+                if ($plan->featured_listing_quantity > 0 && $currentFeaturedCount >= $plan->featured_listing_quantity) {
+                    $errorMsg = 'You have reached your plan limit of ' . $plan->featured_listing_quantity . ' featured listings.';
+                    if ($request->ajax()) {
+                        return response()->json(['success' => false, 'message' => $errorMsg], 403);
+                    }
+                    return back()->with('error', $errorMsg);
+                }
+            }
+
+            // Check gallery image limit
+            if ($request->hasFile('gallery_images')) {
+                $uploadedCount = count($request->file('gallery_images'));
+                if ($plan->gallery_image_quantity > 0 && $uploadedCount > $plan->gallery_image_quantity) {
+                    $errorMsg = 'Your plan allows a maximum of ' . $plan->gallery_image_quantity . ' gallery images per listing.';
+                    if ($request->ajax()) {
+                        return response()->json(['success' => false, 'message' => $errorMsg], 403);
+                    }
+                    return back()->with('error', $errorMsg);
+                }
+            }
+        }
+
         try {
             DB::beginTransaction();
 

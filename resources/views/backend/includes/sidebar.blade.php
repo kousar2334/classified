@@ -58,6 +58,17 @@
                     </a>
                 </li>
 
+                <!--Subscriptions Module-->
+                <li class="nav-item">
+                    <a href="{{ route('admin.subscriptions.list') }}"
+                        class="nav-link {{ Request::routeIs(['admin.subscriptions.list']) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-crown"></i>
+                        <p>
+                            {{ translation('Subscriptions') }}
+                        </p>
+                    </a>
+                </li>
+
                 <!--Listings Module-->
                 <li
                     class="nav-item {{ Request::routeIs(['classified.ads.report.reasons.list', 'classified.ads.report.reasons.edit', 'classified.ads.reports.list', 'classified.ads.list.featured', 'classified.ads.list', 'classified.ads.custom.field.options', 'classified.ads.custom.field.list', 'classified.ads.tag.list', 'classified.ads.condition.list', 'classified.ads.categories.list']) ? 'menu-open ' : '' }}">

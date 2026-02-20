@@ -48,6 +48,13 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('member.subscriptions') }}"
+                    class="{{ Request::routeIs('member.subscriptions') ? 'active' : '' }}">
+                    <span class="sidebar-icon"><i class="fa-solid fa-crown"></i></span>
+                    Subscriptions
+                </a>
+            </li>
+            <li>
                 <a href="#">
                     <span class="sidebar-icon"><i class="fa-solid fa-user"></i></span>
                     Account

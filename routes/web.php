@@ -6,6 +6,7 @@ use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\LocationController;
 use App\Http\Controllers\Frontend\MemberAuthController;
 use App\Http\Controllers\Frontend\MessageController;
+use App\Http\Controllers\Frontend\SubscriptionController;
 
 Route::get('/', [PageController::class, 'homePage'])->name('home');
 Route::get('/pricing-plans', [PageController::class, 'pricingPlans'])->name('pricing.plans');
@@ -44,7 +45,18 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/member/messages/{uid}', [MessageController::class, 'show'])->name('member.messages.show');
     Route::post('/member/messages/start', [MessageController::class, 'start'])->name('member.messages.start');
     Route::post('/member/messages/{uid}/send', [MessageController::class, 'sendMessage'])->name('member.messages.send');
+
+    // Subscriptions
+    Route::get('/member/subscriptions', [SubscriptionController::class, 'mySubscriptions'])->name('member.subscriptions');
+    Route::post('/membership/buy', [SubscriptionController::class, 'buy'])->name('membership.buy');
+    Route::post('/membership/initiate-payment', [SubscriptionController::class, 'initiatePayment'])->name('membership.initiate.payment');
 });
+
+// SSLCommerz callbacks (no auth middleware — called by gateway)
+Route::post('/membership/ssl-success', [SubscriptionController::class, 'sslSuccess'])->name('subscription.ssl.success');
+Route::post('/membership/ssl-fail', [SubscriptionController::class, 'sslFail'])->name('subscription.ssl.fail');
+Route::post('/membership/ssl-cancel', [SubscriptionController::class, 'sslCancel'])->name('subscription.ssl.cancel');
+Route::post('/membership/ssl-ipn', [SubscriptionController::class, 'sslIpn'])->name('subscription.ssl.ipn');
 
 //Listing Routes
 Route::get('/post/listing', [AdController::class, 'addPostPage'])->name('ad.post.page');
