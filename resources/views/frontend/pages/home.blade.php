@@ -27,92 +27,98 @@
 @endsection
 @section('content')
     <!--Banner part Start-->
-    <div class="home-banner" data-padding-top="100" data-padding-bottom="50"
-        style="background-image: url({{ asset('/public/uploads/media-uploader/header1717328732.png') }});">
+    <section class="home-banner-v2"
+        style="background-image: url({{ asset(get_setting('banner_bg_image', 'public/uploads/media-uploader/header1717328732.png')) }});">
+        <div class="banner-v2-overlay"></div>
 
-        <div class="container position-relative">
-            <div class="letf-part-img">
-                <div class="img-wraper">
-                    <div class="img1 imges">
-                        <img src="/public/uploads/media-uploader/img11715513859.png" alt="" />
-                    </div>
-                    <div class="img2 imges">
-                        <img src="/public/uploads/media-uploader/img21715513597.png" alt="" />
-                    </div>
-                    <div class="img3 imges">
-                        <img src="/public/uploads/media-uploader/img31715514924.png" alt="" />
-                    </div>
-                    <div class="img4 imges">
-                        <img src="/public/uploads/media-uploader/img41715513597.png" alt="" />
-                    </div>
-                    <div class="img5 imges">
-                        <img src="/public/uploads/media-uploader/img51715514984.png" alt="" />
-                    </div>
-                    <div class="img6 imges">
-                        <img src="/public/uploads/media-uploader/img61715513596.png" alt="" />
-                    </div>
-                </div>
-            </div>
-            <div class="right-part-img">
-                <div class="img-wraper">
-                    <div class="img1 imges">
-                        <img src="/public/uploads/media-uploader/img011715515047.png" alt="" />
-                    </div>
-                    <div class="img2 imges">
-                        <img src="/public/uploads/media-uploader/img02-11715515047.png" alt="" />
-                    </div>
-                    <div class="img3 imges">
-                        <img src="/public/uploads/media-uploader/img031715513595.png" alt="" />
-                    </div>
-                    <div class="img4 imges">
-                        <img src="/public/uploads/media-uploader/img041715515087.png" alt="" />
-                    </div>
-                    <div class="img5 imges">
-                        <img src="/public/uploads/media-uploader/img05-11715515086.png" alt="" />
-                    </div>
-                    <div class="img6 imges">
-                        <img src="/public/uploads/media-uploader/img061715515086.png" alt="" />
-                    </div>
-                </div>
-            </div>
-            <div class="banner-wraper">
-                <div class="banner-text">
-                    <div class="top-text text-center">
-                        <img src="/public/uploads/media-uploader/cup1715516782.png" alt="" />
-                        #1 Classified Ad listing Platform in the US
-                    </div>
-                    <h1 class="banner-main-head text-center"> Buy anything you need Sell anything you want </h1>
-                    <p class="text text-center">Country's most loved and trusted classified ad listing website. Browse
-                        thousand of classified items near you.</p>
-                </div>
-                <div class="banner-form">
-                    <form action="{{ route('ad.listing.page') }}" class="d-flex align-items-center banner-search-location"
-                        method="get">
-                        <div class="banner-form-wraper align-items-center">
-                            <div class="new_banner__search__input">
-                                <div class="new_banner__search__location_left" id="myLocationGetAddress">
-                                    <i class="fa-solid fa-location-crosshairs fs-4"></i>
+        <div class="container position-relative" style="z-index:1;">
+            <div class="row align-items-center g-4 g-xl-5 banner-v2-row">
+
+                <!-- Left: Text + Form + Stats -->
+                <div class="col-xl-6 col-lg-7 col-md-12">
+
+                    {{-- Badge --}}
+                    @if (get_setting('banner_badge_text', '#1 Classified Ad Platform in the US'))
+                        <div class="banner-v2-badge wow fadeInDown" data-wow-delay="0.1s">
+                            <span class="badge-icon">&#127942;</span>
+                            <span>{{ get_setting('banner_badge_text', '#1 Classified Ad Platform in the US') }}</span>
+                        </div>
+                    @endif
+
+                    {{-- Main Heading --}}
+                    <h1 class="banner-v2-title wow fadeInUp" data-wow-delay="0.2s">
+                        {!! get_setting(
+                            'banner_title',
+                            'Buy <span class="banner-highlight">Anything</span> You Need,<br>Sell <span class="banner-highlight">Anything</span> You Want',
+                        ) !!}
+                    </h1>
+
+                    {{-- Sub-description --}}
+                    <p class="banner-v2-desc wow fadeInUp" data-wow-delay="0.3s">
+                        {{ get_setting('banner_description', "Country's most loved and trusted classified ad listing website. Browse thousands of classified items near you.") }}
+                    </p>
+
+                    {{-- Search Form --}}
+                    <div class="banner-v2-search-wrap wow fadeInUp" data-wow-delay="0.4s">
+                        <form action="{{ route('ad.listing.page') }}"
+                            class="d-flex align-items-stretch banner-search-location banner-v2-form" method="get">
+                            <div class="banner-v2-inputs d-flex align-items-center flex-grow-1">
+                                {{-- Keyword --}}
+                                <div class="banner-v2-input-group flex-grow-1" style="position:relative;">
+                                    <div class="banner-v2-input-icon">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </div>
+                                    <input class="banner-v2-field w-100" type="text" name="q" id="home_search"
+                                        placeholder="What are you looking for?">
+                                    <span id="all_search_result" class="search_with_text_section"></span>
                                 </div>
-                                <input class="form--control" name="change_address_new" id="change_address_new"
-                                    type="hidden" value="">
-                                <input class="banner-input-field w-100" name="autocomplete" id="autocomplete" type="text"
-                                    placeholder="Search location here">
                             </div>
-                            <div class="search-with-any-texts">
-                                <input class="banner-input-field w-100" type="text" name="home_search" id="home_search"
-                                    placeholder="What are you looking for?">
-                                <span id="all_search_result" class="search_with_text_section"></span>
-                            </div>
-                        </div>
-                        <div class="banner-btn">
-                            <button type="submit" class="new-cmn-btn rounded-red-btn setLocation_btn border-0">Search
+                            <button type="submit" class="banner-v2-btn setLocation_btn">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <span class="d-none d-sm-inline">Search</span>
                             </button>
+                        </form>
+                    </div>
+
+                    {{-- Stats Bar --}}
+                    <div class="banner-v2-stats wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="stat-pill">
+                            <strong>{{ number_format($totalAdsCount) }}+</strong>
+                            <span>Live Ads</span>
                         </div>
-                    </form>
+                        <div class="stat-divider"></div>
+                        <div class="stat-pill">
+                            <strong>{{ $categories->count() }}</strong>
+                            <span>Categories</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-pill">
+                            <strong>Free</strong>
+                            <span>To Post</span>
+                        </div>
+                    </div>
                 </div>
+
+                {{-- Right: Floating Category Cards --}}
+                @if ($categories->count() > 0)
+                    <div class="col-xl-6 col-lg-5 d-none d-lg-block">
+                        <div class="banner-v2-categories wow fadeInRight" data-wow-delay="0.3s">
+                            @foreach ($categories->take(6) as $cat)
+                                <a href="{{ route('ad.listing.page', $cat->permalink) }}"
+                                    class="banner-cat-card banner-cat-card-{{ $loop->iteration }}">
+                                    <div class="banner-cat-icon">
+                                        <img src="{{ asset(getFilePath($cat->icon)) }}" alt="{{ $cat->title }}" />
+                                    </div>
+                                    <span class="banner-cat-name">{{ $cat->title }}</span>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
             </div>
         </div>
-    </div>
+    </section>
     <!--Banner part End-->
     <!--Google Adds-->
     <div class="google-adds" data-padding-top="50" data-padding-bottom="50">
@@ -313,50 +319,6 @@
     @endif
     <!-- End-of Membership -->
 
-    <!-- Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form action="#" method="post">
-                @csrf
-                <input type="hidden" id="membership_price">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title" id="LoginModalLabel">
-                            Login to buy Membership
-                        </h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body p-3">
-                        <div class="alert alert-warning " role="alert">
-                            <p>Notice: You must login as a user to buy a membership</p>
-                        </div>
-                        <div class="error-message"></div>
-                        <div class="input-form">
-                            <label class="infoTitle">Email Or User Name</label>
-                            <input class="form-control radius-10" type="text" name="username" id="username"
-                                placeholder="Email Or User Name">
-                        </div>
-                        <div class="single-input mt-4">
-                            <label class="label-title mb-2"> Password </label>
-                            <div class="input-form position-relative">
-                                <input class="form-control radius-10" type="password" name="password" id="password"
-                                    placeholder="Type Password">
-                                <div class="icon toggle-password position-absolute">
-                                    <i class="las la-eye icon"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer flex-column">
-                        <div class="btn-wrapper text-center">
-                            <button type="submit" class="cmn-btn4 w-100 mb-60 login_to_buy_a_membership">Login</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Recent Listings Start -->
     @if ($recentListings->count() > 0)
         <section class="featureListing" data-padding-top="50" data-padding-bottom="100"
@@ -380,16 +342,4 @@
     @endif
     <!-- End-of Recent Listings -->
 
-    <div data-padding-top="50">
-        <div class="container ">
-            <div class="row">
-                <div class="col-lg-8 ">
-                </div>
-                <div class="col-md-6 col-lg-4  widg ">
-                    <div class="widget-area-wrapper custom-margin-widget  style-" data-padding-bottom="0">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection

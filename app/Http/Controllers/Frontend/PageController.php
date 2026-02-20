@@ -80,12 +80,16 @@ class PageController extends Controller
             ->orderBy('price', 'ASC')
             ->get();
 
+        // Total active ads count for banner stats
+        $totalAdsCount = Ad::where('status', $activeStatus)->count();
+
         return view('frontend.pages.home', compact(
             'categories',
             'topListings',
             'recentListings',
             'categoryWiseListings',
-            'pricingPlans'
+            'pricingPlans',
+            'totalAdsCount'
         ));
     }
 
