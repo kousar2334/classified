@@ -225,6 +225,7 @@ Route::prefix('admin')->group(function () {
          */
         Route::group(['prefix' => 'subscriptions'], function () {
             Route::get('/', [SubscriptionController::class, 'index'])->name('admin.subscriptions.list');
+            Route::post('delete', [SubscriptionController::class, 'delete'])->name('admin.subscriptions.delete');
         });
 
         /**

@@ -34,4 +34,13 @@ class SubscriptionController extends Controller
 
         return view('backend.modules.subscriptions.index', compact('subscriptions', 'stats'));
     }
+
+    public function delete(Request $request)
+    {
+        $subscription = UserSubscription::findOrFail($request->id);
+        $subscription->delete();
+
+        toastNotification('success', 'Subscription deleted successfully', 'Success');
+        return redirect()->back();
+    }
 }

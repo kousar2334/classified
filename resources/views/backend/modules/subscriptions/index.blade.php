@@ -100,6 +100,7 @@
                                         <th>{{ translation('Starts') }}</th>
                                         <th>{{ translation('Expires') }}</th>
                                         <th>{{ translation('Date') }}</th>
+                                        <th class="text-right">{{ translation('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -162,10 +163,16 @@
                                                 @endif
                                             </td>
                                             <td>{{ $sub->created_at->format('M d, Y') }}</td>
+                                            <td class="text-right">
+                                                <button class="btn btn-danger btn-sm delete-item"
+                                                    data-id="{{ $sub->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="10">
+                                            <td colspan="11">
                                                 <div class="text-center">{{ translation('No subscriptions found') }}</div>
                                             </td>
                                         </tr>
@@ -183,4 +190,42 @@
             </div>
         </div>
     </section>
+
+    {{-- Delete Confirmation Modal --}}
+    <div class="modal fade" id="delete-item-modal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete?') }}</h4>
+                    <form method="POST" action="{{ route('admin.subscriptions.delete') }}">
+                        @csrf
+                        <input type="hidden" id="delete-item-id" name="id">
+                        <button type="button" class="btn mt-2 btn-danger"
+                            data-dismiss="modal">{{ translation('Cancel') }}</button>
+                        <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('page-script')
+    <script>
+        (function($) {
+            "use strict";
+
+            $('.delete-item').on('click', function() {
+                var id = $(this).data('id');
+                $('#delete-item-id').val(id);
+                $('#delete-item-modal').modal('show');
+            });
+        })(jQuery);
+    </script>
 @endsection
