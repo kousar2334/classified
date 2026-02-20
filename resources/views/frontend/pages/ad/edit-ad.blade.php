@@ -3,6 +3,111 @@
     <title>Edit Ad - {{ get_setting('site_name') }}</title>
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/summernote/summernote-bs4.min.css') }}">
+    <style>
+        /* Transparent overlay — browsers never block opacity:0 inputs (unlike display:none) */
+        .gallery-slot .slot-file-input,
+        .thumbnail-slot .slot-file-input {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            opacity: 0 !important;
+            cursor: pointer !important;
+            z-index: 5 !important;
+        }
+
+        .gallery-slot.has-image .slot-file-input,
+        .thumbnail-slot.has-image .slot-file-input {
+            display: none !important;
+        }
+
+        .thumbnail-slot {
+            position: relative;
+            width: 100%;
+            min-height: 160px;
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            cursor: pointer;
+            overflow: hidden;
+            background: #f9fafb;
+            transition: border-color .2s, background .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .thumbnail-slot:hover {
+            border-color: var(--main-color-one, #3b82f6);
+            background: #eff6ff;
+        }
+
+        .thumbnail-slot.has-image {
+            border-style: solid;
+            border-color: var(--main-color-one, #3b82f6);
+            background: transparent;
+        }
+
+        .thumbnail-slot .slot-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #9ca3af;
+            text-align: center;
+            padding: 20px;
+            pointer-events: none;
+        }
+
+        .thumbnail-slot .slot-placeholder svg {
+            width: 48px;
+            height: 48px;
+            opacity: .5;
+        }
+
+        .thumbnail-slot .slot-placeholder span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .thumbnail-slot .slot-image {
+            position: absolute;
+            inset: 0;
+        }
+
+        .thumbnail-slot .slot-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail-slot .slot-remove {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(239, 68, 68, .9);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            line-height: 1;
+            padding: 0;
+            z-index: 10;
+            transition: background .2s, transform .2s;
+        }
+
+        .thumbnail-slot .slot-remove:hover {
+            background: #dc2626;
+            transform: scale(1.15);
+        }
+    </style>
 @endsection
 @section('content')
     <div class="add-listing-wrapper mt-5 mb-5">
@@ -229,16 +334,33 @@
 
                                             <!-- Thumbnail Image -->
                                             <div class="box-shadow1 p-24 mt-3">
-                                                <label for="thumbnail_image">Featured Image</label>
-                                                <div class="custom-file-input">
+                                                <label>Featured Image</label>
+                                                <div class="thumbnail-slot {{ $ad->thumbnail_image ? 'has-image' : '' }}"
+                                                    id="thumbnail-slot">
+                                                    <div class="slot-placeholder"
+                                                        {{ $ad->thumbnail_image ? 'style=display:none;' : '' }}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="1.5"
+                                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                        </svg>
+                                                        <span>Choose Featured Image</span>
+                                                    </div>
+                                                    <div class="slot-image" id="thumbnail-slot-image"
+                                                        {{ $ad->thumbnail_image ? '' : 'style=display:none;' }}>
+                                                        @if ($ad->thumbnail_image)
+                                                            <img src="{{ asset(getFilePath($ad->thumbnail_image)) }}"
+                                                                alt="">
+                                                        @else
+                                                            <img src="" alt="">
+                                                        @endif
+                                                        <button type="button" class="slot-remove" id="thumbnail-remove"
+                                                            title="Remove">×</button>
+                                                    </div>
                                                     <input type="file" name="thumbnail_image" id="thumbnail_image"
-                                                        class="@error('thumbnail_image') is-invalid @enderror"
+                                                        class="slot-file-input @error('thumbnail_image') is-invalid @enderror"
                                                         accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
-                                                    <label for="thumbnail_image" class="custom-file-label">
-                                                        <i class="fas fa-cloud-upload-alt"></i>
-                                                        <span>Change Featured Image</span>
-                                                    </label>
-                                                    <div class="file-name" id="thumbnail-file-name"></div>
                                                 </div>
                                                 <small class="text-muted d-block mt-2">Leave empty to keep current image |
                                                     max: 5MB</small>
@@ -246,12 +368,6 @@
                                                     @error('thumbnail_image')
                                                         {{ $message }}
                                                     @enderror
-                                                </div>
-                                                <div id="thumbnail-preview" class="mt-2">
-                                                    @if ($ad->thumbnail_image)
-                                                        <img src="{{ asset(getFilePath($ad->thumbnail_image)) }}"
-                                                            style="max-width:200px;max-height:200px;border-radius:6px;object-fit:cover;border:2px solid #e3e3e3;">
-                                                    @endif
                                                 </div>
                                             </div>
 
@@ -298,8 +414,7 @@
                                                                 </div>
                                                                 <span class="slot-number">{{ $i + 1 }}</span>
                                                                 <input type="file" class="slot-file-input"
-                                                                    accept="image/jpg,image/jpeg,image/png,image/gif,image/webp"
-                                                                    style="display:none;">
+                                                                    accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
                                                             </div>
                                                         @endfor
                                                     </div>
@@ -923,32 +1038,35 @@
             // ============================================
             const maxFileSize = 5 * 1024 * 1024; // 5MB in bytes
 
+            // Thumbnail slot
             $('#thumbnail_image').on('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
-                    // Check file size
                     if (file.size > maxFileSize) {
                         alert(
                             `File size (${(file.size / 1024 / 1024).toFixed(2)}MB) exceeds the maximum allowed size of 5MB. Please choose a smaller file.`
                         );
                         this.value = '';
-                        $('#thumbnail-file-name').text('');
                         return;
                     }
-
-                    // Display file name and size
-                    $('#thumbnail-file-name').text(
-                        `Selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
-
-                    // Show preview
                     const reader = new FileReader();
                     reader.onload = function(ev) {
-                        $('#thumbnail-preview').html(
-                            `<img src="${ev.target.result}" style="max-width:200px;max-height:200px;border-radius:6px;object-fit:cover;border:2px solid #e3e3e3;">`
-                        );
+                        $('#thumbnail-slot .slot-placeholder').hide();
+                        $('#thumbnail-slot .slot-image img').attr('src', ev.target.result);
+                        $('#thumbnail-slot .slot-image').show();
+                        $('#thumbnail-slot').addClass('has-image');
                     };
                     reader.readAsDataURL(file);
                 }
+            });
+
+            $('#thumbnail-remove').on('click', function(e) {
+                e.stopPropagation();
+                $('#thumbnail_image').val('');
+                $('#thumbnail-slot .slot-image img').attr('src', '');
+                $('#thumbnail-slot .slot-image').hide();
+                $('#thumbnail-slot .slot-placeholder').show();
+                $('#thumbnail-slot').removeClass('has-image');
             });
 
             // ============================================
@@ -956,13 +1074,6 @@
             // ============================================
             const slotFiles = {}; // slot index => new File object
             const deletedGalleryIds = []; // IDs of existing images marked for deletion
-
-            // Click on slot -> trigger its hidden file input
-            $(document).on('click', '.gallery-slot', function(e) {
-                if (!$(e.target).hasClass('slot-remove') && !$(e.target).closest('.slot-remove').length) {
-                    $(this).find('.slot-file-input').trigger('click');
-                }
-            });
 
             // File selected for a slot
             $(document).on('change', '.slot-file-input', function() {
@@ -975,7 +1086,7 @@
                 if (file.size > maxFileSize) {
                     alert(
                         `File "${file.name}" is too large (${(file.size/1024/1024).toFixed(2)}MB). Max allowed is 5MB.`
-                        );
+                    );
                     this.value = '';
                     return;
                 }
