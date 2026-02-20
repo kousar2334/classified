@@ -44,7 +44,20 @@ class AdController extends Controller
         $conditions = AdsCondition::where('status', config('settings.general_status.active'))->get();
         $tags = AdsTag::orderBy('title', 'ASC')->get();
 
-        return view('frontend.pages.ad.post-ad', compact('categories', 'conditions', 'tags'));
+        // Get active subscription gallery image limit
+        $galleryImageLimit = 0;
+        if (auth()->check()) {
+            $activeSub = UserSubscription::with('plan')
+                ->where('user_id', auth()->id())
+                ->where('status', 'active')
+                ->where('expires_at', '>', now())
+                ->first();
+            if ($activeSub && $activeSub->plan) {
+                $galleryImageLimit = (int) ($activeSub->plan->gallery_image_quantity ?? 0);
+            }
+        }
+
+        return view('frontend.pages.ad.post-ad', compact('categories', 'conditions', 'tags', 'galleryImageLimit'));
     }
 
     public function storeAd(AdPostingRequest $request)
@@ -732,7 +745,18 @@ class AdController extends Controller
             }
         }
 
-        return view('frontend.pages.ad.edit-ad', compact('ad', 'categories', 'conditions', 'tags', 'categoryHierarchy', 'selectedTagIds', 'customFieldValues'));
+        // Get active subscription gallery image limit
+        $galleryImageLimit = 0;
+        $activeSub = UserSubscription::with('plan')
+            ->where('user_id', auth()->id())
+            ->where('status', 'active')
+            ->where('expires_at', '>', now())
+            ->first();
+        if ($activeSub && $activeSub->plan) {
+            $galleryImageLimit = (int) ($activeSub->plan->gallery_image_quantity ?? 0);
+        }
+
+        return view('frontend.pages.ad.edit-ad', compact('ad', 'categories', 'conditions', 'tags', 'categoryHierarchy', 'selectedTagIds', 'customFieldValues', 'galleryImageLimit'));
     }
 
     public function updateAd(Request $request, $uid)

@@ -257,45 +257,70 @@
 
                                             <!-- Gallery Images -->
                                             <div class="box-shadow1 p-24 mt-3">
-                                                <label for="gallery_images">Gallery Images</label>
-                                                <div class="custom-file-input">
-                                                    <input type="file" name="gallery_images[]" id="gallery_images"
-                                                        multiple
-                                                        accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
-                                                    <label for="gallery_images" class="custom-file-label">
-                                                        <i class="fas fa-images"></i>
-                                                        <span>Add More Gallery Images</span>
-                                                    </label>
-                                                    <div class="file-name" id="gallery-file-name"></div>
+                                                @php
+                                                    $existingImages = $ad->galleryImages ?? collect();
+                                                @endphp
+                                                <div class="gallery-slots-label">
+                                                    <span>Gallery Images</span>
+                                                    @if ($galleryImageLimit > 0)
+                                                        <span class="slot-count-badge">{{ $galleryImageLimit }}
+                                                            photos</span>
+                                                    @endif
                                                 </div>
-                                                <small class="text-muted d-block mt-2">You can select multiple images (max:
-                                                    5MB each)</small>
 
-                                                <!-- Existing Gallery Images -->
-                                                @if ($ad->galleryImages && $ad->galleryImages->count() > 0)
-                                                    <div class="existing-gallery mt-3">
-                                                        <label class="mb-2">Current Gallery Images</label>
-                                                        <div id="existing-gallery-preview"
-                                                            style="display:flex;flex-wrap:wrap;gap:10px;">
-                                                            @foreach ($ad->galleryImages as $image)
-                                                                <div class="existing-gallery-image-wrapper"
-                                                                    data-id="{{ $image->id }}"
-                                                                    style="position:relative;display:inline-block;">
-                                                                    <img src="{{ asset(getFilePath($image->image_path)) }}"
-                                                                        style="width:80px;height:80px;object-fit:cover;border-radius:6px;border:2px solid #e3e3e3;">
-                                                                    <span class="remove-existing-gallery-image"
-                                                                        data-id="{{ $image->id }}"
-                                                                        style="position:absolute;top:-8px;right:-8px;background:#ef4444;color:#fff;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;">x</span>
+                                                @if ($galleryImageLimit > 0)
+                                                    <div class="gallery-slots-grid" id="gallery-slots-grid">
+                                                        @for ($i = 0; $i < $galleryImageLimit; $i++)
+                                                            @php $existingImage = $existingImages->get($i); @endphp
+                                                            <div class="gallery-slot {{ $existingImage ? 'has-image' : '' }}"
+                                                                data-slot="{{ $i }}"
+                                                                @if ($existingImage) data-existing-id="{{ $existingImage->id }}" @endif>
+                                                                <div class="slot-placeholder"
+                                                                    {{ $existingImage ? 'style=display:none;' : '' }}>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                        viewBox="0 0 24 24" stroke="currentColor">
+                                                                        <path stroke-linecap="round"
+                                                                            stroke-linejoin="round" stroke-width="1.5"
+                                                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                                    </svg>
+                                                                    <span>Add Photo</span>
                                                                 </div>
-                                                            @endforeach
-                                                        </div>
+                                                                <div class="slot-image"
+                                                                    {{ $existingImage ? '' : 'style=display:none;' }}>
+                                                                    @if ($existingImage)
+                                                                        <img src="{{ asset(getFilePath($existingImage->image_path)) }}"
+                                                                            alt="">
+                                                                    @else
+                                                                        <img src="" alt="">
+                                                                    @endif
+                                                                    <button type="button" class="slot-remove"
+                                                                        title="Remove">×</button>
+                                                                </div>
+                                                                <span class="slot-number">{{ $i + 1 }}</span>
+                                                                <input type="file" class="slot-file-input"
+                                                                    accept="image/jpg,image/jpeg,image/png,image/gif,image/webp"
+                                                                    style="display:none;">
+                                                            </div>
+                                                        @endfor
+                                                    </div>
+                                                    <small class="text-muted d-block mt-2">Click a box to add or replace a
+                                                        photo &bull; max 5MB each</small>
+                                                @else
+                                                    <div class="gallery-no-plan-notice">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        </svg>
+                                                        <span>Your current plan does not include gallery images. <a
+                                                                href="{{ url('/membership') }}">Upgrade your plan</a> to
+                                                            upload gallery photos.</span>
                                                     </div>
                                                 @endif
+
                                                 <input type="hidden" name="deleted_gallery_images"
                                                     id="deleted_gallery_images" value="[]">
-
-                                                <!-- New Gallery Preview -->
-                                                <div id="gallery-preview" class="mt-3"></div>
                                             </div>
 
                                             <!-- Continue Button -->
@@ -926,87 +951,77 @@
                 }
             });
 
-            // Gallery images with remove functionality
-            let galleryFiles = [];
-            let deletedGalleryIds = [];
+            // ============================================
+            // Gallery Image Slots (Edit Page)
+            // ============================================
+            const slotFiles = {}; // slot index => new File object
+            const deletedGalleryIds = []; // IDs of existing images marked for deletion
 
-            $('#gallery_images').on('change', function(e) {
-                const files = Array.from(e.target.files);
-                let invalidFiles = [];
-                let validFiles = [];
+            // Click on slot -> trigger its hidden file input
+            $(document).on('click', '.gallery-slot', function(e) {
+                if (!$(e.target).hasClass('slot-remove') && !$(e.target).closest('.slot-remove').length) {
+                    $(this).find('.slot-file-input').trigger('click');
+                }
+            });
 
-                // Check each file size
-                files.forEach(file => {
-                    if (file.size > maxFileSize) {
-                        invalidFiles.push(
-                            `${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
-                    } else {
-                        validFiles.push(file);
-                    }
-                });
+            // File selected for a slot
+            $(document).on('change', '.slot-file-input', function() {
+                const file = this.files[0];
+                if (!file) return;
 
-                // Show error for invalid files
-                if (invalidFiles.length > 0) {
+                const $slot = $(this).closest('.gallery-slot');
+                const slotIndex = parseInt($slot.data('slot'));
+
+                if (file.size > maxFileSize) {
                     alert(
-                        `The following files exceed 5MB and were not added:\n\n${invalidFiles.join('\n')}\n\nPlease choose smaller files.`
-                    );
+                        `File "${file.name}" is too large (${(file.size/1024/1024).toFixed(2)}MB). Max allowed is 5MB.`
+                        );
+                    this.value = '';
+                    return;
                 }
 
-                if (validFiles.length > 0) {
-                    // Add valid files to galleryFiles array
-                    validFiles.forEach(file => {
-                        galleryFiles.push(file);
-                    });
-
-                    // Update preview
-                    updateGalleryPreview();
+                // If slot had an existing image, mark it for deletion
+                const existingId = $slot.data('existing-id');
+                if (existingId && !deletedGalleryIds.includes(existingId)) {
+                    deletedGalleryIds.push(existingId);
+                    $('#deleted_gallery_images').val(JSON.stringify(deletedGalleryIds));
+                    $slot.removeAttr('data-existing-id');
                 }
 
-                // Clear the input so the same file can be selected again if needed
+                slotFiles[slotIndex] = file;
+
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    $slot.find('.slot-placeholder').hide();
+                    $slot.find('.slot-image img').attr('src', ev.target.result);
+                    $slot.find('.slot-image').show();
+                    $slot.addClass('has-image');
+                };
+                reader.readAsDataURL(file);
                 this.value = '';
             });
 
-            function updateGalleryPreview() {
-                const preview = $('#gallery-preview');
-                preview.html('');
+            // Remove image from slot
+            $(document).on('click', '.slot-remove', function(e) {
+                e.stopPropagation();
+                const $slot = $(this).closest('.gallery-slot');
+                const slotIndex = parseInt($slot.data('slot'));
 
-                galleryFiles.forEach(function(file, index) {
-                    const reader = new FileReader();
-                    reader.onload = function(ev) {
-                        const wrapper = $(`
-                            <div class="gallery-image-wrapper" data-index="${index}" style="position:relative;display:inline-block;margin:5px;">
-                                <img src="${ev.target.result}" style="width:80px;height:80px;object-fit:cover;border-radius:6px;border:2px solid #e3e3e3;">
-                                <span class="remove-gallery-image" data-index="${index}" style="position:absolute;top:-8px;right:-8px;background:#ef4444;color:#fff;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;">x</span>
-                            </div>
-                        `);
-                        preview.append(wrapper);
-                    };
-                    reader.readAsDataURL(file);
-                });
-
-                // Update file count
-                if (galleryFiles.length > 0) {
-                    $('#gallery-file-name').text(`${galleryFiles.length} new image(s) to add`);
-                } else {
-                    $('#gallery-file-name').text('');
+                // If it was an existing image, mark for deletion
+                const existingId = $slot.data('existing-id');
+                if (existingId && !deletedGalleryIds.includes(existingId)) {
+                    deletedGalleryIds.push(existingId);
+                    $('#deleted_gallery_images').val(JSON.stringify(deletedGalleryIds));
+                    $slot.removeAttr('data-existing-id');
                 }
-            }
 
-            // Remove new gallery image
-            $(document).on('click', '.remove-gallery-image', function() {
-                const index = $(this).data('index');
-                galleryFiles.splice(index, 1);
-                updateGalleryPreview();
-            });
+                // Remove new file if any
+                delete slotFiles[slotIndex];
 
-            // Remove existing gallery image
-            $(document).on('click', '.remove-existing-gallery-image', function() {
-                const id = $(this).data('id');
-                deletedGalleryIds.push(id);
-                $('#deleted_gallery_images').val(JSON.stringify(deletedGalleryIds));
-                $(this).closest('.existing-gallery-image-wrapper').fadeOut(300, function() {
-                    $(this).remove();
-                });
+                $slot.find('.slot-image img').attr('src', '');
+                $slot.find('.slot-image').hide();
+                $slot.find('.slot-placeholder').show();
+                $slot.removeClass('has-image');
             });
 
             // ============================================
@@ -1027,9 +1042,9 @@
                 // Prepare form data
                 const formData = new FormData(this);
 
-                // Remove default gallery images and add from galleryFiles array
+                // Add gallery images from slot files
                 formData.delete('gallery_images[]');
-                galleryFiles.forEach(function(file) {
+                Object.values(slotFiles).forEach(function(file) {
                     formData.append('gallery_images[]', file);
                 });
 
