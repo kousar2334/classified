@@ -585,6 +585,30 @@
         }
     }
 </script>
+
+@if (session('success'))
+    <script>
+        $(document).ready(function() {
+            toastr_success_js("{!! addslashes(session('success')) !!}");
+        });
+    </script>
+@endif
+
+@if (session('error'))
+    <script>
+        $(document).ready(function() {
+            toastr_error_js("{!! addslashes(session('error')) !!}");
+        });
+    </script>
+@endif
+
+@if (session('warning'))
+    <script>
+        $(document).ready(function() {
+            toastr_warning_js("{!! addslashes(session('warning')) !!}");
+        });
+    </script>
+@endif
 <script>
     function slickSliderConfiguration() {
         let global = document.querySelectorAll('.global-slick-init');
