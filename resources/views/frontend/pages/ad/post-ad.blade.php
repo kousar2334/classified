@@ -399,7 +399,6 @@
                                                     <div class="form-group">
                                                         <label>
                                                             <input type="checkbox" name="is_featured" id="is_featured"
-                                                                value="1"
                                                                 class="custom-check-box feature_disable_color"
                                                                 {{ old('is_featured') ? 'checked' : '' }}>
                                                             <span class="ms-2">Feature This Ad</span>

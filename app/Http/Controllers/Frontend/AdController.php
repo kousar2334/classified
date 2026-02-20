@@ -870,9 +870,20 @@ class AdController extends Controller
                 }
             }
 
-            // Store new gallery images
+            // Store new gallery images (with limit enforcement)
             if ($request->hasFile('gallery_images')) {
-                foreach ($request->file('gallery_images') as $image) {
+                $activeSub = UserSubscription::with('plan')
+                    ->where('user_id', auth()->id())
+                    ->where('status', 'active')
+                    ->where('expires_at', '>', now())
+                    ->first();
+                $galleryLimit = $activeSub && $activeSub->plan ? (int) ($activeSub->plan->gallery_image_quantity ?? 0) : 0;
+
+                $existingCount = AdGalleryImage::where('ad_id', $ad->id)->count();
+                $newFiles = $request->file('gallery_images');
+                $allowedNew = $galleryLimit > 0 ? max(0, $galleryLimit - $existingCount) : count($newFiles);
+
+                foreach (array_slice($newFiles, 0, $allowedNew) as $image) {
                     $savedImage = saveFileInStorage($image);
                     $galleryImage = new AdGalleryImage();
                     $galleryImage->image_path = $savedImage;

@@ -17,21 +17,6 @@
                 <div class="alert alert-danger">{{ session('error') }}</div>
             </div>
         @endif
-
-        <!-- Nav Bar Tabs -->
-        <div style="display: none" class="nav nav-pills" id="add-listing-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link stepIndicator active stepForm_btn__previous" id="listing-info-tab" data-bs-toggle="pill"
-                href="#listing-info" role="tab" aria-controls="listing-info" aria-selected="true">
-                <span class="nav-link-number">1</span>
-                Listing Info
-            </a>
-            <a class="nav-link stepIndicator" id="location-tab" data-bs-toggle="pill" href="#media-uploads" role="tab"
-                aria-controls="media-uploads" aria-selected="true">
-                <span class="nav-link-number">2</span>
-                Location
-            </a>
-        </div>
-
         <form action="{{ route('member.ad.update', $ad->uid) }}" method="POST" enctype="multipart/form-data"
             id="ad-edit-form">
             @csrf
@@ -149,8 +134,7 @@
 
                                                 <!-- Description -->
                                                 <div class="form-group">
-                                                    <label for="description">Description <span
-                                                            class="text-danger">*</span>
+                                                    <label for="description">Description <span class="text-danger">*</span>
                                                         <span class="text-danger">(minimum 150 characters.)</span>
                                                     </label>
                                                     <textarea name="description" id="description" rows="6"
@@ -459,6 +443,26 @@
 
                                     <div class="col-lg-4">
                                         <div class="right-sidebar">
+                                            <!-- Featured Ad -->
+                                            <div class="card mb-30">
+                                                <div class="card-header">
+                                                    <h6 class="card-title">Feature This Ad</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label>
+                                                            <input type="checkbox" name="is_featured" id="is_featured"
+                                                                class="custom-check-box feature_disable_color"
+                                                                @checked($ad->is_featured == config('settings.general_status.active'))>
+                                                            <span class="ms-2">Feature This Ad</span>
+                                                        </label>
+                                                        <p class="mt-2 mb-0">To feature this ad, you will need to subscribe
+                                                            to a
+                                                            <a href="{{ url('/membership') }}">paid membership</a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <!-- Tags -->
                                             <div class="card mb-30">
                                                 <div class="card-header">
@@ -1013,6 +1017,7 @@
 
             // File selected for a slot
             $(document).on('change', '.slot-file-input', function() {
+                if ($(this).is('#thumbnail_image')) return;
                 const file = this.files[0];
                 if (!file) return;
 
