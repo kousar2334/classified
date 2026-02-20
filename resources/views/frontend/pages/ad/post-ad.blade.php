@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 @section('meta')
-    <title>Post ad 1- {{ get_setting('site_name') }}</title>
+    <title>Post ad - {{ get_setting('site_name') }}</title>
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/summernote/summernote-bs4.min.css') }}">
 @endsection
