@@ -325,6 +325,13 @@ if (!function_exists('activeLanguages')) {
     }
 }
 
+if (!function_exists('getAllLanguages')) {
+    function getAllLanguages()
+    {
+        return Language::orderBy('id', 'asc')->get();
+    }
+}
+
 if (!function_exists('bodyDirection')) {
     function bodyDirection()
     {

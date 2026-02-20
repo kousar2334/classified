@@ -920,8 +920,8 @@
                     <form id="reportForm">
                         @csrf
                         <input type="hidden" name="ad_id" value="{{ $ad->id }}">
-                        <div class="mb-3">
-                            <label for="reportReason" class="form-label">Reason</label>
+                        <div class="form-group mb-20">
+                            <label for="reportReason">Reason</label>
                             <select class="form-select" id="reportReason" name="reason_id">
                                 @forelse ($reportReasons as $reason)
                                     <option value="{{ $reason->id }}">{{ $reason->translation('title') }}</option>
@@ -930,8 +930,8 @@
                                 @endforelse
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="reportMessage" class="form-label">Message</label>
+                        <div class="form-group mb-20">
+                            <label for="reportMessage">Message</label>
                             <textarea class="form-control" id="reportMessage" name="message" rows="3"></textarea>
                         </div>
                     </form>
@@ -951,6 +951,11 @@
         (function($) {
             "use strict";
             $(document).ready(function() {
+                // Destroy Select2 on report reason — Select2 breaks inside Bootstrap modals
+                if ($.fn.select2) {
+                    $('#reportReason').select2('destroy');
+                }
+
                 // Phone reveal
                 $(document).on('click', '.sid-phone-trigger, .sid-phone-triggerForResponsive', function(e) {
                     var $row = $(this);

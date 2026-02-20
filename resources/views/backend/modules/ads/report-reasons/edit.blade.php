@@ -28,9 +28,10 @@
                                     <li class="nav-item">
                                         <a class="nav-link @if ($language->code == $lang) active border-0 @else bg-light @endif py-3"
                                             href="{{ route('classified.ads.report.reasons.edit', ['id' => $reason->id, 'lang' => $language->code]) }}">
-                                            <img src="{{ asset('/public/web-assets/backend/img/flags/' . $language->code . '.png') }}"
-                                                width="20px" class="mr-1">
                                             <span>{{ $language->name }}</span>
+                                            @if ($language->native_title)
+                                                <small class="text-muted d-block">{{ $language->native_title }}</small>
+                                            @endif
                                         </a>
                                     </li>
                                 @endforeach
@@ -54,7 +55,8 @@
                     <div class="col-lg-3 col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="form-group {{ !empty($lang) && $lang != defaultLangCode() ? 'area-disabled' : '' }}">
+                                <div
+                                    class="form-group {{ !empty($lang) && $lang != defaultLangCode() ? 'area-disabled' : '' }}">
                                     <label>{{ translation('Status') }}</label>
                                     <select name="status" class="form-control">
                                         <option value="{{ config('settings.general_status.active') }}"

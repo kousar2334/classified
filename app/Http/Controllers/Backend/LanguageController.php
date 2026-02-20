@@ -33,9 +33,9 @@ class LanguageController extends Controller
         ]);
         try {
             $language = new Language();
-            $language->title = x_clean($request['name']);
-            $language->code = x_clean($request['code']);
-            $language->native_title = x_clean($request['native_name']);
+            $language->title = $request['name'];
+            $language->code = $request['code'];
+            $language->native_title = $request['native_name'];
             $language->status = config('settings.general_status.active');
             $language->save();
 
