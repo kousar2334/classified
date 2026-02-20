@@ -7,7 +7,7 @@
 
 {{-- ─── Seller Card ──────────────────────────────────────────── --}}
 @if ($user)
-    <div class="sid-seller-card">
+    <div class="list-info-card">
         <div class="sid-seller-top">
             <div class="sid-avatar-wrap">
                 <img src="{{ getFilePath($user->image) }}" alt="{{ $user->name }}" class="sid-avatar" />
@@ -40,7 +40,7 @@
 
 {{-- ─── Contact Card ─────────────────────────────────────────── --}}
 @if ($ad->contact_phone || ($user && !($user->id === auth()->id())))
-    <div class="sid-contact-card">
+    <div class="list-info-card p-0">
 
         {{-- Phone Row --}}
         @if ($ad->contact_phone)

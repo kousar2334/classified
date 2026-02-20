@@ -2,14 +2,17 @@
 @section('meta')
     <title>{{ $ad->title }} - {{ get_setting('site_name') }}</title>
     <style>
-        /* ── Sidebar: Seller Card ─────────────────────────────── */
-        .sid-seller-card {
+        .list-info-card {
             background: #fff;
+            border: 1px solid #e2e8f0;
             border-radius: 12px;
-            box-shadow: 0 2px 14px rgba(0, 0, 0, .08);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
             padding: 18px;
-            margin-bottom: 12px;
+            margin-bottom: 20px;
         }
+
+        /* ── Sidebar: Seller Card ─────────────────────────────── */
+
 
         .sid-seller-top {
             display: flex;
@@ -248,13 +251,13 @@
         }
 
         /* ── Actions Card (Save, Report, Share) ─────────────── */
-        .sid-actions-card {
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 14px rgba(0, 0, 0, .08);
-            margin-bottom: 12px;
-            overflow: hidden;
-        }
+        /* .sid-actions-card {
+                        background: #fff;
+                        border-radius: 12px;
+                        box-shadow: 0 2px 14px rgba(0, 0, 0, .08);
+                        margin-bottom: 12px;
+                        overflow: hidden;
+                    } */
 
         .sid-quick-actions {
             display: flex;
@@ -407,12 +410,12 @@
                 max-width: 50%;
             }
 
-            .sid-actions-card .sid-share-row {
+            .sid-share-row {
                 flex-wrap: wrap;
                 padding: 12px 14px;
             }
 
-            .sid-actions-card .sid-quick-btn {
+            .sid-quick-btn {
                 font-size: 12px;
                 padding: 12px 6px;
             }
@@ -772,7 +775,7 @@
                         </div>
 
                         {{-- Actions: Save, Report, Share --}}
-                        <div class="sid-actions-card">
+                        <div class="list-info-card p-0">
                             <div class="sid-quick-actions">
                                 <a href="javascript:void(0)"
                                     class="sid-quick-btn sid-fav-btn click_to_favorite_add_remove {{ $isFavourited ? 'is-favourited' : '' }}"
