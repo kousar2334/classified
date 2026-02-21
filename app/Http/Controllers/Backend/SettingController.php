@@ -100,4 +100,33 @@ class SettingController extends Controller
             return redirect()->back();
         }
     }
+
+    public function socialLogin(): View
+    {
+        return view('backend.modules.system.social_login');
+    }
+
+    public function socialLoginUpdate(Request $request): RedirectResponse
+    {
+        try {
+            foreach ($request->except('_token', 'facebook_login', 'google_login') as $key => $value) {
+                setEnv($key, $value);
+            }
+            if ($request->type == 'google') {
+                isset($request['google_login']) ? set_setting('google_login', config('settings.general_status.active')) : set_setting('google_login', config('settings.general_status.inactive'));
+                toastNotification('success', 'Google Login Settings update successfully', 'Success');
+            }
+            if ($request->type == 'facebook') {
+                isset($request['facebook_login']) ? set_setting('facebook_login', config('settings.general_status.active')) : set_setting('facebook_login', config('settings.general_status.inactive'));
+                toastNotification('success', 'Facebook Login Settings update successfully', 'Success');
+            }
+            return to_route('admin.system.settings.social.login');
+        } catch (\Exception $e) {
+            toastNotification('error', 'Update failed', 'Error');
+            return redirect()->back();
+        } catch (\Error $e) {
+            toastNotification('error', 'Update failed', 'Error');
+            return redirect()->back();
+        }
+    }
 }

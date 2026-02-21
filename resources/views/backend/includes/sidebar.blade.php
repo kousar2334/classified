@@ -191,6 +191,17 @@
                         </li>
                     </ul>
                 </li>
+                <!--Safety Tips Module-->
+                <li class="nav-item">
+                    <a href="{{ route('classified.settings.safety.tips.list') }}"
+                        class="nav-link {{ Request::routeIs(['classified.settings.safety.tips.list', 'classified.settings.safety.tips.edit']) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-shield-alt"></i>
+                        <p>
+                            {{ translation('Safety Tips') }}
+                        </p>
+                    </a>
+                </li>
+                <!--End Safety Tips Module-->
                 <!--Media Module-->
                 @can('Manage Media')
                     <li class="nav-item">
@@ -391,23 +402,13 @@
                         </a>
                     </li>
                 @endcan
-                <!--Safety Tips Module-->
-                <li class="nav-item">
-                    <a href="{{ route('classified.settings.safety.tips.list') }}"
-                        class="nav-link {{ Request::routeIs(['classified.settings.safety.tips.list', 'classified.settings.safety.tips.edit']) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-shield-alt"></i>
-                        <p>
-                            {{ translation('Safety Tips') }}
-                        </p>
-                    </a>
-                </li>
-                <!--End Safety Tips Module-->
+
 
                 <!--System Module-->
                 @canany(['Update Environment', 'Update SMTP'])
                     <li class="nav-item">
                         <a href="{{ route('admin.system.settings.environment') }}"
-                            class="nav-link {{ Request::routeIs(['admin.system.settings.environment', 'admin.system.settings.smtp']) ? 'active ' : '' }}">
+                            class="nav-link {{ Request::routeIs(['admin.system.settings.social.login', 'admin.system.settings.environment', 'admin.system.settings.smtp']) ? 'active ' : '' }}">
                             <i class="nav-icon fas fa-cog"></i>
                             <p>
                                 {{ translation('System') }}

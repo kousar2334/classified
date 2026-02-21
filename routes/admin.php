@@ -151,6 +151,10 @@ Route::prefix('admin')->group(function () {
             Route::post('smtp-setup-update', [SettingController::class, 'smtpSettingsUpdate'])->name('admin.system.settings.smtp.update')->middleware(['can:Update SMTP']);
             Route::post('send-test-mail', [SettingController::class, 'testMail'])->name('admin.system.settings.smtp.mail.test');
 
+            //Social Media
+            Route::get('social-login', [SettingController::class, 'socialLogin'])->name('admin.system.settings.social.login');
+            Route::post('social-login-update', [SettingController::class, 'socialLoginUpdate'])->name('admin.system.settings.social.login.update');
+
             /**
              * Language Module
              */
