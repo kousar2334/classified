@@ -80,15 +80,15 @@
                             @endif
                         @endforeach
                     </ul>
-                    <div class="btn-wrapper nav-post-btn">
-                        <a href="{{ route('ad.post.page') }}" class="cmn-btn1 popup-modal">
-                            <i class="las la-plus-circle"></i><span>Post your ad</span>
+                    <div class="btn-wrapper nav-post-btn d-lg-none d-block">
+                        <a href="{{ route('ad.post.page') }}" class="cmn-btn1 popup-modal text-uppercase">
+                            <span>Post free ad</span>
                         </a>
                     </div>
                 </div>
             </div>
             <!-- Menu Right - desktop only -->
-            <div class="nav-right-content d-none d-lg-flex">
+            <div class="nav-right-content d-none d-lg-flex gap-4">
                 <ul class="header-cart">
 
                     @if (auth()->user() == null)
@@ -131,6 +131,12 @@
                     @endif
 
                 </ul>
+                <div class="btn-wrapper nav-post-btn">
+                    <a href="{{ route('ad.post.page') }}"
+                        class="cmn-btn1 popup-modal d-none d-lg-block text-uppercase">
+                        <span>Post free ad</span>
+                    </a>
+                </div>
             </div>
         </div>
     </nav>

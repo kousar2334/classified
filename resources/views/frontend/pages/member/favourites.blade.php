@@ -1,11 +1,11 @@
 @extends('frontend.layouts.dashboard')
 @section('dash-meta')
-    <title>My Favourites - {{ get_setting('site_name') }}</title>
+    <title>My Favorites - {{ get_setting('site_name') }}</title>
 @endsection
 
 @section('dashboard-content')
     <div class="my-listings-header">
-        <h1>❤️ My Favourites</h1>
+        <h1>My Favorites</h1>
         <span class="fav-count-badge">{{ $totalCount }} saved</span>
     </div>
 

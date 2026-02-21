@@ -431,40 +431,7 @@
         }
 
         /* Shared buttons */
-        .cmn-btn,
-        .cmn-btn1 {
-            padding: 0.6rem 1.25rem;
-            border-radius: 7px;
-            font-weight: 600;
-            font-size: 0.875rem;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: opacity 0.15s;
-        }
 
-        .cmn-btn {
-            background: transparent;
-            color: var(--primary);
-            border: 1.5px solid var(--primary);
-        }
-
-        .cmn-btn:hover {
-            background: var(--primary);
-            color: #fff;
-        }
-
-        .cmn-btn1 {
-            background: var(--primary);
-            color: #fff;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .cmn-btn1:hover {
-            opacity: 0.85;
-        }
 
         /* ══════════════ RESPONSIVE ══════════════ */
 

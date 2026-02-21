@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/member/ad/edit/{uid}', [AdController::class, 'editAd'])->name('member.ad.edit');
     Route::post('/member/ad/update/{uid}', [AdController::class, 'updateAd'])->name('member.ad.update');
 
-    // Favourites
+    // Favorites
     Route::post('/ad/favourite/toggle', [AdController::class, 'toggleFavourite'])->name('ad.favourite.toggle');
     Route::get('/member/favourites', [AdController::class, 'myFavourites'])->name('member.favourites');
 

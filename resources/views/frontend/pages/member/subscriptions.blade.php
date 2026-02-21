@@ -6,9 +6,11 @@
 @section('dashboard-content')
     <div class="my-listings-header">
         <h1>My Subscriptions</h1>
-        <a href="{{ route('pricing.plans') }}" class="cmn-btn1">
-            <i class="fas fa-plus"></i> Upgrade Plan
-        </a>
+        <div class="btn-wrapper">
+            <a href="{{ route('pricing.plans') }}" class="cmn-btn1">
+                Upgrade Plan
+            </a>
+        </div>
     </div>
 
     {{-- Active Subscription Banner --}}

@@ -58,54 +58,57 @@
     <!-- Content Grid -->
     <div class="content-grid">
         <!-- Recent Listings -->
-        <div class="dashboard-card">
+        <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Recent Listings</h3>
                 <a href="{{ route('member.my.listings') }}" class="view-all">View All →</a>
             </div>
 
-            @if ($recentListings->count())
-                <div class="activity-list">
-                    @foreach ($recentListings as $listing)
-                        <div class="activity-item">
-                            <div class="activity-icon blue"
-                                style="background: rgba(53,146,252,0.1); color: var(--primary);">
-                                <i class="fas fa-tag"></i>
-                            </div>
-                            <div class="activity-content" style="flex: 1; min-width: 0;">
-                                <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                    {{ $listing->title }}
-                                </h4>
-                                <p>
-                                    {{ $listing->categoryInfo->title ?? '—' }}
-                                    @if ($listing->cityInfo)
-                                        · <i class="fas fa-location-dot" style="font-size:0.7rem;"></i>
-                                        {{ $listing->cityInfo->name }}
-                                    @endif
-                                </p>
-                                <div class="activity-time">
-                                    <i class="fas fa-clock" style="font-size:0.65rem;"></i>
-                                    {{ $listing->created_at->diffForHumans() }}
+            <div class="card-body">
+                @if ($recentListings->count())
+                    <div class="activity-list">
+                        @foreach ($recentListings as $listing)
+                            <div class="activity-item">
+                                <div class="activity-icon blue"
+                                    style="background: rgba(53,146,252,0.1); color: var(--primary);">
+                                    <i class="fas fa-tag"></i>
+                                </div>
+                                <div class="activity-content" style="flex: 1; min-width: 0;">
+                                    <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        {{ $listing->title }}
+                                    </h4>
+                                    <p>
+                                        {{ $listing->categoryInfo->title ?? '—' }}
+                                        @if ($listing->cityInfo)
+                                            · <i class="fas fa-location-dot" style="font-size:0.7rem;"></i>
+                                            {{ $listing->cityInfo->name }}
+                                        @endif
+                                    </p>
+                                    <div class="activity-time">
+                                        <i class="fas fa-clock" style="font-size:0.65rem;"></i>
+                                        {{ $listing->created_at->diffForHumans() }}
+                                    </div>
+                                </div>
+                                <div style="flex-shrink: 0; align-self: center; margin-left: 0.75rem;">
+                                    <span
+                                        class="badge-status {{ $listing->status == config('settings.general_status.active') ? 'active' : 'inactive' }}">
+                                        {{ $listing->status == config('settings.general_status.active') ? 'Active' : 'Inactive' }}
+                                    </span>
                                 </div>
                             </div>
-                            <div style="flex-shrink: 0; align-self: center; margin-left: 0.75rem;">
-                                <span
-                                    class="badge-status {{ $listing->status == config('settings.general_status.active') ? 'active' : 'inactive' }}">
-                                    {{ $listing->status == config('settings.general_status.active') ? 'Active' : 'Inactive' }}
-                                </span>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <div style="padding: 2rem 0; text-align: center; color: var(--text-muted);">
-                    <i class="fas fa-inbox"
-                        style="font-size: 2rem; margin-bottom: 0.75rem; display: block; opacity: 0.4;"></i>
-                    No listings yet.
-                    <a href="{{ route('ad.post.page') }}" style="color: var(--primary); font-weight: 600;">Post your first
-                        ad!</a>
-                </div>
-            @endif
+                        @endforeach
+                    </div>
+                @else
+                    <div style="padding: 2rem 0; text-align: center; color: var(--text-muted);">
+                        <i class="fas fa-inbox"
+                            style="font-size: 2rem; margin-bottom: 0.75rem; display: block; opacity: 0.4;"></i>
+                        No listings yet.
+                        <a href="{{ route('ad.post.page') }}" style="color: var(--primary); font-weight: 600;">Post your
+                            first
+                            ad!</a>
+                    </div>
+                @endif
+            </div>
         </div>
 
         <!-- Quick Actions -->
