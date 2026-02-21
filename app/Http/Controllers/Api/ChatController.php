@@ -2,21 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
+use App\Http\ApiResource\ChatCollection;
+use App\Http\Controllers\Api\ApiController;
 use App\Models\Ad;
 use App\Models\Chat;
-use App\Http\Controllers\Api\ApiController;
 use App\Models\ChatMessage;
-use App\Http\ApiResource;
-
-\ChatCollection;
-
-use Plugin\ClassiLooksCore\Notifications\NotificationHandler;
-use App\Http\ApiResource;
-
-\SingleChatResource;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ChatController extends ApiController
 {
@@ -56,7 +49,7 @@ class ChatController extends ApiController
                     $chat_message->save();
 
                     //send notification
-                    NotificationHandler::sendChatNotification($new_chat->id, $ad_details->user_id, auth('jwt-customer')->user()->id, $request['message']);
+                    // NotificationHandler::sendChatNotification($new_chat->id, $ad_details->user_id, auth('jwt-customer')->user()->id, $request['message']);
                     DB::commit();
                     return response()->json([
                         'success' => true,

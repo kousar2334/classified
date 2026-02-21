@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
+use App\Http\ApiResource\ShareOptionsCollection;
+use App\Http\ApiResource\TipsCollection;
 use App\Http\Controllers\Api\ApiController;
-use App\Models\SafetyTips;
-use App\Models\QuickSellTip;
 use App\Models\AdShareOption;
-use App\Http\ApiResource;
-
-\TipsCollection;
-
-use App\Http\ApiResource;
-
-\ShareOptionsCollection;
+use App\Models\QuickSellTip;
+use App\Models\SafetyTips;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class UtilityController extends ApiController
 {
@@ -68,9 +63,5 @@ class UtilityController extends ApiController
         $options = AdShareOption::where('status', config('settings.general_status.active'))->get();
 
         return new ShareOptionsCollection($options);
-        return response()->json([
-            'success' => true,
-            'options' => $options
-        ], 200);
     }
 }
