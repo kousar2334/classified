@@ -202,6 +202,17 @@
                     </a>
                 </li>
                 <!--End Safety Tips Module-->
+                <!--Advertisement Module-->
+                <li class="nav-item">
+                    <a href="{{ route('admin.advertisement.list') }}"
+                        class="nav-link {{ Request::routeIs(['admin.advertisement.list']) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-ad"></i>
+                        <p>
+                            {{ translation('Advertisements') }}
+                        </p>
+                    </a>
+                </li>
+                <!--End Advertisement Module-->
                 <!--Media Module-->
                 @can('Manage Media')
                     <li class="nav-item">

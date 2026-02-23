@@ -6,9 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Ad;
 use App\Models\AdsCategory;
 use App\Models\PricingPlan;
+use App\Repository\AdvertisementRepository;
 
 class PageController extends Controller
 {
+    public function __construct(public AdvertisementRepository $advertisement_repository) {}
+
+/*************  ✨ Windsurf Command ⭐  *************/
+/**
+ * Homepage
+ *
+ * @return \Illuminate\View\View
+ */
+/*******  a2bfe6d9-3019-4ac7-9a5d-acefbbff53e5  *******/
     public function homePage()
     {
         $activeStatus = config('settings.general_status.active');
@@ -86,13 +96,17 @@ class PageController extends Controller
         // Total active ads count for banner stats
         $totalAdsCount = Ad::where('status', $activeStatus)->count();
 
+        // Advertisements for homepage
+        $advertisements = $this->advertisement_repository->getActiveByPosition('home_top');
+
         return view('frontend.pages.home', compact(
             'categories',
             'topListings',
             'recentListings',
             'categoryWiseListings',
             'pricingPlans',
-            'totalAdsCount'
+            'totalAdsCount',
+            'advertisements'
         ));
     }
 

@@ -21,6 +21,7 @@ use App\Models\State;
 use App\Models\User;
 use App\Models\UserSubscription;
 use App\Notifications\NewAdPosted;
+use App\Repository\AdvertisementRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
@@ -28,6 +29,7 @@ use Illuminate\Support\Str;
 
 class AdController extends Controller
 {
+    public function __construct(public AdvertisementRepository $advertisement_repository) {}
     public function addPostPage()
     {
         $categories = AdsCategory::whereNull('parent')
@@ -477,6 +479,9 @@ class AdController extends Controller
         $ads = $query->paginate(12)->appends($request->except('page'));
         // dd($ads);
 
+        // Advertisements for listing page
+        $advertisements = $this->advertisement_repository->getActiveByPosition('listing_top');
+
         return view('frontend.pages.ad.listing', compact(
             'categories',
             'conditions',
@@ -489,7 +494,8 @@ class AdController extends Controller
             'breadcrumbChildCategory',
             'breadcrumbCountry',
             'breadcrumbState',
-            'breadcrumbCity'
+            'breadcrumbCity',
+            'advertisements'
         ));
     }
 
@@ -547,7 +553,10 @@ class AdController extends Controller
             ? SavedAd::where('user_id', auth()->id())->where('ad_id', $ad->id)->exists()
             : false;
 
-        return view('frontend.pages.ad.details', compact('ad', 'relevantAds', 'customFields', 'fieldModels', 'safetyTips', 'reportReasons', 'isFavourited'));
+        // Advertisements for details page sidebar
+        $advertisements = $this->advertisement_repository->getActiveByPosition('details_sidebar');
+
+        return view('frontend.pages.ad.details', compact('ad', 'relevantAds', 'customFields', 'fieldModels', 'safetyTips', 'reportReasons', 'isFavourited', 'advertisements'));
     }
 
     public function myFavourites(Request $request)

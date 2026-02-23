@@ -859,6 +859,10 @@
                                 </div>
                             </div>
 
+                            {{-- Advertisements: listing_top --}}
+                            @include('frontend.components.ad-slot', ['position' => 'listing_top'])
+                            {{-- End Advertisements --}}
+
                             <div class="gridView customTab-content customTab-content-1 active">
                                 <div class="gridViews">
                                     <div class="singleFeatureCardWraper d-flex" id="ads-container">

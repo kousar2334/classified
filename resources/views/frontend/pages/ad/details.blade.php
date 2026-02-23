@@ -252,12 +252,12 @@
 
         /* ── Actions Card (Save, Report, Share) ─────────────── */
         /* .sid-actions-card {
-                        background: #fff;
-                        border-radius: 12px;
-                        box-shadow: 0 2px 14px rgba(0, 0, 0, .08);
-                        margin-bottom: 12px;
-                        overflow: hidden;
-                    } */
+                            background: #fff;
+                            border-radius: 12px;
+                            box-shadow: 0 2px 14px rgba(0, 0, 0, .08);
+                            margin-bottom: 12px;
+                            overflow: hidden;
+                        } */
 
         .sid-quick-actions {
             display: flex;
@@ -824,6 +824,10 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- Advertisements: details_sidebar --}}
+                        @include('frontend.components.ad-slot', ['position' => 'details_sidebar'])
+                        {{-- End Advertisements --}}
 
                         {{-- Safety Tips --}}
                         @if (isset($safetyTips) && $safetyTips->count() > 0)

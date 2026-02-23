@@ -28,6 +28,7 @@ use App\Http\Controllers\Backend\AdReportController;
 use App\Http\Controllers\Backend\ReportReasonController;
 use App\Http\Controllers\Backend\ConversationController;
 use App\Http\Controllers\Backend\SubscriptionController;
+use App\Http\Controllers\Backend\AdvertisementController;
 
 Route::prefix('admin')->group(function () {
     //Admin Auth
@@ -383,6 +384,17 @@ Route::prefix('admin')->group(function () {
                 Route::post('update', [LocationController::class, 'updateCity'])->name('classified.locations.city.update');
                 Route::post('delete', [LocationController::class, 'deleteCity'])->name('classified.locations.city.delete');
             });
+        });
+
+        /**
+         * ADVERTISEMENT MODULE
+         */
+        Route::prefix('advertisement')->group(function () {
+            Route::get('/', [AdvertisementController::class, 'index'])->name('admin.advertisement.list');
+            Route::post('store', [AdvertisementController::class, 'store'])->name('admin.advertisement.store');
+            Route::post('edit', [AdvertisementController::class, 'edit'])->name('admin.advertisement.edit');
+            Route::post('update', [AdvertisementController::class, 'update'])->name('admin.advertisement.update');
+            Route::post('delete', [AdvertisementController::class, 'delete'])->name('admin.advertisement.delete');
         });
     });
 });
