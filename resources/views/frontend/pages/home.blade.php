@@ -106,6 +106,9 @@
                             @foreach ($categories->take(6) as $cat)
                                 <a href="{{ route('ad.listing.page', $cat->permalink) }}"
                                     class="banner-cat-card banner-cat-card-{{ $loop->iteration }}">
+                                    @if ($cat->ads_count > 0)
+                                        <span class="banner-cat-count">{{ number_format($cat->ads_count) }}</span>
+                                    @endif
                                     <div class="banner-cat-icon">
                                         <img src="{{ asset(getFilePath($cat->icon)) }}" alt="{{ $cat->title }}" />
                                     </div>

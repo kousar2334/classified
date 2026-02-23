@@ -15,4 +15,9 @@ class AdsCategory extends Model
     {
         return $this->hasMany($this, 'parent')->orderBy('id', 'ASC');
     }
+
+    public function ads()
+    {
+        return $this->hasMany(Ad::class, 'category_id');
+    }
 }
