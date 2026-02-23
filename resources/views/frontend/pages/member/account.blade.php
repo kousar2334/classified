@@ -9,54 +9,11 @@
             align-items: start;
         }
 
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 0.4rem;
-        }
-
-        .required {
-            color: #ef4444;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.65rem 0.875rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 0.9375rem;
-            color: var(--text-dark);
-            background: #fff;
-            transition: border-color 0.15s;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(53, 146, 252, 0.12);
-        }
-
-        .form-input.is-invalid {
-            border-color: #ef4444;
-        }
-
-        .field-error {
-            font-size: 0.8rem;
-            color: #ef4444;
-            margin-top: 0.3rem;
-        }
-
         .password-field {
             position: relative;
         }
 
-        .password-field .form-input {
+        .password-field .input-style {
             padding-right: 2.75rem;
         }
 
@@ -249,7 +206,7 @@
                         accept="image/jpeg,image/png,image/jpg,image/webp">
                     <p>JPG, PNG or WEBP. Max 2 MB.</p>
                     @error('profile_image')
-                        <p class="field-error">{{ $message }}</p>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
@@ -270,34 +227,34 @@
                 @csrf
                 @method('PUT')
 
-                <div class="form-group">
-                    <label class="form-label">Full Name <span class="required">*</span></label>
-                    <input type="text" name="name" class="form-input @error('name') is-invalid @enderror"
+                <div class="form-group mb-20">
+                    <label>Full Name <span class="text-danger">*</span></label>
+                    <input type="text" name="name" class="input-style @error('name') is-invalid @enderror"
                         value="{{ old('name', $user->name) }}" placeholder="Your full name">
                     @error('name')
-                        <p class="field-error">{{ $message }}</p>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">Email Address <span class="required">*</span></label>
-                    <input type="email" name="email" class="form-input @error('email') is-invalid @enderror"
+                <div class="form-group mb-20">
+                    <label>Email Address <span class="text-danger">*</span></label>
+                    <input type="email" name="email" class="input-style @error('email') is-invalid @enderror"
                         value="{{ old('email', $user->email) }}" placeholder="your@email.com">
                     @error('email')
-                        <p class="field-error">{{ $message }}</p>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">Phone Number</label>
-                    <input type="text" name="phone" class="form-input @error('phone') is-invalid @enderror"
+                <div class="form-group mb-20">
+                    <label>Phone Number</label>
+                    <input type="text" name="phone" class="input-style @error('phone') is-invalid @enderror"
                         value="{{ old('phone', $user->phone) }}" placeholder="+1 234 567 8900">
                     @error('phone')
-                        <p class="field-error">{{ $message }}</p>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="form-group" style="margin-bottom:0">
+                <div class="form-group mb-0">
                     <button type="submit" class="submit-btn">
                         <i class="fa-solid fa-floppy-disk"></i> Save Changes
                     </button>
@@ -324,48 +281,48 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="form-group">
-                        <label class="form-label">Current Password <span class="required">*</span></label>
+                    <div class="form-group mb-20">
+                        <label>Current Password <span class="text-danger">*</span></label>
                         <div class="password-field">
                             <input type="password" name="current_password" id="currentPassword"
-                                class="form-input @error('current_password') is-invalid @enderror"
+                                class="input-style @error('current_password') is-invalid @enderror"
                                 placeholder="Enter current password">
                             <button type="button" class="toggle-pw" onclick="togglePw('currentPassword', this)">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
                         </div>
                         @error('current_password')
-                            <p class="field-error">{{ $message }}</p>
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label">New Password <span class="required">*</span></label>
+                    <div class="form-group mb-20">
+                        <label>New Password <span class="text-danger">*</span></label>
                         <div class="password-field">
                             <input type="password" name="new_password" id="newPassword"
-                                class="form-input @error('new_password') is-invalid @enderror"
+                                class="input-style @error('new_password') is-invalid @enderror"
                                 placeholder="Min. 8 characters">
                             <button type="button" class="toggle-pw" onclick="togglePw('newPassword', this)">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
                         </div>
                         @error('new_password')
-                            <p class="field-error">{{ $message }}</p>
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label">Confirm New Password <span class="required">*</span></label>
+                    <div class="form-group mb-20">
+                        <label>Confirm New Password <span class="text-danger">*</span></label>
                         <div class="password-field">
                             <input type="password" name="new_password_confirmation" id="confirmPassword"
-                                class="form-input" placeholder="Repeat new password">
+                                class="input-style" placeholder="Repeat new password">
                             <button type="button" class="toggle-pw" onclick="togglePw('confirmPassword', this)">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
                         </div>
                     </div>
 
-                    <div class="form-group" style="margin-bottom:0">
+                    <div class="form-group mb-0">
                         <button type="submit" class="submit-btn">
                             <i class="fa-solid fa-key"></i> Update Password
                         </button>
