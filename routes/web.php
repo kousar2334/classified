@@ -8,8 +8,12 @@ use App\Http\Controllers\Frontend\MemberAuthController;
 use App\Http\Controllers\Frontend\MessageController;
 use App\Http\Controllers\Frontend\AccountController;
 use App\Http\Controllers\Frontend\SubscriptionController;
+use App\Http\Controllers\Backend\LanguageController;
 
 Route::get('/', [PageController::class, 'homePage'])->name('home');
+
+// Language Switcher (frontend public route)
+Route::get('/language/switch/{code}', [LanguageController::class, 'setSessionLanguage'])->name('frontend.language.switch');
 Route::get('/pricing-plans', [PageController::class, 'pricingPlans'])->name('pricing.plans');
 
 //Auth Routes

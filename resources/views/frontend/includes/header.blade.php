@@ -42,6 +42,28 @@
                             </ul>
                         </div>
                     @endif
+
+                    {{-- Mobile: Language Switcher icon (visible only on mobile) --}}
+                    @if ($languages->count() > 1)
+                        @php $currentLocale = session('locale', 'en'); @endphp
+                        <div class="nav-item dropdown mobile-lang-switcher d-flex d-lg-none">
+                            <a class="lang-trigger" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false" title="Switch Language">
+                                <i class="las la-globe" style="font-size: 1.4rem;"></i>
+                            </a>
+                            <ul class="dropdown-menu lang-dropdown dropdown-menu-end">
+                                @foreach ($languages as $lang)
+                                    <li>
+                                        <a class="dropdown-item {{ $lang->code === $currentLocale ? 'active' : '' }}"
+                                            href="{{ route('frontend.language.switch', $lang->code) }}">
+                                            {{ $lang->native_title ?? $lang->title }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#bizcoxx_main_menu" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -88,7 +110,31 @@
                 </div>
             </div>
             <!-- Menu Right - desktop only -->
-            <div class="nav-right-content d-none d-lg-flex gap-4">
+            <div class="nav-right-content d-none d-lg-flex gap-4 align-items-center">
+                {{-- Language Switcher (desktop) --}}
+                @if ($languages->count() > 1)
+                    <div class="nav-item dropdown lang-switcher">
+                        @php $currentLocale = session('locale', 'en'); @endphp
+                        @php $currentLang = $languages->firstWhere('code', $currentLocale) ?? $languages->first(); @endphp
+                        <a class="lang-trigger" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="las la-globe"></i>
+                            <span class="lang-label">{{ $currentLang->native_title ?? $currentLang->title }}</span>
+                            <i class="las la-angle-down caret-icon"></i>
+                        </a>
+                        <ul class="dropdown-menu lang-dropdown dropdown-menu-end">
+                            @foreach ($languages as $lang)
+                                <li>
+                                    <a class="dropdown-item {{ $lang->code === $currentLocale ? 'active' : '' }}"
+                                        href="{{ route('frontend.language.switch', $lang->code) }}">
+                                        {{ $lang->native_title ?? $lang->title }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <ul class="header-cart">
 
                     @if (auth()->user() == null)

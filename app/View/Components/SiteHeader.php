@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Closure;
+use App\Models\Language;
 use App\Models\MenuItem;
 use App\Models\MenuPosition;
 use Illuminate\View\Component;
@@ -11,6 +12,7 @@ use Illuminate\Contracts\View\View;
 class SiteHeader extends Component
 {
     public $menu_items = [];
+    public $languages = [];
     /**
      * Create a new component instance.
      */
@@ -27,6 +29,8 @@ class SiteHeader extends Component
             ->where('parent', NULL)
             ->orderBy('position', 'ASC')
             ->get();
+
+        $this->languages = Language::where('status', config('settings.general_status.active'))->get();
     }
 
     /**
