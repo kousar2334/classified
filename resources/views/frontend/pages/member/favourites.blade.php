@@ -67,7 +67,7 @@
                             </a>
                             <button class="listing-action-btn remove-fav" data-ad-id="{{ $ad->id }}"
                                 data-toggle-url="{{ route('ad.favourite.toggle') }}" title="Remove from favourites">
-                                <i class="las la-heart" style="color:#ef4444;font-size:16px;"></i>
+                                <i class="las la-heart fav-heart-icon"></i>
                             </button>
                         </div>
                     </div>

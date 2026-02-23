@@ -12,11 +12,11 @@
                         <a href="{{ $ad->click_url }}" target="_blank" rel="noopener sponsored"
                             data-ad-id="{{ $ad->id }}" data-ad-track="click">
                             <img src="{{ asset(getFilePath($ad->image_path, false)) }}" alt="{{ $ad->title }}"
-                                style="max-width:100%;height:auto;border-radius:4px;">
+                                class="ad-slot-img">
                         </a>
                     @else
                         <img src="{{ asset(getFilePath($ad->image_path, false)) }}" alt="{{ $ad->title }}"
-                            style="max-width:100%;height:auto;border-radius:4px;">
+                            class="ad-slot-img">
                     @endif
                 </div>
             @elseif ($ad->type === 'html' && $ad->html_code)

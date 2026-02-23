@@ -9,7 +9,7 @@
     <div class="sidebar-user">
         @if (auth()->user()->image)
             <img src="{{ asset(getFilePath(auth()->user()->image)) }}" alt="{{ auth()->user()->name }}"
-                style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.35);flex-shrink:0;">
+                class="sidebar-user-img">
         @else
             <div class="sidebar-avatar">
                 {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
@@ -22,7 +22,7 @@
     </div>
 
     {{-- Navigation --}}
-    <nav style="flex: 1; overflow-y: auto; padding-bottom: 1rem;">
+    <nav>
         <ul class="sidebar-menu">
             <li class="mt-2">
                 <a href="{{ route('member.dashboard') }}"

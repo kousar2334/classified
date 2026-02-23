@@ -4,13 +4,9 @@
 @endsection
 @section('dashboard-content')
     <!-- Header -->
-    <div class="dashboard-header" style="margin-bottom: 1.5rem;">
-        <h1 style="font-size: 1.5rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.25rem;">
-            Welcome back, {{ auth()->user()->name }}!
-        </h1>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">
-            Here's what's happening with your listings today.
-        </p>
+    <div class="dashboard-header">
+        <h1 class="dash-page-title">Welcome back, {{ auth()->user()->name }}!</h1>
+        <p class="dash-page-subtitle">Here's what's happening with your listings today.</p>
     </div>
 
     <!-- Stats Grid -->
@@ -37,7 +33,7 @@
                     <i class="fas fa-envelope"></i> {{ $unreadMessages }} unread
                 </div>
             @else
-                <div class="stat-change" style="color: var(--text-muted);">
+                <div class="stat-change">
                     <i class="fas fa-check"></i> All caught up
                 </div>
             @endif
@@ -49,7 +45,7 @@
                 <div class="stat-icon cyan"><i class="fas fa-heart"></i></div>
             </div>
             <div class="stat-value">{{ $totalFavourites }}</div>
-            <div class="stat-change" style="color: var(--text-muted);">
+            <div class="stat-change">
                 <i class="fas fa-bookmark"></i> Saved ads
             </div>
         </div>
@@ -69,27 +65,24 @@
                     <div class="activity-list">
                         @foreach ($recentListings as $listing)
                             <div class="activity-item">
-                                <div class="activity-icon blue"
-                                    style="background: rgba(53,146,252,0.1); color: var(--primary);">
+                                <div class="activity-icon blue">
                                     <i class="fas fa-tag"></i>
                                 </div>
-                                <div class="activity-content" style="flex: 1; min-width: 0;">
-                                    <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                        {{ $listing->title }}
-                                    </h4>
+                                <div class="activity-content">
+                                    <h4>{{ $listing->title }}</h4>
                                     <p>
                                         {{ $listing->categoryInfo->title ?? '—' }}
                                         @if ($listing->cityInfo)
-                                            · <i class="fas fa-location-dot" style="font-size:0.7rem;"></i>
+                                            · <i class="fas fa-location-dot icon-xs"></i>
                                             {{ $listing->cityInfo->name }}
                                         @endif
                                     </p>
                                     <div class="activity-time">
-                                        <i class="fas fa-clock" style="font-size:0.65rem;"></i>
+                                        <i class="fas fa-clock icon-xxs"></i>
                                         {{ $listing->created_at->diffForHumans() }}
                                     </div>
                                 </div>
-                                <div style="flex-shrink: 0; align-self: center; margin-left: 0.75rem;">
+                                <div class="activity-badge-wrap">
                                     <span
                                         class="badge-status {{ $listing->status == config('settings.general_status.active') ? 'active' : 'inactive' }}">
                                         {{ $listing->status == config('settings.general_status.active') ? 'Active' : 'Inactive' }}
@@ -99,13 +92,10 @@
                         @endforeach
                     </div>
                 @else
-                    <div style="padding: 2rem 0; text-align: center; color: var(--text-muted);">
-                        <i class="fas fa-inbox"
-                            style="font-size: 2rem; margin-bottom: 0.75rem; display: block; opacity: 0.4;"></i>
+                    <div class="empty-activity">
+                        <i class="fas fa-inbox empty-activity-icon"></i>
                         No listings yet.
-                        <a href="{{ route('ad.post.page') }}" style="color: var(--primary); font-weight: 600;">Post your
-                            first
-                            ad!</a>
+                        <a href="{{ route('ad.post.page') }}" class="link-primary-bold">Post your first ad!</a>
                     </div>
                 @endif
             </div>
@@ -126,10 +116,7 @@
                 <a href="{{ route('member.messages.index') }}" class="action-btn secondary">
                     <i class="fas fa-comments"></i> Messages
                     @if ($unreadMessages > 0)
-                        <span
-                            style="background: var(--primary); color: #fff; border-radius: 999px; font-size: 0.7rem; padding: 0.1rem 0.45rem; margin-left: 0.25rem;">
-                            {{ $unreadMessages }}
-                        </span>
+                        <span class="msg-unread-badge">{{ $unreadMessages }}</span>
                     @endif
                 </a>
                 <a href="{{ route('member.favourites') }}" class="action-btn secondary">

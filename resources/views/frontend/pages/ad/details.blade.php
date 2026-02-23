@@ -836,10 +836,8 @@
                                 <div class="safety-wraper">
                                     <ol>
                                         @foreach ($safetyTips as $tip)
-                                            <li
-                                                style="display: flex; align-items: center; gap: 8px; color: rgb(15, 23, 42); font-size: 16px; line-height: 1.5;">
-                                                <i class="las la-check-circle"
-                                                    style="color: var(--main-color-one); font-size: 20px;"></i>
+                                            <li class="safety-tip-item">
+                                                <i class="las la-check-circle safety-tip-icon"></i>
                                                 <span>{{ $tip->translation('title') }}</span>
                                             </li>
                                         @endforeach
@@ -878,20 +876,15 @@
                                 <div class="msg-listing-ref">
                                     @if ($ad->thumbnail_image)
                                         <img src="{{ asset(getFilePath($ad->thumbnail_image, false)) }}"
-                                            alt="{{ $ad->title }}"
-                                            style="width:40px;height:40px;object-fit:cover;border-radius:6px;flex-shrink:0;">
+                                            alt="{{ $ad->title }}" class="msg-listing-img">
                                     @endif
                                     <div>
-                                        <div
-                                            style="font-size:11px;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.05em;">
-                                            Listing</div>
+                                        <div class="msg-listing-label">Listing</div>
                                         <strong>{{ Str::limit($ad->title, 55) }}</strong>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="form-label"
-                                        style="font-size:13px;font-weight:600;color:#374151;margin-bottom:6px;">Your
-                                        message</label>
+                                    <label class="form-label msg-form-label">Your message</label>
                                     <textarea name="message" class="form-control" rows="5"
                                         placeholder="Hi, I am interested in your listing. Is it still available?" required maxlength="2000"></textarea>
                                 </div>

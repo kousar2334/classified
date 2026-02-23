@@ -209,35 +209,63 @@
 
         @if ($index === 0)
             <!-- About/Promo Section -->
-            <section class="aboutArea" data-padding-top="50" data-padding-bottom="50"
-                style="background-color:rgb(255, 255, 255)">
+            <section class="promoSection">
                 <div class="container">
-                    <div class="aboutAreaWraper"
-                        style="background-image: url(/public/uploads/media-uploader/group-343641717336658.png);">
-                        <div class="row justify-content-between flex-lg-row flex-column-reverse gap-lg-0 gap-4">
+                    <div class="promoWrapper">
+                        <!-- Decorative circles -->
+                        <div class="promo-orb-1"></div>
+                        <div class="promo-orb-2"></div>
+
+                        <div class="row align-items-center flex-lg-row flex-column-reverse gap-lg-0 gap-5">
+                            <!-- Left: Text & CTAs -->
                             <div class="col-lg-6">
-                                <div class="about-caption">
-                                    <div class="section-tittle section-tittle2 mb-80">
-                                        <h2 class="head2 wow fadeInUp" data-wow-delay="0.1s">Earn cash by selling or Find
-                                            anything you desire</h2>
-                                        <p class="wow fadeInUp mt-3" data-wow-delay="0.2s">Earn cash by selling your
-                                            pre-loved
-                                            or new items on our platform or you can find anything on our platform you
-                                            desire.
-                                        </p>
-                                    </div>
-                                    <div class="btn-wrapper">
-                                        <a href="{{ route('ad.post.page') }}" class="cmn-btn2 mr-15 mb-10 wow fadeInLeft"
-                                            data-wow-delay="0.3s">Post Your Ads</a>
-                                        <a href="{{ route('ad.listing.page') }}"
-                                            class="cmn-btn2 transparent-btn mb-10 wow fadeInRight"
-                                            data-wow-delay="0.3s">Browse ads</a>
+                                <div class="wow fadeInLeft" data-wow-delay="0.1s">
+                                    <span class="promo-badge">Your Local Marketplace</span>
+                                    <h2 class="promo-heading">
+                                        Earn cash by selling or find anything you desire
+                                    </h2>
+                                    <p class="promo-text">
+                                        List your pre-loved or new items in minutes, or browse thousands of ads to
+                                        find exactly what you need — all in one place.
+                                    </p>
+                                    <div class="d-flex flex-wrap gap-3 wow fadeInUp" data-wow-delay="0.3s">
+                                        <a href="{{ route('ad.post.page') }}" class="promo-btn-primary">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8 1a.5.5 0 0 1 .5.5V7h5.5a.5.5 0 0 1 0 1H8.5v5.5a.5.5 0 0 1-1 0V8H2a.5.5 0 0 1 0-1h5.5V1.5A.5.5 0 0 1 8 1z" />
+                                            </svg>
+                                            Post Your Ad
+                                        </a>
+                                        <a href="{{ route('ad.listing.page') }}" class="promo-btn-outline">
+                                            Browse Ads
+                                        </a>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Right: Image + floating stat card -->
                             <div class="col-lg-6">
-                                <div class="aboutImg tilt-effect wow fadeInRight ps-lg-5" data-wow-delay="0.1s">
-                                    <img src="/public/uploads/media-uploader/about11713418479.png" alt="" />
+                                <div class="promoImageWrap position-relative text-center wow fadeInRight"
+                                    data-wow-delay="0.15s">
+                                    <img src="/public/uploads/media-uploader/about11713418479.png" alt="Marketplace"
+                                        class="promoImg" />
+                                    <!-- Floating stat card -->
+                                    <div class="promo-stat-card">
+                                        <div class="promo-stat-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                fill="#fff" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102z" />
+                                                <circle cx="5.5" cy="13.5" r="1.5" />
+                                                <circle cx="11.5" cy="13.5" r="1.5" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <div class="promo-stat-count">10k+</div>
+                                            <div class="promo-stat-label">Active Listings</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -249,33 +277,63 @@
 
     @if (count($categoryWiseListings) === 0)
         <!-- About/Promo Section (shown if no category listings) -->
-        <section class="aboutArea" data-padding-top="50" data-padding-bottom="50"
-            style="background-color:rgb(255, 255, 255)">
+        <section class="promoSection">
             <div class="container">
-                <div class="aboutAreaWraper"
-                    style="background-image: url(/public/uploads/media-uploader/group-343641717336658.png);">
-                    <div class="row justify-content-between flex-lg-row flex-column-reverse gap-lg-0 gap-4">
+                <div class="promoWrapper">
+                    <!-- Decorative circles -->
+                    <div class="promo-orb-1"></div>
+                    <div class="promo-orb-2"></div>
+
+                    <div class="row align-items-center flex-lg-row flex-column-reverse gap-lg-0 gap-5">
+                        <!-- Left: Text & CTAs -->
                         <div class="col-lg-6">
-                            <div class="about-caption">
-                                <div class="section-tittle section-tittle2 mb-80">
-                                    <h2 class="head2 wow fadeInUp" data-wow-delay="0.1s">Earn cash by selling or Find
-                                        anything you desire</h2>
-                                    <p class="wow fadeInUp mt-3" data-wow-delay="0.2s">Earn cash by selling your pre-loved
-                                        or new items on our platform or you can find anything on our platform you desire.
-                                    </p>
-                                </div>
-                                <div class="btn-wrapper">
-                                    <a href="{{ route('ad.post.page') }}" class="cmn-btn2 mr-15 mb-10 wow fadeInLeft"
-                                        data-wow-delay="0.3s">Post Your Ads</a>
-                                    <a href="{{ route('ad.listing.page') }}"
-                                        class="cmn-btn2 transparent-btn mb-10 wow fadeInRight"
-                                        data-wow-delay="0.3s">Browse ads</a>
+                            <div class="wow fadeInLeft" data-wow-delay="0.1s">
+                                <span class="promo-badge">Your Local Marketplace</span>
+                                <h2 class="promo-heading">
+                                    Earn cash by selling or find anything you desire
+                                </h2>
+                                <p class="promo-text">
+                                    List your pre-loved or new items in minutes, or browse thousands of ads to
+                                    find exactly what you need — all in one place.
+                                </p>
+                                <div class="d-flex flex-wrap gap-3 wow fadeInUp" data-wow-delay="0.3s">
+                                    <a href="{{ route('ad.post.page') }}" class="promo-btn-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 1a.5.5 0 0 1 .5.5V7h5.5a.5.5 0 0 1 0 1H8.5v5.5a.5.5 0 0 1-1 0V8H2a.5.5 0 0 1 0-1h5.5V1.5A.5.5 0 0 1 8 1z" />
+                                        </svg>
+                                        Post Your Ad
+                                    </a>
+                                    <a href="{{ route('ad.listing.page') }}" class="promo-btn-outline">
+                                        Browse Ads
+                                    </a>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Right: Image + floating stat card -->
                         <div class="col-lg-6">
-                            <div class="aboutImg tilt-effect wow fadeInRight ps-lg-5" data-wow-delay="0.1s">
-                                <img src="/public/uploads/media-uploader/about11713418479.png" alt="" />
+                            <div class="promoImageWrap position-relative text-center wow fadeInRight"
+                                data-wow-delay="0.15s">
+                                <img src="/public/uploads/media-uploader/about11713418479.png" alt="Marketplace"
+                                    class="promoImg" />
+                                <!-- Floating stat card -->
+                                <div class="promo-stat-card">
+                                    <div class="promo-stat-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            fill="#fff" viewBox="0 0 16 16">
+                                            <path
+                                                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102z" />
+                                            <circle cx="5.5" cy="13.5" r="1.5" />
+                                            <circle cx="11.5" cy="13.5" r="1.5" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="promo-stat-count">10k+</div>
+                                        <div class="promo-stat-label">Active Listings</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

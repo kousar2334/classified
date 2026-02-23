@@ -306,8 +306,8 @@
                                             <!-- Continue Button -->
                                             <div class="continue-btn mt-3">
                                                 <div class="btn-wrapper mb-10 d-flex justify-content-end gap-3">
-                                                    <button class="red-btn w-100 d-block" style="border: none"
-                                                        id="nextBtn" type="button">Continue</button>
+                                                    <button class="red-btn w-100 d-block" id="nextBtn"
+                                                        type="button">Continue</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -519,10 +519,9 @@
                                             <!-- Previous / Submit -->
                                             <div class="continue-btn mt-3">
                                                 <div class="btn-wrapper mb-10 d-flex justify-content-end gap-3">
-                                                    <button class="red-btn w-100 d-block" style="border: none"
-                                                        id="prevBtn" type="button">Previous</button>
-                                                    <button class="red-btn w-100 d-block" style="border: none"
-                                                        id="submitBtn" type="submit">
+                                                    <button class="red-btn w-100 d-block" id="prevBtn"
+                                                        type="button">Previous</button>
+                                                    <button class="red-btn w-100 d-block" id="submitBtn" type="submit">
                                                         <span class="btn-text">Submit Listing</span>
                                                     </button>
                                                 </div>
