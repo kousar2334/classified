@@ -7,9 +7,14 @@
 
     {{-- User profile block --}}
     <div class="sidebar-user">
-        <div class="sidebar-avatar">
-            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-        </div>
+        @if (auth()->user()->image)
+            <img src="{{ asset(getFilePath(auth()->user()->image)) }}" alt="{{ auth()->user()->name }}"
+                style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.35);flex-shrink:0;">
+        @else
+            <div class="sidebar-avatar">
+                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+            </div>
+        @endif
         <div>
             <div class="sidebar-user-name">{{ auth()->user()->name }}</div>
             <div class="sidebar-user-role">Member</div>
@@ -55,7 +60,8 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('member.account') }}"
+                    class="{{ Request::routeIs('member.account') ? 'active' : '' }}">
                     <span class="sidebar-icon"><i class="fa-solid fa-user"></i></span>
                     Account
                 </a>
