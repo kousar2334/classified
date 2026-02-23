@@ -12,13 +12,6 @@ class PageController extends Controller
 {
     public function __construct(public AdvertisementRepository $advertisement_repository) {}
 
-/*************  ✨ Windsurf Command ⭐  *************/
-/**
- * Homepage
- *
- * @return \Illuminate\View\View
- */
-/*******  a2bfe6d9-3019-4ac7-9a5d-acefbbff53e5  *******/
     public function homePage()
     {
         $activeStatus = config('settings.general_status.active');
