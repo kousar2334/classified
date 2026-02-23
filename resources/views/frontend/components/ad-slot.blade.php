@@ -33,43 +33,27 @@
 
 <script>
     (function() {
-        var csrfToken = document.querySelector('meta[name="_token"]') ?
-            document.querySelector('meta[name="_token"]').getAttribute('content') :
+        var csrfToken = document.querySelector('meta[name="csrf-token"]') ?
+            document.querySelector('meta[name="csrf-token"]').getAttribute('content') :
             '';
 
         function sendTrack(type, adId) {
             var url = type === 'click' ?
                 '{{ route('ad.track.click') }}' :
                 '{{ route('ad.track.impression') }}';
-            var body = new FormData();
-            body.append('id', adId);
-            body.append('_token', csrfToken);
-            navigator.sendBeacon ? navigator.sendBeacon(url, body) : fetch(url, {
+            fetch(url, {
                 method: 'POST',
-                body: body
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'id=' + encodeURIComponent(adId),
+                keepalive: true
             });
         }
 
-        // Impressions — fire once per visible ad using IntersectionObserver
-        var observer = window.IntersectionObserver ?
-            new IntersectionObserver(function(entries, obs) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        sendTrack('impression', entry.target.dataset.adId);
-                        obs.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.5
-            }) :
-            null;
-
+        // Impressions — fire immediately (script runs right after ad elements are rendered)
         document.querySelectorAll('[data-ad-track="impression"]').forEach(function(el) {
-            if (observer) {
-                observer.observe(el);
-            } else {
-                sendTrack('impression', el.dataset.adId);
-            }
+            sendTrack('impression', el.dataset.adId);
         });
 
         // Clicks

@@ -60,25 +60,7 @@
     <div id="edit-image-fields" class="ad-type-fields {{ $advertisement->type === 'image' ? 'active' : '' }}">
         <div class="form-group">
             <label class="black font-14">Banner Image <span class="text-danger">*</span></label>
-            <div class="input-group">
-                <input type="text" name="image_path" id="edit-image-path" class="form-control"
-                    value="{{ $advertisement->image_path }}" placeholder="Select image from media library" readonly>
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-secondary open-media-for-edit">
-                        <i class="fas fa-image"></i> Browse
-                    </button>
-                </div>
-            </div>
-            @if ($advertisement->image_path)
-                <div id="edit-image-preview" class="mt-2">
-                    <img src="{{ asset(getFilePath($advertisement->image_path, false)) }}" alt="Preview"
-                        style="max-height:120px;border-radius:4px;">
-                </div>
-            @else
-                <div id="edit-image-preview" class="mt-2" style="display:none;">
-                    <img src="" alt="Preview" style="max-height:120px;border-radius:4px;">
-                </div>
-            @endif
+            <x-media name="image_path" :value="$advertisement->image_path ?? ''"></x-media>
         </div>
         <div class="form-group">
             <label class="black font-14">Click-through URL</label>
@@ -117,11 +99,6 @@
 
         $('#edit-type-select').on('change', function() {
             toggleEditTypeFields($(this).val());
-        });
-
-        $(document).on('click', '.open-media-for-edit', function() {
-            $('#media-modal').modal('show');
-            window._adMediaTarget = 'edit';
         });
     })(jQuery);
 </script>

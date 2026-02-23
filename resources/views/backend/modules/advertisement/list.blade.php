@@ -235,19 +235,7 @@
                                 <div class="form-group">
                                     <label class="black font-14">{{ translation('Banner Image') }} <span
                                             class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" name="image_path" id="create-image-path"
-                                            class="form-control" placeholder="Select image from media library" readonly>
-                                        <div class="input-group-append">
-                                            <button type="button"
-                                                class="btn btn-outline-secondary open-media-for-create">
-                                                <i class="fas fa-image"></i> Browse
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div id="create-image-preview" class="mt-2" style="display:none;">
-                                        <img src="" alt="Preview" style="max-height:120px;border-radius:4px;">
-                                    </div>
+                                    <x-media name="image_path" value=""></x-media>
                                 </div>
                                 <div class="form-group">
                                     <label class="black font-14">{{ translation('Click-through URL') }}</label>
@@ -336,25 +324,6 @@
             }
             $('#create-type-select').on('change', function() {
                 toggleCreateTypeFields($(this).val());
-            });
-
-            // ── Media picker for create form ─────────────────────────────
-            $(document).on('click', '.open-media-for-create', function() {
-                $('#media-modal').modal('show');
-                window._adMediaTarget = 'create';
-            });
-
-            // Media selection callback (triggered by media modal)
-            $(document).on('media-selected', function(e, path) {
-                if (window._adMediaTarget === 'create') {
-                    $('#create-image-path').val(path);
-                    $('#create-image-preview img').attr('src', '/' + path);
-                    $('#create-image-preview').show();
-                } else if (window._adMediaTarget === 'edit') {
-                    $('#edit-image-path').val(path);
-                    $('#edit-image-preview img').attr('src', '/' + path);
-                    $('#edit-image-preview').show();
-                }
             });
 
             // ── Create form submit ───────────────────────────────────────

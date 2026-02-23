@@ -143,16 +143,11 @@ class AdvertisementRepository
      */
     public function recordImpression(int $id): void
     {
-        AdvertisementStat::upsert(
-            [
-                'advertisement_id' => $id,
-                'date'             => Carbon::today()->toDateString(),
-                'impressions'      => 1,
-                'clicks'           => 0,
-            ],
-            ['advertisement_id', 'date'],
-            ['impressions' => DB::raw('impressions + 1')]
+        $stat = AdvertisementStat::firstOrCreate(
+            ['advertisement_id' => $id, 'date' => Carbon::today()->toDateString()],
+            ['impressions' => 0, 'clicks' => 0]
         );
+        $stat->increment('impressions');
     }
 
     /**
@@ -160,16 +155,11 @@ class AdvertisementRepository
      */
     public function recordClick(int $id): void
     {
-        AdvertisementStat::upsert(
-            [
-                'advertisement_id' => $id,
-                'date'             => Carbon::today()->toDateString(),
-                'impressions'      => 0,
-                'clicks'           => 1,
-            ],
-            ['advertisement_id', 'date'],
-            ['clicks' => DB::raw('clicks + 1')]
+        $stat = AdvertisementStat::firstOrCreate(
+            ['advertisement_id' => $id, 'date' => Carbon::today()->toDateString()],
+            ['impressions' => 0, 'clicks' => 0]
         );
+        $stat->increment('clicks');
     }
 
     /**
