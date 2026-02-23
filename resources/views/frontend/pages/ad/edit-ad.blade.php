@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 @section('meta')
-    <title>Edit Ad - {{ get_setting('site_name') }}</title>
+    <title>Edit Ad 1- {{ get_setting('site_name') }}</title>
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/summernote/summernote-bs4.min.css') }}">
 @endsection
@@ -452,8 +452,9 @@
                                                     <div class="form-group">
                                                         <label>
                                                             <input type="checkbox" name="is_featured" id="is_featured"
+                                                                value="1"
                                                                 class="custom-check-box feature_disable_color"
-                                                                @checked($ad->is_featured == config('settings.general_status.active'))>
+                                                                @checked(old('is_featured', $ad->is_featured == config('settings.general_status.active')))>
                                                             <span class="ms-2">Feature This Ad</span>
                                                         </label>
                                                         <p class="mt-2 mb-0">To feature this ad, you will need to subscribe

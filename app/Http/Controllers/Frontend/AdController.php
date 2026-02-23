@@ -785,6 +785,28 @@ class AdController extends Controller
 
         $request->validate($rules);
 
+        // Check featured listing limit only when newly featuring an ad
+        if ($request->has('is_featured') && $ad->is_featured != config('settings.general_status.active')) {
+            $activeSub = UserSubscription::with('plan')
+                ->where('user_id', auth()->id())
+                ->where('status', 'active')
+                ->where('expires_at', '>', now())
+                ->first();
+            if ($activeSub && $activeSub->plan) {
+                $plan = $activeSub->plan;
+                $currentFeaturedCount = Ad::where('user_id', auth()->id())
+                    ->where('is_featured', config('settings.general_status.active'))
+                    ->count();
+                if ($plan->featured_listing_quantity > 0 && $currentFeaturedCount >= $plan->featured_listing_quantity) {
+                    $errorMsg = 'You have reached your plan limit of ' . $plan->featured_listing_quantity . ' featured listings.';
+                    if ($request->ajax()) {
+                        return response()->json(['success' => false, 'message' => $errorMsg], 422);
+                    }
+                    return back()->withErrors(['is_featured' => $errorMsg]);
+                }
+            }
+        }
+
         try {
             DB::beginTransaction();
 
@@ -802,6 +824,7 @@ class AdController extends Controller
             $ad->contact_email = xss_clean($request->contact_email);
             $ad->contact_phone = xss_clean($request->phone);
             $ad->contact_is_hide = $request->has('hide_phone_number') ? config('settings.general_status.active') : config('settings.general_status.in_active');
+            $ad->is_featured = $request->has('is_featured') ? config('settings.general_status.active') : config('settings.general_status.in_active');
 
             // Handle thumbnail image
             if ($request->hasFile('thumbnail_image')) {
