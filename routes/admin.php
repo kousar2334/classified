@@ -395,6 +395,7 @@ Route::prefix('admin')->group(function () {
             Route::post('edit', [AdvertisementController::class, 'edit'])->name('admin.advertisement.edit');
             Route::post('update', [AdvertisementController::class, 'update'])->name('admin.advertisement.update');
             Route::post('delete', [AdvertisementController::class, 'delete'])->name('admin.advertisement.delete');
+            Route::get('{id}/analytics', [AdvertisementController::class, 'analytics'])->name('admin.advertisement.analytics');
         });
     });
 });

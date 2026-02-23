@@ -47,6 +47,8 @@
                                         <th>{{ translation('Status') }}</th>
                                         <th>{{ translation('Dates') }}</th>
                                         <th>{{ translation('Order') }}</th>
+                                        <th class="text-center">{{ translation('Views') }}</th>
+                                        <th class="text-center">{{ translation('Clicks') }}</th>
                                         <th class="text-right">{{ translation('Action') }}</th>
                                     </tr>
                                 </thead>
@@ -104,6 +106,16 @@
                                                 @endif
                                             </td>
                                             <td>{{ $advertisement->sort_order }}</td>
+                                            <td class="text-center">
+                                                <span class="badge badge-info">
+                                                    {{ number_format($advertisement->total_impressions ?? 0) }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="badge badge-success">
+                                                    {{ number_format($advertisement->total_clicks ?? 0) }}
+                                                </span>
+                                            </td>
                                             <td class="text-right">
                                                 <div class="btn-group">
                                                     <button type="button"
@@ -113,6 +125,11 @@
                                                         data-toggle="dropdown" aria-expanded="false">
                                                     </button>
                                                     <div class="dropdown-menu" role="menu">
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('admin.advertisement.analytics', $advertisement->id) }}">
+                                                            {{ translation('Analytics') }}
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item edit-ad-btn"
                                                             data-id="{{ $advertisement->id }}">
                                                             {{ translation('Edit') }}
@@ -128,7 +145,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8">
+                                            <td colspan="10">
                                                 <div class="text-center">{{ translation('No advertisements found') }}</div>
                                             </td>
                                         </tr>

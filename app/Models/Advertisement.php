@@ -25,6 +25,21 @@ class Advertisement extends Model
         'end_date'   => 'date',
     ];
 
+    public function stats()
+    {
+        return $this->hasMany(AdvertisementStat::class);
+    }
+
+    public function totalImpressions(): int
+    {
+        return (int) $this->stats()->sum('impressions');
+    }
+
+    public function totalClicks(): int
+    {
+        return (int) $this->stats()->sum('clicks');
+    }
+
     /**
      * Scope: only active and within date range
      */

@@ -83,4 +83,43 @@ class AdvertisementController extends Controller
 
         return to_route('admin.advertisement.list');
     }
+
+    /**
+     * Analytics page for a single advertisement
+     */
+    public function analytics(Request $request, int $id): View
+    {
+        $days = (int) ($request->query('days', 30));
+        if (!in_array($days, [7, 14, 30, 90])) {
+            $days = 30;
+        }
+
+        $data = $this->advertisement_repository->getAnalytics($id, $days);
+
+        return view('backend.modules.advertisement.analytics', $data + compact('days'));
+    }
+
+    /**
+     * Record an impression (called via AJAX from frontend)
+     */
+    public function trackImpression(Request $request): JsonResponse
+    {
+        $id = (int) $request->input('id');
+        if ($id > 0) {
+            $this->advertisement_repository->recordImpression($id);
+        }
+        return response()->json(['ok' => true]);
+    }
+
+    /**
+     * Record a click (called via AJAX from frontend)
+     */
+    public function trackClick(Request $request): JsonResponse
+    {
+        $id = (int) $request->input('id');
+        if ($id > 0) {
+            $this->advertisement_repository->recordClick($id);
+        }
+        return response()->json(['ok' => true]);
+    }
 }

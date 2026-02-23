@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\AdController;
 use App\Http\Controllers\Frontend\PageController;
+use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Frontend\LocationController;
 use App\Http\Controllers\Frontend\MemberAuthController;
 use App\Http\Controllers\Frontend\MessageController;
@@ -11,6 +12,10 @@ use App\Http\Controllers\Frontend\SubscriptionController;
 use App\Http\Controllers\Backend\LanguageController;
 
 Route::get('/', [PageController::class, 'homePage'])->name('home');
+
+// Advertisement tracking (public, lightweight)
+Route::post('/ad/impression', [AdvertisementController::class, 'trackImpression'])->name('ad.track.impression');
+Route::post('/ad/click', [AdvertisementController::class, 'trackClick'])->name('ad.track.click');
 
 // Language Switcher (frontend public route)
 Route::get('/language/switch/{code}', [LanguageController::class, 'setSessionLanguage'])->name('frontend.language.switch');

@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Models\Advertisement;
+use App\Models\AdvertisementStat;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class AdvertisementRepository
@@ -12,7 +14,10 @@ class AdvertisementRepository
      */
     public function advertisementList($request)
     {
-        $query = Advertisement::orderBy('sort_order', 'ASC')->orderBy('id', 'DESC');
+        $query = Advertisement::withCount([
+            'stats as total_impressions' => fn($q) => $q->select(DB::raw('COALESCE(SUM(impressions),0)')),
+            'stats as total_clicks'      => fn($q) => $q->select(DB::raw('COALESCE(SUM(clicks),0)')),
+        ])->orderBy('sort_order', 'ASC')->orderBy('id', 'DESC');
 
         if ($request->has('search') && $request['search'] != null) {
             $query->where('title', 'like', '%' . $request['search'] . '%');
@@ -131,5 +136,72 @@ class AdvertisementRepository
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    /**
+     * Increment today's impression count for an ad
+     */
+    public function recordImpression(int $id): void
+    {
+        AdvertisementStat::upsert(
+            [
+                'advertisement_id' => $id,
+                'date'             => Carbon::today()->toDateString(),
+                'impressions'      => 1,
+                'clicks'           => 0,
+            ],
+            ['advertisement_id', 'date'],
+            ['impressions' => DB::raw('impressions + 1')]
+        );
+    }
+
+    /**
+     * Increment today's click count for an ad
+     */
+    public function recordClick(int $id): void
+    {
+        AdvertisementStat::upsert(
+            [
+                'advertisement_id' => $id,
+                'date'             => Carbon::today()->toDateString(),
+                'impressions'      => 0,
+                'clicks'           => 1,
+            ],
+            ['advertisement_id', 'date'],
+            ['clicks' => DB::raw('clicks + 1')]
+        );
+    }
+
+    /**
+     * Get daily analytics for a single ad (last 30 days by default)
+     */
+    public function getAnalytics(int $id, int $days = 30): array
+    {
+        $ad = Advertisement::withCount([
+            'stats as total_impressions' => fn($q) => $q->select(DB::raw('COALESCE(SUM(impressions),0)')),
+            'stats as total_clicks'      => fn($q) => $q->select(DB::raw('COALESCE(SUM(clicks),0)')),
+        ])->findOrFail($id);
+
+        $from = Carbon::today()->subDays($days - 1);
+
+        $rows = AdvertisementStat::where('advertisement_id', $id)
+            ->where('date', '>=', $from)
+            ->orderBy('date')
+            ->get(['date', 'impressions', 'clicks']);
+
+        // Build a full date range so days with 0 stats show on the chart
+        $dates       = [];
+        $impressions = [];
+        $clicks      = [];
+        $indexed     = $rows->keyBy(fn($r) => $r->date);
+
+        for ($i = 0; $i < $days; $i++) {
+            $d = $from->copy()->addDays($i)->toDateString();
+            $dates[]       = $d;
+            $impressions[] = $indexed->has($d) ? $indexed[$d]->impressions : 0;
+            $clicks[]      = $indexed->has($d) ? $indexed[$d]->clicks      : 0;
+        }
+
+        return compact('ad', 'dates', 'impressions', 'clicks');
     }
 }
