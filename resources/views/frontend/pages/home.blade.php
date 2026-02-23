@@ -31,93 +31,85 @@
         style="background-image: url({{ asset(get_setting('banner_bg_image', 'public/uploads/media-uploader/header1717328732.png')) }});">
         <div class="banner-v2-overlay"></div>
 
+        {{-- Decorative orbs --}}
+        <div class="banner-orb banner-orb-1"></div>
+        <div class="banner-orb banner-orb-2"></div>
+        <div class="banner-orb banner-orb-3"></div>
+
         <div class="container position-relative" style="z-index:1;">
-            <div class="row align-items-center g-4 g-xl-5 banner-v2-row">
+            <div class="banner-v3-wrap">
 
-                <!-- Left: Text + Form + Stats -->
-                <div class="col-xl-6 col-lg-7 col-md-12">
-
-                    {{-- Badge --}}
-                    @if (get_setting('banner_badge_text', '#1 Classified Ad Platform in the US'))
-                        <div class="banner-v2-badge wow fadeInDown" data-wow-delay="0.1s">
-                            <span class="badge-icon">&#127942;</span>
-                            <span>{{ get_setting('banner_badge_text', '#1 Classified Ad Platform in the US') }}</span>
-                        </div>
-                    @endif
-
-                    {{-- Main Heading --}}
-                    <h1 class="banner-v2-title wow fadeInUp" data-wow-delay="0.2s">
-                        {!! get_setting(
-                            'banner_title',
-                            'Buy <span class="banner-highlight">Anything</span> You Need,<br>Sell <span class="banner-highlight">Anything</span> You Want',
-                        ) !!}
-                    </h1>
-
-                    {{-- Sub-description --}}
-                    <p class="banner-v2-desc wow fadeInUp" data-wow-delay="0.3s">
-                        {{ get_setting('banner_description', "Country's most loved and trusted classified ad listing website. Browse thousands of classified items near you.") }}
-                    </p>
-
-                    {{-- Search Form --}}
-                    <div class="banner-v2-search-wrap wow fadeInUp" data-wow-delay="0.4s">
-                        <form action="{{ route('ad.listing.page') }}"
-                            class="d-flex align-items-stretch banner-search-location banner-v2-form" method="get">
-                            <div class="banner-v2-inputs d-flex align-items-center flex-grow-1">
-                                {{-- Keyword --}}
-                                <div class="banner-v2-input-group flex-grow-1" style="position:relative;">
-                                    <div class="banner-v2-input-icon">
-                                        <i class="fa-solid fa-magnifying-glass"></i>
-                                    </div>
-                                    <input class="banner-v2-field w-100" type="text" name="q" id="home_search"
-                                        placeholder="What are you looking for?">
-                                    <span id="all_search_result" class="search_with_text_section"></span>
-                                </div>
-                            </div>
-                            <button type="submit" class="banner-v2-btn setLocation_btn">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <span class="d-none d-sm-inline">Search</span>
-                            </button>
-                        </form>
-                    </div>
-
-                    {{-- Stats Bar --}}
-                    <div class="banner-v2-stats wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="stat-pill">
-                            <strong>{{ number_format($totalAdsCount) }}+</strong>
-                            <span>Live Ads</span>
-                        </div>
-                        <div class="stat-divider"></div>
-                        <div class="stat-pill">
-                            <strong>{{ $categories->count() }}</strong>
-                            <span>Categories</span>
-                        </div>
-                        <div class="stat-divider"></div>
-                        <div class="stat-pill">
-                            <strong>Free</strong>
-                            <span>To Post</span>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Right: Floating Category Cards --}}
-                @if ($categories->count() > 0)
-                    <div class="col-xl-6 col-lg-5 d-none d-lg-block">
-                        <div class="banner-v2-categories wow fadeInRight" data-wow-delay="0.3s">
-                            @foreach ($categories->take(6) as $cat)
-                                <a href="{{ route('ad.listing.page', $cat->permalink) }}"
-                                    class="banner-cat-card banner-cat-card-{{ $loop->iteration }}">
-                                    @if ($cat->ads_count > 0)
-                                        <span class="banner-cat-count">{{ number_format($cat->ads_count) }}</span>
-                                    @endif
-                                    <div class="banner-cat-icon">
-                                        <img src="{{ asset(getFilePath($cat->icon)) }}" alt="{{ $cat->title }}" />
-                                    </div>
-                                    <span class="banner-cat-name">{{ $cat->title }}</span>
-                                </a>
-                            @endforeach
-                        </div>
+                {{-- Badge --}}
+                @if (get_setting('banner_badge_text', '#1 Classified Ad Platform in the US'))
+                    <div class="banner-v2-badge wow fadeInDown" data-wow-delay="0.1s">
+                        <span class="badge-icon">&#127942;</span>
+                        <span>{{ get_setting('banner_badge_text', '#1 Classified Ad Platform in the US') }}</span>
                     </div>
                 @endif
+
+                {{-- Main Heading --}}
+                <h1 class="banner-v2-title wow fadeInUp" data-wow-delay="0.2s">
+                    {!! get_setting(
+                        'banner_title',
+                        'Buy <span class="banner-highlight">Anything</span> You Need,<br>Sell <span class="banner-highlight">Anything</span> You Want',
+                    ) !!}
+                </h1>
+
+                {{-- Sub-description --}}
+                <p class="banner-v2-desc wow fadeInUp" data-wow-delay="0.3s">
+                    {{ get_setting('banner_description', "Country's most loved and trusted classified ad listing website. Browse thousands of classified items near you.") }}
+                </p>
+
+                {{-- Search Form --}}
+                <div class="banner-v2-search-wrap wow fadeInUp" data-wow-delay="0.4s">
+                    <form action="{{ route('ad.listing.page') }}"
+                        class="d-flex align-items-stretch banner-search-location banner-v2-form" method="get">
+                        <div class="banner-v2-inputs d-flex align-items-center flex-grow-1">
+                            <div class="banner-v2-input-group flex-grow-1" style="position:relative;">
+                                <div class="banner-v2-input-icon">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                                <input class="banner-v2-field w-100" type="text" name="q" id="home_search"
+                                    placeholder="What are you looking for?">
+                                <span id="all_search_result" class="search_with_text_section"></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="banner-v2-btn setLocation_btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span class="d-none d-sm-inline">Search</span>
+                        </button>
+                    </form>
+                </div>
+
+                {{-- Quick browse category pills --}}
+                @if ($categories->count() > 0)
+                    <div class="banner-quick-cats wow fadeInUp" data-wow-delay="0.5s">
+                        <span class="banner-quick-label">Browse:</span>
+                        @foreach ($categories->take(8) as $cat)
+                            <a href="{{ route('ad.listing.page', $cat->permalink) }}" class="banner-quick-pill">
+                                {{ $cat->title }}
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
+
+                {{-- Stats Bar --}}
+                <div class="banner-v2-stats wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="stat-pill">
+                        <strong>{{ number_format($totalAdsCount) }}+</strong>
+                        <span>Live Ads</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-pill">
+                        <strong>{{ $categories->count() }}</strong>
+                        <span>Categories</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-pill">
+                        <strong>Free</strong>
+                        <span>To Post</span>
+                    </div>
+                </div>
 
             </div>
         </div>
