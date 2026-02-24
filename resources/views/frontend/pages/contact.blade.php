@@ -162,13 +162,13 @@
 
                                 {{-- Name --}}
                                 <div class="col-md-6">
-                                    <div class="fe-form-group">
+                                    <div class="form-group mb-20">
                                         <label class="fe-label">
                                             {{ translation('Full Name') }}
                                             <span class="required">*</span>
                                         </label>
                                         <input type="text" name="name" value="{{ old('name') }}"
-                                            class="fe-input {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                            class="input-style {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                             placeholder="{{ translation('Enter your full name') }}" required>
                                         @error('name')
                                             <span class="fe-invalid-feedback">{{ $message }}</span>
@@ -178,13 +178,13 @@
 
                                 {{-- Email --}}
                                 <div class="col-md-6">
-                                    <div class="fe-form-group">
+                                    <div class="form-group mb-20">
                                         <label class="fe-label">
                                             {{ translation('Email Address') }}
                                             <span class="required">*</span>
                                         </label>
                                         <input type="email" name="email" value="{{ old('email') }}"
-                                            class="fe-input {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                                            class="input-style {{ $errors->has('email') ? 'is-invalid' : '' }}"
                                             placeholder="{{ translation('Enter your email') }}" required>
                                         @error('email')
                                             <span class="fe-invalid-feedback">{{ $message }}</span>
@@ -194,13 +194,13 @@
 
                                 {{-- Subject --}}
                                 <div class="col-12">
-                                    <div class="fe-form-group">
+                                    <div class="form-group mb-20">
                                         <label class="fe-label">
                                             {{ translation('Subject') }}
                                             <span class="required">*</span>
                                         </label>
                                         <input type="text" name="subject" value="{{ old('subject') }}"
-                                            class="fe-input {{ $errors->has('subject') ? 'is-invalid' : '' }}"
+                                            class="input-style {{ $errors->has('subject') ? 'is-invalid' : '' }}"
                                             placeholder="{{ translation('What is this about?') }}" required>
                                         @error('subject')
                                             <span class="fe-invalid-feedback">{{ $message }}</span>
@@ -210,12 +210,12 @@
 
                                 {{-- Message --}}
                                 <div class="col-12">
-                                    <div class="fe-form-group">
+                                    <div class="form-group mb-20">
                                         <label class="fe-label">
                                             {{ translation('Message') }}
                                             <span class="required">*</span>
                                         </label>
-                                        <textarea name="message" rows="6" class="fe-input {{ $errors->has('message') ? 'is-invalid' : '' }}"
+                                        <textarea name="message" rows="6" class="input-style {{ $errors->has('message') ? 'is-invalid' : '' }}"
                                             placeholder="{{ translation('Write your message here...') }}" required>{{ old('message') }}</textarea>
                                         @error('message')
                                             <span class="fe-invalid-feedback">{{ $message }}</span>
@@ -225,7 +225,7 @@
 
                                 {{-- Submit --}}
                                 <div class="col-12">
-                                    <button type="submit" class="fe-btn fe-btn-primary fe-btn-lg">
+                                    <button type="submit" class="cmn-btn1">
                                         <i class="las la-paper-plane"></i>
                                         {{ translation('Send Message') }}
                                     </button>

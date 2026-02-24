@@ -10,7 +10,7 @@
                 <div class="click-mobile-menu">
                     {{-- Mobile: user account or sign in (visible only on mobile) --}}
                     @if (auth()->user() == null)
-                        <a href="{{ route('member.login') }}" class="cmn-btn sign-in mobile-sign-in d-flex d-lg-none">
+                        <a href="{{ route('member.login') }}" class="cmn-btn1 sign-in mobile-sign-in d-flex d-lg-none">
                             Sign In
                         </a>
                     @else
@@ -140,7 +140,7 @@
                     @if (auth()->user() == null)
                         <li>
                             <div class="btn-wrapper">
-                                <a href="{{ route('member.login') }}" class="cmn-btn sign-in">
+                                <a href="{{ route('member.login') }}" class="cmn-btn1 sign-in">
                                     Sign In
                                 </a>
                             </div>

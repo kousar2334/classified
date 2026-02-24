@@ -103,7 +103,7 @@
                     @endif
                 </div>
 
-                <button type="submit" class="auth-submit-btn user-register-form sign_up_now_button">
+                <button type="submit" class="cmn-btn1 w-100 user-register-form sign_up_now_button">
                     Create Account <span id="user_register_load_spinner"></span>
                 </button>
             </form>

@@ -34,25 +34,6 @@
             color: var(--primary);
         }
 
-        .submit-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.65rem 1.5rem;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.15s;
-        }
-
-        .submit-btn:hover {
-            opacity: 0.85;
-        }
-
         .social-notice {
             display: flex;
             align-items: flex-start;
@@ -141,26 +122,6 @@
             display: none;
         }
 
-        .avatar-save-btn {
-            display: none;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.55rem 1.1rem;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.15s;
-            margin-left: 0.5rem;
-        }
-
-        .avatar-save-btn:hover {
-            opacity: 0.85;
-        }
-
         @media (max-width: 768px) {
             .account-grid {
                 grid-template-columns: 1fr;
@@ -199,7 +160,7 @@
                     <label for="profileImageInput" class="avatar-file-label">
                         <i class="fa-solid fa-arrow-up-from-bracket"></i> Choose Photo
                     </label>
-                    <button type="submit" class="avatar-save-btn" id="avatarSaveBtn">
+                    <button type="submit" class="cmn-btn1" id="avatarSaveBtn" style="display:none">
                         <i class="fa-solid fa-floppy-disk"></i> Upload
                     </button>
                     <input type="file" name="profile_image" id="profileImageInput" class="avatar-file-input"
@@ -255,7 +216,7 @@
                 </div>
 
                 <div class="form-group mb-0">
-                    <button type="submit" class="submit-btn">
+                    <button type="submit" class="cmn-btn1">
                         <i class="fa-solid fa-floppy-disk"></i> Save Changes
                     </button>
                 </div>
@@ -323,7 +284,7 @@
                     </div>
 
                     <div class="form-group mb-0">
-                        <button type="submit" class="submit-btn">
+                        <button type="submit" class="cmn-btn1">
                             <i class="fa-solid fa-key"></i> Update Password
                         </button>
                     </div>

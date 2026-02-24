@@ -89,7 +89,7 @@
                     <div class="modal-footer flex-column">
                         <div class="btn-wrapper text-center">
                             <button type="submit"
-                                class="cmn-btn4 w-100 mb-60 login_to_buy_a_membership">{{ translation('Login') }}</button>
+                                class="cmn-btn1 w-100 login_to_buy_a_membership">{{ translation('Login') }}</button>
                         </div>
                     </div>
                 </div>

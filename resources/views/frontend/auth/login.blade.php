@@ -81,7 +81,7 @@
                     </label>
                 </div>
 
-                <button type="submit" class="auth-submit-btn">Sign In</button>
+                <button type="submit" class="cmn-btn1 w-100">Sign In</button>
             </form>
 
             <p class="auth-switch-text">

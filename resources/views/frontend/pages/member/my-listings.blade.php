@@ -165,7 +165,7 @@
                     <span>+</span> Post Your First Ad
                 </a>
             @else
-                <a href="{{ route('member.my.listings') }}" class="cmn-btn">
+                <a href="{{ route('member.my.listings') }}" class="cmn-btn1">
                     View All Listings
                 </a>
             @endif
