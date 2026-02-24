@@ -21977,17 +21977,6 @@ select.input-style {
     letter-spacing: -0.8px;
 }
 
-.banner-v2-title span:not(.banner-highlight) {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
-}
-
-.banner-highlight {
-    background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-color-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
 
 /* ── Description ── */
 .banner-v2-desc {

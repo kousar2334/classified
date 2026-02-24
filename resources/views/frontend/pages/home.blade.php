@@ -49,10 +49,7 @@
 
                 {{-- Main Heading --}}
                 <h1 class="banner-v2-title wow fadeInUp" data-wow-delay="0.2s">
-                    {!! get_setting(
-                        'banner_title',
-                        'Buy <span class="banner-highlight">Anything</span> You Need,<br>Sell <span class="banner-highlight">Anything</span> You Want',
-                    ) !!}
+                    {{ get_setting('banner_title', 'Buy & Sell Anything, All in One Place') }}
                 </h1>
 
                 {{-- Sub-description --}}
@@ -67,7 +64,7 @@
                         <div class="banner-v2-inputs d-flex align-items-center flex-grow-1">
                             <div class="banner-v2-input-group flex-grow-1" style="position:relative;">
                                 <div class="banner-v2-input-icon">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <i class="las la-search"></i>
                                 </div>
                                 <input class="banner-v2-field w-100" type="text" name="q" id="home_search"
                                     placeholder="What are you looking for?">
@@ -75,7 +72,7 @@
                             </div>
                         </div>
                         <button type="submit" class="banner-v2-btn setLocation_btn">
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <i class="las la-search"></i>
                             <span class="d-none d-sm-inline">Search</span>
                         </button>
                     </form>
