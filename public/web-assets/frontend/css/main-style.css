@@ -25983,6 +25983,7 @@ select.input-style {
     font-size: 12px;
     color: #64748b;
 }
+
 /* ============================================================
    Ad Listing Page
    ============================================================ */
@@ -26016,8 +26017,13 @@ select.input-style {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 #map-container {
@@ -26143,9 +26149,9 @@ input[type="range"]::-moz-range-thumb {
     color: var(--main-color-one);
 }
 
-.category-item.active > .category-link,
-.subcategory-item.active > .subcategory-link,
-.location-item.active > .location-link {
+.category-item.active>.category-link,
+.subcategory-item.active>.subcategory-link,
+.location-item.active>.location-link {
     background-color: var(--main-color-one);
     color: white;
 }
@@ -26155,7 +26161,7 @@ input[type="range"]::-moz-range-thumb {
     transition: transform 0.3s ease;
 }
 
-.category-item.has-children.active > .category-link .category-arrow {
+.category-item.has-children.active>.category-link .category-arrow {
     transform: rotate(90deg);
 }
 
@@ -26254,7 +26260,7 @@ input[type="range"]::-moz-range-thumb {
     margin: 0;
 }
 
-.filter-radio-label input[type="radio"]:checked + span {
+.filter-radio-label input[type="radio"]:checked+span {
     color: var(--main-color-one);
     font-weight: 500;
 }
@@ -26438,5 +26444,510 @@ input[type="range"]::-moz-range-thumb {
         background: #f1f5f9;
         border-color: var(--main-color-one);
         color: var(--main-color-one);
+    }
+}
+
+/* ============================================================
+   Ad Details Page
+   ============================================================ */
+.list-info-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
+    padding: 18px;
+    margin-bottom: 20px;
+}
+
+/* ── Sidebar: Seller Card ──────────────────────────────────── */
+.sid-seller-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.sid-avatar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.sid-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e2e8f0;
+}
+
+.sid-member-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.sid-seller-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.sid-seller-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.sid-verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background: #3b82f6;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    padding: 2px 7px;
+    border-radius: 20px;
+}
+
+.sid-seller-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.sid-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #94a3b8;
+    display: inline-block;
+}
+
+/* ── Sidebar: Contact Card ──────────────────────────────────── */
+.sid-contact-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, .08);
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.sid-action-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    transition: background .15s;
+}
+
+.sid-action-row:hover {
+    background: #f8fafc;
+    color: inherit;
+    text-decoration: none;
+}
+
+.sid-icon-wrap {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.sid-icon-phone {
+    background: #22c55e;
+}
+
+.sid-icon-chat {
+    background: #f59e0b;
+}
+
+.sid-icon-whatsapp {
+    background: #25d366;
+}
+
+.sid-action-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.sid-action-text span {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.sid-action-text small {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.sid-action-arrow {
+    flex-shrink: 0;
+}
+
+.sid-divider {
+    height: 1px;
+    background: #f1f5f9;
+    margin: 0 18px;
+}
+
+/* ── Message modal ─────────────────────────────────────────── */
+#messageSellerModal .modal-content {
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+#messageSellerModal .modal-header {
+    background: var(--main-color-one);
+    border-bottom: none;
+    padding: 18px 22px;
+}
+
+#messageSellerModal .modal-title {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#messageSellerModal .btn-close {
+    filter: invert(1) brightness(2);
+}
+
+#messageSellerModal .modal-body {
+    padding: 22px;
+}
+
+#messageSellerModal .msg-listing-ref {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: #475569;
+}
+
+#messageSellerModal .msg-listing-ref strong {
+    color: #1e293b;
+}
+
+#messageSellerModal textarea.form-control {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 14px;
+    resize: none;
+    transition: border-color .2s;
+}
+
+#messageSellerModal textarea.form-control:focus {
+    border-color: var(--main-color-one);
+    box-shadow: none;
+}
+
+#messageSellerModal .modal-footer {
+    border-top: 1px solid #f1f5f9;
+    padding: 14px 22px;
+    gap: 10px;
+}
+
+#messageSellerModal .modal-send-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 22px;
+    background: var(--main-color-one);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter .2s;
+}
+
+#messageSellerModal .modal-send-btn:hover {
+    filter: brightness(1.08);
+}
+
+/* ── Actions Card (Save, Report, Share) ─────────────────────── */
+.sid-quick-actions {
+    display: flex;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.sid-quick-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 14px 10px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+    transition: background .15s, color .15s;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.sid-quick-btn:hover {
+    background: #f8fafc;
+    color: #1e293b;
+    text-decoration: none;
+}
+
+.sid-quick-btn i {
+    font-size: 17px;
+}
+
+.sid-fav-btn i {
+    color: #ef4444;
+}
+
+.sid-fav-btn:hover,
+.sid-fav-btn.is-favourited {
+    color: #ef4444;
+}
+
+.sid-fav-btn.is-favourited i {
+    font-weight: 900;
+}
+
+.sid-report-btn:hover {
+    color: #ef4444;
+}
+
+.sid-quick-sep {
+    width: 1px;
+    background: #f1f5f9;
+    flex-shrink: 0;
+}
+
+.sid-share-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+}
+
+.sid-share-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    white-space: nowrap;
+}
+
+.sid-share-icons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.sid-share-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 14px;
+    color: #fff;
+    transition: transform .15s, filter .15s;
+}
+
+.sid-share-icon:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.12);
+    color: #fff;
+}
+
+.sid-share-fb {
+    background: #1877f2;
+}
+
+.sid-share-tw {
+    background: #000;
+}
+
+.sid-share-pt {
+    background: #e60023;
+}
+
+.sid-share-wa {
+    background: #25d366;
+}
+
+/* ── Misc ────────────────────────────────────────────────────── */
+img.no-image {
+    max-width: 400px;
+    margin: auto;
+}
+
+.slick_slider_item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: max-content;
+}
+
+.slick_slider_item a {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgb(243, 243, 247);
+    padding: 8px 16px 8px 12px;
+    font-size: 15px;
+    font-weight: initial;
+    line-height: 16px;
+    letter-spacing: 0.25px;
+    transition: all;
+}
+
+.product-view-wrap .shop-details-gallery-slider {
+    position: relative;
+}
+
+.product-view-wrap .shop-details-gallery-slider .prev-icon,
+.product-view-wrap .shop-details-gallery-slider .next-icon {
+    cursor: pointer;
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 10;
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.5) !important;
+    color: #fff !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50% !important;
+    border: none !important;
+    line-height: normal !important;
+    right: auto !important;
+    left: auto !important;
+}
+
+.product-view-wrap .shop-details-gallery-slider .prev-icon {
+    left: 10px !important;
+}
+
+.product-view-wrap .shop-details-gallery-slider .next-icon {
+    right: 10px !important;
+}
+
+.product-view-wrap .shop-details-gallery-slider .prev-icon i,
+.product-view-wrap .shop-details-gallery-slider .next-icon i {
+    font-size: 20px;
+    color: #fff !important;
+    position: static !important;
+}
+
+.zoom-img {
+    width: 100%;
+    display: block;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 767px) {
+    .proDetails.section-padding2 {
+        padding-top: 20px;
+    }
+
+    .product-name-price {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .product-name {
+        font-size: 18px !important;
+    }
+
+    .price {
+        text-align: left !important;
+    }
+
+    .date-location {
+        flex-wrap: wrap;
+        gap: 4px 0;
+    }
+
+    .date-location .vartical-devider {
+        display: none;
+    }
+
+    .date-location>span {
+        display: block;
+        width: 100%;
+    }
+
+    .descriptionTop .row>div {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .sid-share-row {
+        flex-wrap: wrap;
+        padding: 12px 14px;
+    }
+
+    .sid-quick-btn {
+        font-size: 12px;
+        padding: 12px 6px;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .product-view-wrap .shop-details-gallery-slider .prev-icon,
+    .product-view-wrap .shop-details-gallery-slider .next-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .product-view-wrap .shop-details-gallery-slider .prev-icon i,
+    .product-view-wrap .shop-details-gallery-slider .next-icon i {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .descriptionTop .row>div {
+        flex: 0 0 100%;
+        max-width: 100%;
     }
 }
