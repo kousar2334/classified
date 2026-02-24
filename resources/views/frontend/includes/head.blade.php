@@ -39,7 +39,7 @@
     <link rel="canonical" href="#" />
     <style>
         :root {
-            --main-color-one: rgb(53, 146, 252);
+            --main-color-one: rgb(31, 211, 85);
             --main-color-two: rgb(82, 78, 183);
             --main-color-three: rgb(0, 202, 213);
             --heading-color: #333333;
