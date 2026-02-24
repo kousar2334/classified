@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/plugin.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/main-style.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/helpers.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/new-css-add.css') }}">
 
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/common/css/toastr.min.css') }}">
