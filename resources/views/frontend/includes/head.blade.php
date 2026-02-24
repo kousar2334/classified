@@ -38,8 +38,14 @@
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/all.min.css') }}">
     <link rel="canonical" href="#" />
     <style>
+        /* ── Site-wide primary color override from admin settings.
+           Changing --primary-color here recolours buttons, footer,
+           badges, sidebar and every element that uses the variable. ── */
         :root {
-            --main-color-one: rgb(31, 211, 85);
+            --primary-color: rgb(31, 211, 85);
+            /* ← master brand color */
+            --main-color-one: var(--primary-color);
+            /* backward-compat alias */
             --main-color-two: rgb(82, 78, 183);
             --main-color-three: rgb(0, 202, 213);
             --heading-color: #333333;

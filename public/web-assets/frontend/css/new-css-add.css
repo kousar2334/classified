@@ -568,7 +568,7 @@ span.popup_contents__close.popup_close i {
 
 .auth-forgot-link {
     font-size: 13px;
-    color: var(--main-color-one, #3592fc);
+    color: var(--primary-color);
     text-decoration: none;
     font-weight: 500;
 }
@@ -590,8 +590,8 @@ span.popup_contents__close.popup_close i {
 }
 
 .auth-input:focus {
-    border-color: var(--main-color-one, #3592fc);
-    box-shadow: 0 0 0 3px rgba(53, 146, 252, 0.12);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 12%, transparent);
     background: #fff;
 }
 
@@ -618,12 +618,12 @@ span.popup_contents__close.popup_close i {
 .auth-checkbox-label input[type="checkbox"] {
     width: 16px;
     height: 16px;
-    accent-color: var(--main-color-one, #3592fc);
+    accent-color: var(--primary-color);
     cursor: pointer;
 }
 
 .auth-link {
-    color: var(--main-color-one, #3592fc);
+    color: var(--primary-color);
     text-decoration: none;
 }
 
@@ -634,7 +634,7 @@ span.popup_contents__close.popup_close i {
 .auth-submit-btn {
     width: 100%;
     padding: 13px;
-    background: var(--main-color-one, #3592fc);
+    background: var(--primary-color);
     color: #fff;
     border: none;
     border-radius: 10px;
@@ -647,8 +647,8 @@ span.popup_contents__close.popup_close i {
 }
 
 .auth-submit-btn:hover {
-    background: #1a7fe8;
-    box-shadow: 0 6px 20px rgba(53, 146, 252, 0.35);
+    background: var(--primary-color-dark, var(--primary-color));
+    box-shadow: 0 6px 20px color-mix(in srgb, var(--primary-color) 35%, transparent);
 }
 
 .auth-switch-text {
@@ -659,7 +659,7 @@ span.popup_contents__close.popup_close i {
 }
 
 .auth-switch-link {
-    color: var(--main-color-one, #3592fc);
+    color: var(--primary-color);
     font-weight: 600;
     text-decoration: none;
 }
@@ -705,7 +705,7 @@ span.popup_contents__close.popup_close i {
 
 .lang-switcher .lang-trigger i.la-globe {
     font-size: 18px;
-    color: var(--main-color-one, #3592fc);
+    color: var(--primary-color);
 }
 
 .lang-switcher .lang-trigger .caret-icon {
@@ -735,11 +735,11 @@ span.popup_contents__close.popup_close i {
 
 .lang-dropdown .dropdown-item:hover {
     background: #f0f6ff;
-    color: var(--main-color-one, #3592fc);
+    color: var(--primary-color);
 }
 
 .lang-dropdown .dropdown-item.active {
-    background: var(--main-color-one, #3592fc);
+    background: var(--primary-color);
     color: #fff;
 }
 
