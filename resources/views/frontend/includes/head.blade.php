@@ -10,17 +10,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;regular;500;600;700;800;900&display=swap"
         rel="stylesheet">
-
-    <style>
-        /*heading font*/
-        :root {
-            --heading-font1: 'Inter', sans-serif !important;
-            --heading-font: 'Inter', sans-serif !important;
-            --body-font1: 'Inter', sans-serif !important;
-            --body-font: 'Inter', sans-serif !important;
-        }
-    </style>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -38,24 +27,6 @@
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/jquery.ihavecookies.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/frontend/css/all.min.css') }}">
     <link rel="canonical" href="#" />
-    <style>
-        /* ── Site-wide primary color override from admin settings.
-           Changing --primary-color here recolours buttons, footer,
-           badges, sidebar and every element that uses the variable. ── */
-        :root {
-            --primary-color: rgb(31, 211, 85);
-            /* ← master brand color */
-            --main-color-one: var(--primary-color);
-            /* backward-compat alias */
-            --main-color-two: rgb(82, 78, 183);
-            --main-color-three: rgb(0, 202, 213);
-            --heading-color: #333333;
-            --light-color: rgb(0, 0, 0);
-            --extra-light-color: rgb(56, 147, 106);
-            --heading-font: Inter, sans-serif;
-            --body-font: Inter, sans-serif;
-        }
-    </style>
     @yield('meta')
 
 </head>
