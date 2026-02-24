@@ -10,8 +10,11 @@ use App\Http\Controllers\Frontend\MessageController;
 use App\Http\Controllers\Frontend\AccountController;
 use App\Http\Controllers\Frontend\SubscriptionController;
 use App\Http\Controllers\Backend\LanguageController;
+use App\Http\Controllers\Frontend\ContactController;
 
 Route::get('/', [PageController::class, 'homePage'])->name('home');
+Route::get('/contact', [ContactController::class, 'contactPage'])->name('contact');
+Route::post('/contact/send', [ContactController::class, 'sendMessage'])->name('contact.send');
 
 // Advertisement tracking (public, lightweight)
 Route::post('/ad/impression', [AdvertisementController::class, 'trackImpression'])->name('ad.track.impression');
@@ -20,6 +23,28 @@ Route::post('/ad/click', [AdvertisementController::class, 'trackClick'])->name('
 // Language Switcher (frontend public route)
 Route::get('/language/switch/{code}', [LanguageController::class, 'setSessionLanguage'])->name('frontend.language.switch');
 Route::get('/pricing-plans', [PageController::class, 'pricingPlans'])->name('pricing.plans');
+
+
+// SSLCommerz callbacks (no auth middleware — called by gateway)
+Route::post('/membership/ssl-success', [SubscriptionController::class, 'sslSuccess'])->name('subscription.ssl.success');
+Route::post('/membership/ssl-fail', [SubscriptionController::class, 'sslFail'])->name('subscription.ssl.fail');
+Route::post('/membership/ssl-cancel', [SubscriptionController::class, 'sslCancel'])->name('subscription.ssl.cancel');
+Route::post('/membership/ssl-ipn', [SubscriptionController::class, 'sslIpn'])->name('subscription.ssl.ipn');
+
+//Listing Routes
+Route::get('/post/listing', [AdController::class, 'addPostPage'])->name('ad.post.page');
+Route::post('/post/ad', [AdController::class, 'storeAd'])->name('ad.store');
+Route::get('/ad/subcategories', [AdController::class, 'getSubcategories'])->name('ad.subcategories');
+Route::get('/ad/custom-fields', [AdController::class, 'getCustomFields'])->name('ad.custom.fields');
+Route::get('/ad/countries', [AdController::class, 'getCountries'])->name('ad.countries');
+Route::get('/ad/states', [AdController::class, 'getStates'])->name('ad.states');
+Route::get('/ad/cities', [AdController::class, 'getCities'])->name('ad.cities');
+Route::get('listings/{category_slug?}', [AdController::class, 'adListingPage'])->name('ad.listing.page');
+Route::get('/listings/details/{slug}', [AdController::class, 'adDetailsPage'])->name('ad.details.page');
+
+//Location Routes
+Route::get('/state/list', [LocationController::class, 'stateListofCountry'])->name('location.country.states.options');
+Route::get('/city/list', [LocationController::class, 'cityListofState'])->name('location.state.cities.options');
 
 //Auth Routes
 Route::group(['middleware' => ['guest']], function () {
@@ -67,26 +92,4 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/membership/buy', [SubscriptionController::class, 'buy'])->name('membership.buy');
     Route::post('/membership/initiate-payment', [SubscriptionController::class, 'initiatePayment'])->name('membership.initiate.payment');
 });
-
-// SSLCommerz callbacks (no auth middleware — called by gateway)
-Route::post('/membership/ssl-success', [SubscriptionController::class, 'sslSuccess'])->name('subscription.ssl.success');
-Route::post('/membership/ssl-fail', [SubscriptionController::class, 'sslFail'])->name('subscription.ssl.fail');
-Route::post('/membership/ssl-cancel', [SubscriptionController::class, 'sslCancel'])->name('subscription.ssl.cancel');
-Route::post('/membership/ssl-ipn', [SubscriptionController::class, 'sslIpn'])->name('subscription.ssl.ipn');
-
-//Listing Routes
-Route::get('/post/listing', [AdController::class, 'addPostPage'])->name('ad.post.page');
-Route::post('/post/ad', [AdController::class, 'storeAd'])->name('ad.store');
-Route::get('/ad/subcategories', [AdController::class, 'getSubcategories'])->name('ad.subcategories');
-Route::get('/ad/custom-fields', [AdController::class, 'getCustomFields'])->name('ad.custom.fields');
-Route::get('/ad/countries', [AdController::class, 'getCountries'])->name('ad.countries');
-Route::get('/ad/states', [AdController::class, 'getStates'])->name('ad.states');
-Route::get('/ad/cities', [AdController::class, 'getCities'])->name('ad.cities');
-Route::get('listings/{category_slug?}', [AdController::class, 'adListingPage'])->name('ad.listing.page');
-Route::get('/listings/details/{slug}', [AdController::class, 'adDetailsPage'])->name('ad.details.page');
-
-//Location Routes
-Route::get('/state/list', [LocationController::class, 'stateListofCountry'])->name('location.country.states.options');
-Route::get('/city/list', [LocationController::class, 'cityListofState'])->name('location.state.cities.options');
-
 require __DIR__ . '/admin.php';

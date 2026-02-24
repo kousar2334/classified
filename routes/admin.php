@@ -106,6 +106,7 @@ Route::prefix('admin')->group(function () {
          */
         Route::group(['middleware' => 'can:Manage Message'], function () {
             Route::get('messages', [ContactUsController::class, 'messages'])->name('admin.contact.us.message.list');
+            Route::post('messages/reply', [ContactUsController::class, 'replyMessage'])->name('admin.contact.us.message.reply');
             Route::post('delete/message', [ContactUsController::class, 'deleteMessage'])->name('admin.contact.us.message.delete');
         });
 

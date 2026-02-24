@@ -213,6 +213,21 @@
                     </a>
                 </li>
                 <!--End Advertisement Module-->
+
+                <!--Contact Messages Module-->
+                @can('Manage Message')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.contact.us.message.list') }}"
+                            class="nav-link {{ Request::routeIs(['admin.contact.us.message.list']) ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-envelope-open-text"></i>
+                            <p>
+                                {{ translation('Contact Messages') }}
+                            </p>
+                        </a>
+                    </li>
+                @endcan
+                <!--End Contact Messages Module-->
+
                 <!--Media Module-->
                 @can('Manage Media')
                     <li class="nav-item">
