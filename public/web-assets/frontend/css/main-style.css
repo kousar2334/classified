@@ -22005,25 +22005,24 @@ select.input-style {
     margin-bottom: 24px;
 }
 
-/* Outer form: transparent, gap between input box and button */
+/* Outer form: grouped pill container */
 .banner-v2-form {
-    background: transparent;
-    border-radius: 0;
-    box-shadow: none;
-    overflow: visible;
+    border-radius: 50px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
     position: relative;
-    gap: 12px;
+    gap: 0;
     align-items: stretch;
 }
 
-/* Input box — standalone pill */
+/* Input box — white background */
 .banner-v2-inputs {
     flex: 1;
     overflow: visible;
     min-width: 0;
-    background: #ffffff;
-    border-radius: 50px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    background: #fff;
+    border-radius: 0;
+    box-shadow: none;
 }
 
 .banner-v2-input-group {
@@ -22061,22 +22060,28 @@ select.input-style {
     color: var(--color-9);
 }
 
+.banner-v2-form .banner-v2-field:focus {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
 .banner-v2-divider {
     display: none;
 }
 
-/* Button — standalone pill */
+/* Button — attached to the right of the pill */
 .banner-v2-btn {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-dark) 100%);
+    background: var(--primary-color);
     color: #fff;
     border: none;
-    border-radius: 50px;
+    border-radius: 0;
     padding: 0 36px;
     font-size: 15px;
     font-weight: 700;
     cursor: pointer;
     white-space: nowrap;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    transition: background 0.25s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -22084,13 +22089,11 @@ select.input-style {
     height: 58px;
     flex-shrink: 0;
     letter-spacing: 0.2px;
-    box-shadow: 0 8px 24px rgba(247, 102, 49, 0.35);
+    box-shadow: none;
 }
 
 .banner-v2-btn:hover {
-    background: linear-gradient(135deg, var(--primary-color-dark) 0%, #c93a08 100%);
-    box-shadow: 0 12px 32px rgba(247, 102, 49, 0.55);
-    transform: translateY(-2px);
+    background: var(--primary-color-dark);
     color: #fff;
 }
 
@@ -22277,11 +22280,17 @@ select.input-style {
     .banner-v2-form {
         flex-direction: column;
         gap: 10px;
+        background: transparent;
+        border-radius: 0;
+        box-shadow: none;
+        overflow: visible;
     }
 
     .banner-v2-inputs {
         width: 100%;
         border-radius: 50px;
+        background: #fff;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
     }
 
     .banner-v2-input-group {
@@ -22371,16 +22380,22 @@ select.input-style {
    Promo / About Section
    ============================================================ */
 .promoSection {
-    padding: 60px 0;
+    padding: 40px 0;
     background-color: #fff;
 }
 
 .promoWrapper {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-light) 60%, var(--primary-color-lighter) 100%);
     border-radius: 24px;
-    padding: 60px 70px;
+    padding: 50px 70px;
     position: relative;
     overflow: hidden;
+    text-align: center;
+}
+
+.promo-compact-content {
+    max-width: 680px;
+    margin: 0 auto;
 }
 
 /* Decorative background circles */
@@ -22424,19 +22439,19 @@ select.input-style {
 /* Heading */
 .promo-heading {
     color: #fff;
-    font-size: clamp(28px, 4vw, 44px);
+    font-size: clamp(22px, 3vw, 34px);
     font-weight: 800;
     line-height: 1.2;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
 }
 
 /* Body text */
 .promo-text {
     color: rgba(255, 255, 255, 0.88);
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.7;
-    max-width: 430px;
-    margin-bottom: 36px;
+    max-width: 540px;
+    margin: 0 auto 28px;
 }
 
 /* Primary CTA button */
@@ -22546,11 +22561,6 @@ select.input-style {
 @media (max-width: 575px) {
     .promoWrapper {
         padding: 30px 20px;
-    }
-
-    .promo-stat-card {
-        left: 50%;
-        transform: translateX(-50%);
     }
 }
 }
