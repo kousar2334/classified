@@ -24549,8 +24549,7 @@ img.no-image {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.1rem;
-    padding-bottom: 0.875rem;
+    padding: 0.775rem;
     border-bottom: 1px solid var(--border);
 }
 
@@ -24558,6 +24557,7 @@ img.no-image {
     font-size: 0.95rem;
     font-weight: 700;
     color: var(--text-dark);
+    margin-bottom: 0px;
 }
 
 .view-all {
