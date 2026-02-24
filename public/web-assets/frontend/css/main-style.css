@@ -23580,35 +23580,46 @@ input[type="range"]::-moz-range-thumb {
 .price_range_setup {
     margin-top: 16px;
     margin-bottom: 8px;
+    padding: 8px 0;
 }
 
-.price_range_setup .noUi-horizontal {
-    height: 6px;
+/* Use 3-class specificity to beat .cateSidebar1 .catagoriesWraper .noUi-horizontal (also 3 classes) */
+.catagoriesWraper .price_range_setup .noUi-horizontal {
+    height: 4px;
     border: none;
     box-shadow: none;
     background: var(--color-15);
-    border-radius: 3px;
+    border-radius: 2px;
+    overflow: visible;
 }
 
-.price_range_setup .noUi-connect {
+.catagoriesWraper .price_range_setup .noUi-connect {
     background: var(--main-color-one);
 }
 
-.price_range_setup .noUi-handle {
-    width: 18px;
-    height: 18px;
+/* 3-class specificity ensures handle size beats all global rules */
+.catagoriesWraper .price_range_setup .noUi-handle {
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: var(--main-color-one);
     border: 2px solid #fff;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
     cursor: pointer;
-    top: -7px;
-    right: -9px;
+    top: -6px;
+    right: -8px;
 }
 
-.price_range_setup .noUi-handle::before,
-.price_range_setup .noUi-handle::after {
+.catagoriesWraper .price_range_setup .noUi-handle::before,
+.catagoriesWraper .price_range_setup .noUi-handle::after {
     display: none;
+}
+
+/* Reset touch-area inside price slider — the handle itself provides the colour */
+.price_range_setup .noUi-handle .noUi-touch-area {
+    background: transparent;
+    border: none;
+    border-radius: 0;
 }
 
 /* Search input button */
