@@ -17,7 +17,8 @@
                 @endphp
                 <div class="chat-header">
                     @if ($other && $other->image)
-                        <img src="{{ getFilePath($other->image) }}" alt="{{ $other->name }}" class="chat-header-avatar">
+                        <img src="{{ asset(getFilePath($other->image)) }}" alt="{{ $other->name }}"
+                            class="chat-header-avatar">
                     @else
                         <div class="chat-header-placeholder">{{ strtoupper(substr($other->name ?? 'U', 0, 1)) }}
                         </div>
@@ -51,7 +52,7 @@
                         @php $isMine = $msg->sender_id === auth()->id(); @endphp
                         <div class="msg-bubble-wrap {{ $isMine ? 'mine' : '' }}">
                             @if ($msg->sender && $msg->sender->image)
-                                <img src="{{ getFilePath($msg->sender->image) }}" alt="{{ $msg->sender->name }}"
+                                <img src="{{ asset(getFilePath($msg->sender->image)) }}" alt="{{ $msg->sender->name }}"
                                     class="bubble-avatar">
                             @else
                                 <div class="bubble-avatar-placeholder">

@@ -30,7 +30,7 @@
                                 <a href="{{ route('member.messages.show', $chat->uid) }}"
                                     class="msg-list-item {{ $unread > 0 ? 'unread' : '' }}">
                                     @if ($other && $other->image)
-                                        <img src="{{ getFilePath($other->image) }}" alt="{{ $other->name }}"
+                                        <img src="{{ asset(getFilePath($other->image)) }}" alt="{{ $other->name }}"
                                             class="msg-avatar">
                                     @else
                                         <div class="msg-avatar-placeholder">
