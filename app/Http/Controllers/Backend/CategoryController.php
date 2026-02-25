@@ -56,7 +56,7 @@ class CategoryController extends Controller
         return redirect()->back();
     }
     /**
-     * Will redirect category edit page
+     * Will redirect category edit page (AJAX modal — kept for backwards compat)
      */
     public function categoryEdit(Request $request): JsonResponse|View
     {
@@ -67,6 +67,15 @@ class CategoryController extends Controller
             'success' => true,
             'html' => view('backend.modules.ads.categories.edit', ['category' => $category])->render()
         ]);
+    }
+
+    /**
+     * Will show dedicated category edit page with language tabs
+     */
+    public function categoryEditPage(int $id, Request $request): View
+    {
+        $category = $this->category_repository->categoryDetails($id);
+        return view('backend.modules.ads.categories.edit_page', ['category' => $category]);
     }
 
     /**

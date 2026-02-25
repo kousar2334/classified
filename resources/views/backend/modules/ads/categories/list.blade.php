@@ -89,10 +89,10 @@
                                                         data-toggle="dropdown" aria-expanded="false">
                                                     </button>
                                                     <div class="dropdown-menu" role="menu">
-                                                        <button class="dropdown-item edit-item"
-                                                            data-id="{{ $category->id }}">
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('classified.ads.categories.edit.page', ['id' => $category->id]) }}">
                                                             {{ translation('Edit') }}
-                                                        </button>
+                                                        </a>
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item delete-item"
                                                             data-id="{{ $category->id }}">
@@ -187,23 +187,6 @@
             </div>
         </div>
         <!--End New  Modal-->
-        <!-- Edit Modal-->
-        <div class="modal fade" id="edit-item-modal">
-            <div class="modal-dialog modal-md">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('Category Information') }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body item-edit-content">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--End  Edit Modal-->
         <!-- Delete Modal-->
         <div class="modal fade" id="user-delete-modal">
             <div class="modal-dialog modal-sm">
@@ -279,74 +262,6 @@
                     }
                 });
             });
-
-            //Visible user edit modal
-            $('.edit-item').on('click', function(e) {
-                e.preventDefault();
-                let category_id = $(this).data('id');
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    },
-                    type: "POST",
-                    url: '{{ route('classified.ads.categories.edit') }}',
-                    data: {
-                        id: category_id
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            $('.item-edit-content').html(response.html);
-                            $('#edit-item-modal').modal('show');
-                            initParentSelect();
-                        } else {
-                            toastr.error('Category fetch failed', 'Error')
-                        }
-                    },
-                    error: function(response) {
-                        toastr.error('Category fetch failed', 'Error')
-                    }
-                });
-            });
-
-
-            //update category
-            $(document).on('submit', '#editForm', function(e) {
-                e.preventDefault();
-                $(document).find(".invalid-input").remove();
-                $(document).find(".form-control").removeClass('is-invalid');
-                var formData = new FormData(this);
-                $.ajax({
-                    type: "POST",
-                    data: formData,
-                    url: '{{ route('classified.ads.categories.update') }}',
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        if (response.success) {
-                            toastr.success('Category updated successfully', 'Success');
-                            location.reload();
-                        } else {
-                            toastr.error(response.message, 'Error');
-                        }
-                    },
-                    error: function(response) {
-                        if (response.status === 422) {
-                            $.each(response.responseJSON.errors, function(field_name,
-                                error) {
-                                $(document).find('[name=' + field_name + ']')
-                                    .addClass('is-invalid');
-                                $(document).find('[name=' + field_name + ']')
-                                    .after(
-                                        '<div class="error text-danger mb-0 invalid-input">' +
-                                        error + '</div>');
-                            })
-                        } else {
-                            toastr.error('Category update failed', 'Error')
-                        }
-                    }
-                });
-            });
-
 
             //Visible user delete modal
             $('.delete-item').on('click', function(e) {

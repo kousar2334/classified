@@ -49,7 +49,7 @@ class CategoryRepository
     /**
      * Will delete a category
      * 
-     * @param Int $id
+     * @param int $id
      */
     public function deleteCategory(int $id): bool
     {
@@ -65,28 +65,38 @@ class CategoryRepository
         }
     }
     /**
-     * Will return category details
+     * Will return category details with translations
      */
     public function categoryDetails(int $id)
     {
-        return AdsCategory::findOrFail($id);
+        return AdsCategory::with('ads_category_translations')->findOrFail($id);
     }
 
     /**
-     * Will update category
-     * 
+     * Will update category; handles translation vs default lang
      */
     public function updateCategory($request): bool
     {
         try {
             DB::beginTransaction();
             $category = AdsCategory::findOrFail($request['id']);
-            $category->title = $request['title'];
-            $category->icon = $request['icon_edit'];
-            $category->image = $request['image_edit'];
-            $category->parent = $request['parent'];
-            $category->status = $request['status'];
-            $category->save();
+
+            if (!empty($request['lang']) && $request['lang'] != defaultLangCode()) {
+                $translation = AdsCategoryTranslation::firstOrNew([
+                    'category_id' => $category->id,
+                    'lang'        => $request['lang'],
+                ]);
+                $translation->title = x_clean($request['title']);
+                $translation->save();
+            } else {
+                $category->title  = $request['title'];
+                $category->icon   = $request['icon_edit'];
+                $category->image  = $request['image_edit'];
+                $category->parent = $request['parent'];
+                $category->status = $request['status'];
+                $category->save();
+            }
+
             DB::commit();
             return true;
         } catch (\Exception $e) {

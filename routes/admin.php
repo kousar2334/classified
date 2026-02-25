@@ -297,6 +297,7 @@ Route::prefix('admin')->group(function () {
                 Route::post('store', [CategoryController::class, 'categoryStore'])->name('classified.ads.categories.store');
                 Route::post('delete', [CategoryController::class, 'categoryDelete'])->name('classified.ads.categories.delete');
                 Route::post('edit', [CategoryController::class, 'categoryEdit'])->name('classified.ads.categories.edit');
+                Route::get('{id}/edit', [CategoryController::class, 'categoryEditPage'])->name('classified.ads.categories.edit.page');
                 Route::post('update', [CategoryController::class, 'categoryUpdate'])->name('classified.ads.categories.update');
                 Route::get('options', [CategoryController::class, 'CategoryOption'])->name('classified.ads.categories.options');
             });
