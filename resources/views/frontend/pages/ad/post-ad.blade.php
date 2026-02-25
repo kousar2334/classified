@@ -331,15 +331,20 @@
                                             </div>
                                             <div class="card-body">
                                                 <!-- Country -->
-                                                <div class="form-group mb-20">
-                                                    <label for="country">Country <span
-                                                            class="text-danger">*</span></label>
-                                                    <select name="country" id="country" class="select2-ajax w-100"
-                                                        required>
-                                                        <option value="">Select Country</option>
-                                                    </select>
-                                                    <div class="invalid-feedback"></div>
-                                                </div>
+                                                @if ($countriesCount > 1)
+                                                    <div class="form-group mb-20">
+                                                        <label for="country">Country <span
+                                                                class="text-danger">*</span></label>
+                                                        <select name="country" id="country" class="select2-ajax w-100"
+                                                            required>
+                                                            <option value="">Select Country</option>
+                                                        </select>
+                                                        <div class="invalid-feedback"></div>
+                                                    </div>
+                                                @else
+                                                    <input type="hidden" name="country" id="country"
+                                                        value="{{ $singleCountry->id }}">
+                                                @endif
 
                                                 <!-- State -->
                                                 <div class="form-group mb-20">
@@ -648,27 +653,31 @@
             }
 
             // Initialize Select2 for Country with ajax
-            $('#country').select2({
-                ajax: {
-                    url: "{{ route('ad.countries') }}",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            search: params.term
-                        };
+            @if ($countriesCount > 1)
+                $('#country').select2({
+                    ajax: {
+                        url: "{{ route('ad.countries') }}",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function(params) {
+                            return {
+                                search: params.term
+                            };
+                        },
+                        processResults: function(data) {
+                            return {
+                                results: data
+                            };
+                        },
+                        cache: true
                     },
-                    processResults: function(data) {
-                        return {
-                            results: data
-                        };
-                    },
-                    cache: true
-                },
-                placeholder: 'Select Country',
-                minimumInputLength: 0,
-                allowClear: true
-            });
+                    placeholder: 'Select Country',
+                    minimumInputLength: 0,
+                    allowClear: true
+                });
+            @else
+                $('#state').prop('disabled', false);
+            @endif
 
             // Initialize Select2 for State with ajax
             $('#state').select2({

@@ -59,7 +59,11 @@ class AdController extends Controller
             }
         }
 
-        return view('frontend.pages.ad.post-ad', compact('categories', 'conditions', 'tags', 'galleryImageLimit'));
+        $activeStatus = config('settings.general_status.active');
+        $countriesCount = Country::where('status', $activeStatus)->count();
+        $singleCountry = $countriesCount === 1 ? Country::where('status', $activeStatus)->first() : null;
+
+        return view('frontend.pages.ad.post-ad', compact('categories', 'conditions', 'tags', 'galleryImageLimit', 'countriesCount', 'singleCountry'));
     }
 
     public function storeAd(AdPostingRequest $request)
@@ -765,7 +769,11 @@ class AdController extends Controller
             $galleryImageLimit = (int) ($activeSub->plan->gallery_image_quantity ?? 0);
         }
 
-        return view('frontend.pages.ad.edit-ad', compact('ad', 'categories', 'conditions', 'tags', 'categoryHierarchy', 'selectedTagIds', 'customFieldValues', 'galleryImageLimit'));
+        $activeStatus = config('settings.general_status.active');
+        $countriesCount = Country::where('status', $activeStatus)->count();
+        $singleCountry = $countriesCount === 1 ? Country::where('status', $activeStatus)->first() : null;
+
+        return view('frontend.pages.ad.edit-ad', compact('ad', 'categories', 'conditions', 'tags', 'categoryHierarchy', 'selectedTagIds', 'customFieldValues', 'galleryImageLimit', 'countriesCount', 'singleCountry'));
     }
 
     public function updateAd(Request $request, $uid)
