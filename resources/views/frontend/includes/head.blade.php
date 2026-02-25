@@ -4,8 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="csrf-token" content="4qMgoof0CGXn76Y2Ovd5AWGkX891VOaiaqMZeUxn">
-    <link rel="icon" href="/public/uploads/media-uploader/icon1717328206.png" type="image/png">
+    <meta name="_token" content="{{ csrf_token() }}">
+    <link rel=icon href="{{ asset(getFilePath(get_setting('site_favicon'))) }}" sizes="20x20" type="image/png">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;regular;500;600;700;800;900&display=swap"
