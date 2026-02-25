@@ -38,37 +38,11 @@ class SiteSettingController extends Controller
         }
     }
     /**
-     * Will redirect site header settings page
-     */
-    public function headerSetting(): View
-    {
-        return view('backend.modules.appearances.site-setting.header');
-    }
-    /**
-     * Will update header settings
-     * 
-     */
-    public function headerSettingUpdate(Request $request): RedirectResponse
-    {
-        try {
-
-            foreach ($request->except('_token') as $key => $value) {
-                set_setting($key, $value);
-            }
-
-            toastNotification('success', 'Header Settings update successfully', 'Success');
-            return to_route('admin.appearance.site.setting.header');
-        } catch (\Exception $e) {
-            toastNotification('error', 'Header Settings update failed');
-            return redirect()->back();
-        }
-    }
-    /**
      * Will redirect footer settings page
      */
     public function footerSetting(): View
     {
-       
+
         return view('backend.modules.appearances.site-setting.footer');
     }
     /**

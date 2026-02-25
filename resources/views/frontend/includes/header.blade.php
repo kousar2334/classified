@@ -1,5 +1,5 @@
 <header class="header-style-01">
-    <nav class="navbar navbar-area headerBg4 navbar-expand-lg">
+    <nav class="navbar navbar-area header-bg navbar-expand-lg">
         <div class="container nav-container gap-lg-4">
             <div class="responsive-mobile-menu">
                 <div class="logo-wrapper">

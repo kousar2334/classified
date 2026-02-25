@@ -68,13 +68,6 @@
                                                     <x-media name="site_favicon" :value="get_setting('site_favicon')"></x-media>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label>{{ translation('Whats App Number') }}</label>
-                                                    <input type="text" class="form-control" name="site_whatsapp_number"
-                                                        placeholder="Enter Whats App Number"
-                                                        value="{{ get_setting('site_whatsapp_number') }}">
-                                                </div>
-
                                                 <div class="form-row justify-content-end">
                                                     <button type="submit"
                                                         class="btn btn-primary">{{ translation('Save Change') }}</button>

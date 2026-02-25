@@ -199,9 +199,6 @@ Route::prefix('admin')->group(function () {
             Route::get('/site-setting', [SiteSettingController::class, 'siteSetting'])->name('admin.appearance.site.setting');
             Route::post('/site-setting-update', [SiteSettingController::class, 'siteSettingUpdate'])->name('admin.appearance.site.setting.update')->middleware(['can:Manage Site Settings']);
 
-            Route::get('/header-setting', [SiteSettingController::class, 'headerSetting'])->name('admin.appearance.site.setting.header');
-            Route::post('/header-setting-update', [SiteSettingController::class, 'headerSettingUpdate'])->name('admin.appearance.site.setting.header.update')->middleware(['can:Manage Site Settings']);
-
             Route::get('/footer-setting', [SiteSettingController::class, 'footerSetting'])->name('admin.appearance.site.setting.footer');
             Route::post('/footer-setting-update', [SiteSettingController::class, 'footerSettingUpdate'])->name('admin.appearance.site.setting.footer.update')->middleware(['can:Manage Site Settings']);
 

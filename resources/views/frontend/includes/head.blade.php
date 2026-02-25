@@ -31,6 +31,7 @@
 
             --heading-color: {{ get_setting('site_heading_color', '#333333') }};
             --secondary-color: {{ get_setting('site_base_color', '#fba260') }};
+            --header-color: {{ get_setting('site_header_color', '#fff4ed') }};
         }
     </style>
 

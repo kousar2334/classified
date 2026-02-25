@@ -7112,8 +7112,8 @@ object {
     }
 }
 
-.main-body .headerBg4 {
-    background: var(--color-4);
+.main-body .header-bg {
+    background: var(--header-color);
 }
 
 .main-body .sideBar-form {
@@ -20738,7 +20738,7 @@ header.header-style-01.sticky-bar {
     animation: headerSlideDown 0.35s ease forwards;
 }
 
-header.header-style-01.sticky-bar .headerBg4 {
+header.header-style-01.sticky-bar .header-bg {
     background: var(--color-4, var(--color-4));
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }

@@ -3,12 +3,6 @@
          href="{{ route('admin.appearance.site.setting') }}">
          {{ translation('Site Settings') }}
      </a>
-
-
-     <a class="nav-link {{ Request::routeIs(['admin.appearance.site.setting.header']) ? 'active' : '' }}"
-         href="{{ route('admin.appearance.site.setting.header') }}">
-         {{ translation('Header') }}
-     </a>
      <a class="nav-link {{ Request::routeIs(['admin.appearance.site.setting.footer']) ? 'active' : '' }}"
          href="{{ route('admin.appearance.site.setting.footer') }}">
          {{ translation('Footer') }}

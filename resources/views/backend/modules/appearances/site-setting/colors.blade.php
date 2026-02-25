@@ -160,6 +160,23 @@
                                                                 class="text-muted">{{ translation('Supports 8-digit hex with alpha (e.g. #f766310f)') }}</small>
                                                         </div>
                                                     </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>{{ translation('Site Header Color') }} <span
+                                                                    class="color-var-badge">--header-color</span></label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control color-text"
+                                                                    name="site_header_color"
+                                                                    value="{{ get_setting('site_header_color', '#eef7ff') }}">
+                                                                <div class="input-group-append">
+                                                                    <label class="input-group-text color-swatch-label">
+                                                                        <input type="color" class="color-swatch"
+                                                                            value="{{ get_setting('site_header_color', '#eef7ff') }}">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                                 {{-- Accent Colors --}}
