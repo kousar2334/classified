@@ -64,16 +64,6 @@ Route::prefix('admin')->group(function () {
         });
 
         /**
-         * PAGE CONTENT MODULE
-         */
-        Route::prefix('page-content')->group(function () {
-            Route::get('/home', [PageContentController::class, 'homePageContent'])->name('admin.page.content.home');
-            Route::get('/about', [PageContentController::class, 'aboutPageContent'])->name('admin.page.content.about');
-            Route::get('/contact', [PageContentController::class, 'contactPageContent'])->name('admin.page.content.contact');
-            Route::post('update-page-content', [PageContentController::class, 'updatePageContent'])->name('admin.page.content.update');
-        });
-
-        /**
          * HOME PAGE BUILDER MODULE
          */
         Route::prefix('home-builder')->group(function () {

@@ -355,16 +355,6 @@
                                     </p>
                                 </a>
                             </li>
-
-                            <li class="nav-item">
-                                <a href="{{ route('admin.page.content.home', ['lang' => defaultLangCode()]) }}"
-                                    class="nav-link {{ Request::routeIs(['admin.page.content.home']) ? 'active' : '' }}">
-                                    <i class="fa fa-minus nav-icon"></i>
-                                    <p>
-                                        {{ translation('Page Settings') }}
-                                    </p>
-                                </a>
-                            </li>
                             @can('Manage Site Settings')
                                 <li class="nav-item">
                                     <a href="{{ route('admin.appearance.site.setting') }}"
