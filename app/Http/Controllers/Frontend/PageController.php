@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Ad;
 use App\Models\AdsCategory;
+use App\Models\HomePageSection;
 use App\Models\PricingPlan;
 use App\Repository\AdvertisementRepository;
 
@@ -92,6 +93,11 @@ class PageController extends Controller
         // Advertisements for homepage
         $advertisements = $this->advertisement_repository->getActiveByPosition('home_top');
 
+        // Home page section order and visibility
+        $homeSections = HomePageSection::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
         return view('frontend.pages.home', compact(
             'categories',
             'topListings',
@@ -99,7 +105,8 @@ class PageController extends Controller
             'categoryWiseListings',
             'pricingPlans',
             'totalAdsCount',
-            'advertisements'
+            'advertisements',
+            'homeSections'
         ));
     }
 

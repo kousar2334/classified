@@ -29,6 +29,7 @@ use App\Http\Controllers\Backend\ReportReasonController;
 use App\Http\Controllers\Backend\ConversationController;
 use App\Http\Controllers\Backend\SubscriptionController;
 use App\Http\Controllers\Backend\AdvertisementController;
+use App\Http\Controllers\Backend\HomePageBuilderController;
 
 Route::prefix('admin')->group(function () {
     //Admin Auth
@@ -70,6 +71,16 @@ Route::prefix('admin')->group(function () {
             Route::get('/about', [PageContentController::class, 'aboutPageContent'])->name('admin.page.content.about');
             Route::get('/contact', [PageContentController::class, 'contactPageContent'])->name('admin.page.content.contact');
             Route::post('update-page-content', [PageContentController::class, 'updatePageContent'])->name('admin.page.content.update');
+        });
+
+        /**
+         * HOME PAGE BUILDER MODULE
+         */
+        Route::prefix('home-builder')->group(function () {
+            Route::get('/', [HomePageBuilderController::class, 'index'])->name('admin.home.builder');
+            Route::post('update-order', [HomePageBuilderController::class, 'updateOrder'])->name('admin.home.builder.order');
+            Route::post('toggle-active', [HomePageBuilderController::class, 'toggleActive'])->name('admin.home.builder.toggle');
+            Route::post('update-content', [HomePageBuilderController::class, 'updateContent'])->name('admin.home.builder.content');
         });
 
         /**

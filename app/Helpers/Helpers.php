@@ -295,26 +295,26 @@ if (!function_exists('bodyDirection')) {
 if (!function_exists('p_trans')) {
     function p_trans($key, $lang = null, $fallback = null)
     {
-
         if ($lang == null) {
             $lang = getUserLocale();
         }
 
+        $defaultLang = defaultLangCode();
 
-        $page_content = PageContent::firstOrCreate([
-            'key' => $key,
-        ]);
+        $page_content = PageContent::where('key', $key)->first();
 
-        if ($lang == null || $lang == 'en') {
-            return $page_content->value;
+        if ($lang == null || $lang == $defaultLang) {
+            return ($page_content && $page_content->value) ? $page_content->value : $fallback;
         } else {
-            $page_content_translations = PageContentTranslation::where('lang', $lang)
-                ->where('page_content_id', $page_content->id)
+            $page_content_translation = PageContentTranslation::where('key', $key)
+                ->where('lang', $lang)
                 ->first();
-            return $page_content_translations != null ? $page_content_translations->value : $page_content->value;
-        }
 
-        return $fallback;
+            if ($page_content_translation && $page_content_translation->value) {
+                return $page_content_translation->value;
+            }
+            return ($page_content && $page_content->value) ? $page_content->value : $fallback;
+        }
     }
 }
 

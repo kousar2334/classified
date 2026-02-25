@@ -9,7 +9,9 @@ class PageContentTranslation extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'page_content_id',
-        'lang'
+        'page_id',
+        'key',
+        'lang',
+        'value',
     ];
 }

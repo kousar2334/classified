@@ -323,9 +323,9 @@
 
                 @can('Manage Appearances')
                     <li
-                        class="nav-item {{ Request::routeIs(['admin.appearance.video.add','admin.appearance.video.edit','admin.appearance.video.list','admin.appearance.team.add','admin.appearance.team.edit','admin.appearance.team.list','admin.appearance.faq.add','admin.appearance.faq.edit','admin.appearance.faq.list','admin.appearance.why.us.add','admin.appearance.why.us.edit','admin.appearance.why.us.list','admin.appearance.partner.add','admin.appearance.partner.edit','admin.appearance.partner.list','admin.appearance.product.application.add','admin.appearance.product.application.edit','admin.appearance.product.application.list','admin.appearance.slider.edit.slider.item','admin.appearance.slider.add.slider.item','admin.appearance.slider.list','admin.page.content.about','admin.page.content.contact','admin.page.content.home','admin.appearance.site.setting.banner','admin.appearance.site.setting.custom.css','admin.appearance.site.setting.page','admin.appearance.site.setting.social.account','admin.appearance.site.setting','admin.appearance.menu.builder'])? 'menu-open ': '' }}">
+                        class="nav-item {{ Request::routeIs(['admin.home.builder','admin.appearance.video.add','admin.appearance.video.edit','admin.appearance.video.list','admin.appearance.team.add','admin.appearance.team.edit','admin.appearance.team.list','admin.appearance.faq.add','admin.appearance.faq.edit','admin.appearance.faq.list','admin.appearance.why.us.add','admin.appearance.why.us.edit','admin.appearance.why.us.list','admin.appearance.partner.add','admin.appearance.partner.edit','admin.appearance.partner.list','admin.appearance.product.application.add','admin.appearance.product.application.edit','admin.appearance.product.application.list','admin.appearance.slider.edit.slider.item','admin.appearance.slider.add.slider.item','admin.appearance.slider.list','admin.page.content.about','admin.page.content.contact','admin.page.content.home','admin.appearance.site.setting.banner','admin.appearance.site.setting.custom.css','admin.appearance.site.setting.page','admin.appearance.site.setting.social.account','admin.appearance.site.setting','admin.appearance.menu.builder'])? 'menu-open ': '' }}">
                         <a href="#"
-                            class="nav-link {{ Request::routeIs(['admin.appearance.video.add','admin.appearance.video.edit','admin.appearance.video.list','admin.appearance.team.add','admin.appearance.team.edit','admin.appearance.team.list','admin.appearance.faq.add','admin.appearance.faq.edit','admin.appearance.faq.list','admin.appearance.why.us.add','admin.appearance.why.us.edit','admin.appearance.why.us.list','admin.appearance.partner.add','admin.appearance.partner.edit','admin.appearance.partner.list','admin.appearance.product.application.add','admin.appearance.product.application.edit','admin.appearance.product.application.list','admin.appearance.slider.edit.slider.item','admin.appearance.slider.add.slider.item','admin.appearance.slider.list','admin.page.content.about','admin.page.content.contact','admin.page.content.home','admin.appearance.site.setting.banner','admin.appearance.site.setting.custom.css','admin.appearance.site.setting.page','admin.appearance.site.setting.social.account','admin.appearance.site.setting','admin.appearance.menu.builder'])? 'active': '' }}">
+                            class="nav-link {{ Request::routeIs(['admin.home.builder','admin.appearance.video.add','admin.appearance.video.edit','admin.appearance.video.list','admin.appearance.team.add','admin.appearance.team.edit','admin.appearance.team.list','admin.appearance.faq.add','admin.appearance.faq.edit','admin.appearance.faq.list','admin.appearance.why.us.add','admin.appearance.why.us.edit','admin.appearance.why.us.list','admin.appearance.partner.add','admin.appearance.partner.edit','admin.appearance.partner.list','admin.appearance.product.application.add','admin.appearance.product.application.edit','admin.appearance.product.application.list','admin.appearance.slider.edit.slider.item','admin.appearance.slider.add.slider.item','admin.appearance.slider.list','admin.page.content.about','admin.page.content.contact','admin.page.content.home','admin.appearance.site.setting.banner','admin.appearance.site.setting.custom.css','admin.appearance.site.setting.page','admin.appearance.site.setting.social.account','admin.appearance.site.setting','admin.appearance.menu.builder'])? 'active': '' }}">
                             <i class="nav-icon fas fa-desktop"></i>
                             <p>
                                 {{ translation('Appearances') }}
@@ -345,6 +345,16 @@
                                 </li>
                             @endcan
 
+
+                            <li class="nav-item">
+                                <a href="{{ route('admin.home.builder') }}"
+                                    class="nav-link {{ Request::routeIs(['admin.home.builder']) ? 'active' : '' }}">
+                                    <i class="fa fa-minus nav-icon"></i>
+                                    <p>
+                                        {{ translation('Home Builder') }}
+                                    </p>
+                                </a>
+                            </li>
 
                             <li class="nav-item">
                                 <a href="{{ route('admin.page.content.home', ['lang' => defaultLangCode()]) }}"
