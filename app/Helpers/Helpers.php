@@ -296,7 +296,7 @@ if (!function_exists('p_trans')) {
     function p_trans($key, $lang = null, $fallback = null)
     {
         if ($lang == null) {
-            $lang = getUserLocale();
+            $lang = getLocale();
         }
 
         $defaultLang = defaultLangCode();
