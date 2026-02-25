@@ -122,47 +122,49 @@
             {{-- ═══════════════════════════ CATEGORIES ═══════════════════════════ --}}
             @case('categories')
                 @if ($categories->count() > 0)
-                    <div class="exploreCategories" data-padding-top="50" data-padding-bottom="50"
-                        style="background-color: rgb(255, 255, 255)">
+                    @php
+                        $catBg = [
+                            'linear-gradient(145deg,#fde8d8,#f9c7a8)',
+                            'linear-gradient(145deg,#daeaff,#b8d4ff)',
+                            'linear-gradient(145deg,#d6f5e8,#a8e6cc)',
+                            'linear-gradient(145deg,#f0deff,#d9b8ff)',
+                            'linear-gradient(145deg,#fff3cc,#ffe080)',
+                            'linear-gradient(145deg,#ffe0eb,#ffb3c6)',
+                            'linear-gradient(145deg,#d0f0ff,#8ed8f8)',
+                            'linear-gradient(145deg,#e8f5d0,#c3e89a)',
+                            'linear-gradient(145deg,#ffd6c8,#ffaa8a)',
+                            'linear-gradient(145deg,#d8e4ff,#a0b8f8)',
+                            'linear-gradient(145deg,#d6faf5,#90e8d8)',
+                            'linear-gradient(145deg,#fde8f8,#f5b8e8)',
+                        ];
+                    @endphp
+                    <section class="browse-categories-section" data-padding-top="50" data-padding-bottom="50">
                         <div class="container">
-                            <div class="row">
-                                <div class="col-xl-8 col-lg-7 col-md-10 col-sm-10">
-                                    <div class="section-tittle">
-                                        <h2 class="tittle">{{ p_trans('home_categories_title', null, 'Categories') }}</h2>
-                                    </div>
-                                </div>
+                            <div class="titleWithBtn d-flex justify-content-between align-items-center mb-40">
+                                <h2 class="head3">{{ p_trans('home_categories_title', null, 'Browse Categories') }}</h2>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="global-slick-init slider-inner-margin sliderArrow" data-infinite="true"
-                                        data-arrows="true" data-dots="false" data-rtl="false" data-slidesToShow="8"
-                                        data-swipeToSlide="true" data-autoplay="false" data-autoplaySpeed="2500"
-                                        data-prevArrow='<div class="prev-icon"><i class="las la-angle-left"></i></div>'
-                                        data-nextArrow='<div class="next-icon"><i class="las la-angle-right"></i></div>'
-                                        data-responsive='[{"breakpoint": 1500,"settings": {"slidesToShow": 4}},{"breakpoint": 1600,"settings": {"slidesToShow": 4}},{"breakpoint": 1400,"settings": {"slidesToShow": 3}},{"breakpoint": 1200,"settings": {"slidesToShow": 3}},{"breakpoint": 991,"settings": {"slidesToShow": 2}},{"breakpoint": 768, "settings": {"slidesToShow": 2}},{"breakpoint": 576, "settings": {"slidesToShow": 1}}]'>
-                                        @foreach ($categories as $category)
-                                            <div class="singleCategories categories{{ $loop->iteration }} wow fadeInUp"
-                                                data-wow-delay="0.1s">
-                                                <div class="categoriIcon text-center">
-                                                    <a href="{{ route('ad.listing.page', $category->permalink) }}"
-                                                        class="title">
-                                                        <img src="{{ asset(getFilePath($category->icon)) }}"
-                                                            alt="{{ $category->title }}" />
-                                                    </a>
-                                                </div>
-                                                <div class="categorie-text">
-                                                    <h4 class="text-center">
-                                                        <a href="{{ route('ad.listing.page', $category->permalink) }}"
-                                                            class="title oneLine mt-2">{{ $category->title }}</a>
-                                                    </h4>
+                            <div class="row g-3">
+                                @foreach ($categories as $category)
+                                    @php $bg = $catBg[$loop->index % count($catBg)]; @endphp
+                                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6">
+                                        <a href="{{ route('ad.listing.page', $category->permalink) }}"
+                                            class="cat-v3-card text-decoration-none" style="background:{{ $bg }};">
+                                            <div class="cat-v3-img">
+                                                <img src="{{ asset(getFilePath($category->icon)) }}"
+                                                    alt="{{ $category->title }}" />
+                                            </div>
+                                            <div class="cat-v3-footer">
+                                                <div class="cat-v3-name">{{ $category->title }}</div>
+                                                <div class="cat-v3-count">
+                                                    {{ number_format($category->ads_count) }} {{ translation('ads') ?? 'ads' }}
                                                 </div>
                                             </div>
-                                        @endforeach
+                                        </a>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
-                    </div>
+                    </section>
                 @endif
             @break
 
@@ -240,6 +242,26 @@
                                     <div class="col-xl-3 col-lg-4 col-sm-6">
                                         @include('frontend.includes.pricing-card', ['plan' => $plan])
                                     </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </section>
+                @endif
+            @break
+
+            {{-- ═══════════════════════════ FEATURED ADS ═══════════════════════════ --}}
+            @case('featured_ads')
+                @if ($featuredAds->count() > 0)
+                    <section class="featureListing" data-padding-top="50" data-padding-bottom="50">
+                        <div class="container">
+                            <div class="titleWithBtn d-flex justify-content-between align-items-center mb-40">
+                                <h2 class="head3">{{ p_trans('home_featured_ads_title', null, 'Featured Ads') }}</h2>
+                                <a href="{{ route('ad.listing.page', ['listing_type_preferences' => 'top_listing']) }}"
+                                    class="see-all">{{ translation('See All') }} <i class="las la-angle-right"></i></a>
+                            </div>
+                            <div class="slider-inner-margin">
+                                @foreach ($featuredAds as $ad)
+                                    <x-single-listing :ad="$ad" />
                                 @endforeach
                             </div>
                         </div>

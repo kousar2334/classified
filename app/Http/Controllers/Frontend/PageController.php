@@ -34,6 +34,9 @@ class PageController extends Controller
             ->take(8)
             ->get();
 
+        // Featured ads section (same data, independent section)
+        $featuredAds = $topListings;
+
         // Fetch recent listings
         $recentListings = Ad::where('status', $activeStatus)
             ->with(['cityInfo', 'stateInfo'])
@@ -101,6 +104,7 @@ class PageController extends Controller
         return view('frontend.pages.home', compact(
             'categories',
             'topListings',
+            'featuredAds',
             'recentListings',
             'categoryWiseListings',
             'pricingPlans',

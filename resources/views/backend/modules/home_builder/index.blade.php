@@ -320,6 +320,15 @@
                                                     </div>
                                                 @break
 
+                                                @case('featured_ads')
+                                                    <div class="form-group">
+                                                        <label class="font-weight-bold">{{ translation('Section Title') }}</label>
+                                                        <input type="text" class="form-control" name="home_featured_ads_title"
+                                                            placeholder="{{ translation('e.g. Featured Ads') }}"
+                                                            value="{{ p_trans('home_featured_ads_title', $lang, 'Featured Ads') }}">
+                                                    </div>
+                                                @break
+
                                                 @case('recent_listings')
                                                     <div class="form-group">
                                                         <label class="font-weight-bold">{{ translation('Section Title') }}</label>
