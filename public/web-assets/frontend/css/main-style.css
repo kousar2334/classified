@@ -1,13 +1,4 @@
 :root {
-    --primary-color: rgb(38, 10, 196);
-    --primary-color-dark: #e84e1b;
-    --primary-color-light: #ff9a5c;
-    --primary-color-lighter: #ffb347;
-    --primary-color-shadow: #f766310f;
-
-    --main-color-one: var(--primary-color);
-    --main-color-two: rgb(82, 78, 183);
-    --main-color-three: rgb(0, 202, 213);
 
     /* ─── Semantic palette ─── */
     --color1: #fde0d6;
