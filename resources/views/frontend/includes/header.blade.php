@@ -104,7 +104,7 @@
                     </ul>
                     <div class="btn-wrapper nav-post-btn d-lg-none d-block">
                         <a href="{{ route('ad.post.page') }}" class="cmn-btn1 popup-modal text-uppercase">
-                            <span>Post free ad</span>
+                            <span>{{ translation('Post free ad') }}</span>
                         </a>
                     </div>
                 </div>
@@ -180,7 +180,7 @@
                 <div class="btn-wrapper nav-post-btn">
                     <a href="{{ route('ad.post.page') }}"
                         class="cmn-btn1 popup-modal d-none d-lg-block text-uppercase">
-                        <span>Post free ad</span>
+                        <span>{{ translation('Post free ad') }}</span>
                     </a>
                 </div>
             </div>
