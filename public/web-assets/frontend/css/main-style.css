@@ -25184,8 +25184,6 @@ body {
 
 /* ══════════════════════════════════════════════════════════════════
    FOOTER — REDESIGNED
-   Uses --primary-color for hover/accent, --main-color-two for bg.
-   Changing --primary-color in head.blade.php recolours all accents.
    ══════════════════════════════════════════════════════════════════ */
 
 /* ── Brand block ── */
@@ -25194,10 +25192,10 @@ body {
 }
 
 .footer-site-name {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     font-weight: 700;
-    color: #fff;
-    margin-bottom: 0.5rem;
+    color: #fff !important;
+    margin-bottom: 0.7rem;
 }
 
 .footer-tagline {

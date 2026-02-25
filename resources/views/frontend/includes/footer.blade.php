@@ -54,7 +54,8 @@
                                 <div class="footer-social-links mt-3">
                                     @foreach ($socials as $key => $icon)
                                         @if (get_setting($key))
-                                            <a href="{{ get_setting($key) }}" target="_blank" rel="noopener noreferrer">
+                                            <a href="{{ get_setting($key) }}" class="footer-social-btn" target="_blank"
+                                                rel="noopener noreferrer">
                                                 <i class="{{ $icon }}"></i>
                                             </a>
                                         @endif
@@ -64,36 +65,43 @@
                         </div>
                     </div>
 
-                    {{-- Footer Menu --}}
+                    {{-- Footer Menu — each parent with children = its own column --}}
                     @if ($footer_menu_items->isNotEmpty())
-                        <div class="col-lg-4 col-md-3 col-6">
-                            <ul class="footer-links">
-                                @foreach ($footer_menu_items as $item)
-                                    @if ($item->children->isNotEmpty())
-                                        <li class="footer-menu-group">
-                                            <h6 class="footerTittle">{{ $item->translation('title') }}</h6>
-                                            <ul class="footer-links">
-                                                @foreach ($item->children as $child)
-                                                    <li>
-                                                        <a href="{{ $child->link() }}"
-                                                            @if ($child->target) target="_blank" rel="noopener noreferrer" @endif>
-                                                            {{ $child->translation('title') }}
-                                                        </a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
+                        @php
+                            $grouped_items = $footer_menu_items->filter(fn($i) => $i->children->isNotEmpty());
+                            $flat_items = $footer_menu_items->filter(fn($i) => $i->children->isEmpty());
+                        @endphp
+
+                        @foreach ($grouped_items as $item)
+                            <div class="col-lg-2 col-md-3 col-6">
+                                <h6 class="footerTittle">{{ $item->translation('title') }}</h6>
+                                <ul class="footer-links">
+                                    @foreach ($item->children as $child)
+                                        <li>
+                                            <a href="{{ $child->link() }}"
+                                                @if ($child->target) target="_blank" rel="noopener noreferrer" @endif>
+                                                {{ $child->translation('title') }}
+                                            </a>
                                         </li>
-                                    @else
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endforeach
+
+                        @if ($flat_items->isNotEmpty())
+                            <div class="col-lg-2 col-md-3 col-6">
+                                <ul class="footer-links">
+                                    @foreach ($flat_items as $item)
                                         <li>
                                             <a href="{{ $item->link() }}"
                                                 @if ($item->target) target="_blank" rel="noopener noreferrer" @endif>
                                                 {{ $item->translation('title') }}
                                             </a>
                                         </li>
-                                    @endif
-                                @endforeach
-                            </ul>
-                        </div>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                     @endif
 
                 </div>

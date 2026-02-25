@@ -1,3 +1,38 @@
+/* ── Footer contact icons: white ── */
+.footer-contact-list li i {
+    color: #fff !important;
+}
+
+/* ── Footer social circle buttons ── */
+.footer-social-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.footer-social-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    color: #fff;
+    font-size: 15px;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    flex-shrink: 0;
+}
+
+.footer-social-btn:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
 /* NavWrapper left align */
 .NavWrapper {
     justify-content: flex-start;
