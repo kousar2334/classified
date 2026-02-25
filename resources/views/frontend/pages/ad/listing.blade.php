@@ -6,78 +6,7 @@
 @endsection
 @section('content')
     <div class="container">
-        <nav aria-label="breadcrumb" class="frontend-breadcrumb-wrap mt-3 mb-5">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('ad.listing.page') }}">Listings</a></li>
-
-                @if ($breadcrumbCategory)
-                    <li class="breadcrumb-item {{ !$breadcrumbSubcategory && !$breadcrumbChildCategory ? 'active' : '' }}">
-                        @if ($breadcrumbSubcategory || $breadcrumbChildCategory)
-                            <a
-                                href="{{ route('ad.listing.page') }}?cat={{ $breadcrumbCategory->id }}">{{ $breadcrumbCategory->title }}</a>
-                        @else
-                            {{ $breadcrumbCategory->title }}
-                        @endif
-                    </li>
-                @endif
-
-                @if ($breadcrumbSubcategory)
-                    <li class="breadcrumb-item {{ !$breadcrumbChildCategory ? 'active' : '' }}">
-                        @if ($breadcrumbChildCategory)
-                            <a
-                                href="{{ route('ad.listing.page') }}?cat={{ $breadcrumbCategory->id }}&subcat={{ $breadcrumbSubcategory->id }}">{{ $breadcrumbSubcategory->title }}</a>
-                        @else
-                            {{ $breadcrumbSubcategory->title }}
-                        @endif
-                    </li>
-                @endif
-
-                @if ($breadcrumbChildCategory)
-                    <li class="breadcrumb-item active" aria-current="page">{{ $breadcrumbChildCategory->title }}</li>
-                @endif
-
-                @if ($breadcrumbCountry && !$breadcrumbCategory && !$breadcrumbSubcategory && !$breadcrumbChildCategory)
-                    <li class="breadcrumb-item {{ !$breadcrumbState && !$breadcrumbCity ? 'active' : '' }}">
-                        @if ($breadcrumbState || $breadcrumbCity)
-                            <a
-                                href="{{ route('ad.listing.page') }}?country={{ $breadcrumbCountry->id }}">{{ $breadcrumbCountry->name }}</a>
-                        @else
-                            {{ $breadcrumbCountry->name }}
-                        @endif
-                    </li>
-                @endif
-
-                @if ($breadcrumbState && !$breadcrumbCategory && !$breadcrumbSubcategory && !$breadcrumbChildCategory)
-                    <li class="breadcrumb-item {{ !$breadcrumbCity ? 'active' : '' }}">
-                        @if ($breadcrumbCity)
-                            <a
-                                href="{{ route('ad.listing.page') }}?country={{ $breadcrumbCountry->id }}&state={{ $breadcrumbState->id }}">{{ $breadcrumbState->name }}</a>
-                        @else
-                            {{ $breadcrumbState->name }}
-                        @endif
-                    </li>
-                @endif
-
-                @if ($breadcrumbCity && !$breadcrumbCategory && !$breadcrumbSubcategory && !$breadcrumbChildCategory)
-                    <li class="breadcrumb-item active" aria-current="page">{{ $breadcrumbCity->name }}</li>
-                @endif
-
-                @if (
-                    !$breadcrumbCategory &&
-                        !$breadcrumbSubcategory &&
-                        !$breadcrumbChildCategory &&
-                        !$breadcrumbCountry &&
-                        !$breadcrumbState &&
-                        !$breadcrumbCity)
-                    <li class="breadcrumb-item active" aria-current="page">All Listings</li>
-                @endif
-            </ol>
-        </nav>
-    </div>
-
-    <div class="all-listing">
-        <div class="container">
+        <div class="all-listing">
             <!-- Sidebar backdrop overlay -->
             <div class="sidebar-overlay" id="sidebar_overlay"></div>
 

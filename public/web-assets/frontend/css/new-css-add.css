@@ -1069,3 +1069,43 @@ span.popup_contents__close.popup_close i {
         font-size: 24px;
     }
 }
+
+/* ═══════════════════════════════════════════════
+   SHARED PAGE SPACING
+   Consistent spacing below breadcrumb & above footer
+   ═══════════════════════════════════════════════ */
+
+/* Shared page content padding — listing & details pages */
+.all-listing,
+.proDetails-content {
+    padding-top: 48px;
+    padding-bottom: 80px;
+}
+
+@media (max-width: 991px) {
+
+    .all-listing,
+    .proDetails-content {
+        padding-top: 36px;
+        padding-bottom: 60px;
+    }
+}
+
+@media (max-width: 575px) {
+
+    .all-listing,
+    .proDetails-content {
+        padding-top: 28px;
+        padding-bottom: 48px;
+    }
+}
+
+/* Details page: clamp long ad title so it doesn't wrap too much */
+.contact-breadcrumb-area h1 {
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+}
+}

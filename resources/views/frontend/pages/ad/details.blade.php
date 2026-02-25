@@ -6,25 +6,10 @@
 
 @section('content')
     @php $sellerUser = $ad->userInfo; @endphp
-    <!--Listing Details-->
-    <div class="proDetails section-padding2">
-        <div class="container">
-            {{-- Breadcrumb --}}
-            <div class="bradecrumb-wraper-div">
-                <div class="row mb-24">
-                    <div class="col-sm-12">
-                        <nav aria-label="breadcrumb" class="frontend-breadcrumb-wrap">
-                            <h4 class="breadcrumb-contents-title"></h4>
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('ad.listing.page') }}">Listings</a></li>
-                                <li class="breadcrumb-item active">{{ $ad->title }}</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
 
+    <!--Listing Details-->
+    <div class="container">
+        <div class="proDetails proDetails-content">
             <div class="row justify-content-center">
                 {{-- Left Column --}}
                 <div class="col-xl-8 col-lg-8 col-md-8">
@@ -88,8 +73,7 @@
                                     <div class="single-main-image">
                                         <a href="#" data-mfp-src="{{ asset(getFilePath($image, false)) }}"
                                             class="long-img image-link">
-                                            <img src="{{ asset(getFilePath($image, false)) }}"
-                                                alt="{{ $ad->title }}" />
+                                            <img src="{{ asset(getFilePath($image, false)) }}" alt="{{ $ad->title }}" />
                                         </a>
                                     </div>
                                 @endforeach
@@ -202,8 +186,8 @@
                                             <div class="btn-wrapper">
                                                 @if ($relAd->is_featured == config('settings.general_status.active'))
                                                     <span class="pro-btn2">
-                                                        <svg width="7" height="10" viewBox="0 0 7 10"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <svg width="7" height="10" viewBox="0 0 7 10" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
                                                             <path d="M4 0V3.88889H7L3 10V6.11111H0L4 0Z" fill="white" />
                                                         </svg>
                                                         FEATURED
