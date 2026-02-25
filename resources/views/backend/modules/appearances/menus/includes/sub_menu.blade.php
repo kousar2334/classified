@@ -51,8 +51,8 @@
                 <!--End Menu Item Content-->
             </div>
             <!--Child Items-->
-            @if ($item->children->count() > 0)
-                @include('backend.modules.Appearances.menus.includes.sub_menu', [
+            @if ($subitem->children->count() > 0)
+                @include('backend.modules.appearances.menus.includes.sub_menu', [
                     'children' => $subitem->children,
                 ])
             @endif

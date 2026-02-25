@@ -179,8 +179,8 @@
         }
 
         /**
-                                                                                                                                                        * Nestable Extras
-                                                                                                                                                        */
+                                                                                                                                                                    * Nestable Extras
+                                                                                                                                                                    */
 
         .nestable-lists {
             display: block;
@@ -215,8 +215,8 @@
         }
 
         /**
-                                                                                                                                                        * Nestable Draggable Handles
-                                                                                                                                                        */
+                                                                                                                                                                    * Nestable Draggable Handles
+                                                                                                                                                                    */
         .dd-item-header {
             margin-left: 43px;
         }
@@ -564,7 +564,7 @@
                                                                                     <!--Child Items-->
                                                                                     @if ($item->children->count() > 0)
                                                                                         @include(
-                                                                                            'backend.modules.Appearances.menus.includes.sub_menu',
+                                                                                            'backend.modules.appearances.menus.includes.sub_menu',
                                                                                             [
                                                                                                 'children' =>
                                                                                                     $item->children,
@@ -602,6 +602,20 @@
                                                                         </span>
                                                                     </label>
                                                                     <!--End Header Menu-->
+                                                                    <!--Footer Menu-->
+                                                                    <label class="display-location mb-20">
+                                                                        <input type="checkbox"
+                                                                            class="display-location-checkbox"
+                                                                            name="footer_menu"
+                                                                            @checked($menu_id != null && $footer_menu != null && $footer_menu->menu_id == $menu_id)>
+                                                                        <span class="h6">
+                                                                            {{ translation('Footer Menu') }}
+                                                                            <span>
+                                                                                {{ $footer_menu != null ? __('(Currently set to: ' . $footer_menu->menu->title . ')') : 'No Menu set' }}
+                                                                            </span>
+                                                                        </span>
+                                                                    </label>
+                                                                    <!--End Footer Menu-->
                                                                 </div>
                                                             </div>
                                                         </div>

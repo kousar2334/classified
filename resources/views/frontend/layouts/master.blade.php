@@ -7,7 +7,7 @@
 
     <x-site-header />
     @yield('content')
-    @include('frontend.includes.footer')
+    <x-site-footer />
 
     <!-- back to top area start -->
     <div class="back-to-top">
