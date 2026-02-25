@@ -148,14 +148,14 @@
                                     @php $bg = $catBg[$loop->index % count($catBg)]; @endphp
                                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6">
                                         <a href="{{ route('ad.listing.page', $category->permalink) }}"
-                                            class="cat-v3-card text-decoration-none" style="background:{{ $bg }};">
-                                            <div class="cat-v3-img">
+                                            class="cat-thumb-card text-decoration-none">
+                                            <div class="cat-thumb-img" style="background:{{ $bg }};">
                                                 <img src="{{ asset(getFilePath($category->icon)) }}"
                                                     alt="{{ $category->title }}" />
                                             </div>
-                                            <div class="cat-v3-footer">
-                                                <div class="cat-v3-name">{{ $category->title }}</div>
-                                                <div class="cat-v3-count">
+                                            <div class="cat-thumb-info">
+                                                <div class="cat-thumb-name">{{ $category->title }}</div>
+                                                <div class="cat-thumb-count">
                                                     {{ number_format($category->ads_count) }} {{ translation('ads') ?? 'ads' }}
                                                 </div>
                                             </div>
