@@ -17,16 +17,18 @@ class PageContentController extends Controller
             $lang = $request->input('lang', defaultLangCode());
             $defaultLang = defaultLangCode();
 
+            $pageId = $request->input('page', 'home');
+
             foreach ($request->except(['_token', 'lang', 'page']) as $key => $value) {
                 if ($lang == $defaultLang) {
                     PageContent::updateOrCreate(
                         ['key' => $key],
-                        ['value' => $value]
+                        ['value' => $value, 'page_id' => $pageId]
                     );
                 } else {
                     PageContentTranslation::updateOrCreate(
                         ['key' => $key, 'lang' => $lang],
-                        ['value' => $value]
+                        ['value' => $value, 'page_id' => $pageId]
                     );
                 }
             }

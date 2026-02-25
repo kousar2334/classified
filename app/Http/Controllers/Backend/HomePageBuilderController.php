@@ -73,17 +73,18 @@ class HomePageBuilderController extends Controller
 
             $lang = $request->input('lang', defaultLangCode());
             $defaultLang = defaultLangCode();
+            $pageId = 'home';
 
             foreach ($request->except(['_token', 'lang', 'section_key']) as $key => $value) {
                 if ($lang === $defaultLang) {
                     PageContent::updateOrCreate(
                         ['key' => $key],
-                        ['value' => $value]
+                        ['value' => $value, 'page_id' => $pageId]
                     );
                 } else {
                     PageContentTranslation::updateOrCreate(
                         ['key' => $key, 'lang' => $lang],
-                        ['value' => $value]
+                        ['value' => $value, 'page_id' => $pageId]
                     );
                 }
             }
@@ -93,7 +94,7 @@ class HomePageBuilderController extends Controller
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollBack();
-            toastNotification('error', 'Failed to update content', 'Error');
+            toastNotification('error', $e->getMessage(), 'Error');
             return redirect()->back();
         }
     }
