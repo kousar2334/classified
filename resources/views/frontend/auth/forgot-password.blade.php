@@ -18,7 +18,7 @@
                             </div>
                         </div>
                         <div class="btn-wrapper mb-10">
-                            <button type="submit" class="cmn-btn1 w-100">Submit Now</button>
+                            <button type="submit" class="cmn-btn w-100">Submit Now</button>
                         </div>
                     </form>
                 </div>

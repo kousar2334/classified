@@ -160,7 +160,7 @@
                     <label for="profileImageInput" class="avatar-file-label">
                         <i class="fa-solid fa-arrow-up-from-bracket"></i> Choose Photo
                     </label>
-                    <button type="submit" class="cmn-btn1" id="avatarSaveBtn" style="display:none">
+                    <button type="submit" class="cmn-btn" id="avatarSaveBtn" style="display:none">
                         <i class="fa-solid fa-floppy-disk"></i> Upload
                     </button>
                     <input type="file" name="profile_image" id="profileImageInput" class="avatar-file-input"
@@ -216,7 +216,7 @@
                 </div>
 
                 <div class="form-group mb-0">
-                    <button type="submit" class="cmn-btn1">
+                    <button type="submit" class="cmn-btn">
                         <i class="fa-solid fa-floppy-disk"></i> Save Changes
                     </button>
                 </div>
@@ -284,7 +284,7 @@
                     </div>
 
                     <div class="form-group mb-0">
-                        <button type="submit" class="cmn-btn1">
+                        <button type="submit" class="cmn-btn">
                             <i class="fa-solid fa-key"></i> Update Password
                         </button>
                     </div>

@@ -7,7 +7,7 @@
     <div class="my-listings-header">
         <h1>My Subscriptions</h1>
         <div class="btn-wrapper">
-            <a href="{{ route('pricing.plans') }}" class="cmn-btn1">
+            <a href="{{ route('pricing.plans') }}" class="cmn-btn">
                 Upgrade Plan
             </a>
         </div>
@@ -128,7 +128,7 @@
                 <div class="icon"><i class="fas fa-credit-card"></i></div>
                 <h3>No subscriptions yet</h3>
                 <p>Subscribe to a plan to start posting ads.</p>
-                <a href="{{ route('pricing.plans') }}" class="cmn-btn1">
+                <a href="{{ route('pricing.plans') }}" class="cmn-btn">
                     <i class="fas fa-tag"></i> View Plans
                 </a>
             </div>

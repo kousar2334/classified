@@ -27,7 +27,7 @@ header.header-style-01.sticky-bar .headerBg4 {
 }
 
 /* ── Post your ad button fix ── */
-.nav-post-btn .cmn-btn1 {
+.nav-post-btn .cmn-btn {
     white-space: nowrap;
     padding: 9px 18px;
     font-size: 14px;
@@ -36,7 +36,7 @@ header.header-style-01.sticky-bar .headerBg4 {
     gap: 6px;
 }
 
-.nav-post-btn .cmn-btn1 i {
+.nav-post-btn .cmn-btn i {
     font-size: 18px;
     margin-right: 0;
 }
@@ -54,7 +54,7 @@ header.header-style-01.sticky-bar .headerBg4 {
         padding: 10px 15px;
     }
 
-    .navbar-collapse .nav-post-btn .cmn-btn1 {
+    .navbar-collapse .nav-post-btn .cmn-btn {
         width: 100%;
         justify-content: center;
     }

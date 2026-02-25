@@ -119,9 +119,9 @@
                 @endif
             </p>
             @if (request('q'))
-                <a href="{{ route('member.favourites') }}" class="cmn-btn1">View All Favourites</a>
+                <a href="{{ route('member.favourites') }}" class="cmn-btn">View All Favourites</a>
             @else
-                <a href="{{ route('ad.listing.page') }}" class="cmn-btn1">Browse Listings</a>
+                <a href="{{ route('ad.listing.page') }}" class="cmn-btn">Browse Listings</a>
             @endif
         </div>
     @endif

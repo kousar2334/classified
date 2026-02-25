@@ -5,7 +5,7 @@
 @section('dashboard-content')
     <div class="my-listings-header">
         <h1>My Listings</h1>
-        <a href="{{ route('ad.post.page') }}" class="cmn-btn1">
+        <a href="{{ route('ad.post.page') }}" class="cmn-btn">
             <span>+</span> Post New Ad
         </a>
     </div>
@@ -161,11 +161,11 @@
                 @endif
             </p>
             @if (!request('status') && !request('q'))
-                <a href="{{ route('ad.post.page') }}" class="cmn-btn1">
+                <a href="{{ route('ad.post.page') }}" class="cmn-btn">
                     <span>+</span> Post Your First Ad
                 </a>
             @else
-                <a href="{{ route('member.my.listings') }}" class="cmn-btn1">
+                <a href="{{ route('member.my.listings') }}" class="cmn-btn">
                     View All Listings
                 </a>
             @endif

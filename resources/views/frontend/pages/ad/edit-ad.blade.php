@@ -347,7 +347,7 @@
                                             <!-- Continue Button -->
                                             <div class="continue-btn mt-3">
                                                 <div class="btn-wrapper mb-10 d-flex justify-content-end gap-3">
-                                                    <button class="cmn-btn1 w-100" id="nextBtn"
+                                                    <button class="cmn-btn w-100" id="nextBtn"
                                                         type="button">Continue</button>
                                                 </div>
                                             </div>
@@ -498,9 +498,9 @@
                                             <!-- Previous / Submit -->
                                             <div class="continue-btn mt-3">
                                                 <div class="btn-wrapper mb-10 d-flex justify-content-end gap-3">
-                                                    <button class="cmn-btn1 w-100" id="prevBtn"
+                                                    <button class="cmn-btn w-100" id="prevBtn"
                                                         type="button">Previous</button>
-                                                    <button class="cmn-btn1 w-100" id="submitBtn" type="submit">
+                                                    <button class="cmn-btn w-100" id="submitBtn" type="submit">
                                                         <span class="btn-text">Update Listing</span>
                                                     </button>
                                                 </div>

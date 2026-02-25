@@ -225,7 +225,7 @@
 
                                 {{-- Submit --}}
                                 <div class="col-12">
-                                    <button type="submit" class="cmn-btn1">
+                                    <button type="submit" class="cmn-btn">
                                         <i class="las la-paper-plane"></i>
                                         {{ translation('Send Message') }}
                                     </button>
