@@ -214,6 +214,35 @@
                 </li>
                 <!--End Advertisement Module-->
 
+                <!--Newsletter Module-->
+                <li class="nav-item has-treeview {{ Request::routeIs('admin.newsletter.*') ? 'menu-open' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ Request::routeIs('admin.newsletter.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-paper-plane"></i>
+                        <p>
+                            {{ translation('Newsletter') }}
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.newsletter.subscribers') }}"
+                                class="nav-link {{ Request::routeIs('admin.newsletter.subscribers') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ translation('Subscribers') }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.newsletter.campaigns') }}"
+                                class="nav-link {{ Request::routeIs(['admin.newsletter.campaigns', 'admin.newsletter.campaigns.*']) ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ translation('Campaigns') }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--End Newsletter Module-->
+
                 <!--Contact Messages Module-->
                 @can('Manage Message')
                     <li class="nav-item">

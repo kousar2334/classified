@@ -12,10 +12,16 @@ use App\Http\Controllers\Frontend\AccountController;
 use App\Http\Controllers\Frontend\SubscriptionController;
 use App\Http\Controllers\Backend\LanguageController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\NewsletterController;
 
 Route::get('/', [PageController::class, 'homePage'])->name('home');
 Route::get('/contact', [ContactController::class, 'contactPage'])->name('contact');
 Route::post('/contact/send', [ContactController::class, 'sendMessage'])->name('contact.send');
+
+// Newsletter
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
+Route::get('/newsletter/track/open/{campaign}/{subscriber}', [NewsletterController::class, 'trackOpen'])->name('newsletter.track.open');
 
 // Advertisement tracking (public, lightweight)
 Route::post('/ad/impression', [AdvertisementController::class, 'trackImpression'])->name('ad.track.impression');

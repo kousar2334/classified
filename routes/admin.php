@@ -29,6 +29,7 @@ use App\Http\Controllers\Backend\ConversationController;
 use App\Http\Controllers\Backend\SubscriptionController;
 use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Backend\HomePageBuilderController;
+use App\Http\Controllers\Backend\NewsletterController as BackendNewsletterController;
 
 Route::prefix('admin')->group(function () {
     //Admin Auth
@@ -398,6 +399,25 @@ Route::prefix('admin')->group(function () {
             Route::post('update', [AdvertisementController::class, 'update'])->name('admin.advertisement.update');
             Route::post('delete', [AdvertisementController::class, 'delete'])->name('admin.advertisement.delete');
             Route::get('{id}/analytics', [AdvertisementController::class, 'analytics'])->name('admin.advertisement.analytics');
+        });
+
+        /**
+         * NEWSLETTER MODULE
+         */
+        Route::prefix('newsletter')->group(function () {
+            // Subscribers
+            Route::get('subscribers', [BackendNewsletterController::class, 'subscribers'])->name('admin.newsletter.subscribers');
+            Route::post('subscribers/delete', [BackendNewsletterController::class, 'deleteSubscriber'])->name('admin.newsletter.subscribers.delete');
+
+            // Campaigns
+            Route::get('campaigns', [BackendNewsletterController::class, 'campaigns'])->name('admin.newsletter.campaigns');
+            Route::get('campaigns/create', [BackendNewsletterController::class, 'createCampaign'])->name('admin.newsletter.campaigns.create');
+            Route::post('campaigns/store', [BackendNewsletterController::class, 'storeCampaign'])->name('admin.newsletter.campaigns.store');
+            Route::get('campaigns/{id}/edit', [BackendNewsletterController::class, 'editCampaign'])->name('admin.newsletter.campaigns.edit');
+            Route::post('campaigns/{id}/update', [BackendNewsletterController::class, 'updateCampaign'])->name('admin.newsletter.campaigns.update');
+            Route::post('campaigns/delete', [BackendNewsletterController::class, 'deleteCampaign'])->name('admin.newsletter.campaigns.delete');
+            Route::post('campaigns/{id}/send', [BackendNewsletterController::class, 'sendCampaign'])->name('admin.newsletter.campaigns.send');
+            Route::get('campaigns/{id}/stats', [BackendNewsletterController::class, 'campaignStats'])->name('admin.newsletter.campaigns.stats');
         });
     });
 });
