@@ -59,7 +59,7 @@ class NewsletterController extends Controller
     {
         $links = [
             ['title' => 'Newsletter', 'route' => '', 'active' => false],
-            ['title' => 'Campaigns', 'route' => route('admin.newsletter.campaigns'), 'active' => false],
+            ['title' => 'Campaigns', 'route' => 'admin.newsletter.campaigns', 'active' => false],
             ['title' => 'Create', 'route' => '', 'active' => true],
         ];
 
@@ -85,7 +85,7 @@ class NewsletterController extends Controller
         $campaign = $this->newsletter_repository->findCampaign($id);
         $links = [
             ['title' => 'Newsletter', 'route' => '', 'active' => false],
-            ['title' => 'Campaigns', 'route' => route('admin.newsletter.campaigns'), 'active' => false],
+            ['title' => 'Campaigns', 'route' => 'admin.newsletter.campaigns', 'active' => false],
             ['title' => 'Edit', 'route' => '', 'active' => true],
         ];
 
@@ -160,7 +160,7 @@ class NewsletterController extends Controller
         $data  = $this->newsletter_repository->getCampaignStats($id);
         $links = [
             ['title' => 'Newsletter', 'route' => '', 'active' => false],
-            ['title' => 'Campaigns', 'route' => route('admin.newsletter.campaigns'), 'active' => false],
+            ['title' => 'Campaigns', 'route' => 'admin.newsletter.campaigns', 'active' => false],
             ['title' => 'Stats', 'route' => '', 'active' => true],
         ];
 

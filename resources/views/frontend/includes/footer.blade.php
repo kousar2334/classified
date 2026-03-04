@@ -70,6 +70,8 @@
                         </div>
                     </div>
 
+
+
                     {{-- Footer Menu — each parent with children = its own column --}}
                     @if ($footer_menu_items->isNotEmpty())
                         @php
@@ -108,34 +110,23 @@
                             </div>
                         @endif
                     @endif
-
-                </div>
-            </div>
-        </div>
-
-        {{-- ── Newsletter Subscribe ── --}}
-        <div class="footer-newsletter-area">
-            <div class="container">
-                <div class="footer-border py-4">
-                    <div class="row align-items-center">
-                        <div class="col-lg-5 mb-3 mb-lg-0">
-                            <h5 class="footer-newsletter-title mb-1">Subscribe to our Newsletter</h5>
-                            <p class="footer-newsletter-desc mb-0 text-muted" style="font-size:14px;">
-                                Get the latest listings and updates delivered to your inbox.
-                            </p>
-                        </div>
-                        <div class="col-lg-7">
-                            <form id="footer-newsletter-form" class="d-flex gap-2">
-                                @csrf
-                                <input type="email" name="email" id="newsletter-email"
-                                    class="form-control" placeholder="Enter your email address" required
-                                    style="border-radius:4px;">
-                                <button type="submit" class="btn btn-primary px-4" style="white-space:nowrap;">
-                                    Subscribe
-                                </button>
-                            </form>
+                    {{-- Newsletter Column --}}
+                    <div class="col-lg-3 col-md-6">
+                        <h6 class="footerTittle">Join Newsletter</h6>
+                        <p style="font-size:14px;margin-bottom:16px;">
+                            Subscribe to the newsletter for all the latest updates
+                        </p>
+                        <form id="footer-newsletter-form" method="POST" action="{{ route('newsletter.subscribe') }}">
+                            @csrf
+                            <div class="mb-2">
+                                <input type="email" name="email" id="newsletter-email" class="form-control"
+                                    placeholder="Enter your email" required>
+                            </div>
+                            <button type="submit" class="btn btn-dark w-100">
+                                Subscribe
+                            </button>
                             <div id="newsletter-msg" class="mt-2" style="display:none;font-size:13px;"></div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -163,42 +154,55 @@
 </footer>
 
 <script>
-(function ($) {
-    'use strict';
-    $('#footer-newsletter-form').on('submit', function (e) {
-        e.preventDefault();
-        var $btn = $(this).find('button[type=submit]');
-        var $msg = $('#newsletter-msg');
-        $btn.prop('disabled', true).text('Subscribing...');
-        $msg.hide();
-        $.ajax({
-            url: '{{ route('newsletter.subscribe') }}',
-            method: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                email: $('#newsletter-email').val(),
-            },
-            success: function (res) {
-                if (res.success) {
-                    $msg.removeClass('text-danger').addClass('text-success')
-                        .text(res.message).show();
-                    $('#newsletter-email').val('');
-                } else {
-                    $msg.removeClass('text-success').addClass('text-danger')
-                        .text(res.message || 'Something went wrong.').show();
-                }
-            },
-            error: function (xhr) {
-                var msg = 'Something went wrong. Please try again.';
-                if (xhr.status === 422 && xhr.responseJSON && xhr.responseJSON.errors) {
-                    msg = Object.values(xhr.responseJSON.errors)[0][0];
-                }
-                $msg.removeClass('text-success').addClass('text-danger').text(msg).show();
-            },
-            complete: function () {
-                $btn.prop('disabled', false).text('Subscribe');
-            }
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('footer-newsletter-form');
+        if (!form) return;
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var btn = form.querySelector('button[type=submit]');
+            var msg = document.getElementById('newsletter-msg');
+            var email = document.getElementById('newsletter-email').value;
+
+            btn.disabled = true;
+            btn.textContent = 'Subscribing...';
+            msg.style.display = 'none';
+
+            fetch('{{ route('newsletter.subscribe') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email
+                    }),
+                })
+                .then(function(res) {
+                    return res.json();
+                })
+                .then(function(data) {
+                    msg.className = 'mt-2';
+                    if (data.success) {
+                        msg.classList.add('text-success');
+                        msg.textContent = data.message;
+                        document.getElementById('newsletter-email').value = '';
+                    } else {
+                        msg.classList.add('text-danger');
+                        msg.textContent = data.message || 'Something went wrong.';
+                    }
+                    msg.style.display = 'block';
+                })
+                .catch(function() {
+                    msg.className = 'mt-2 text-danger';
+                    msg.textContent = 'Something went wrong. Please try again.';
+                    msg.style.display = 'block';
+                })
+                .finally(function() {
+                    btn.disabled = false;
+                    btn.textContent = 'Subscribe';
+                });
         });
     });
-}(jQuery));
 </script>
