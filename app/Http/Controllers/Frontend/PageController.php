@@ -8,10 +8,14 @@ use App\Models\AdsCategory;
 use App\Models\HomePageSection;
 use App\Models\PricingPlan;
 use App\Repository\AdvertisementRepository;
+use App\Repository\PageRepository;
 
 class PageController extends Controller
 {
-    public function __construct(public AdvertisementRepository $advertisement_repository) {}
+    public function __construct(
+        public AdvertisementRepository $advertisement_repository,
+        public PageRepository $page_repository,
+    ) {}
 
     public function homePage()
     {
@@ -112,6 +116,18 @@ class PageController extends Controller
             'advertisements',
             'homeSections'
         ));
+    }
+
+    /**
+     * Display a single static page by permalink
+     */
+    public function pagePreview(string $permalink)
+    {
+        $page = $this->page_repository->getPageByPermalink($permalink);
+
+        abort_if($page === null, 404);
+
+        return view('frontend.pages.page-single', compact('page'));
     }
 
     /**

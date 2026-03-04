@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\AdController;
+use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Frontend\LocationController;
@@ -23,6 +24,14 @@ Route::post('/ad/click', [AdvertisementController::class, 'trackClick'])->name('
 // Language Switcher (frontend public route)
 Route::get('/language/switch/{code}', [LanguageController::class, 'setSessionLanguage'])->name('frontend.language.switch');
 Route::get('/pricing-plans', [PageController::class, 'pricingPlans'])->name('pricing.plans');
+
+// Static pages
+Route::get('/page/{permalink}', [PageController::class, 'pagePreview'])->name('frontend.page.single.preview');
+
+// Blog
+Route::get('/blog', [BlogController::class, 'blogList'])->name('frontend.blog.list');
+Route::get('/blog/{permalink}', [BlogController::class, 'blogDetails'])->name('frontend.new.details');
+Route::post('/blog/{permalink}/comment', [BlogController::class, 'storeComment'])->name('frontend.blog.comment.store');
 
 
 // SSLCommerz callbacks (no auth middleware — called by gateway)

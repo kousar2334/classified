@@ -51,13 +51,12 @@ class PageRepository
     {
         try {
             DB::beginTransaction();
-             if ($request['lang'] != null && $request['lang'] != defaultLangCode()) {
+            if ($request['lang'] != null && $request['lang'] != defaultLangCode()) {
                 $page_translation = PageTranslation::firstOrNew(['page_id' => $request['id'], 'lang' => $request['lang']]);
-                $page_translation->title= x_clean($request['title']);
+                $page_translation->title = x_clean($request['title']);
                 $page_translation->content = x_clean($request['content']);
                 $page_translation->save();
-
-            }else{
+            } else {
                 $page = Page::findOrFail($request['id']);
                 $page->title = $request['title'];
                 $page->content = $request['content'];
@@ -71,7 +70,7 @@ class PageRepository
                 $page->header = $request['header'];
                 $page->save();
             }
-            
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -98,8 +97,22 @@ class PageRepository
     }
 
     /**
+     * Find an active page by its permalink
+     *
+     * @param string $permalink
+     * @return Page|null
+     */
+    public function getPageByPermalink(string $permalink): ?Page
+    {
+        return Page::with('page_translations')
+            ->where('permalink', $permalink)
+            ->where('status', config('settings.page_status.active'))
+            ->first();
+    }
+
+    /**
      * Will delete a page
-     * 
+     *
      * @param Int $id
      * @return bool
      */

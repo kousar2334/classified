@@ -400,8 +400,73 @@ class BlogRepository
     }
 
     /**
-     * Will delete a page
-     * 
+     * Return paginated active blogs for frontend listing
+     */
+    public function activeBlogList($request, int $perPage = 9)
+    {
+        $query = Blog::with(['blog_translations', 'authorInfo' => fn($q) => $q->select('id', 'name')])
+            ->where('status', config('settings.general_status.active'));
+
+        if ($request->filled('category')) {
+            $query->whereHas('categories', fn($q) => $q->where('slug', $request->category));
+        }
+
+        if ($request->filled('search')) {
+            $term = $request->search;
+            $query->where(fn($q) => $q->where('title', 'LIKE', "%{$term}%")
+                ->orWhere('short_description', 'LIKE', "%{$term}%"));
+        }
+
+        return $query->orderByDesc('id')->paginate($perPage)->withQueryString();
+    }
+
+    /**
+     * Find an active blog by permalink with relations loaded
+     */
+    public function getBlogByPermalink(string $permalink): ?Blog
+    {
+        return Blog::with(['blog_translations', 'categories.blog_category_translations', 'tags', 'authorInfo', 'comments'])
+            ->where('permalink', $permalink)
+            ->where('status', config('settings.general_status.active'))
+            ->first();
+    }
+
+    /**
+     * Return recent active blogs, excluding a given id
+     */
+    public function recentBlogs(int $exclude, int $limit = 4)
+    {
+        return Blog::with('blog_translations')
+            ->where('status', config('settings.general_status.active'))
+            ->where('id', '!=', $exclude)
+            ->orderByDesc('id')
+            ->take($limit)
+            ->get();
+    }
+
+    /**
+     * Store a new comment on a blog post
+     */
+    public function storeBlogComment(array $data): bool
+    {
+        try {
+            $comment = new BlogComment();
+            $comment->blog_id   = $data['blog_id'];
+            $comment->user_id   = $data['user_id'] ?? null;
+            $comment->guest_name  = $data['guest_name'] ?? null;
+            $comment->guest_email = $data['guest_email'] ?? null;
+            $comment->comment   = $data['comment'];
+            $comment->status    = config('settings.general_status.active');
+            $comment->save();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Will delete a blog
+     *
      * @param Int $id
      * @return bool
      */
