@@ -99,8 +99,12 @@
 
                     {{-- Video --}}
                     @if ($blog->video)
-                        <div class="blog-video-wrap mt-4 ratio ratio-16x9">
-                            <iframe src="{{ $blog->video }}" allowfullscreen></iframe>
+                        <div class="blog-video-wrap mt-4">
+                            <a href="{{ $blog->video }}" target="_blank" rel="noopener noreferrer"
+                                class="cmn-btn d-inline-flex align-items-center gap-2">
+                                <i class="las la-play-circle"></i>
+                                {{ translation('Watch Video') }}
+                            </a>
                         </div>
                     @endif
 
