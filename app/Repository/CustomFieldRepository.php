@@ -71,7 +71,7 @@ class CustomFieldRepository
      */
     public function fieldDetails($id)
     {
-        return AdsCustomField::findOrFail($id);
+        return AdsCustomField::with('field_translations')->findOrFail($id);
     }
     /**
      * Will update a custom field
@@ -80,14 +80,25 @@ class CustomFieldRepository
     {
         try {
             DB::beginTransaction();
-            $field = AdsCustomField::findOrFail($request['id']);
-            $field->title = xss_clean($request['title']);
-            $field->type = $request['type'];
-            $field->is_required = $request->has('is_required') ? config('settings.general_status.active') : config('settings.general_status.in_active');
-            $field->is_filterable = $request->has('is_filterable') ? config('settings.general_status.active') : config('settings.general_status.in_active');
-            $field->default_value = xss_clean($request['default_value']);
-            $field->status = $request['status'];
-            $field->save();
+
+            if (!empty($request['lang']) && $request['lang'] != defaultLangCode()) {
+                $translation = AdsCustomFieldTranslation::firstOrNew([
+                    'field_id' => $request['id'],
+                    'lang'     => $request['lang'],
+                ]);
+                $translation->title = xss_clean($request['title']);
+                $translation->save();
+            } else {
+                $field = AdsCustomField::findOrFail($request['id']);
+                $field->title = xss_clean($request['title']);
+                $field->type = $request['type'];
+                $field->is_required = $request->has('is_required') ? config('settings.general_status.active') : config('settings.general_status.in_active');
+                $field->is_filterable = $request->has('is_filterable') ? config('settings.general_status.active') : config('settings.general_status.in_active');
+                $field->default_value = xss_clean($request['default_value']);
+                $field->status = $request['status'];
+                $field->save();
+            }
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -197,7 +208,7 @@ class CustomFieldRepository
      */
     public function optionDetails($id)
     {
-        return AdsCustomFieldOption::with(['field'])->findOrFail($id);
+        return AdsCustomFieldOption::with(['field', 'option_translations'])->findOrFail($id);
     }
     /**
      * Will update custom field option
@@ -206,10 +217,21 @@ class CustomFieldRepository
     {
         try {
             DB::beginTransaction();
-            $option = AdsCustomFieldOption::findOrFail($request['id']);
-            $option->value = xss_clean($request['value']);
-            $option->status = $request['status'];
-            $option->save();
+
+            if (!empty($request['lang']) && $request['lang'] != defaultLangCode()) {
+                $translation = AdsCustomFieldOptionTranslation::firstOrNew([
+                    'option_id' => $request['id'],
+                    'lang'      => $request['lang'],
+                ]);
+                $translation->value = xss_clean($request['value']);
+                $translation->save();
+            } else {
+                $option = AdsCustomFieldOption::findOrFail($request['id']);
+                $option->value  = xss_clean($request['value']);
+                $option->status = $request['status'];
+                $option->save();
+            }
+
             DB::commit();
             return true;
         } catch (\Exception $e) {

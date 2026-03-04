@@ -58,7 +58,7 @@ class CustomFieldController extends Controller
         }
     }
     /**
-     * Will redirect edit page
+     * Will redirect edit page (modal)
      */
     public function editCustomField(Request $request): JsonResponse
     {
@@ -68,6 +68,16 @@ class CustomFieldController extends Controller
             'html' => view('backend.modules.ads.custom-field.edit', ['field' => $field])->render(),
         ]);
     }
+
+    /**
+     * Will show custom field edit page with language tabs
+     */
+    public function editCustomFieldPage(int $id, Request $request): View
+    {
+        $field = $this->customFieldRepository->fieldDetails($id);
+        return view('backend.modules.ads.custom-field.edit_page', compact('field'));
+    }
+
     /**
      * Will update custom field
      */
@@ -167,7 +177,7 @@ class CustomFieldController extends Controller
         return to_route('classified.ads.custom.field.options', ['id' => $request['field_id']]);
     }
     /**
-     * Will redirect option edit page
+     * Will redirect option edit page (modal)
      */
     public function customFieldOptionEdit(Request $request): JsonResponse|View
     {
@@ -178,6 +188,16 @@ class CustomFieldController extends Controller
             'html' => view('backend.modules.ads.custom-field.option_edit', ['option' => $option])->render(),
         ]);
     }
+
+    /**
+     * Will show option edit page with language tabs
+     */
+    public function editOptionPage(int $id, Request $request): View
+    {
+        $option = $this->customFieldRepository->optionDetails($id);
+        return view('backend.modules.ads.custom-field.option_edit_page', compact('option'));
+    }
+
     /**
      * Will update option
      */

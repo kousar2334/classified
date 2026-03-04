@@ -62,7 +62,7 @@ class ConditionController extends Controller
     }
 
     /**
-     * Will redirect category edit page
+     * Will redirect category edit page (modal)
      */
     public function editCondition(Request $request): JsonResponse|View
     {
@@ -72,6 +72,16 @@ class ConditionController extends Controller
             'html' => view('backend.modules.ads.condition.edit', compact('condition'))->render(),
         ]);
     }
+
+    /**
+     * Will show condition edit page with language tabs
+     */
+    public function editConditionPage(int $id, Request $request): View
+    {
+        $condition = $this->condition_repository->conditionDetails($id);
+        return view('backend.modules.ads.condition.edit_page', compact('condition'));
+    }
+
     /**
      * Will update Condition
      */
@@ -79,19 +89,15 @@ class ConditionController extends Controller
     {
         $res = $this->condition_repository->updateAdsCondition($request);
         if ($res) {
-            return response()->json(
-                [
-                    'success' => true,
-                    'message' => 'Condition updated successfully',
-                ]
-            );
+            return response()->json([
+                'success' => true,
+                'message' => 'Condition updated successfully',
+            ]);
         }
 
-        return response()->json(
-            [
-                'success' => false,
-                'message' => 'Condition update failed',
-            ]
-        );
+        return response()->json([
+            'success' => false,
+            'message' => 'Condition update failed',
+        ]);
     }
 }

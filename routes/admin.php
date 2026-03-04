@@ -308,6 +308,7 @@ Route::prefix('admin')->group(function () {
                 Route::post('store', [ConditionController::class, 'storeCondition'])->name('classified.ads.condition.store');
                 Route::post('delete', [ConditionController::class, 'deleteCondition'])->name('classified.ads.condition.delete');
                 Route::post('edit', [ConditionController::class, 'editCondition'])->name('classified.ads.condition.edit');
+                Route::get('edit/{id}', [ConditionController::class, 'editConditionPage'])->name('classified.ads.condition.edit.page');
                 Route::post('update', [ConditionController::class, 'updateCondition'])->name('classified.ads.condition.update');
             });
 
@@ -328,6 +329,7 @@ Route::prefix('admin')->group(function () {
                 Route::post('store', [CustomFieldController::class, 'storeCustomField'])->name('classified.ads.custom.field.store');
                 Route::post('delete', [CustomFieldController::class, 'deleteCustomField'])->name('classified.ads.custom.field.delete');
                 Route::post('edit}', [CustomFieldController::class, 'editCustomField'])->name('classified.ads.custom.field.edit');
+                Route::get('edit/{id}', [CustomFieldController::class, 'editCustomFieldPage'])->name('classified.ads.custom.field.edit.page');
                 Route::post('update', [CustomFieldController::class, 'updateCustomField'])->name('classified.ads.custom.field.update');
                 Route::post('assign-category', [CustomFieldController::class, 'assignCategory'])->name('classified.ads.custom.field.assign.category');
                 Route::post('bulk-action', [CustomFieldController::class, 'customFieldBulkAction'])->name('classified.ads.custom.field.bulk.action');
@@ -336,6 +338,7 @@ Route::prefix('admin')->group(function () {
                 Route::post('options/store', [CustomFieldController::class, 'customFieldOptionStore'])->name('classified.ads.custom.field.options.store');
                 Route::post('options/delete', [CustomFieldController::class, 'customFieldOptionDelete'])->name('classified.ads.custom.field.options.delete');
                 Route::post('options/edit', [CustomFieldController::class, 'customFieldOptionEdit'])->name('classified.ads.custom.field.options.edit');
+                Route::get('options/edit/{id}', [CustomFieldController::class, 'editOptionPage'])->name('classified.ads.custom.field.options.edit.page');
                 Route::post('options/update', [CustomFieldController::class, 'customFieldOptionUpdate'])->name('classified.ads.custom.field.options.update');
                 Route::post('options/bulk-action', [CustomFieldController::class, 'customFieldOptionBulkAction'])->name('classified.ads.custom.field.options.bulk.action');
             });

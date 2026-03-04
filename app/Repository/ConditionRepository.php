@@ -50,7 +50,7 @@ class ConditionRepository
      */
     public function conditionDetails($id)
     {
-        return AdsCondition::findOrFail($id);
+        return AdsCondition::with('condition_translations')->findOrFail($id);
     }
     /**
      * Will delete condition
@@ -71,16 +71,26 @@ class ConditionRepository
 
     /**
      * Will update condition
-     * 
      */
     public function updateAdsCondition($request): bool
     {
         try {
             DB::beginTransaction();
-            $condition = AdsCondition::findOrFail($request['id']);
-            $condition->title = $request['title'];
-            $condition->status = $request['status'];
-            $condition->save();
+
+            if (!empty($request['lang']) && $request['lang'] != defaultLangCode()) {
+                $translation = AdsConditionTranslation::firstOrNew([
+                    'condition_id' => $request['id'],
+                    'lang'         => $request['lang'],
+                ]);
+                $translation->title = xss_clean($request['title']);
+                $translation->save();
+            } else {
+                $condition = AdsCondition::findOrFail($request['id']);
+                $condition->title  = xss_clean($request['title']);
+                $condition->status = $request['status'];
+                $condition->save();
+            }
+
             DB::commit();
             return true;
         } catch (\Exception $e) {

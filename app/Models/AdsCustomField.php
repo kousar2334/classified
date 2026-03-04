@@ -4,12 +4,15 @@ namespace App\Models;
 
 use App\Models\AdsCategory;
 use App\Models\AdsCustomFieldOption;
+use App\Models\AdsCustomFieldTranslation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AdsCustomField extends Model
 {
+    protected $fillable = ['title', 'type', 'category_id', 'is_required', 'is_filterable', 'default_value', 'status'];
+
     public function options(): HasMany
     {
         return $this->hasMany(AdsCustomFieldOption::class, 'field_id');
@@ -18,6 +21,18 @@ class AdsCustomField extends Model
     public function category(): HasOne
     {
         return $this->hasOne(AdsCategory::class, 'id', 'category_id');
+    }
+
+    public function field_translations(): HasMany
+    {
+        return $this->hasMany(AdsCustomFieldTranslation::class, 'field_id');
+    }
+
+    public function translation($field = '', $lang = false)
+    {
+        $lang = $lang == false ? app()->getLocale() : $lang;
+        $translation = $this->field_translations->where('lang', $lang)->first();
+        return $translation != null ? $translation->$field : $this->$field;
     }
 
     public function get_type()

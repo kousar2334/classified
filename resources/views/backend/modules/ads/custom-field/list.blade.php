@@ -116,10 +116,10 @@
                                                                 {{ translation('Options') }}</a>
                                                             <div class="dropdown-divider"></div>
                                                         @endif
-                                                        <button class="dropdown-item edit-item"
-                                                            data-id="{{ $field->id }}">
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('classified.ads.custom.field.edit.page', ['id' => $field->id, 'lang' => defaultLangCode()]) }}">
                                                             {{ translation('Edit') }}
-                                                        </button>
+                                                        </a>
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item delete-item"
                                                             data-id="{{ $field->id }}">

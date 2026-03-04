@@ -66,10 +66,10 @@
                                                         data-toggle="dropdown" aria-expanded="false">
                                                     </button>
                                                     <div class="dropdown-menu" role="menu">
-                                                        <button class="dropdown-item edit-item"
-                                                            data-id="{{ $condition->id }}">
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('classified.ads.condition.edit.page', ['id' => $condition->id, 'lang' => defaultLangCode()]) }}">
                                                             {{ translation('Edit') }}
-                                                        </button>
+                                                        </a>
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item delete-item"
                                                             data-id="{{ $condition->id }}">

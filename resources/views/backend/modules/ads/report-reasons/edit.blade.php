@@ -24,14 +24,11 @@
                         <div class="card">
                             {{-- Language Tabs --}}
                             <ul class="nav nav-tabs nav-fill border-light border-0">
-                                @foreach (getAllLanguages() as $language)
+                                @foreach (activeLanguages() as $language)
                                     <li class="nav-item">
                                         <a class="nav-link @if ($language->code == $lang) active border-0 @else bg-light @endif py-3"
                                             href="{{ route('classified.ads.report.reasons.edit', ['id' => $reason->id, 'lang' => $language->code]) }}">
-                                            <span>{{ $language->name }}</span>
-                                            @if ($language->native_title)
-                                                <small class="text-muted d-block">{{ $language->native_title }}</small>
-                                            @endif
+                                            {{ $language->title }}
                                         </a>
                                     </li>
                                 @endforeach
