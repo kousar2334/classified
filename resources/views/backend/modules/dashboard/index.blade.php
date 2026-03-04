@@ -213,7 +213,7 @@
                                             <td>{{ $ad->categoryInfo->title ?? 'N/A' }}</td>
                                             <td>{{ $ad->userInfo->name ?? 'N/A' }}</td>
                                             <td>
-                                                @if ($ad->status == config('settings.general_status.active'))
+                                                @if ($ad->status == $active)
                                                     <span class="badge badge-success">{{ translation('Active') }}</span>
                                                 @else
                                                     <span class="badge badge-warning">{{ translation('Inactive') }}</span>
@@ -293,9 +293,9 @@
                                 <tbody>
                                     @forelse($latest_reports as $report)
                                         <tr>
-                                            <td>{{ Str::limit($report->ad->title ?? 'N/A', 20) }}</td>
-                                            <td>{{ $report->user->name ?? 'N/A' }}</td>
-                                            <td>{{ $report->reason->title ?? 'N/A' }}</td>
+                                            <td>{{ Str::limit($report->ad?->title ?? 'N/A', 20) }}</td>
+                                            <td>{{ $report->user?->name ?? 'N/A' }}</td>
+                                            <td>{{ $report->reason?->title ?? 'N/A' }}</td>
                                             <td>{{ $report->created_at->format('M d, Y') }}</td>
                                         </tr>
                                     @empty

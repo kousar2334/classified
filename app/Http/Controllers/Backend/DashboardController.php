@@ -25,11 +25,18 @@ class DashboardController extends Controller
         $active   = config('settings.general_status.active');
         $inactive = config('settings.general_status.in_active');
 
-        // --- Stat Boxes ---
-        $total_ads        = Ad::count();
-        $active_ads       = Ad::where('status', $active)->count();
-        $pending_ads      = Ad::where('status', $inactive)->count();
-        $featured_ads     = Ad::where('is_featured', $active)->count();
+        // --- Stat Boxes (Ad counts in one query) ---
+        $ad_counts = Ad::selectRaw("
+            COUNT(*) as total_ads,
+            SUM(status = ?) as active_ads,
+            SUM(status = ?) as pending_ads,
+            SUM(is_featured = ?) as featured_ads
+        ", [$active, $inactive, $active])->first();
+
+        $total_ads    = $ad_counts->total_ads;
+        $active_ads   = $ad_counts->active_ads;
+        $pending_ads  = $ad_counts->pending_ads;
+        $featured_ads = $ad_counts->featured_ads;
         $total_members    = User::count();
         $total_categories = AdsCategory::count();
         $total_blogs      = Blog::count();
@@ -62,38 +69,36 @@ class DashboardController extends Controller
             ->take(8)
             ->get();
 
-        // --- Monthly Ads (last 12 months) bar chart ---
+        // --- Monthly charts (last 12 months) ---
+        $now         = now();
+        $periodStart = $now->copy()->subMonths(11)->startOfMonth();
+
         $monthly_ads = Ad::select(
             DB::raw("DATE_FORMAT(created_at, '%Y-%m') as month"),
             DB::raw('COUNT(*) as total')
         )
-            ->where('created_at', '>=', now()->subMonths(11)->startOfMonth())
+            ->where('created_at', '>=', $periodStart)
             ->groupBy('month')
             ->orderBy('month')
             ->pluck('total', 'month');
 
-        $monthly_labels = [];
-        $monthly_data   = [];
-        for ($i = 11; $i >= 0; $i--) {
-            $date             = now()->subMonths($i);
-            $key              = $date->format('Y-m');
-            $monthly_labels[] = $date->format('M Y');
-            $monthly_data[]   = $monthly_ads[$key] ?? 0;
-        }
-
-        // --- Monthly Members (last 12 months) line chart ---
         $monthly_members_raw = User::select(
             DB::raw("DATE_FORMAT(created_at, '%Y-%m') as month"),
             DB::raw('COUNT(*) as total')
         )
-            ->where('created_at', '>=', now()->subMonths(11)->startOfMonth())
+            ->where('created_at', '>=', $periodStart)
             ->groupBy('month')
             ->orderBy('month')
             ->pluck('total', 'month');
 
+        $monthly_labels       = [];
+        $monthly_data         = [];
         $monthly_members_data = [];
         for ($i = 11; $i >= 0; $i--) {
-            $key                    = now()->subMonths($i)->format('Y-m');
+            $date                   = $now->copy()->subMonths($i);
+            $key                    = $date->format('Y-m');
+            $monthly_labels[]       = $date->format('M Y');
+            $monthly_data[]         = $monthly_ads[$key] ?? 0;
             $monthly_members_data[] = $monthly_members_raw[$key] ?? 0;
         }
 
@@ -127,7 +132,8 @@ class DashboardController extends Controller
             'monthly_data',
             'monthly_members_data',
             'category_labels',
-            'category_data'
+            'category_data',
+            'active'
         ));
     }
 }
