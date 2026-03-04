@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AdsController;
 use App\Http\Controllers\Backend\TagController;
-use App\Http\Controllers\PageContentController;
 use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\MenuController;
 use App\Http\Controllers\Backend\PageController;

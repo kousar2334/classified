@@ -3,6 +3,15 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ad;
+use App\Models\AdReport;
+use App\Models\AdsCategory;
+use App\Models\Blog;
+use App\Models\ContactUsMessage;
+use App\Models\Page;
+use App\Models\SavedAd;
+use App\Models\User;
+use App\Models\UserSubscription;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -13,20 +22,48 @@ class DashboardController extends Controller
      */
     public function adminDashboard(): View
     {
-        $total_ads = \App\Models\Ad::count();
-        $total_members = \App\Models\User::count();
-        $total_blogs = \App\Models\Blog::count();
-        $total_page = \App\Models\Page::count();
-        $latest_ads = \App\Models\Ad::with(['categoryInfo', 'userInfo', 'cityInfo'])
+        $active   = config('settings.general_status.active');
+        $inactive = config('settings.general_status.in_active');
+
+        // --- Stat Boxes ---
+        $total_ads        = Ad::count();
+        $active_ads       = Ad::where('status', $active)->count();
+        $pending_ads      = Ad::where('status', $inactive)->count();
+        $featured_ads     = Ad::where('is_featured', $active)->count();
+        $total_members    = User::count();
+        $total_categories = AdsCategory::count();
+        $total_blogs      = Blog::count();
+        $total_page       = Page::count();
+        $total_reports    = AdReport::count();
+        $unread_messages  = ContactUsMessage::where('is_read', false)->count();
+        $total_saved_ads  = SavedAd::count();
+        $active_subs      = UserSubscription::where('status', 'active')
+            ->where('expires_at', '>', now())
+            ->count();
+
+        // --- Latest Ads ---
+        $latest_ads = Ad::with(['categoryInfo', 'userInfo', 'cityInfo'])
             ->latest()
             ->take(10)
             ->get();
-        $latest_members = \App\Models\User::latest()
-            ->take(10)
+
+        // --- Latest Members ---
+        $latest_members = User::latest()->take(10)->get();
+
+        // --- Latest Reports ---
+        $latest_reports = AdReport::with(['ad', 'user', 'reason'])
+            ->latest()
+            ->take(8)
             ->get();
 
-        // Monthly ad posts for the last 12 months
-        $monthly_ads = \App\Models\Ad::select(
+        // --- Latest Unread Messages ---
+        $latest_messages = ContactUsMessage::where('is_read', false)
+            ->latest()
+            ->take(8)
+            ->get();
+
+        // --- Monthly Ads (last 12 months) bar chart ---
+        $monthly_ads = Ad::select(
             DB::raw("DATE_FORMAT(created_at, '%Y-%m') as month"),
             DB::raw('COUNT(*) as total')
         )
@@ -35,25 +72,62 @@ class DashboardController extends Controller
             ->orderBy('month')
             ->pluck('total', 'month');
 
-        // Build arrays for all 12 months (fill missing months with 0)
         $monthly_labels = [];
-        $monthly_data = [];
+        $monthly_data   = [];
         for ($i = 11; $i >= 0; $i--) {
-            $date = now()->subMonths($i);
-            $key = $date->format('Y-m');
+            $date             = now()->subMonths($i);
+            $key              = $date->format('Y-m');
             $monthly_labels[] = $date->format('M Y');
-            $monthly_data[] = $monthly_ads[$key] ?? 0;
+            $monthly_data[]   = $monthly_ads[$key] ?? 0;
         }
 
-        return view('backend.modules.dashboard.index', [
-            'total_ads' => $total_ads,
-            'total_members' => $total_members,
-            'total_blogs' => $total_blogs,
-            'total_page' => $total_page,
-            'latest_ads' => $latest_ads,
-            'latest_members' => $latest_members,
-            'monthly_labels' => $monthly_labels,
-            'monthly_data' => $monthly_data,
-        ]);
+        // --- Monthly Members (last 12 months) line chart ---
+        $monthly_members_raw = User::select(
+            DB::raw("DATE_FORMAT(created_at, '%Y-%m') as month"),
+            DB::raw('COUNT(*) as total')
+        )
+            ->where('created_at', '>=', now()->subMonths(11)->startOfMonth())
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('total', 'month');
+
+        $monthly_members_data = [];
+        for ($i = 11; $i >= 0; $i--) {
+            $key                    = now()->subMonths($i)->format('Y-m');
+            $monthly_members_data[] = $monthly_members_raw[$key] ?? 0;
+        }
+
+        // --- Ads by Category (top 8) doughnut chart ---
+        $ads_by_category = AdsCategory::withCount('ads')
+            ->orderByDesc('ads_count')
+            ->take(8)
+            ->get();
+
+        $category_labels = $ads_by_category->pluck('title')->toArray();
+        $category_data   = $ads_by_category->pluck('ads_count')->toArray();
+
+        return view('backend.modules.dashboard.index', compact(
+            'total_ads',
+            'active_ads',
+            'pending_ads',
+            'featured_ads',
+            'total_members',
+            'total_categories',
+            'total_blogs',
+            'total_page',
+            'total_reports',
+            'unread_messages',
+            'total_saved_ads',
+            'active_subs',
+            'latest_ads',
+            'latest_members',
+            'latest_reports',
+            'latest_messages',
+            'monthly_labels',
+            'monthly_data',
+            'monthly_members_data',
+            'category_labels',
+            'category_data'
+        ));
     }
 }
