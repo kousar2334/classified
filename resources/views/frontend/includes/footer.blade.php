@@ -9,7 +9,12 @@
                     {{-- Brand + Contact --}}
                     <div class="col-lg-4 col-md-6">
                         <div class="footer-brand">
-                            <h3 class="footer-site-name">{{ get_setting('site_name') }}</h3>
+                            @if (get_setting('site_dark_logo'))
+                                <img src="{{ asset(getFilePath(get_setting('site_dark_logo'))) }}"
+                                    alt="{{ get_setting('site_name') }}" class="mb-3" style="max-height: 50px;">
+                            @else
+                                <h3 class="footer-site-name mb-3">{{ get_setting('site_name') }}</h3>
+                            @endif
 
                             @if (get_setting('footer_address') || get_setting('footer_phone_number') || get_setting('footer_hotline'))
                                 <ul class="footer-contact-list">

@@ -4,7 +4,12 @@
             <div class="responsive-mobile-menu">
                 <div class="logo-wrapper">
                     <a href="{{ url('/') }}" class="logo">
-                        <h3> {{ get_setting('site_name') }}</h3>
+                        @if (get_setting('site_logo'))
+                            <img src="{{ asset(getFilePath(get_setting('site_logo'))) }}"
+                                alt="{{ get_setting('site_name') }}" style="max-height: 50px;">
+                        @else
+                            <h3>{{ get_setting('site_name') }}</h3>
+                        @endif
                     </a>
                 </div>
                 <div class="click-mobile-menu">
