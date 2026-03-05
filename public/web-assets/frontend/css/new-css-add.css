@@ -1144,3 +1144,69 @@ span.popup_contents__close.popup_close i {
     margin-right: auto;
 }
 }
+
+/* ── Newsletter Footer ── */
+.footer-newsletter-desc {
+    font-size: 14px;
+    margin-bottom: 16px;
+    color: var(--paragraph-color-three);
+}
+
+.footer-newsletter-msg {
+    display: none;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+/* Inline pill wrapper */
+.newsletter-input-wrap {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 50px;
+    overflow: hidden;
+    padding: 4px 4px 4px 16px;
+}
+
+/* Input inside the pill */
+.newsletter-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    color: #333;
+    padding: 6px 0;
+    min-width: 0;
+}
+
+.newsletter-input::placeholder {
+    color: #aaa;
+}
+
+/* Button attached to right of pill */
+.newsletter-submit-btn {
+    flex-shrink: 0;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background: var(--main-color-one);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+}
+
+.newsletter-submit-btn:hover {
+    opacity: 0.88;
+}
+
+.newsletter-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

@@ -113,19 +113,19 @@
                     {{-- Newsletter Column --}}
                     <div class="col-lg-3 col-md-6">
                         <h6 class="footerTittle">Join Newsletter</h6>
-                        <p style="font-size:14px;margin-bottom:16px;">
+                        <p class="footer-newsletter-desc mb-10">
                             Subscribe to the newsletter for all the latest updates
                         </p>
                         <form id="footer-newsletter-form" method="POST" action="{{ route('newsletter.subscribe') }}">
                             @csrf
-                            <div class="mb-2">
-                                <input type="email" name="email" id="newsletter-email" class="form-control"
+                            <div class="newsletter-input-wrap">
+                                <input type="email" name="email" id="newsletter-email" class="newsletter-input"
                                     placeholder="Enter your email" required>
+                                <button type="submit" class="newsletter-submit-btn">
+                                    <i class="las la-paper-plane"></i> Subscribe
+                                </button>
                             </div>
-                            <button type="submit" class="btn btn-dark w-100">
-                                Subscribe
-                            </button>
-                            <div id="newsletter-msg" class="mt-2" style="display:none;font-size:13px;"></div>
+                            <div id="newsletter-msg" class="footer-newsletter-msg"></div>
                         </form>
                     </div>
                 </div>
@@ -167,6 +167,7 @@
             btn.disabled = true;
             btn.textContent = 'Subscribing...';
             msg.style.display = 'none';
+            msg.className = 'footer-newsletter-msg';
 
             fetch('{{ route('newsletter.subscribe') }}', {
                     method: 'POST',
