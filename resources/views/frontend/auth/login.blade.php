@@ -6,8 +6,8 @@
     <div class="auth-page-wrapper">
         <div class="auth-card">
             <div class="auth-card-header text-center">
-                <h2 class="auth-title">Welcome Back</h2>
-                <p class="auth-subtitle">Sign in to your account to continue</p>
+                <h2 class="auth-title">{{ translation('Welcome Back') }}</h2>
+                <p class="auth-subtitle">{{ translation('Sign in to your account to continue') }}</p>
             </div>
 
             {{-- Social Login --}}
@@ -25,7 +25,7 @@
                                 d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
                             <path fill="none" d="M0 0h48v48H0z" />
                         </svg>
-                        Continue with Google
+                        {{ translation('Continue with Google') }}
                     </a>
                 @endif
                 @if (get_setting('facebook_login') == config('settings.general_status.active'))
@@ -35,7 +35,7 @@
                             <path
                                 d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                         </svg>
-                        Continue with Facebook
+                        {{ translation('Continue with Facebook') }}
                     </a>
                 @endif
             </div>
@@ -43,7 +43,7 @@
             @if (get_setting('facebook_login') == config('settings.general_status.active') ||
                     get_setting('google_login') == config('settings.general_status.active'))
                 <div class="auth-divider">
-                    <span>or Sign In with email</span>
+                    <span>{{ translation('or Sign In with email') }}</span>
                 </div>
             @endif
 
@@ -55,9 +55,9 @@
                 @csrf
 
                 <div class="form-group mb-20">
-                    <label>Email or Phone</label>
-                    <input type="text" name="username" class="input-style" placeholder="Enter your email or phone"
-                        value="{{ old('username') }}">
+                    <label>{{ translation('Email or Phone') }}</label>
+                    <input type="text" name="username" class="input-style"
+                        placeholder="{{ translation('Enter your email or phone') }}" value="{{ old('username') }}">
                     @if ($errors->has('username'))
                         <p class="invalid-feedback d-block">{{ $errors->first('username') }}</p>
                     @endif
@@ -65,10 +65,12 @@
 
                 <div class="form-group mb-20">
                     <div class="auth-label-row">
-                        <label>Password</label>
-                        <a href="{{ route('member.forgot.password') }}" class="auth-forgot-link">Forgot password?</a>
+                        <label>{{ translation('Password') }}</label>
+                        <a href="{{ route('member.forgot.password') }}"
+                            class="auth-forgot-link">{{ translation('Forgot password?') }}</a>
                     </div>
-                    <input type="password" name="password" class="input-style" placeholder="Enter your password">
+                    <input type="password" name="password" class="input-style"
+                        placeholder="{{ translation('Enter your password') }}">
                     @if ($errors->has('password'))
                         <p class="invalid-feedback d-block">{{ $errors->first('password') }}</p>
                     @endif
@@ -77,16 +79,16 @@
                 <div class="form-group">
                     <label class="auth-checkbox-label">
                         <input type="checkbox" name="remember" id="remember">
-                        <span>Remember me</span>
+                        <span>{{ translation('Remember me') }}</span>
                     </label>
                 </div>
 
-                <button type="submit" class="cmn-btn w-100">Sign In</button>
+                <button type="submit" class="cmn-btn w-100">{{ translation('Sign In') }}</button>
             </form>
 
             <p class="auth-switch-text">
-                Don't have an account?
-                <a href="{{ route('member.register') }}" class="auth-switch-link">Create account</a>
+                {{ translation("Don't have an account?") }}
+                <a href="{{ route('member.register') }}" class="auth-switch-link">{{ translation('Create account') }}</a>
             </p>
         </div>
     </div>

@@ -1,30 +1,30 @@
 @extends('frontend.layouts.dashboard')
 @section('dash-meta')
-    <title>My Listings - {{ get_setting('site_name') }}</title>
+    <title>{{ translation('My Ads') }} - {{ get_setting('site_name') }}</title>
 @endsection
 @section('dashboard-content')
     <div class="my-listings-header">
-        <h1>My Listings</h1>
+        <h1>{{ translation('My Ads') }}</h1>
         <a href="{{ route('ad.post.page') }}" class="cmn-btn">
-            <span>+</span> Post New Ad
+            <span>+</span> {{ translation('Post New Ad') }}
         </a>
     </div>
 
     <div class="listing-tabs">
         <a href="{{ route('member.my.listings') }}" class="listing-tab {{ !request('status') ? 'active' : '' }}">
-            All <span class="count">{{ $totalCount }}</span>
+            {{ translation('All') }} <span class="count">{{ $totalCount }}</span>
         </a>
         <a href="{{ route('member.my.listings', ['status' => 'active']) }}"
             class="listing-tab {{ request('status') == 'active' ? 'active' : '' }}">
-            Active <span class="count">{{ $activeCount }}</span>
+            {{ translation('Active') }} <span class="count">{{ $activeCount }}</span>
         </a>
         <a href="{{ route('member.my.listings', ['status' => 'inactive']) }}"
             class="listing-tab {{ request('status') == 'inactive' ? 'active' : '' }}">
-            Inactive <span class="count">{{ $inactiveCount }}</span>
+            {{ translation('Inactive') }} <span class="count">{{ $inactiveCount }}</span>
         </a>
         <a href="{{ route('member.my.listings', ['status' => 'sold']) }}"
             class="listing-tab {{ request('status') == 'sold' ? 'active' : '' }}">
-            Sold <span class="count">{{ $soldCount }}</span>
+            {{ translation('Sold') }} <span class="count">{{ $soldCount }}</span>
         </a>
     </div>
 
@@ -44,14 +44,18 @@
                             stroke-linejoin="round" />
                     </svg>
                 </span>
-                <input type="text" name="q" placeholder="Search your listings..." value="{{ request('q') }}">
+                <input type="text" name="q" placeholder="{{ translation('Search your listings...') }}"
+                    value="{{ request('q') }}">
             </div>
             <select name="sortby" class="sort-select" onchange="this.form.submit()">
-                <option value="">Sort by: Latest</option>
-                <option value="oldest" {{ request('sortby') == 'oldest' ? 'selected' : '' }}>Oldest First</option>
-                <option value="price_low" {{ request('sortby') == 'price_low' ? 'selected' : '' }}>Price: Low to High
+                <option value="">{{ translation('Sort by: Latest') }}</option>
+                <option value="oldest" {{ request('sortby') == 'oldest' ? 'selected' : '' }}>
+                    {{ translation('Oldest First') }}</option>
+                <option value="price_low" {{ request('sortby') == 'price_low' ? 'selected' : '' }}>
+                    {{ translation('Price: Low to High') }}
                 </option>
-                <option value="price_high" {{ request('sortby') == 'price_high' ? 'selected' : '' }}>Price: High to Low
+                <option value="price_high" {{ request('sortby') == 'price_high' ? 'selected' : '' }}>
+                    {{ translation('Price: High to Low') }}
                 </option>
             </select>
         </div>
@@ -67,13 +71,13 @@
                         </a>
 
                         @if ($ad->is_sold == config('settings.general_status.active'))
-                            <span class="listing-status sold">Sold</span>
+                            <span class="listing-status sold">{{ translation('Sold') }}</span>
                         @elseif($ad->is_featured == config('settings.general_status.active'))
-                            <span class="listing-status featured">Featured</span>
+                            <span class="listing-status featured">{{ translation('Featured') }}</span>
                         @elseif($ad->status == config('settings.general_status.active'))
-                            <span class="listing-status active">Active</span>
+                            <span class="listing-status active">{{ translation('Active') }}</span>
                         @else
-                            <span class="listing-status inactive">Inactive</span>
+                            <span class="listing-status inactive">{{ translation('Inactive') }}</span>
                         @endif
 
                         <div class="listing-actions-overlay">
@@ -116,7 +120,7 @@
                                     d="M11.7712 11.6047L8.94251 14.4333C8.6925 14.6831 8.35356 14.8234 8.00017 14.8234C7.64678 14.8234 7.30785 14.6831 7.05784 14.4333L4.22851 11.6047C3.48265 10.8588 2.97473 9.90845 2.76896 8.8739C2.5632 7.83934 2.66883 6.767 3.07251 5.79247C3.47618 4.81795 4.15977 3.98501 5.03683 3.39899C5.91388 2.81297 6.94502 2.50018 7.99984 2.50018C9.05466 2.50018 10.0858 2.81297 10.9629 3.39899C11.8399 3.98501 12.5235 4.81795 12.9272 5.79247C13.3308 6.767 13.4365 7.83934 13.2307 8.8739C13.0249 9.90845 12.517 10.8588 11.7712 11.6047Z"
                                     stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                            <span>{{ $ad->cityInfo?->name ? $ad->cityInfo->name . ', ' . $ad->stateInfo?->name : 'Unknown Location' }}</span>
+                            <span>{{ $ad->cityInfo?->name ? $ad->cityInfo->name . ', ' . $ad->stateInfo?->name : translation('Unknown Location') }}</span>
                         </div>
 
                         <div class="listing-footer">
@@ -137,7 +141,7 @@
                         </div>
 
                         <div class="listing-date">
-                            Posted {{ $ad->created_at->diffForHumans() }}
+                            {{ translation('Posted') }} {{ $ad->created_at->diffForHumans() }}
                         </div>
                     </div>
                 </div>
@@ -152,21 +156,21 @@
     @else
         <div class="empty-listings">
             <div class="icon">📦</div>
-            <h3>No listings found</h3>
+            <h3>{{ translation('No listings found') }}</h3>
             <p>
                 @if (request('status') || request('q'))
-                    No listings match your current filters. Try adjusting your search criteria.
+                    {{ translation('No listings match your current filters. Try adjusting your search criteria.') }}
                 @else
-                    You haven't posted any listings yet. Start by creating your first ad!
+                    {{ translation("You haven't posted any listings yet. Start by creating your first ad!") }}
                 @endif
             </p>
             @if (!request('status') && !request('q'))
                 <a href="{{ route('ad.post.page') }}" class="cmn-btn">
-                    <span>+</span> Post Your First Ad
+                    <span>+</span> {{ translation('Post Your First Ad') }}
                 </a>
             @else
                 <a href="{{ route('member.my.listings') }}" class="cmn-btn">
-                    View All Listings
+                    {{ translation('View All Listings') }}
                 </a>
             @endif
         </div>

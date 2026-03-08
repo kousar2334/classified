@@ -122,7 +122,8 @@
                                 <div class="row gy-4">
                                     @if ($ad->condition)
                                         <div class="col-4">
-                                            Condition: <span class="text-bold">{{ $ad->condition->title }}</span>
+                                            {{ translation('Condition') }}: <span
+                                                class="text-bold">{{ $ad->condition->title }}</span>
                                         </div>
                                     @endif
                                     @if ($customFields)
@@ -260,7 +261,7 @@
                                     data-is-auth="{{ auth()->check() ? 'true' : 'false' }}"
                                     data-login-url="{{ route('member.login') }}">
                                     <i class="{{ $isFavourited ? 'las' : 'lar' }} la-heart icon favorite_add_icon"></i>
-                                    <span>{{ $isFavourited ? 'Saved' : 'Save' }}</span>
+                                    <span>{{ $isFavourited ? translation('Saved') : translation('Save') }}</span>
                                 </a>
                                 <div class="sid-quick-sep"></div>
                                 <a href="javascript:void(0)" class="sid-quick-btn sid-report-btn"
@@ -271,7 +272,7 @@
                                         <path d="M1 10H15L10.5 5.5L15 1H1V17" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
-                                    <span>Report</span>
+                                    <span>{{ translation('Report') }}</span>
                                 </a>
                             </div>
                             <div class="sid-share-row">
@@ -341,7 +342,7 @@
                                         d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
                                         stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                                <h5 class="modal-title">Message {{ $sellerUser->name }}</h5>
+                                <h5 class="modal-title">{{ translation('Message') }} {{ $sellerUser->name }}</h5>
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -362,7 +363,8 @@
                                 <div>
                                     <label class="form-label msg-form-label">{{ translation('Message') }}</label>
                                     <textarea name="message" class="form-control" rows="5"
-                                        placeholder="Hi, I am interested in your listing. Is it still available?" required maxlength="2000"></textarea>
+                                        placeholder="{{ translation('Hi, I am interested in your listing. Is it still available?') }}" required
+                                        maxlength="2000"></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer">

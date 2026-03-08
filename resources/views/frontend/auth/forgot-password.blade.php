@@ -7,18 +7,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 login-Wrapper">
-                    <h3 class="tittle mb-3"> Forgot Password!</h3>
+                    <h3 class="tittle mb-3">{{ translation('Forgot Password!') }}</h3>
                     <form method="post" action="forget-password.html">
                         <input type="hidden" name="_token" value="4qMgoof0CGXn76Y2Ovd5AWGkX891VOaiaqMZeUxn"
                             autocomplete="off">
                         <div class="col-lg-12">
-                            <label class="infoTitle"> Email </label>
+                            <label class="infoTitle">{{ translation('Email') }}</label>
                             <div class="input-form input-form2">
-                                <input type="text" name="email" class="input-style w-100" placeholder="Enter email">
+                                <input type="text" name="email" class="input-style w-100"
+                                    placeholder="{{ translation('Enter email') }}">
                             </div>
                         </div>
                         <div class="btn-wrapper mb-10">
-                            <button type="submit" class="cmn-btn w-100">Submit Now</button>
+                            <button type="submit" class="cmn-btn w-100">{{ translation('Submit Now') }}</button>
                         </div>
                     </form>
                 </div>

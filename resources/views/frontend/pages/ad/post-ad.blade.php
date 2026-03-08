@@ -31,17 +31,17 @@
                                     <div class="col-lg-8">
                                         <div class="card mb-30">
                                             <div class="card-header">
-                                                <h6 class="card-title">Item Details</h6>
+                                                <h6 class="card-title">{{ translation('Item Details') }}</h6>
                                             </div>
                                             <div class="card-body">
                                                 <div class="form-group mb-20">
-                                                    <label for="title">Item Name
+                                                    <label for="title">{{ translation('Item Name') }}
                                                         <span class="text-danger">*</span>
                                                     </label>
                                                     <input type="text" name="title" id="title"
                                                         value="{{ old('title') }}"
                                                         class="input-style @error('title') is-invalid @enderror"
-                                                        placeholder="Item Name">
+                                                        placeholder="{{ translation('Item Name') }}">
 
                                                     <div class="invalid-feedback @error('title') d-block @enderror">
                                                         @error('title')
@@ -51,11 +51,12 @@
                                                 </div>
                                                 <!-- Category -->
                                                 <div class="form-group mb-20">
-                                                    <label for="category">Category
+                                                    <label for="category">{{ translation('Category') }}
                                                         <span class="text-danger">*</span>
                                                     </label>
                                                     <select name="" id="select-category" class="input-style">
-                                                        <option value="">Select Category</option>
+                                                        <option value="">{{ translation('Select Category') }}
+                                                        </option>
                                                         @foreach ($categories as $category)
                                                             <option value="{{ $category->id }}">{{ $category->title }}
                                                             </option>
@@ -66,21 +67,24 @@
                                                 <!-- Subcategory -->
                                                 <div class="form-group mb-20" id="subcategory-wrapper"
                                                     style="display:none;">
-                                                    <label for="subcategory">Subcategory
+                                                    <label for="subcategory">{{ translation('Subcategory') }}
                                                         <span class="text-danger">*</span>
                                                     </label>
                                                     <select name="" id="select-subcategory"
                                                         class="input-style w-100">
-                                                        <option value="">Select Subcategory</option>
+                                                        <option value="">{{ translation('Select Subcategory') }}
+                                                        </option>
                                                     </select>
                                                 </div>
 
                                                 <!-- Sub-subcategory -->
                                                 <div class="form-group mb-20" id="sub-subcategory-wrapper"
                                                     style="display:none;">
-                                                    <label for="sub-subcategory">Sub Subcategory</label>
+                                                    <label
+                                                        for="sub-subcategory">{{ translation('Sub Subcategory') }}</label>
                                                     <select id="select-sub-subcategory" class="input-style w-100">
-                                                        <option value="">Select Sub Subcategory</option>
+                                                        <option value="">{{ translation('Select Sub Subcategory') }}
+                                                        </option>
                                                     </select>
                                                 </div>
 
@@ -102,9 +106,10 @@
 
                                                 <!-- Condition -->
                                                 <div class="form-group mb-20">
-                                                    <label for="condition">Item Condition</label>
+                                                    <label for="condition">{{ translation('Item Condition') }}</label>
                                                     <select name="condition" id="condition" class="input-style">
-                                                        <option value="">Select Condition</option>
+                                                        <option value="">{{ translation('Select Condition') }}
+                                                        </option>
                                                         @foreach ($conditions as $condition)
                                                             <option value="{{ $condition->id }}"
                                                                 {{ old('condition') == $condition->id ? 'selected' : '' }}>
@@ -114,9 +119,10 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group mb-20">
-                                                    <label for="description">Description</label>
+                                                    <label for="description">{{ translation('Description') }}</label>
                                                     <textarea name="description" id="description" rows="6"
-                                                        class="input-style summernote @error('description') is-invalid @enderror" placeholder="Enter a Description">{{ old('description') }}</textarea>
+                                                        class="input-style summernote @error('description') is-invalid @enderror"
+                                                        placeholder="{{ translation('Enter a Description') }}">{{ old('description') }}</textarea>
                                                     <div class="invalid-feedback @error('description') d-block @enderror">
                                                         @error('description')
                                                             {{ $message }}
@@ -132,11 +138,11 @@
                                             <!-- Price -->
                                             <div class="card mb-30">
                                                 <div class="card-header">
-                                                    <h6 class="card-title">Price</h6>
+                                                    <h6 class="card-title">{{ translation('Price') }}</h6>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="form-group">
-                                                        <label for="price">Price <span
+                                                        <label for="price">{{ translation('Price') }} <span
                                                                 class="text-danger">*</span></label>
                                                         <input type="number" name="price" id="price"
                                                             value="{{ old('price') }}"
@@ -151,7 +157,7 @@
                                                             <input type="checkbox" class="custom-check-box"
                                                                 name="negotiable" id="negotiable"
                                                                 {{ old('negotiable') ? 'checked' : '' }}>
-                                                            <span class="ms-2">Negotiable</span>
+                                                            <span class="ms-2">{{ translation('Negotiable') }}</span>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -160,17 +166,17 @@
                                             <!-- Contact -->
                                             <div class="card mb-30">
                                                 <div class="card-header">
-                                                    <h6>Contact</h6>
+                                                    <h6>{{ translation('Contact') }}</h6>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="form-group mb-20">
-                                                        <label for="contact_email">Contact Email
+                                                        <label for="contact_email">{{ translation('Contact Email') }}
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <input type="email" name="contact_email" id="contact_email"
                                                             value="{{ old('contact_email', auth()->check() ? auth()->user()->email : '') }}"
                                                             class="input-style w-100 @error('contact_email') is-invalid @enderror"
-                                                            placeholder="Email Address">
+                                                            placeholder="{{ translation('Email Address') }}">
                                                         <div
                                                             class="invalid-feedback @error('contact_email') d-block @enderror">
                                                             @error('contact_email')
@@ -183,14 +189,15 @@
                                                             <input type="checkbox" class="custom-check-box"
                                                                 name="hide_phone_number"
                                                                 {{ old('hide_phone_number') ? 'checked' : '' }}>
-                                                            <span class="black-font"> Hide My Phone Number</span>
+                                                            <span
+                                                                class="black-font">{{ translation('Hide My Phone Number') }}</span>
                                                         </label>
                                                         <div class="mt-3">
                                                             <input
                                                                 class="input-style w-100 @error('phone') is-invalid @enderror"
                                                                 type="tel" name="phone"
                                                                 value="{{ old('phone') }}" id="phone"
-                                                                placeholder="Type Phone">
+                                                                placeholder="{{ translation('Type Phone') }}">
                                                             <div
                                                                 class="invalid-feedback @error('phone') d-block @enderror">
                                                                 @error('phone')
@@ -204,12 +211,13 @@
 
                                             <div class="card mb-30">
                                                 <div class="card-header">
-                                                    <h6>Media Uploads</h6>
+                                                    <h6>{{ translation('Media Uploads') }}</h6>
                                                 </div>
                                                 <div class="card-body">
                                                     <!-- Thumbnail Image -->
                                                     <div class="form-group mb-20">
-                                                        <label>Featured Image <span class="text-danger">*</span></label>
+                                                        <label>{{ translation('Featured Image') }} <span
+                                                                class="text-danger">*</span></label>
                                                         <div class="thumbnail-slot" id="thumbnail-slot">
                                                             <div class="slot-placeholder">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -218,7 +226,7 @@
                                                                         stroke-width="1.5"
                                                                         d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                                 </svg>
-                                                                <span>Choose Featured Image</span>
+                                                                <span>{{ translation('Choose Featured Image') }}</span>
                                                             </div>
                                                             <div class="slot-image" id="thumbnail-slot-image"
                                                                 style="display:none;">
@@ -231,9 +239,8 @@
                                                                 class="slot-file-input @error('thumbnail_image') is-invalid @enderror"
                                                                 accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
                                                         </div>
-                                                        <small class="text-muted d-block mt-2">image format:
-                                                            jpg,jpeg,png,gif,webp
-                                                            | max: 5MB</small>
+                                                        <small
+                                                            class="text-muted d-block mt-2">{{ translation('image format: jpg,jpeg,png,gif,webp | max: 5MB') }}</small>
                                                         <div
                                                             class="invalid-feedback @error('thumbnail_image') d-block @enderror">
                                                             @error('thumbnail_image')
@@ -245,10 +252,10 @@
                                                     <!-- Gallery Images -->
                                                     <div class="form-group">
                                                         <div class="gallery-slots-label">
-                                                            <span>Gallery Images</span>
+                                                            <span>{{ translation('Gallery Images') }}</span>
                                                             @if ($galleryImageLimit > 0)
                                                                 <span class="slot-count-badge">{{ $galleryImageLimit }}
-                                                                    photos</span>
+                                                                    {{ translation('photos') }}</span>
                                                             @endif
                                                         </div>
 
@@ -266,7 +273,7 @@
                                                                                     stroke-width="1.5"
                                                                                     d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                                             </svg>
-                                                                            <span>Add Photo</span>
+                                                                            <span>{{ translation('Add Photo') }}</span>
                                                                         </div>
                                                                         <div class="slot-image" style="display:none;">
                                                                             <img src="" alt="">
@@ -280,9 +287,9 @@
                                                                     </div>
                                                                 @endfor
                                                             </div>
-                                                            <small class="text-muted d-block mt-2">Click a box to add a
-                                                                photo
-                                                                &bull; max 5MB each</small>
+                                                            <small
+                                                                class="text-muted d-block mt-2">{{ translation('Click a box to add a photo') }}
+                                                                &bull; {{ translation('max 5MB each') }}</small>
                                                         @else
                                                             <div class="gallery-no-plan-notice">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -291,10 +298,10 @@
                                                                         stroke-width="2"
                                                                         d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                                 </svg>
-                                                                <span>Your current plan does not include gallery images. <a
-                                                                        href="{{ url('/membership') }}">Upgrade your
-                                                                        plan</a> to
-                                                                    upload gallery photos.</span>
+                                                                <span>{{ translation('Your current plan does not include gallery images.') }}
+                                                                    <a
+                                                                        href="{{ url('/membership') }}">{{ translation('Upgrade your plan') }}</a>
+                                                                    {{ translation('to upload gallery photos.') }}</span>
                                                             </div>
                                                         @endif
                                                     </div>
@@ -307,7 +314,7 @@
                                             <div class="continue-btn mt-3">
                                                 <div class="btn-wrapper mb-10 d-flex justify-content-end gap-3">
                                                     <button class="cmn-btn w-100" id="nextBtn"
-                                                        type="button">Continue</button>
+                                                        type="button">{{ translation('Continue') }}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -327,17 +334,18 @@
                                         <!-- Location Information -->
                                         <div class="card mb-30">
                                             <div class="card-header">
-                                                <h6 class="card-title">Location Information</h6>
+                                                <h6 class="card-title">{{ translation('Location Information') }}</h6>
                                             </div>
                                             <div class="card-body">
                                                 <!-- Country -->
                                                 @if ($countriesCount > 1)
                                                     <div class="form-group mb-20">
-                                                        <label for="country">Country <span
+                                                        <label for="country">{{ translation('Country') }} <span
                                                                 class="text-danger">*</span></label>
                                                         <select name="country" id="country" class="select2-ajax w-100"
                                                             required>
-                                                            <option value="">Select Country</option>
+                                                            <option value="">{{ translation('Select Country') }}
+                                                            </option>
                                                         </select>
                                                         <div class="invalid-feedback"></div>
                                                     </div>
@@ -348,29 +356,31 @@
 
                                                 <!-- State -->
                                                 <div class="form-group mb-20">
-                                                    <label for="state">State <span class="text-danger">*</span></label>
+                                                    <label for="state">{{ translation('State') }} <span
+                                                            class="text-danger">*</span></label>
                                                     <select name="state" id="state" class="select2-ajax w-100"
                                                         required disabled>
-                                                        <option value="">Select State</option>
+                                                        <option value="">{{ translation('Select State') }}</option>
                                                     </select>
                                                     <div class="invalid-feedback"></div>
                                                 </div>
 
                                                 <!-- City -->
                                                 <div class="form-group mb-20">
-                                                    <label for="city">City <span class="text-danger">*</span></label>
+                                                    <label for="city">{{ translation('City') }} <span
+                                                            class="text-danger">*</span></label>
                                                     <select name="city" id="city" class="select2-ajax w-100"
                                                         required disabled>
-                                                        <option value="">Select City</option>
+                                                        <option value="">{{ translation('Select City') }}</option>
                                                     </select>
                                                     <div class="invalid-feedback"></div>
                                                 </div>
 
                                                 <!-- Address -->
                                                 <div class="form-group">
-                                                    <label for="address">Address</label>
+                                                    <label for="address">{{ translation('Address') }}</label>
                                                     <textarea class="w-100 input-style" name="address" id="address" rows="3"
-                                                        placeholder="Enter your detailed address">{{ old('address') }}</textarea>
+                                                        placeholder="{{ translation('Enter your detailed address') }}">{{ old('address') }}</textarea>
                                                     <div class="invalid-feedback"></div>
                                                 </div>
                                             </div>
@@ -379,14 +389,14 @@
                                         <!-- Video URL -->
                                         <div class="card mb-30">
                                             <div class="card-header">
-                                                <h6 class="card-title">Video</h6>
+                                                <h6 class="card-title">{{ translation('Video') }}</h6>
                                             </div>
                                             <div class="card-body">
                                                 <div class="form-group">
-                                                    <label for="video_url">Video URL</label>
+                                                    <label for="video_url">{{ translation('Video URL') }}</label>
                                                     <input type="text" class="input-style w-100" name="video_url"
                                                         id="video_url" value="{{ old('video_url') }}"
-                                                        placeholder="YouTube URL">
+                                                        placeholder="{{ translation('YouTube URL') }}">
                                                     <div class="invalid-feedback"></div>
                                                 </div>
                                             </div>
@@ -398,7 +408,7 @@
                                             <!-- Featured Ad -->
                                             <div class="card mb-30">
                                                 <div class="card-header">
-                                                    <h6 class="card-title">Feature This Ad</h6>
+                                                    <h6 class="card-title">{{ translation('Feature This Ad') }}</h6>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="form-group">
@@ -406,11 +416,13 @@
                                                             <input type="checkbox" name="is_featured" id="is_featured"
                                                                 class="custom-check-box feature_disable_color"
                                                                 {{ old('is_featured') ? 'checked' : '' }}>
-                                                            <span class="ms-2">Feature This Ad</span>
+                                                            <span
+                                                                class="ms-2">{{ translation('Feature This Ad') }}</span>
                                                         </label>
-                                                        <p class="mt-2 mb-0">To feature this ad, you will need to subscribe
-                                                            to a
-                                                            <a href="{{ url('/membership') }}">paid membership</a>
+                                                        <p class="mt-2 mb-0">
+                                                            {{ translation('To feature this ad, you will need to subscribe to a') }}
+                                                            <a
+                                                                href="{{ url('/membership') }}">{{ translation('paid membership') }}</a>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -419,7 +431,7 @@
                                             <!-- Tags -->
                                             <div class="card mb-30">
                                                 <div class="card-header">
-                                                    <h6 class="card-title">Tags</h6>
+                                                    <h6 class="card-title">{{ translation('Tags') }}</h6>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="form-group">
@@ -433,7 +445,7 @@
                                                                     </option>
                                                                 @endforeach
                                                             </select>
-                                                            <small>Select your tags or type a new tag name</small>
+                                                            <small>{{ translation('Select your tags or type a new tag name') }}</small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -443,37 +455,40 @@
                                             @guest
                                                 <div class="card mb-30">
                                                     <div class="card-header">
-                                                        <h6 class="card-title">User Information</h6>
+                                                        <h6 class="card-title">{{ translation('User Information') }}</h6>
                                                     </div>
                                                     <div class="card-body">
                                                         <div class="form-group mb-20">
-                                                            <label for="guest_first_name">First Name <span
-                                                                    class="text-danger">*</span></label>
+                                                            <label for="guest_first_name">{{ translation('First Name') }}
+                                                                <span class="text-danger">*</span></label>
                                                             <input type="text" class="input-style w-100"
                                                                 name="guest_first_name" id="guest_first_name"
                                                                 value="{{ old('guest_first_name') }}"
-                                                                placeholder="First Name">
+                                                                placeholder="{{ translation('First Name') }}">
                                                         </div>
                                                         <div class="form-group mb-20">
-                                                            <label for="guest_last_name">Last Name <span
+                                                            <label for="guest_last_name">{{ translation('Last Name') }} <span
                                                                     class="text-danger">*</span></label>
                                                             <input type="text" class="input-style w-100"
                                                                 name="guest_last_name" id="guest_last_name"
-                                                                value="{{ old('guest_last_name') }}" placeholder="Last Name">
+                                                                value="{{ old('guest_last_name') }}"
+                                                                placeholder="{{ translation('Last Name') }}">
                                                         </div>
                                                         <div class="form-group mb-20">
-                                                            <label for="guest_email">Email <span
+                                                            <label for="guest_email">{{ translation('Email') }} <span
                                                                     class="text-danger">*</span></label>
                                                             <input type="email" class="input-style w-100"
                                                                 name="guest_email" id="guest_email"
-                                                                value="{{ old('guest_email') }}" placeholder="Email">
+                                                                value="{{ old('guest_email') }}"
+                                                                placeholder="{{ translation('Email') }}">
                                                         </div>
                                                         <div class="form-group mb-20">
-                                                            <label for="guest_phone">Phone Number <span
+                                                            <label for="guest_phone">{{ translation('Phone Number') }} <span
                                                                     class="text-danger">*</span></label>
                                                             <input type="tel" class="input-style w-100"
                                                                 name="guest_phone" id="guest_phone"
-                                                                value="{{ old('guest_phone') }}" placeholder="Phone">
+                                                                value="{{ old('guest_phone') }}"
+                                                                placeholder="{{ translation('Phone') }}">
                                                         </div>
                                                         <div id="guest_error_message" class="d-flex flex-column gap-2 mb-2">
                                                         </div>
@@ -482,9 +497,8 @@
                                                                 <input type="checkbox" name="guest_register_request"
                                                                     id="guest_register_request" value="1"
                                                                     class="custom-check-box">
-                                                                <span class="ms-2 title-para text-primary">I confirm the above
-                                                                    info
-                                                                    and am excited to register!</span>
+                                                                <span
+                                                                    class="ms-2 title-para text-primary">{{ translation('I confirm the above info and am excited to register!') }}</span>
                                                             </label>
                                                         </div>
                                                     </div>
@@ -494,7 +508,7 @@
                                             <!-- Terms and Conditions -->
                                             <div class="card mb-30">
                                                 <div class="card-header">
-                                                    <h6 class="card-title">Terms &amp; Conditions</h6>
+                                                    <h6 class="card-title">{{ translation('Terms & Conditions') }}</h6>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="form-group">
@@ -502,10 +516,10 @@
                                                             <input class="custom-check-box" type="checkbox"
                                                                 name="terms_conditions" id="terms_conditions"
                                                                 value="1">
-                                                            <span>I agree with the
+                                                            <span>{{ translation('I agree with the') }}
                                                                 <a href="{{ url('/terms-and-conditions') }}"
-                                                                    target="_blank" class="text-primary">Terms and
-                                                                    Conditions</a>
+                                                                    target="_blank"
+                                                                    class="text-primary">{{ translation('Terms and Conditions') }}</a>
                                                             </span>
                                                         </label>
                                                         <div
@@ -525,9 +539,9 @@
                                             <div class="continue-btn mt-3">
                                                 <div class="btn-wrapper mb-10 d-flex justify-content-end gap-3">
                                                     <button class="cmn-btn w-100" id="prevBtn"
-                                                        type="button">Previous</button>
+                                                        type="button">{{ translation('Previous') }}</button>
                                                     <button class="cmn-btn w-100" id="submitBtn" type="submit">
-                                                        <span class="btn-text">Submit Listing</span>
+                                                        <span class="btn-text">{{ translation('Submit Listing') }}</span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -549,7 +563,7 @@
     <!-- Form Loader -->
     <div id="form-loader">
         <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
+            <span class="visually-hidden">{{ translation('Loading...') }}</span>
         </div>
     </div>
 @endsection

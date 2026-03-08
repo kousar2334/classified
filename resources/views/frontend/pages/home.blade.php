@@ -70,20 +70,20 @@
                                                 <i class="las la-search"></i>
                                             </div>
                                             <input class="banner-v2-field w-100" type="text" name="q" id="home_search"
-                                                placeholder="What are you looking for?">
+                                                placeholder="{{ translation('What are you looking for?') }}">
                                             <span id="all_search_result" class="search_with_text_section"></span>
                                         </div>
                                     </div>
                                     <button type="submit" class="banner-v2-btn setLocation_btn">
                                         <i class="las la-search"></i>
-                                        <span class="d-none d-sm-inline">Search</span>
+                                        <span class="d-none d-sm-inline">{{ translation('Search') }}</span>
                                     </button>
                                 </form>
                             </div>
 
                             @if ($categories->count() > 0)
                                 <div class="banner-quick-cats wow fadeInUp" data-wow-delay="0.5s">
-                                    <span class="banner-quick-label">Browse:</span>
+                                    <span class="banner-quick-label">{{ translation('Browse:') }}</span>
                                     @foreach ($categories->take(8) as $cat)
                                         <a href="{{ route('ad.listing.page', $cat->permalink) }}" class="banner-quick-pill">
                                             {{ $cat->title }}
@@ -95,17 +95,17 @@
                             <div class="banner-v2-stats wow fadeInUp" data-wow-delay="0.6s">
                                 <div class="stat-pill">
                                     <strong>{{ number_format($totalAdsCount) }}+</strong>
-                                    <span>Live Ads</span>
+                                    <span>{{ translation('Live Ads') }}</span>
                                 </div>
                                 <div class="stat-divider"></div>
                                 <div class="stat-pill">
                                     <strong>{{ $categories->count() }}</strong>
-                                    <span>Categories</span>
+                                    <span>{{ translation('Categories') }}</span>
                                 </div>
                                 <div class="stat-divider"></div>
                                 <div class="stat-pill">
-                                    <strong>Free</strong>
-                                    <span>To Post</span>
+                                    <strong>{{ translation('Free') }}</strong>
+                                    <span>{{ translation('To Post') }}</span>
                                 </div>
                             </div>
 
@@ -176,7 +176,7 @@
                             <div class="titleWithBtn d-flex justify-content-between align-items-center mb-40">
                                 <h2 class="head3">{{ p_trans('home_top_listings_title', null, 'Top Listings') }}</h2>
                                 <a href="{{ route('ad.listing.page', ['listing_type_preferences' => 'top_listing']) }}"
-                                    class="see-all">See All <i class="las la-angle-right"></i></a>
+                                    class="see-all">{{ translation('See All') }} <i class="las la-angle-right"></i></a>
                             </div>
                             <div class="slider-inner-margin">
                                 @foreach ($topListings as $ad)
@@ -277,7 +277,8 @@
                         <div class="container">
                             <div class="titleWithBtn d-flex justify-content-between align-items-center mb-40">
                                 <h2 class="head3">{{ p_trans('home_recent_title', null, 'Recent Listing') }}</h2>
-                                <a href="{{ route('ad.listing.page', ['sortby' => 'latest_listing']) }}" class="see-all">See All
+                                <a href="{{ route('ad.listing.page', ['sortby' => 'latest_listing']) }}"
+                                    class="see-all">{{ translation('See All') }}
                                     <i class="las la-angle-right"></i></a>
                             </div>
                             <div class="slider-inner-margin">
@@ -298,8 +299,9 @@
             <div class="container">
                 <div class="titleWithBtn d-flex justify-content-between align-items-center mb-40">
                     <h2 class="head3">{{ $catListing['category']->title }}</h2>
-                    <a href="{{ route('ad.listing.page', ['cat' => $catListing['category']->id]) }}" class="see-all">See
-                        All <i class="las la-angle-right"></i></a>
+                    <a href="{{ route('ad.listing.page', ['cat' => $catListing['category']->id]) }}"
+                        class="see-all">{{ translation('See All') }}
+                        <i class="las la-angle-right"></i></a>
                 </div>
                 <div class="slider-inner-margin">
                     @foreach ($catListing['ads'] as $ad)

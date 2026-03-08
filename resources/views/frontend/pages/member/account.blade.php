@@ -132,14 +132,15 @@
 
 @section('dashboard-content')
     <div class="my-listings-header">
-        <h1>Account Settings</h1>
+        <h1>{{ translation('Account Settings') }}</h1>
     </div>
 
     {{-- ── Profile Photo ── --}}
     <div class="dashboard-card avatar-card">
         <div class="card-header">
             <h3 class="card-title">
-                <i class="fa-solid fa-camera" style="margin-right:.5rem;color:var(--primary)"></i>Profile Photo
+                <i class="fa-solid fa-camera"
+                    style="margin-right:.5rem;color:var(--primary)"></i>{{ translation('Profile Photo') }}
             </h3>
         </div>
 
@@ -158,14 +159,14 @@
 
                 <div class="avatar-upload-info">
                     <label for="profileImageInput" class="avatar-file-label">
-                        <i class="fa-solid fa-arrow-up-from-bracket"></i> Choose Photo
+                        <i class="fa-solid fa-arrow-up-from-bracket"></i> {{ translation('Choose Photo') }}
                     </label>
                     <button type="submit" class="cmn-btn" id="avatarSaveBtn" style="display:none">
-                        <i class="fa-solid fa-floppy-disk"></i> Upload
+                        <i class="fa-solid fa-floppy-disk"></i> {{ translation('Upload') }}
                     </button>
                     <input type="file" name="profile_image" id="profileImageInput" class="avatar-file-input"
                         accept="image/jpeg,image/png,image/jpg,image/webp">
-                    <p>JPG, PNG or WEBP. Max 2 MB.</p>
+                    <p>{{ translation('JPG, PNG or WEBP. Max 2 MB.') }}</p>
                     @error('profile_image')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
@@ -180,7 +181,8 @@
         <div class="dashboard-card">
             <div class="card-header">
                 <h3 class="card-title">
-                    <i class="fa-solid fa-user" style="margin-right:.5rem;color:var(--primary)"></i>Profile Information
+                    <i class="fa-solid fa-user"
+                        style="margin-right:.5rem;color:var(--primary)"></i>{{ translation('Profile Information') }}
                 </h3>
             </div>
 
@@ -189,27 +191,27 @@
                 @method('PUT')
 
                 <div class="form-group mb-20">
-                    <label>Full Name <span class="text-danger">*</span></label>
+                    <label>{{ translation('Full Name') }} <span class="text-danger">*</span></label>
                     <input type="text" name="name" class="input-style @error('name') is-invalid @enderror"
-                        value="{{ old('name', $user->name) }}" placeholder="Your full name">
+                        value="{{ old('name', $user->name) }}" placeholder="{{ translation('Your full name') }}">
                     @error('name')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="form-group mb-20">
-                    <label>Email Address <span class="text-danger">*</span></label>
+                    <label>{{ translation('Email Address') }} <span class="text-danger">*</span></label>
                     <input type="email" name="email" class="input-style @error('email') is-invalid @enderror"
-                        value="{{ old('email', $user->email) }}" placeholder="your@email.com">
+                        value="{{ old('email', $user->email) }}" placeholder="{{ translation('your@email.com') }}">
                     @error('email')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="form-group mb-20">
-                    <label>Phone Number</label>
+                    <label>{{ translation('Phone Number') }}</label>
                     <input type="text" name="phone" class="input-style @error('phone') is-invalid @enderror"
-                        value="{{ old('phone', $user->phone) }}" placeholder="+1 234 567 8900">
+                        value="{{ old('phone', $user->phone) }}" placeholder="{{ translation('+1 234 567 8900') }}">
                     @error('phone')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
@@ -217,7 +219,7 @@
 
                 <div class="form-group mb-0">
                     <button type="submit" class="cmn-btn">
-                        <i class="fa-solid fa-floppy-disk"></i> Save Changes
+                        <i class="fa-solid fa-floppy-disk"></i> {{ translation('Save Changes') }}
                     </button>
                 </div>
             </form>
@@ -227,15 +229,17 @@
         <div class="dashboard-card">
             <div class="card-header">
                 <h3 class="card-title">
-                    <i class="fa-solid fa-lock" style="margin-right:.5rem;color:var(--primary)"></i>Change Password
+                    <i class="fa-solid fa-lock"
+                        style="margin-right:.5rem;color:var(--primary)"></i>{{ translation('Change Password') }}
                 </h3>
             </div>
 
             @if ($user->social_provider)
                 <div class="social-notice">
                     <i class="fa-solid fa-circle-info"></i>
-                    Your account is linked via <strong>{{ ucfirst($user->social_provider) }}</strong>.
-                    Password change is not available for social login accounts.
+                    {{ translation('Your account is linked via') }}
+                    <strong>{{ ucfirst($user->social_provider) }}</strong>.
+                    {{ translation('Password change is not available for social login accounts.') }}
                 </div>
             @else
                 <form action="{{ route('member.account.update.password') }}" method="POST" novalidate>
@@ -243,11 +247,11 @@
                     @method('PUT')
 
                     <div class="form-group mb-20">
-                        <label>Current Password <span class="text-danger">*</span></label>
+                        <label>{{ translation('Current Password') }} <span class="text-danger">*</span></label>
                         <div class="password-field">
                             <input type="password" name="current_password" id="currentPassword"
                                 class="input-style @error('current_password') is-invalid @enderror"
-                                placeholder="Enter current password">
+                                placeholder="{{ translation('Enter current password') }}">
                             <button type="button" class="toggle-pw" onclick="togglePw('currentPassword', this)">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
@@ -258,11 +262,11 @@
                     </div>
 
                     <div class="form-group mb-20">
-                        <label>New Password <span class="text-danger">*</span></label>
+                        <label>{{ translation('New Password') }} <span class="text-danger">*</span></label>
                         <div class="password-field">
                             <input type="password" name="new_password" id="newPassword"
                                 class="input-style @error('new_password') is-invalid @enderror"
-                                placeholder="Min. 8 characters">
+                                placeholder="{{ translation('Min. 8 characters') }}">
                             <button type="button" class="toggle-pw" onclick="togglePw('newPassword', this)">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
@@ -273,10 +277,10 @@
                     </div>
 
                     <div class="form-group mb-20">
-                        <label>Confirm New Password <span class="text-danger">*</span></label>
+                        <label>{{ translation('Confirm New Password') }} <span class="text-danger">*</span></label>
                         <div class="password-field">
                             <input type="password" name="new_password_confirmation" id="confirmPassword"
-                                class="input-style" placeholder="Repeat new password">
+                                class="input-style" placeholder="{{ translation('Repeat new password') }}">
                             <button type="button" class="toggle-pw" onclick="togglePw('confirmPassword', this)">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
@@ -285,7 +289,7 @@
 
                     <div class="form-group mb-0">
                         <button type="submit" class="cmn-btn">
-                            <i class="fa-solid fa-key"></i> Update Password
+                            <i class="fa-solid fa-key"></i> {{ translation('Update Password') }}
                         </button>
                     </div>
                 </form>

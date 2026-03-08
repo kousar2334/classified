@@ -1,13 +1,13 @@
 @extends('frontend.layouts.dashboard')
 @section('dash-meta')
-    <title>Messages - {{ get_setting('site_name') }}</title>
+    <title>{{ translation('Message') }} - {{ get_setting('site_name') }}</title>
 @endsection
 
 @section('dashboard-content')
     <div class="dashboard-wrapper">
         <div class="dashboard-content">
             <a href="{{ route('member.messages.index') }}" class="back-link">
-                <i class="las la-arrow-left"></i> Back to messages
+                <i class="las la-arrow-left"></i> {{ translation('Back to messages') }}
             </a>
 
             <div class="chat-card">
@@ -24,12 +24,12 @@
                         </div>
                     @endif
                     <div class="chat-header-info">
-                        <p class="chat-header-name">{{ $other->name ?? 'Unknown' }}</p>
+                        <p class="chat-header-name">{{ $other->name ?? translation('Unknown') }}</p>
                         @if ($chat->ad)
                             <p class="chat-header-sub">
                                 <a href="{{ route('ad.details.page', $chat->ad->uid) }}" target="_blank"
                                     class="chat-ad-link">
-                                    Re: {{ $chat->ad->title }}
+                                    {{ translation('Re') }}: {{ $chat->ad->title }}
                                 </a>
                             </p>
                         @endif
@@ -64,7 +64,8 @@
                             </div>
                         </div>
                     @empty
-                        <div class="text-center text-muted mt-auto mb-auto">No messages yet. Say hello!</div>
+                        <div class="text-center text-muted mt-auto mb-auto">
+                            {{ translation('No messages yet. Say hello!') }}</div>
                     @endforelse
                 </div>
 
@@ -72,10 +73,10 @@
                 <div class="chat-footer">
                     <form action="{{ route('member.messages.send', $chat->uid) }}" method="POST">
                         @csrf
-                        <textarea name="message" rows="2" placeholder="Type a message..." required
+                        <textarea name="message" rows="2" placeholder="{{ translation('Type a message...') }}" required
                             onkeydown="if(event.ctrlKey && event.key==='Enter') this.form.submit()">{{ old('message') }}</textarea>
                         <button type="submit">
-                            <i class="las la-paper-plane"></i> Send
+                            <i class="las la-paper-plane"></i> {{ translation('Send') }}
                         </button>
                     </form>
                 </div>

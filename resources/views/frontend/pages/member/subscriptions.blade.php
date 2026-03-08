@@ -1,14 +1,14 @@
 @extends('frontend.layouts.dashboard')
 @section('dash-meta')
-    <title>My Subscriptions - {{ get_setting('site_name') }}</title>
+    <title>{{ translation('My Subscriptions') }} - {{ get_setting('site_name') }}</title>
 @endsection
 
 @section('dashboard-content')
     <div class="my-listings-header">
-        <h1>My Subscriptions</h1>
+        <h1>{{ translation('My Subscriptions') }}</h1>
         <div class="btn-wrapper">
             <a href="{{ route('pricing.plans') }}" class="cmn-btn">
-                Upgrade Plan
+                {{ translation('Upgrade Plan') }}
             </a>
         </div>
     </div>
@@ -18,19 +18,22 @@
         <div class="sub-active-banner">
             <div class="sub-active-banner-row">
                 <div>
-                    <div class="sub-plan-label">Active Plan</div>
+                    <div class="sub-plan-label">{{ translation('Active Plan') }}</div>
                     <div class="sub-plan-name">{{ $activeSubscription->plan->title ?? 'N/A' }}</div>
                     <div class="sub-plan-expires">
-                        Expires: {{ $activeSubscription->expires_at?->format('M d, Y') }}
+                        {{ translation('Expires:') }} {{ $activeSubscription->expires_at?->format('M d, Y') }}
                         ({{ $activeSubscription->expires_at?->diffForHumans() }})
                     </div>
                 </div>
                 <div class="sub-limits-col">
-                    <div class="sub-limits-label">Plan Limits</div>
+                    <div class="sub-limits-label">{{ translation('Plan Limits') }}</div>
                     <div class="sub-limits-detail">
-                        <i class="fas fa-list-ul"></i> {{ $activeSubscription->plan->listing_quantity }} Listings<br>
-                        <i class="fas fa-star"></i> {{ $activeSubscription->plan->featured_listing_quantity }} Featured<br>
-                        <i class="fas fa-images"></i> {{ $activeSubscription->plan->gallery_image_quantity }} Gallery Images
+                        <i class="fas fa-list-ul"></i> {{ $activeSubscription->plan->listing_quantity }}
+                        {{ translation('Listings') }}<br>
+                        <i class="fas fa-star"></i> {{ $activeSubscription->plan->featured_listing_quantity }}
+                        {{ translation('Featured') }}<br>
+                        <i class="fas fa-images"></i> {{ $activeSubscription->plan->gallery_image_quantity }}
+                        {{ translation('Gallery Images') }}
                     </div>
                 </div>
             </div>
@@ -39,10 +42,10 @@
         <div class="sub-warning-banner">
             <i class="fas fa-exclamation-triangle sub-warning-icon"></i>
             <div>
-                <strong class="sub-warning-title">No active subscription</strong>
+                <strong class="sub-warning-title">{{ translation('No active subscription') }}</strong>
                 <p class="sub-warning-text">
-                    <a href="{{ route('pricing.plans') }}" class="sub-warning-link">Choose a plan</a>
-                    to unlock posting limits and premium features.
+                    <a href="{{ route('pricing.plans') }}" class="sub-warning-link">{{ translation('Choose a plan') }}</a>
+                    {{ translation('to unlock posting limits and premium features.') }}
                 </p>
             </div>
         </div>
@@ -51,8 +54,8 @@
     {{-- Subscription History Table --}}
     <div class="dashboard-card">
         <div class="card-header">
-            <h3 class="card-title">Subscription History</h3>
-            <span class="sub-history-count">{{ $subscriptions->total() }} total</span>
+            <h3 class="card-title">{{ translation('Subscription History') }}</h3>
+            <span class="sub-history-count">{{ $subscriptions->total() }} {{ translation('total') }}</span>
         </div>
 
         @if ($subscriptions->count())
@@ -60,13 +63,13 @@
                 <table class="sub-table">
                     <thead>
                         <tr>
-                            <th>Plan</th>
-                            <th>Transaction ID</th>
-                            <th>Amount</th>
-                            <th>Method</th>
-                            <th>Status</th>
-                            <th>Start</th>
-                            <th>Expires</th>
+                            <th>{{ translation('Plan') }}</th>
+                            <th>{{ translation('Transaction ID') }}</th>
+                            <th>{{ translation('Amount') }}</th>
+                            <th>{{ translation('Method') }}</th>
+                            <th>{{ translation('Status') }}</th>
+                            <th>{{ translation('Start') }}</th>
+                            <th>{{ translation('Expires') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,14 +81,14 @@
                                     @if ($sub->amount > 0)
                                         ${{ number_format($sub->amount, 2) }}
                                     @else
-                                        <span class="sub-free-badge">Free</span>
+                                        <span class="sub-free-badge">{{ translation('Free') }}</span>
                                     @endif
                                 </td>
                                 <td>
                                     @if ($sub->payment_method === 'sslcommerz')
                                         <span class="sub-method-badge sub-method-sslcommerz">SSLCommerz</span>
                                     @else
-                                        <span class="sub-method-badge sub-method-trial">Trial</span>
+                                        <span class="sub-method-badge sub-method-trial">{{ translation('Trial') }}</span>
                                     @endif
                                 </td>
                                 <td>
@@ -106,7 +109,7 @@
                                         style="background: {{ $color['bg'] }}; color: {{ $color['text'] }};">
                                         {{ $sub->status }}
                                         @if ($sub->status === 'active' && $sub->expires_at?->isPast())
-                                            (expired)
+                                            ({{ translation('expired') }})
                                         @endif
                                     </span>
                                 </td>
@@ -126,10 +129,10 @@
         @else
             <div class="empty-listings">
                 <div class="icon"><i class="fas fa-credit-card"></i></div>
-                <h3>No subscriptions yet</h3>
-                <p>Subscribe to a plan to start posting ads.</p>
+                <h3>{{ translation('No subscriptions yet') }}</h3>
+                <p>{{ translation('Subscribe to a plan to start posting ads.') }}</p>
                 <a href="{{ route('pricing.plans') }}" class="cmn-btn">
-                    <i class="fas fa-tag"></i> View Plans
+                    <i class="fas fa-tag"></i> {{ translation('View Plans') }}
                 </a>
             </div>
         @endif

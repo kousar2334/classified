@@ -112,15 +112,15 @@
                     @endif
                     {{-- Newsletter Column --}}
                     <div class="col-lg-3 col-md-6">
-                        <h6 class="footerTittle">Join Newsletter</h6>
+                        <h6 class="footerTittle">{{ translation('Join Newsletter') }}</h6>
                         <p class="footer-newsletter-desc mb-10">
-                            Subscribe to the newsletter for all the latest updates
+                            {{ translation('Subscribe to the newsletter for all the latest updates') }}
                         </p>
                         <form id="footer-newsletter-form" method="POST" action="{{ route('newsletter.subscribe') }}">
                             @csrf
                             <div class="newsletter-input-wrap">
                                 <input type="email" name="email" id="newsletter-email" class="newsletter-input"
-                                    placeholder="Enter your email" required>
+                                    placeholder="{{ translation('Enter your email') }}" required>
                                 <button type="submit" class="newsletter-submit-btn">
                                     <i class="las la-paper-plane"></i> {{ translation('Subscribe') }}
                                 </button>
@@ -141,8 +141,8 @@
                             <p class="pera">{!! get_setting('site_copy_right_text') !!}</p>
                         @else
                             <p class="pera">
-                                All copyright &copy; {{ date('Y') }} {{ get_setting('site_name') }}. All Rights
-                                Reserved.
+                                {{ translation('All copyright') }} &copy; {{ date('Y') }}
+                                {{ get_setting('site_name') }}. {{ translation('All Rights Reserved.') }}
                             </p>
                         @endif
                     </div>
