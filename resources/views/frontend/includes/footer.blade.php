@@ -122,7 +122,7 @@
                                 <input type="email" name="email" id="newsletter-email" class="newsletter-input"
                                     placeholder="Enter your email" required>
                                 <button type="submit" class="newsletter-submit-btn">
-                                    <i class="las la-paper-plane"></i> Subscribe
+                                    <i class="las la-paper-plane"></i> {{ translation('Subscribe') }}
                                 </button>
                             </div>
                             <div id="newsletter-msg" class="footer-newsletter-msg"></div>

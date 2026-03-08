@@ -1,7 +1,6 @@
 @extends('frontend.layouts.master')
 @section('meta')
     @yield('dash-meta')
-    {{-- Font Awesome 6 via CDN (local font files are missing) --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 @endsection
 
@@ -13,7 +12,7 @@
 
             <main class="dashboard-main">
                 <button class="mobile-menu-toggle" onclick="toggleSidebar()">
-                    <i class="fa-solid fa-bars"></i> Menu
+                    <i class="fa-solid fa-bars"></i> {{ translation('Menu') }}
                 </button>
 
                 @yield('dashboard-content')

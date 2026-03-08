@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 @section('meta')
-    <title>Edit Ad 1- {{ get_setting('site_name') }}</title>
+    <title>{{ translation('Edit Ad') }} {{ get_setting('site_name') }}</title>
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/summernote/summernote-bs4.min.css') }}">
 @endsection
@@ -31,14 +31,14 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="edit-page-header mt-3 mb-2">
-                                            <h4>Edit Listing</h4>
+                                            <h4>{{ translation('Edit Ad') }}</h4>
                                             <a href="{{ route('member.my.listings') }}" class="back-link">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                                                 </svg>
-                                                Back to My Listings
+                                                {{ translation('Back to My Ads') }}
                                             </a>
                                         </div>
                                     </div>
@@ -47,7 +47,7 @@
                                     <div class="col-lg-8">
                                         <div class="card mb-30">
                                             <div class="card-header">
-                                                <h6 class="card-title">Item Details</h6>
+                                                <h6 class="card-title">{{ translation('Item Details') }}</h6>
                                             </div>
                                             <div class="card-body">
                                                 <!-- Item Name -->

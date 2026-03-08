@@ -17,7 +17,7 @@
         @endif
         <div>
             <div class="sidebar-user-name">{{ auth()->user()->name }}</div>
-            <div class="sidebar-user-role">Member</div>
+            <div class="sidebar-user-role">{{ translation('Member') }}</div>
         </div>
     </div>
 
@@ -28,42 +28,42 @@
                 <a href="{{ route('member.dashboard') }}"
                     class="{{ Request::routeIs('member.dashboard') ? 'active' : '' }}">
                     <span class="sidebar-icon"><i class="fa-solid fa-gauge-high"></i></span>
-                    Dashboard
+                    {{ translation('Dashboard') }}
                 </a>
             </li>
             <li>
                 <a href="{{ route('member.my.listings') }}"
                     class="{{ Request::routeIs('member.my.listings') ? 'active' : '' }}">
                     <span class="sidebar-icon"><i class="fa-solid fa-list-ul"></i></span>
-                    My Listings
+                    {{ translation('My Ads') }}
                 </a>
             </li>
             <li>
                 <a href="{{ route('member.favourites') }}"
                     class="{{ Request::routeIs('member.favourites') ? 'active' : '' }}">
                     <span class="sidebar-icon"><i class="fa-solid fa-heart"></i></span>
-                    Favourites
+                    {{ translation('Favorites') }}
                 </a>
             </li>
             <li>
                 <a href="{{ route('member.messages.index') }}"
                     class="{{ Request::routeIs(['member.messages.index', 'member.messages.show']) ? 'active' : '' }}">
                     <span class="sidebar-icon"><i class="fa-solid fa-comments"></i></span>
-                    Messages
+                    {{ translation('Messages') }}
                 </a>
             </li>
             <li>
                 <a href="{{ route('member.subscriptions') }}"
                     class="{{ Request::routeIs('member.subscriptions') ? 'active' : '' }}">
                     <span class="sidebar-icon"><i class="fa-solid fa-crown"></i></span>
-                    Subscriptions
+                    {{ translation('Subscriptions') }}
                 </a>
             </li>
             <li>
                 <a href="{{ route('member.account') }}"
                     class="{{ Request::routeIs('member.account') ? 'active' : '' }}">
                     <span class="sidebar-icon"><i class="fa-solid fa-user"></i></span>
-                    Account
+                    {{ translation('Account') }}
                 </a>
             </li>
         </ul>
@@ -74,7 +74,7 @@
             <li>
                 <a href="{{ route('member.logout') }}">
                     <span class="sidebar-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
-                    Logout
+                    {{ translation('Logout') }}
                 </a>
             </li>
         </ul>
