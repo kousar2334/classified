@@ -2,23 +2,22 @@
 @section('meta')
     <title>{{ get_setting('site_name') }} - {{ get_setting('site_tagline') }}</title>
     <!-- Primary Meta Tags -->
-    <meta name="title" content="{{ get_setting('site_name') }}">
-    <meta name="description" content="{{ get_setting('site_description') }}">
-    <meta name="keywords" content="{{ get_setting('site_keywords') }}">
+    <meta name="title" content="{{ get_setting('site_meta_title') }}">
+    <meta name="description" content="{{ get_setting('site_meta_description') }}">
+    <meta name="keywords" content="{{ get_setting('site_meta_keys') }}">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url('/') }}">
-    <meta property="og:title" content="{{ get_setting('site_name') }}">
-    <meta property="og:description" content="{{ get_setting('site_description') }}">
-    <meta property="og:image" content="{{ asset('/public/uploads/media-uploader/icon1717328206.png') }}">
+    <meta property="og:title" content="{{ get_setting('site_meta_title') }}">
+    <meta property="og:description" content="{{ get_setting('site_meta_description') }}">
+    <meta property="og:image" content="{{ asset(getFilePath(get_setting('site_meta_image'))) }}">
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="{{ asset('/public/uploads/media-uploader/icon1717328206.png') }}">
     <meta property="twitter:url" content="{{ url('/') }}">
-    <meta property="twitter:title" content="{{ get_setting('site_name') }}">
-    <meta property="twitter:description" content="{{ get_setting('site_description') }}">
-    <meta property="twitter:description" content="{{ asset('/public/uploads/media-uploader/icon1717328206.png') }}">
+    <meta property="twitter:title" content="{{ get_setting('site_meta_title') }}">
+    <meta property="twitter:description" content="{{ get_setting('site_meta_description') }}">
+    <meta property="twitter:card" content="{{ asset(getFilePath(get_setting('site_meta_image'))) }}">
 @endsection
 @section('content')
     @php
