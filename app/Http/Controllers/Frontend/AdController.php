@@ -268,22 +268,26 @@ class AdController extends Controller
     {
         $parentCategory = null;
         if ($request->parent_id) {
-            $parentCategory = AdsCategory::find($request->parent_id);
+            $parentCategory = AdsCategory::with('ads_category_translations')->find($request->parent_id);
         }
 
-        $subcategories = AdsCategory::where('parent', $request->parent_id)
+        $subcategories = AdsCategory::with('ads_category_translations')
+            ->where('parent', $request->parent_id)
             ->where('status', config('settings.general_status.active'))
             ->orderBy('id', 'ASC')
-            ->get(['id', 'title', 'parent'])
+            ->get()
             ->map(function ($cat) use ($parentCategory) {
+                $grandparentTitle = null;
+                if ($parentCategory && $parentCategory->parent) {
+                    $grandparent = AdsCategory::with('ads_category_translations')->find($parentCategory->parent);
+                    $grandparentTitle = $grandparent ? $grandparent->translation('title') : null;
+                }
                 return [
-                    'id' => $cat->id,
-                    'title' => $cat->title,
-                    'parent_id' => $parentCategory ? $parentCategory->parent : null,
-                    'parent_title' => $parentCategory ? $parentCategory->title : null,
-                    'grandparent_title' => $parentCategory && $parentCategory->parent
-                        ? AdsCategory::find($parentCategory->parent)->title ?? null
-                        : null
+                    'id'               => $cat->id,
+                    'title'            => $cat->translation('title'),
+                    'parent_id'        => $parentCategory ? $parentCategory->parent : null,
+                    'parent_title'     => $parentCategory ? $parentCategory->translation('title') : null,
+                    'grandparent_title' => $grandparentTitle,
                 ];
             });
 
@@ -297,7 +301,7 @@ class AdController extends Controller
         $selectedCategory = null;
 
         if ($selectedCategoryId) {
-            $selectedCategory = AdsCategory::with('parentCategory')
+            $selectedCategory = AdsCategory::with(['parentCategory', 'parentCategory.ads_category_translations', 'ads_category_translations'])
                 ->where('status', config('settings.general_status.active'))
                 ->find($selectedCategoryId);
 
@@ -308,50 +312,55 @@ class AdController extends Controller
 
             if ($hasChildren) {
                 // Load children of selected category
-                $categories = AdsCategory::where('parent', $selectedCategoryId)
+                $categories = AdsCategory::with('ads_category_translations')
+                    ->where('parent', $selectedCategoryId)
                     ->where('status', config('settings.general_status.active'))
                     ->orderBy('id', 'ASC')
-                    ->get(['id', 'title', 'parent'])
+                    ->get()
                     ->map(function ($cat) use ($selectedCategory) {
-                        $cat->parent_id = $cat->parent;
-                        $cat->parent_title = $selectedCategory->title ?? '';
+                        $cat->parent_id    = $cat->parent;
+                        $cat->parent_title = $selectedCategory ? $selectedCategory->translation('title') : '';
                         return $cat;
                     });
             } else {
                 // Load siblings (same parent level)
-                $categories = AdsCategory::where('parent', $selectedCategory->parent ?? null)
+                $categories = AdsCategory::with('ads_category_translations')
+                    ->where('parent', $selectedCategory->parent ?? null)
                     ->where('status', config('settings.general_status.active'))
                     ->orderBy('id', 'ASC')
-                    ->get(['id', 'title', 'parent'])
+                    ->get()
                     ->map(function ($cat) use ($selectedCategory) {
                         $cat->parent_id = $cat->parent;
                         if ($cat->parent && $selectedCategory->parentCategory) {
-                            $cat->parent_title = $selectedCategory->parentCategory->title ?? '';
+                            $cat->parent_title = $selectedCategory->parentCategory->translation('title');
                         }
                         return $cat;
                     });
             }
         } else {
             // Load root categories (no parent)
-            $categories = AdsCategory::whereNull('parent')
+            $categories = AdsCategory::with('ads_category_translations')
+                ->whereNull('parent')
                 ->where('status', config('settings.general_status.active'))
                 ->orderBy('id', 'ASC')
-                ->get(['id', 'title', 'parent'])
+                ->get()
                 ->map(function ($cat) {
-                    $cat->parent_id = null;
+                    $cat->parent_id    = null;
                     $cat->parent_title = null;
                     return $cat;
                 });
         }
 
         // Load conditions for filter
-        $conditions = AdsCondition::where('status', config('settings.general_status.active'))
+        $conditions = AdsCondition::with('condition_translations')
+            ->where('status', config('settings.general_status.active'))
             ->orderBy('id', 'ASC')
-            ->get(['id', 'title']);
+            ->get();
 
         // If category slug provided, find the category
         if ($category_slug && !$selectedCategory) {
-            $selectedCategory = AdsCategory::where('permalink', $category_slug)
+            $selectedCategory = AdsCategory::with('ads_category_translations')
+                ->where('permalink', $category_slug)
                 ->where('status', config('settings.general_status.active'))
                 ->first();
         }
@@ -374,20 +383,20 @@ class AdController extends Controller
         $breadcrumbCity = null;
 
         if ($request->has('city') && $request->city != '') {
-            $breadcrumbCity = City::find($request->city);
+            $breadcrumbCity = City::with('city_translations')->find($request->city);
             if ($breadcrumbCity) {
-                $breadcrumbState = State::find($breadcrumbCity->state_id);
+                $breadcrumbState = State::with('state_translations')->find($breadcrumbCity->state_id);
                 if ($breadcrumbState) {
-                    $breadcrumbCountry = Country::find($breadcrumbState->country_id);
+                    $breadcrumbCountry = Country::with('country_translations')->find($breadcrumbState->country_id);
                 }
             }
         } elseif ($request->has('state') && $request->state != '') {
-            $breadcrumbState = State::find($request->state);
+            $breadcrumbState = State::with('state_translations')->find($request->state);
             if ($breadcrumbState) {
-                $breadcrumbCountry = Country::find($breadcrumbState->country_id);
+                $breadcrumbCountry = Country::with('country_translations')->find($breadcrumbState->country_id);
             }
         } elseif ($request->has('country') && $request->country != '') {
-            $breadcrumbCountry = Country::find($request->country);
+            $breadcrumbCountry = Country::with('country_translations')->find($request->country);
         }
 
         // Build query for ads
@@ -607,50 +616,53 @@ class AdController extends Controller
 
     public function getCountries(Request $request)
     {
-        $query = Country::where('status', config('settings.general_status.active'));
+        $query = Country::with('country_translations')
+            ->where('status', config('settings.general_status.active'));
 
-        // If search term is provided for Select2
         if ($request->has('search')) {
             $query->where('name', 'LIKE', '%' . $request->search . '%');
         }
 
         $countries = $query->orderBy('name', 'ASC')
             ->limit(50)
-            ->get(['id', 'name as text']);
+            ->get()
+            ->map(fn($c) => ['id' => $c->id, 'text' => $c->translation('name')]);
 
         return response()->json($countries);
     }
 
     public function getStates(Request $request)
     {
-        $query = State::where('status', config('settings.general_status.active'))
+        $query = State::with('state_translations')
+            ->where('status', config('settings.general_status.active'))
             ->where('country_id', $request->country_id);
 
-        // If search term is provided for Select2
         if ($request->has('search')) {
             $query->where('name', 'LIKE', '%' . $request->search . '%');
         }
 
         $states = $query->orderBy('name', 'ASC')
             ->limit(50)
-            ->get(['id', 'name as text']);
+            ->get()
+            ->map(fn($s) => ['id' => $s->id, 'text' => $s->translation('name')]);
 
         return response()->json($states);
     }
 
     public function getCities(Request $request)
     {
-        $query = City::where('status', config('settings.general_status.active'))
+        $query = City::with('city_translations')
+            ->where('status', config('settings.general_status.active'))
             ->where('state_id', $request->state_id);
 
-        // If search term is provided for Select2
         if ($request->has('search')) {
             $query->where('name', 'LIKE', '%' . $request->search . '%');
         }
 
         $cities = $query->orderBy('name', 'ASC')
             ->limit(50)
-            ->get(['id', 'name as text']);
+            ->get()
+            ->map(fn($c) => ['id' => $c->id, 'text' => $c->translation('name')]);
 
         return response()->json($cities);
     }

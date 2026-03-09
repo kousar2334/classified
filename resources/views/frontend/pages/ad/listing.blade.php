@@ -91,7 +91,7 @@
                                             <div id="selected-category-display" class="selected-cat-display">
                                                 <strong class="selected-cat-name">
                                                     <i class="las la-folder-open icon-mr-sm"></i>
-                                                    {{ $selectedCategory->title }}
+                                                    {{ $selectedCategory->translation('title') }}
                                                 </strong>
                                             </div>
                                         @endif
@@ -101,12 +101,12 @@
                                             @foreach ($categories as $category)
                                                 <li class="category-item {{ request('cat_id') == $category->id ? 'active' : '' }}"
                                                     data-category-id="{{ $category->id }}"
-                                                    data-category-name="{{ $category->title }}"
+                                                    data-category-name="{{ $category->translation('title') }}"
                                                     data-parent-id="{{ $category->parent_id ?? '' }}"
                                                     data-parent-name="{{ $category->parent_title ?? '' }}">
                                                     <a href="javascript:void(0)" class="category-link">
                                                         <i class="las la-angle-right"></i>
-                                                        {{ $category->title }}
+                                                        {{ $category->translation('title') }}
                                                     </a>
                                                 </li>
                                             @endforeach
@@ -226,7 +226,7 @@
                                                 <input type="radio" name="condition_radio"
                                                     value="{{ $condition->id }}"
                                                     {{ request('condition') == $condition->id ? 'checked' : '' }}>
-                                                <span>{{ $condition->title }}</span>
+                                                <span>{{ $condition->translation('title') }}</span>
                                             </label>
                                         @endforeach
                                     </div>
@@ -273,11 +273,11 @@
                                                 <div class="content-title">
                                                     <h4>
                                                         @if ($breadcrumbChildCategory)
-                                                            {{ $breadcrumbChildCategory->title }}
+                                                            {{ $breadcrumbChildCategory->translation('title') }}
                                                         @elseif($breadcrumbSubcategory)
-                                                            {{ $breadcrumbSubcategory->title }}
+                                                            {{ $breadcrumbSubcategory->translation('title') }}
                                                         @elseif($breadcrumbCategory)
-                                                            {{ $breadcrumbCategory->title }}
+                                                            {{ $breadcrumbCategory->translation('title') }}
                                                         @else
                                                             {{ translation('All Ads') }}
                                                         @endif
