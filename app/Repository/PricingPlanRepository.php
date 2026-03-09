@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\PricingPlan;
+use App\Models\PricingPlanTranslation;
 use Illuminate\Support\Facades\DB;
 
 class PricingPlanRepository
@@ -50,7 +51,7 @@ class PricingPlanRepository
 
     public function planDetails(int $id)
     {
-        return PricingPlan::findOrFail($id);
+        return PricingPlan::with('pricing_plan_translations')->findOrFail($id);
     }
 
     public function updatePlan($request): bool
@@ -58,16 +59,27 @@ class PricingPlanRepository
         try {
             DB::beginTransaction();
             $plan = PricingPlan::findOrFail($request['id']);
-            $plan->title = $request['title'];
-            $plan->duration_days = $request['duration_days'];
-            $plan->price = $request['price'];
-            $plan->listing_quantity = $request['listing_quantity'];
-            $plan->featured_listing_quantity = $request['featured_listing_quantity'];
-            $plan->gallery_image_quantity = $request['gallery_image_quantity'];
-            $plan->membership_badge = $request['membership_badge'] ?? 0;
-            $plan->online_shop = $request['online_shop'];
-            $plan->status = $request['status'];
-            $plan->save();
+            $lang = $request['lang'] ?? defaultLangCode();
+
+            if ($lang !== defaultLangCode()) {
+                $translation = PricingPlanTranslation::firstOrNew([
+                    'plan_id' => $plan->id,
+                    'lang'    => $lang,
+                ]);
+                $translation->title = x_clean($request['title']);
+                $translation->save();
+            } else {
+                $plan->title = $request['title'];
+                $plan->duration_days = $request['duration_days'];
+                $plan->price = $request['price'];
+                $plan->listing_quantity = $request['listing_quantity'];
+                $plan->featured_listing_quantity = $request['featured_listing_quantity'];
+                $plan->gallery_image_quantity = $request['gallery_image_quantity'];
+                $plan->membership_badge = $request['membership_badge'] ?? 0;
+                $plan->online_shop = $request['online_shop'];
+                $plan->status = $request['status'];
+                $plan->save();
+            }
 
             DB::commit();
             return true;

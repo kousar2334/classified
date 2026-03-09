@@ -13,16 +13,18 @@ class PricingPlanRequest extends FormRequest
 
     public function rules(): array
     {
+        $isTranslation = $this->input('lang') && $this->input('lang') !== defaultLangCode();
+
         return [
-            'title' => 'required|string|max:250',
-            'duration_days' => 'required|integer|min:1',
-            'price' => 'required|numeric|min:0',
-            'listing_quantity' => 'required|integer|min:0',
-            'featured_listing_quantity' => 'required|integer|min:0',
-            'gallery_image_quantity' => 'required|integer|min:0',
-            'membership_badge' => 'nullable|in:0,1',
-            'online_shop' => 'required|in:0,1',
-            'status' => 'required|in:0,1',
+            'title'                      => 'required|string|max:250',
+            'duration_days'              => $isTranslation ? 'sometimes' : 'required|integer|min:1',
+            'price'                      => $isTranslation ? 'sometimes' : 'required|numeric|min:0',
+            'listing_quantity'           => $isTranslation ? 'sometimes' : 'required|integer|min:0',
+            'featured_listing_quantity'  => $isTranslation ? 'sometimes' : 'required|integer|min:0',
+            'gallery_image_quantity'     => $isTranslation ? 'sometimes' : 'required|integer|min:0',
+            'membership_badge'           => 'nullable|in:0,1',
+            'online_shop'                => $isTranslation ? 'sometimes' : 'required|in:0,1',
+            'status'                     => $isTranslation ? 'sometimes' : 'required|in:0,1',
         ];
     }
 

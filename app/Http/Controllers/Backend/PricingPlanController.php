@@ -51,11 +51,13 @@ class PricingPlanController extends Controller
     public function planEdit(Request $request): JsonResponse
     {
         $plan = $this->planRepository->planDetails($request['id']);
+        $lang = $request->input('lang', defaultLangCode());
 
         return response()->json([
             'success' => true,
             'html' => view('backend.modules.pricing-plans.edit', [
-                'plan' => $plan,
+                'plan'  => $plan,
+                'lang'  => $lang,
             ])->render()
         ]);
     }

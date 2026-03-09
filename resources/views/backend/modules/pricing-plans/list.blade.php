@@ -304,7 +304,8 @@
                     type: "POST",
                     url: '{{ route('admin.pricing.plans.edit') }}',
                     data: {
-                        id: plan_id
+                        id: plan_id,
+                        lang: '{{ defaultLangCode() }}'
                     },
                     success: function(response) {
                         if (response.success) {

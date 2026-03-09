@@ -90,7 +90,8 @@ class PageController extends Controller
         }
 
         // Fetch active pricing plans
-        $pricingPlans = PricingPlan::where('status', $activeStatus)
+        $pricingPlans = PricingPlan::with('pricing_plan_translations')
+            ->where('status', $activeStatus)
             ->orderBy('price', 'ASC')
             ->get();
 
@@ -137,7 +138,8 @@ class PageController extends Controller
     {
         $activeStatus = config('settings.general_status.active');
 
-        $pricingPlans = PricingPlan::where('status', $activeStatus)
+        $pricingPlans = PricingPlan::with('pricing_plan_translations')
+            ->where('status', $activeStatus)
             ->orderBy('price', 'ASC')
             ->get();
 
