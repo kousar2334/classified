@@ -181,6 +181,7 @@ class LanguageController extends Controller
             $lang = Language::where('code', $code)->first();
             if ($lang != null) {
                 session()->put('locale', $code);
+                app()->setLocale($code);
                 return redirect()->back();
             }
             toastNotification('error', 'Something went wrong', 'Error');

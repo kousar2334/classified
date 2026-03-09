@@ -22,7 +22,7 @@ class PageController extends Controller
         $activeStatus = config('settings.general_status.active');
 
         // Fetch active parent categories sorted by number of ads (most ads first)
-        $categories = AdsCategory::whereNull('parent')
+        $categories = AdsCategory::with(['ads_category_translations'])->whereNull('parent')
             ->where('status', $activeStatus)
             ->withCount(['ads' => function ($q) use ($activeStatus) {
                 $q->where('status', $activeStatus);
@@ -49,7 +49,7 @@ class PageController extends Controller
             ->get();
 
         // Fetch category-wise listings for top 3 parent categories
-        $topCategories = AdsCategory::whereNull('parent')
+        $topCategories = AdsCategory::with(['ads_category_translations'])->whereNull('parent')
             ->where('status', $activeStatus)
             ->orderBy('id', 'ASC')
             ->take(3)

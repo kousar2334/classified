@@ -3,7 +3,7 @@
 <section class="featureListing" data-padding-top="50" data-padding-bottom="50">
     <div class="container">
         <div class="titleWithBtn d-flex justify-content-between align-items-center mb-40">
-            <h2 class="head3">{{ $catListing['category']->title }}</h2>
+            <h2 class="head3">{{ $catListing['category']->translation('title') }}</h2>
             <a href="{{ route('ad.listing.page', ['cat' => $catListing['category']->id]) }}"
                 class="see-all">{{ translation('See All') }} <i class="las la-angle-right"></i></a>
         </div>
