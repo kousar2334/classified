@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Page;
 use App\Models\Media;
 use App\Models\Setting;
 use App\Models\Language;
@@ -54,20 +53,6 @@ if (!function_exists('getDefaultLang')) {
         //     return $language->code;
         // }
         return 'en';
-    }
-}
-if (!function_exists('theme')) {
-    /**
-     * Set toast message
-     *
-     * @param String $type
-     * @param String $message
-     * @param String $header
-     * @return void
-     */
-    function theme($path)
-    {
-        return 'frontend' . "." . $path;
     }
 }
 
@@ -202,7 +187,7 @@ if (!function_exists('translation')) {
             return Translation::where('lang', $lang)->pluck('lang_value', 'lang_key')->toArray();
         });
 
-        if (isset($translation_locale[$lang_key])) {
+        if (isset($translation_locale[$lang_key]) && trim($translation_locale[$lang_key]) !== '') {
             return $addslashes ? addslashes(trim($translation_locale[$lang_key])) : trim($translation_locale[$lang_key]);
         }
 
