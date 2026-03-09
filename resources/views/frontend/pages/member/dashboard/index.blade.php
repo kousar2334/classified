@@ -5,7 +5,7 @@
 @section('dashboard-content')
     <!-- Header -->
     <div class="dashboard-header">
-        <h1 class="dash-page-title">Welcome back, {{ auth()->user()->name }}!</h1>
+        <h1 class="dash-page-title">{{ translation('Welcome back') }}, {{ auth()->user()->name }}!</h1>
         <p class="dash-page-subtitle">{{ translation("Here's what's happening with your listings today.") }}</p>
     </div>
 
