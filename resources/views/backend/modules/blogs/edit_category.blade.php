@@ -33,16 +33,21 @@
                             <h3 class="card-title">{{ translation('Category Information') }}</h3>
                         </div>
                         <div class="card-body">
-                            <ul class="nav nav-tabs nav-fill border-light border-0">
-                                @foreach (activeLanguages() as $key => $language)
-                                    <li class="nav-item">
-                                        <a class="nav-link @if ($language->code == $lang) active border-0 @else bg-light @endif py-3"
-                                            href="{{ route('admin.blogs.categories.edit', ['id' => $category->id, 'lang' => $language->code]) }}">
-                                            <span>{{ $language->title }}</span>
+                            <div class="lang-switcher-wrap mb-3">
+                                <div class="lang-switcher-label">
+                                    <i class="fas fa-globe-americas"></i>
+                                    <span>{{ translation('Language') }}</span>
+                                </div>
+                                <div class="lang-switcher-tabs">
+                                    @foreach (activeLanguages() as $key => $language)
+                                        <a href="{{ route('admin.blogs.categories.edit', ['id' => $category->id, 'lang' => $language->code]) }}"
+                                            class="lang-switcher-btn @if ($language->code == $lang) active @endif">
+                                            <span class="lang-dot"></span>
+                                            {{ $language->title }}
                                         </a>
-                                    </li>
-                                @endforeach
-                            </ul>
+                                    @endforeach
+                                </div>
+                            </div>
                             <form action="{{ route('admin.blogs.categories.update') }}" method="POST">
                                 @csrf
                                 <div class="form-group">

@@ -53,6 +53,7 @@ div#filtered_media {
         grid-template-columns: repeat(8, 1fr);
     }
 }
+
 @media (max-width: 992px) {
     .media-list ul {
         grid-template-columns: repeat(6, 1fr);
@@ -124,17 +125,19 @@ div#filtered_media {
     border: 2px solid #fff;
 }
 
-.media-container{
+.media-container {
     height: 75vh;
     max-height: 75vh;
 }
-.media-preview-sidebar{
+
+.media-preview-sidebar {
     height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
     scrollbar-width: thin !important;
 }
-.no-media{
+
+.no-media {
     height: 250px;
     text-align: center;
     display: -webkit-box;
@@ -147,19 +150,100 @@ div#filtered_media {
     -ms-flex-pack: center;
     justify-content: center;
 }
-.no-media img{
-    max-width:100px;
+
+.no-media img {
+    max-width: 100px;
     height: auto;
 }
-.media-form{
+
+.media-form {
     margin-bottom: 10px;
 }
-.media-form span{
+
+.media-form span {
     font-size: 13px;
 }
-.media-form p{
+
+.media-form p {
     font-weight: 700;
     display: block;
     font-size: .875rem;
     margin-bottom: 0px;
+}
+
+/* ── Language Switcher (global) ─────────────────────────────── */
+.lang-switcher-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f8f9fc;
+    border: 1px solid #e3e6f0;
+    border-radius: 10px;
+    padding: 10px 14px;
+}
+
+.lang-switcher-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #6c757d;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.lang-switcher-label i {
+    font-size: 14px;
+    color: #4e73df;
+}
+
+.lang-switcher-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.lang-switcher-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #495057;
+    background: #fff;
+    border: 1.5px solid #d1d5db;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.lang-switcher-btn:hover {
+    border-color: #4e73df;
+    color: #4e73df;
+    text-decoration: none;
+    background: #eef0fb;
+}
+
+.lang-switcher-btn.active {
+    background: #4e73df;
+    border-color: #4e73df;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(78, 115, 223, 0.35);
+}
+
+.lang-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.6;
+    display: inline-block;
+}
+
+.lang-switcher-btn.active .lang-dot {
+    background: #fff;
+    opacity: 1;
 }

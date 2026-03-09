@@ -159,26 +159,25 @@
     <section class="content">
         <div class="container-fluid">
 
-            {{-- Language Switcher --}}
-            <div class="card mb-3">
-                <div class="card-body py-2">
-                    <div class="d-flex align-items-center gap-3 flex-wrap">
-                        <span class="font-weight-bold text-sm mr-2">{{ translation('Language') }}:</span>
-                        <ul class="nav nav-pills" style="gap:4px;">
-                            @foreach (activeLanguages() as $language)
-                                <li class="nav-item">
-                                    <a class="nav-link py-1 px-3 {{ $language->code == $lang ? 'active' : '' }}"
-                                        href="{{ route('admin.home.builder', ['lang' => $language->code]) }}">
-                                        {{ $language->title }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                        <span class="ml-auto order-saving-indicator" id="order-saving-indicator">
-                            <i class="fas fa-check-circle"></i> {{ translation('Order saved') }}
-                        </span>
+            <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+                <div class="lang-switcher-wrap">
+                    <div class="lang-switcher-label">
+                        <i class="fas fa-globe-americas"></i>
+                        <span>{{ translation('Language') }}</span>
+                    </div>
+                    <div class="lang-switcher-tabs">
+                        @foreach (activeLanguages() as $language)
+                            <a href="{{ route('admin.home.builder', ['lang' => $language->code]) }}"
+                                class="lang-switcher-btn {{ $language->code == $lang ? 'active' : '' }}">
+                                <span class="lang-dot"></span>
+                                {{ $language->title }}
+                            </a>
+                        @endforeach
                     </div>
                 </div>
+                <span class="order-saving-indicator" id="order-saving-indicator">
+                    <i class="fas fa-check-circle"></i> {{ translation('Order saved') }}
+                </span>
             </div>
 
             {{-- Section Builder --}}
@@ -286,8 +285,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label
-                                                            class="font-weight-bold">{{ translation('Paragraph Text') }}</label>
+                                                        <label class="font-weight-bold">{{ translation('Paragraph Text') }}</label>
                                                         <textarea class="form-control" name="home_promo_text" rows="2"
                                                             placeholder="{{ translation('Enter promo description') }}">{{ p_trans('home_promo_text', $lang, 'List your pre-loved or new items in minutes, or browse thousands of ads to find exactly what you need — all in one place.') }}</textarea>
                                                     </div>

@@ -4,16 +4,21 @@
     <input type="hidden" name="lang" value="{{ $lang }}">
 
     {{-- Language tabs --}}
-    <ul class="nav nav-tabs nav-fill mb-3">
-        @foreach (activeLanguages() as $language)
-            <li class="nav-item">
-                <a class="nav-link lang-tab @if ($language->code == $lang) active @else bg-light @endif py-2"
-                    href="#" data-lang="{{ $language->code }}" data-id="{{ $plan->id }}">
+    <div class="lang-switcher-wrap mb-4">
+        <div class="lang-switcher-label">
+            <i class="fas fa-globe-americas"></i>
+            <span>{{ translation('Language') }}</span>
+        </div>
+        <div class="lang-switcher-tabs">
+            @foreach (activeLanguages() as $language)
+                <a href="#" class="lang-tab lang-switcher-btn @if ($language->code == $lang) active @endif"
+                    data-lang="{{ $language->code }}" data-id="{{ $plan->id }}">
+                    <span class="lang-dot"></span>
                     {{ $language->title }}
                 </a>
-            </li>
-        @endforeach
-    </ul>
+            @endforeach
+        </div>
+    </div>
 
     <div class="form-row">
         <div class="form-group col-lg-12">
