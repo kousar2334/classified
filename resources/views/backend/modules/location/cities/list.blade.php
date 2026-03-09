@@ -292,10 +292,8 @@
                 });
             });
 
-            //Visible user edit modal
-            $('.edit-item').on('click', function(e) {
-                e.preventDefault();
-                let city_id = $(this).data('id');
+            function loadCityEditModal(city_id, lang) {
+                lang = lang || '{{ defaultLangCode() }}';
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -303,21 +301,33 @@
                     type: "POST",
                     url: '{{ route('classified.locations.city.edit') }}',
                     data: {
-                        id: city_id
+                        id: city_id,
+                        lang: lang
                     },
                     success: function(response) {
                         if (response.success) {
                             $('.item-edit-content').html(response.html);
                             $('#edit-item-modal').modal('show');
-                            initParentSelect();
                         } else {
-                            toastr.error('city fetch failed', 'Error')
+                            toastr.error('city fetch failed', 'Error');
                         }
                     },
-                    error: function(response) {
-                        toastr.error('city fetch failed', 'Error')
+                    error: function() {
+                        toastr.error('city fetch failed', 'Error');
                     }
                 });
+            }
+
+            //Visible user edit modal
+            $('.edit-item').on('click', function(e) {
+                e.preventDefault();
+                loadCityEditModal($(this).data('id'));
+            });
+
+            //Language tab switching inside edit modal
+            $(document).on('click', '.location-lang-tab', function(e) {
+                e.preventDefault();
+                loadCityEditModal($(this).data('id'), $(this).data('lang'));
             });
 
 

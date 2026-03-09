@@ -242,10 +242,8 @@
                 });
             });
 
-            //Visible user edit modal
-            $('.edit-item').on('click', function(e) {
-                e.preventDefault();
-                let state_id = $(this).data('id');
+            function loadStateEditModal(state_id, lang) {
+                lang = lang || '{{ defaultLangCode() }}';
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -253,21 +251,33 @@
                     type: "POST",
                     url: '{{ route('classified.locations.state.edit') }}',
                     data: {
-                        id: state_id
+                        id: state_id,
+                        lang: lang
                     },
                     success: function(response) {
                         if (response.success) {
                             $('.item-edit-content').html(response.html);
                             $('#edit-item-modal').modal('show');
-                            initParentSelect();
                         } else {
-                            toastr.error('state fetch failed', 'Error')
+                            toastr.error('state fetch failed', 'Error');
                         }
                     },
-                    error: function(response) {
-                        toastr.error('state fetch failed', 'Error')
+                    error: function() {
+                        toastr.error('state fetch failed', 'Error');
                     }
                 });
+            }
+
+            //Visible user edit modal
+            $('.edit-item').on('click', function(e) {
+                e.preventDefault();
+                loadStateEditModal($(this).data('id'));
+            });
+
+            //Language tab switching inside edit modal
+            $(document).on('click', '.location-lang-tab', function(e) {
+                e.preventDefault();
+                loadStateEditModal($(this).data('id'), $(this).data('lang'));
             });
 
 

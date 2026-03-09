@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Country;
 use App\Models\CityTranslation;
 use App\Models\StateTranslation;
+use App\Models\CountryTranslation;
 use Illuminate\Http\Request;
 
 class LocationRepository
 {
     /**
      * will return country list
-     * 
+     *
      * @return Collections
      */
     public function countries($status = [1, 2])
@@ -23,7 +24,7 @@ class LocationRepository
     }
 
     /**
-     * Wll return countries 
+     * Wll return countries
      */
     public function countryList($request, $status = [1, 0])
     {
@@ -41,7 +42,7 @@ class LocationRepository
     }
     /**
      * Will store new country
-     * 
+     *
      * @param Request $data
      * @return bool
      */
@@ -60,17 +61,17 @@ class LocationRepository
     }
     /**
      * will return country details
-     * 
+     *
      * @param Int $id
      * @return Collection
      */
     public function countryDetails($id)
     {
-        return Country::findOrFail($id);
+        return Country::with('country_translations')->findOrFail($id);
     }
     /**
      * will update country
-     * 
+     *
      * @param Request $request
      * @return bool
      */
@@ -79,10 +80,21 @@ class LocationRepository
         try {
             DB::beginTransaction();
             $country = Country::findOrFail($request['id']);
-            $country->name = $request['name'];
-            $country->code = $request['code'];
-            $country->status = $request['status'];
-            $country->save();
+            $lang = $request['lang'] ?? defaultLangCode();
+
+            if ($lang != defaultLangCode()) {
+                $translation = CountryTranslation::firstOrNew([
+                    'country_id' => $country->id,
+                    'lang'       => $lang,
+                ]);
+                $translation->name = $request['name'];
+                $translation->save();
+            } else {
+                $country->name   = $request['name'];
+                $country->code   = $request['code'];
+                $country->status = $request['status'];
+                $country->save();
+            }
 
             DB::commit();
             return true;
@@ -96,7 +108,7 @@ class LocationRepository
     }
     /**
      * Change country status
-     * 
+     *
      * @param Int $id
      * @return bool
      */
@@ -120,7 +132,7 @@ class LocationRepository
     }
     /**
      * Will applied country bulk action
-     * 
+     *
      * @param Request $request
      * @return bool
      */
@@ -133,28 +145,18 @@ class LocationRepository
             if ($request['action'] == 'active') {
                 $status = config('settings.general_status.active');
                 Country::whereIn('id', $request['items'])
-                    ->update(
-                        [
-                            'status' => $status
-                        ]
-                    );
+                    ->update(['status' => $status]);
             }
             //Inactive Country status
             if ($request['action'] == 'in_active') {
                 $status = config('settings.general_status.in_active');
                 Country::whereIn('id', $request['items'])
-                    ->update(
-                        [
-                            'status' => $status
-                        ]
-                    );
+                    ->update(['status' => $status]);
             }
 
             //Delete selected countries
             if ($request['action'] == 'delete_all') {
-                $status = config('settings.general_status.in_active');
-                Country::whereIn('id', $request['items'])
-                    ->delete();
+                Country::whereIn('id', $request['items'])->delete();
             }
 
             DB::commit();
@@ -169,7 +171,7 @@ class LocationRepository
     }
     /**
      * Will delete a country
-     * 
+     *
      * @param Int $id
      * @return bool
      */
@@ -189,7 +191,7 @@ class LocationRepository
 
     /**
      * Will return state list
-     * 
+     *
      * @return collections
      */
     public function statesList($request, $status = [1, 0])
@@ -208,7 +210,7 @@ class LocationRepository
     }
     /**
      * Will return state list
-     * 
+     *
      * @return collections
      */
     public function states($status = [1, 2])
@@ -217,7 +219,7 @@ class LocationRepository
     }
     /**
      * Store new State
-     * 
+     *
      * @param Request $request
      * @return bool
      */
@@ -242,7 +244,7 @@ class LocationRepository
     }
     /**
      * Will delete state
-     * 
+     *
      * @param Int $id
      * @return bool
      */
@@ -264,17 +266,17 @@ class LocationRepository
     }
     /**
      * will return state details
-     * 
+     *
      * @param Int $id
      * @return Collection
      */
     public function stateDetails($id)
     {
-        return State::findOrFail($id);
+        return State::with('state_translations')->findOrFail($id);
     }
     /**
      * will update state
-     * 
+     *
      * @param Request $request
      * @return bool
      */
@@ -283,10 +285,21 @@ class LocationRepository
         try {
             DB::beginTransaction();
             $state = State::findOrFail($request['id']);
-            $state->name = $request['name'];
-            $state->country_id = $request['country'];
-            $state->status = $request['status'];
-            $state->save();
+            $lang = $request['lang'] ?? defaultLangCode();
+
+            if ($lang != defaultLangCode()) {
+                $translation = StateTranslation::firstOrNew([
+                    'state_id' => $state->id,
+                    'lang'     => $lang,
+                ]);
+                $translation->name = $request['name'];
+                $translation->save();
+            } else {
+                $state->name       = $request['name'];
+                $state->country_id = $request['country'];
+                $state->status     = $request['status'];
+                $state->save();
+            }
 
             DB::commit();
             return true;
@@ -308,7 +321,7 @@ class LocationRepository
 
     /**
      * Will return cities
-     * 
+     *
      * @return City
      */
     public function cities()
@@ -317,7 +330,7 @@ class LocationRepository
     }
     /**
      * Will return cities
-     * 
+     *
      * @return Collections
      */
     public function citiesList($request, $status = [1, 0])
@@ -336,7 +349,7 @@ class LocationRepository
     }
     /**
      * Store new city
-     * 
+     *
      * @param Request $request
      * @return bool
      */
@@ -407,11 +420,11 @@ class LocationRepository
      */
     public function cityDetails(int $id)
     {
-        return City::findOrFail($id);
+        return City::with('city_translations')->findOrFail($id);
     }
     /**
      * will update city
-     * 
+     *
      * @param Request $request
      * @return bool
      */
@@ -420,10 +433,22 @@ class LocationRepository
         try {
             DB::beginTransaction();
             $city = City::findOrFail($request['id']);
-            $city->name = $request['name'];
-            $city->state_id = $request['state_id'];
-            $city->status = $request['status'];
-            $city->save();
+            $lang = $request['lang'] ?? defaultLangCode();
+
+            if ($lang != defaultLangCode()) {
+                $translation = CityTranslation::firstOrNew([
+                    'city_id' => $city->id,
+                    'lang'    => $lang,
+                ]);
+                $translation->name = $request['name'];
+                $translation->save();
+            } else {
+                $city->name     = $request['name'];
+                $city->state_id = $request['state_id'];
+                $city->status   = $request['status'];
+                $city->save();
+            }
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -437,7 +462,7 @@ class LocationRepository
 
     /**
      * Will applied cities bulk action
-     * 
+     *
      * @param Request $request
      * @return bool
      */
@@ -448,29 +473,17 @@ class LocationRepository
             //Active Cities status
             if ($request['action'] == 'active') {
                 $status = config('settings.general_status.active');
-                City::whereIn('id', $request['items'])
-                    ->update(
-                        [
-                            'status' => $status
-                        ]
-                    );
+                City::whereIn('id', $request['items'])->update(['status' => $status]);
             }
             //Inactive Cities status
             if ($request['action'] == 'in_active') {
                 $status = config('settings.general_status.in_active');
-                City::whereIn('id', $request['items'])
-                    ->update(
-                        [
-                            'status' => $status
-                        ]
-                    );
+                City::whereIn('id', $request['items'])->update(['status' => $status]);
             }
 
             //Delete selected cities
             if ($request['action'] == 'delete_all') {
-                $status = config('settings.general_status.in_active');
-                City::whereIn('id', $request['items'])
-                    ->delete();
+                City::whereIn('id', $request['items'])->delete();
             }
 
             DB::commit();

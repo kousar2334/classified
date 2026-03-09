@@ -6,40 +6,35 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CityRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
-        return [
+        $lang = $this->input('lang', defaultLangCode());
+        $isDefaultLang = $lang == defaultLangCode();
+
+        $rules = [
             'name' => 'required|max:250',
-            'state_id' => 'required|exists:states,id',
-            'status' => 'required|in:0,1'
+            'lang' => 'nullable|string|max:10',
         ];
+
+        if ($isDefaultLang) {
+            $rules['state_id'] = 'required|exists:states,id';
+            $rules['status']   = 'required|in:0,1';
+        }
+
+        return $rules;
     }
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
-     */
+
     public function messages()
     {
         return [
-            'name.required' => translation('Name is required'),
-            'state.required' => translation('Please select a state'),
-            'state.exists' => translation('Invalid state'),
+            'name.required'     => translation('Name is required'),
+            'state_id.required' => translation('Please select a state'),
+            'state_id.exists'   => translation('Invalid state'),
         ];
     }
 }

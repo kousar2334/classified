@@ -241,10 +241,8 @@
                 });
             });
 
-            //Visible user edit modal
-            $('.edit-item').on('click', function(e) {
-                e.preventDefault();
-                let country_id = $(this).data('id');
+            function loadCountryEditModal(country_id, lang) {
+                lang = lang || '{{ defaultLangCode() }}';
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -252,21 +250,33 @@
                     type: "POST",
                     url: '{{ route('classified.locations.country.edit') }}',
                     data: {
-                        id: country_id
+                        id: country_id,
+                        lang: lang
                     },
                     success: function(response) {
                         if (response.success) {
                             $('.item-edit-content').html(response.html);
                             $('#edit-item-modal').modal('show');
-                            initParentSelect();
                         } else {
-                            toastr.error('country fetch failed', 'Error')
+                            toastr.error('country fetch failed', 'Error');
                         }
                     },
-                    error: function(response) {
-                        toastr.error('country fetch failed', 'Error')
+                    error: function() {
+                        toastr.error('country fetch failed', 'Error');
                     }
                 });
+            }
+
+            //Visible user edit modal
+            $('.edit-item').on('click', function(e) {
+                e.preventDefault();
+                loadCountryEditModal($(this).data('id'));
+            });
+
+            //Language tab switching inside edit modal
+            $(document).on('click', '.location-lang-tab', function(e) {
+                e.preventDefault();
+                loadCountryEditModal($(this).data('id'), $(this).data('lang'));
             });
 
 

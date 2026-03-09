@@ -37,9 +37,9 @@
                                 @endif
                                 @php
                                     $locationParts = array_filter([
-                                        $ad->cityInfo->name ?? null,
-                                        $ad->stateInfo->name ?? null,
-                                        $ad->countryInfo->name ?? null,
+                                        $ad->cityInfo?->translation('name') ?? null,
+                                        $ad->stateInfo?->translation('name') ?? null,
+                                        $ad->countryInfo?->translation('name') ?? null,
                                     ]);
                                 @endphp
                                 @if (count($locationParts) > 0)

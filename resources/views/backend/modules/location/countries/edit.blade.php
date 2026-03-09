@@ -1,38 +1,61 @@
- <form id="editForm">
-     @csrf
-     <input type="hidden" name="id" value="{{ $country->id }}">
+<form id="editForm">
+    @csrf
+    <input type="hidden" name="id" value="{{ $country->id }}">
+    <input type="hidden" name="lang" value="{{ $lang }}">
 
-     <div class="form-row">
-         <div class="form-group col-lg-12">
-             <label class="black font-14">{{ translation('Name') }}</label>
-             <input type="text" name="name" class="form-control" placeholder="{{ translation('Enter name') }}"
-                 value="{{ $country->name }}">
-         </div>
-     </div>
+    {{-- Language Tabs --}}
+    <div class="lang-switcher-wrap mb-3">
+        <div class="lang-switcher-label">
+            <i class="fas fa-globe-americas"></i>
+            <span>{{ translation('Language') }}</span>
+        </div>
+        <div class="lang-switcher-tabs">
+            @foreach ($languages as $language)
+                <button type="button"
+                    class="lang-switcher-btn location-lang-tab @if ($language->code == $lang) active @endif"
+                    data-lang="{{ $language->code }}" data-id="{{ $country->id }}"
+                    data-endpoint="{{ route('classified.locations.country.edit') }}">
+                    <span class="lang-dot"></span>
+                    {{ $language->title }}
+                </button>
+            @endforeach
+        </div>
+    </div>
 
-     <div class="form-row">
-         <div class="form-group col-lg-12">
-             <label class="black font-14">{{ translation('Country Code') }}</label>
-             <input type="text" name="code" class="form-control"
-                 placeholder="{{ translation('Enter country code') }}" value="{{ $country->code }}">
-         </div>
-     </div>
+    <div class="form-row">
+        <div class="form-group col-lg-12">
+            <label class="black font-14">{{ translation('Name') }}</label>
+            <input type="text" name="name" class="form-control" placeholder="{{ translation('Enter name') }}"
+                value="{{ $country->translation('name', $lang) }}">
+        </div>
+    </div>
 
-     <div class="form-row">
-         <div class="form-group col-lg-12">
-             <label class="black font-14">{{ translation('Status') }}</label>
-             <select name="status" class="form-control" required>
-                 <option value="{{ config('settings.general_status.active') }}" @selected($country->status == config('settings.general_status.active'))>
-                     {{ translation('Active') }}
-                 </option>
-                 <option value="{{ config('settings.general_status.in_active') }}" @selected($country->status == config('settings.general_status.in_active'))>
-                     {{ translation('Inactive') }}
-                 </option>
-             </select>
-         </div>
-     </div>
-     <div class="btn-area d-flex justify-content-between">
-         <button class="btn btn-primary mt-2 store-category">{{ translation('Save Changes') }}</button>
-     </div>
+    @if ($lang == defaultLangCode())
+        <div class="form-row">
+            <div class="form-group col-lg-12">
+                <label class="black font-14">{{ translation('Country Code') }}</label>
+                <input type="text" name="code" class="form-control"
+                    placeholder="{{ translation('Enter country code') }}" value="{{ $country->code }}">
+            </div>
+        </div>
 
- </form>
+        <div class="form-row">
+            <div class="form-group col-lg-12">
+                <label class="black font-14">{{ translation('Status') }}</label>
+                <select name="status" class="form-control" required>
+                    <option value="{{ config('settings.general_status.active') }}" @selected($country->status == config('settings.general_status.active'))>
+                        {{ translation('Active') }}
+                    </option>
+                    <option value="{{ config('settings.general_status.in_active') }}" @selected($country->status == config('settings.general_status.in_active'))>
+                        {{ translation('Inactive') }}
+                    </option>
+                </select>
+            </div>
+        </div>
+    @endif
+
+    <div class="btn-area d-flex justify-content-between">
+        <button class="btn btn-primary mt-2 store-category">{{ translation('Save Changes') }}</button>
+    </div>
+
+</form>

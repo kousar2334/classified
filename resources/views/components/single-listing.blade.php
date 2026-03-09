@@ -27,7 +27,7 @@
                     stroke="#64748B" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             <span
-                class="oneLine">{{ $ad->cityInfo->name ? $ad->cityInfo->name . ', ' . $ad->stateInfo?->name : 'Unknown Location' }}</span>
+                class="oneLine">{{ $ad->cityInfo ? $ad->cityInfo->translation('name') . ', ' . $ad->stateInfo?->translation('name') : 'Unknown Location' }}</span>
         </p>
 
         @if ($ad->is_featured == config('settings.general_status.active'))

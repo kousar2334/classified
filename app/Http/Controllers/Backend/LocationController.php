@@ -57,9 +57,14 @@ class LocationController extends Controller
     public function editCountry(Request $request): JsonResponse
     {
         $country = $this->location_repository->countryDetails($request->id);
+        $lang = $request->input('lang', defaultLangCode());
         return response()->json([
             'success' => true,
-            'html' => view('backend.modules.location.countries.edit', ['country' => $country])->render(),
+            'html' => view('backend.modules.location.countries.edit', [
+                'country'   => $country,
+                'lang'      => $lang,
+                'languages' => activeLanguages(),
+            ])->render(),
         ]);
     }
     /**
@@ -181,13 +186,15 @@ class LocationController extends Controller
      */
     public function editState(Request $request): JsonResponse
     {
+        $lang = $request->input('lang', defaultLangCode());
         return response()->json([
             'success' => true,
             'html' => view('backend.modules.location.states.edit', [
                 'countries' => $this->location_repository->countries(),
-                'state' => $this->location_repository->stateDetails($request->id)
+                'state'     => $this->location_repository->stateDetails($request->id),
+                'lang'      => $lang,
+                'languages' => activeLanguages(),
             ])->render()
-
         ]);
     }
     /**
@@ -262,13 +269,16 @@ class LocationController extends Controller
     public function editCity(Request $request): JsonResponse
     {
         $city = $this->location_repository->cityDetails($request->id);
+        $lang = $request->input('lang', defaultLangCode());
         return response()->json(
             [
                 'success' => true,
                 'html' => view('backend.modules.location.cities.edit', [
                     'countries' => $this->location_repository->countries(),
-                    'city' => $city,
-                    'states' => $this->location_repository->statesByCountry($city->state?->country_id),
+                    'city'      => $city,
+                    'states'    => $this->location_repository->statesByCountry($city->state?->country_id),
+                    'lang'      => $lang,
+                    'languages' => activeLanguages(),
                 ])->render(),
             ]
         );
