@@ -51,9 +51,9 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>{{ translation('Site Slogan') }}</label>
-                                                    <input type="text" class="form-control" name="site_slogan"
+                                                    <input type="text" class="form-control" name="site_tagline"
                                                         placeholder="Enter Site Slogan"
-                                                        value="{{ get_setting('site_slogan') }}">
+                                                        value="{{ get_setting('site_tagline') }}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>{{ translation('Site Logo') }}</label>

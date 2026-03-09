@@ -113,8 +113,7 @@
         @endif
     @else
         <div class="empty-listings">
-            <div class="icon">❤️</div>
-            <h3>{{ translation('No favourites yet') }}</h3>
+            <h3>{{ translation('No favorites yet') }}</h3>
             <p>
                 @if (request('q'))
                     {{ translation('No saved ads match your search. Try a different keyword.') }}
@@ -123,7 +122,7 @@
                 @endif
             </p>
             @if (request('q'))
-                <a href="{{ route('member.favourites') }}" class="cmn-btn">{{ translation('View All Favourites') }}</a>
+                <a href="{{ route('member.favourites') }}" class="cmn-btn">{{ translation('View All Favorites') }}</a>
             @else
                 <a href="{{ route('ad.listing.page') }}" class="cmn-btn">{{ translation('Browse Listings') }}</a>
             @endif

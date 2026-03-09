@@ -18,7 +18,7 @@
                         <i class="las la-comments"></i>
                         <p>{{ translation('No conversations yet.') }}</p>
                         <a href="{{ route('ad.listing.page') }}"
-                            class="btn btn-primary btn-sm mt-2">{{ translation('Browse Listings') }}</a>
+                            class="btn btn-primary btn-sm mt-2">{{ translation('Browse Ads') }}</a>
                     </div>
                 @else
                     <ul class="msg-list">

@@ -1,6 +1,6 @@
 @extends('frontend.layouts.dashboard')
 @section('dash-meta')
-    <title>Account Settings - {{ get_setting('site_name') }}</title>
+    <title>{{ translation('Account') }} - {{ get_setting('site_name') }}</title>
     <style>
         .account-grid {
             display: grid;

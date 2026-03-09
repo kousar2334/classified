@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 @section('meta')
-    <title>Listing mb-3- {{ get_setting('site_name') }}</title>
+    <title>{{ translation('Ads') }} - {{ get_setting('site_name') }}</title>
     <!-- page css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css">
 @endsection

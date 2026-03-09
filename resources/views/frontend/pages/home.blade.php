@@ -1,28 +1,23 @@
 @extends('frontend.layouts.master')
 @section('meta')
-    <title>{{ get_setting('site_name') }} - Classifieds ads</title>
-    <title>{{ get_setting('site_name') }}: Your Gateway to Seamless Buying and Selling Experiences</title>
+    <title>{{ get_setting('site_name') }} - {{ get_setting('site_tagline') }}</title>
     <!-- Primary Meta Tags -->
-    <meta name="title" content="Your Gateway to Seamless Buying and Selling Experiences">
-    <meta name="description"
-        content="Dive into the endless possibilities of buying and selling at ListOcean! Navigate a vast sea of opportunities as you connect with buyers and sellers effortlessly. Uncover incredible deals on a wide range of items or transform your unused items into treasure by listing them for sale. Immerse yourself in our dynamic community and enjoy the simplicity of buying and selling. Begin your oceanic journey today at ListOcean – where opportunities flow like waves!">
-    <meta name="keywords"
-        content="classified ads, free ads, buy and sell, online classifieds, cars, housing, electronics, community,Home & Livings,Fashion			,Sports	,Pet's & Animals">
+    <meta name="title" content="{{ get_setting('site_name') }}">
+    <meta name="description" content="{{ get_setting('site_description') }}">
+    <meta name="keywords" content="{{ get_setting('site_keywords') }}">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url('/') }}">
-    <meta property="og:title" content="Your Gateway to Seamless Buying and Selling Experiences">
-    <meta property="og:description"
-        content="Dive into the endless possibilities of buying and selling at ListOcean! Navigate a vast sea of opportunities as you connect with buyers and sellers effortlessly. Uncover incredible deals on a wide range of items or transform your unused items into treasure by listing them for sale. Immerse yourself in our dynamic community and enjoy the simplicity of buying and selling. Begin your oceanic journey today at ListOcean – where opportunities flow like waves!">
+    <meta property="og:title" content="{{ get_setting('site_name') }}">
+    <meta property="og:description" content="{{ get_setting('site_description') }}">
     <meta property="og:image" content="{{ asset('/public/uploads/media-uploader/icon1717328206.png') }}">
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:card" content="{{ asset('/public/uploads/media-uploader/icon1717328206.png') }}">
     <meta property="twitter:url" content="{{ url('/') }}">
-    <meta property="twitter:title" content="Your Gateway to Seamless Buying and Selling Experiences">
-    <meta property="twitter:description"
-        content="Dive into the endless possibilities of buying and selling at ListOcean! Navigate a vast sea of opportunities as you connect with buyers and sellers effortlessly. Uncover incredible deals on a wide range of items or transform your unused items into treasure by listing them for sale. Immerse yourself in our dynamic community and enjoy the simplicity of buying and selling. Begin your oceanic journey today at ListOcean – where opportunities flow like waves!">
+    <meta property="twitter:title" content="{{ get_setting('site_name') }}">
+    <meta property="twitter:description" content="{{ get_setting('site_description') }}">
     <meta property="twitter:description" content="{{ asset('/public/uploads/media-uploader/icon1717328206.png') }}">
 @endsection
 @section('content')
