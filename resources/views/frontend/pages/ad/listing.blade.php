@@ -32,7 +32,8 @@
                             'sortby',
                         ]))
                         <div class="reset-btn cmn-filter-btn mb-3">
-                            <a href="{{ route('ad.listing.page', $category_slug ?? '') }}" class="btn btn-primary w-100">
+                            <a href="{{ route('ad.listing.page', $category_slug ?? '') }}" class="btn w-100"
+                                style="background-color: var(--primary-color); color: #fff;">
                                 <i class="las la-undo-alt"></i> {{ translation('Reset Filters') }}
                             </a>
                         </div>
