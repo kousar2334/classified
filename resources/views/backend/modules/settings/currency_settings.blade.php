@@ -1,149 +1,136 @@
 @php
+    $links = [['title' => 'Currency Settings', 'route' => '', 'active' => true]];
     $currency_position = getCurrencyPosition();
 @endphp
 @extends('backend.layouts.dashboard_layout')
-@section('title')
+@section('page-title')
     {{ translation('Currency Settings') }}
 @endsection
-@push('head')
-    <style>
-        .important-border {
-            border: 1px solid #dddcdc !important
-        }
-
-        .form-row {
-            align-items: center !important;
-        }
-    </style>
-@endpush
 @section('page-content')
-    <div class="theme-option-container">
-        @include('backend.modules.settings.includes.head')
-        <div class="theme-option-tab-wrap">
-            @include('backend.modules.settings.includes.tabs')
-            <div class="tab-content">
-                <div class="tab-pane fade show active">
+    <x-admin-page-header title="Currency Settings" :links="$links" />
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8">
                     <div class="card">
-                        <div class="card-header bg-white border-bottom2 py-3">
-                            <h4>{{ translation('Currency Settings') }}</h4>
+                        <div class="card-header">
+                            <h3 class="card-title">{{ translation('Currency Settings') }}</h3>
                         </div>
-                        <div class="card-body">
-                            <form action="{{ route('classified.settings.update') }}" method="POST">
-                                @csrf
-                                <div class="form-row mb-20">
-                                    <div class="col-md-4">
-                                        <label class="font-14 bold black">{{ translation('Name') }} </label>
-                                    </div>
-                                    <div class="col-md-8">
+                        <form action="{{ route('classified.settings.update') }}" method="POST">
+                            @csrf
+                            <div class="card-body">
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">{{ translation('Name') }}</label>
+                                    <div class="col-sm-8">
                                         <input type="text" name="default_currency_name" class="form-control"
                                             value="{{ getGeneralSetting('default_currency_name') }}"
-                                            placeholder="{{ translation('Type Name') }}">
-                                        @if ($errors->has('default_currency_name'))
-                                            <div class="invalid-input">{{ $errors->first('default_currency_name') }}</div>
-                                        @endif
+                                            placeholder="{{ translation('e.g. US Dollar') }}">
+                                        @error('default_currency_name')
+                                            <span class="text-danger small">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
-                                <div class="form-row mb-20">
-                                    <div class="col-md-4">
-                                        <label class="font-14 bold black">{{ translation('Symbol') }}</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <input type="text" name="default_currency_symbol"
-                                            class="form-control currency-font"
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">{{ translation('Symbol') }}</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="default_currency_symbol" class="form-control"
                                             value="{{ getGeneralSetting('default_currency_symbol') }}"
-                                            placeholder="{{ translation('Symbol') }}">
-                                        @if ($errors->has('default_currency_symbol'))
-                                            <div class="invalid-input">{{ $errors->first('default_currency_symbol') }}
-                                            </div>
-                                        @endif
+                                            placeholder="{{ translation('e.g. $') }}">
+                                        @error('default_currency_symbol')
+                                            <span class="text-danger small">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
-                                <div class="form-row mb-20">
-                                    <div class="col-md-4">
-                                        <label class="font-14 bold black">{{ translation('Code') }}</label>
-                                    </div>
-                                    <div class="col-md-8">
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">{{ translation('Code') }}</label>
+                                    <div class="col-sm-8">
                                         <input type="text" name="default_currency_code" class="form-control"
                                             value="{{ getGeneralSetting('default_currency_code') }}"
-                                            placeholder="{{ translation('Code') }}">
-                                        @if ($errors->has('default_currency_code'))
-                                            <div class="invalid-input">{{ $errors->first('default_currency_code') }}</div>
-                                        @endif
+                                            placeholder="{{ translation('e.g. USD') }}">
+                                        @error('default_currency_code')
+                                            <span class="text-danger small">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
-                                <div class="form-row mb-20">
-                                    <div class="col-md-4">
-                                        <label class="font-14 bold black">{{ translation('Currency Position') }}</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <select class="form-control" name="default_currency_position" id="currency_position"
-                                            placeholder="{{ translation('Select currency position') }}">
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">{{ translation('Currency Position') }}</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" name="default_currency_position">
                                             @foreach ($currency_position as $key => $value)
                                                 <option value="{{ $key }}" @selected(getGeneralSetting('default_currency_position') == $key)>
                                                     {{ $value }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @if ($errors->has('default_currency_position'))
-                                            <div class="invalid-input">{{ $errors->first('default_currency_position') }}
-                                            </div>
-                                        @endif
+                                        @error('default_currency_position')
+                                            <span class="text-danger small">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
-                                <div class="form-row mb-20">
-                                    <div class="col-md-4">
-                                        <label class="font-14 bold black">{{ translation('Thousand separator') }}</label>
-                                    </div>
-                                    <div class="col-md-8">
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">{{ translation('Thousand Separator') }}</label>
+                                    <div class="col-sm-8">
                                         <input type="text" name="default_currency_thousand_separator"
                                             class="form-control"
                                             value="{{ getGeneralSetting('default_currency_thousand_separator') }}"
-                                            placeholder="{{ translation('Thousand separator') }}">
-                                        @if ($errors->has('default_currency_thousand_separator'))
-                                            <div class="invalid-input">
-                                                {{ $errors->first('default_currency_thousand_separator') }}</div>
-                                        @endif
+                                            placeholder="{{ translation('e.g. ,') }}">
+                                        @error('default_currency_thousand_separator')
+                                            <span class="text-danger small">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
-                                <div class="form-row mb-20">
-                                    <div class="col-md-4">
-                                        <label class="font-14 bold black">{{ translation('Decimal separator') }}</label>
-                                    </div>
-                                    <div class="col-md-8">
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">{{ translation('Decimal Separator') }}</label>
+                                    <div class="col-sm-8">
                                         <input type="text" name="default_currency_decimal_separator" class="form-control"
                                             value="{{ getGeneralSetting('default_currency_decimal_separator') }}"
-                                            placeholder="{{ translation('Decimal separator') }}">
-                                        @if ($errors->has('default_currency_decimal_separator'))
-                                            <div class="invalid-input">
-                                                {{ $errors->first('default_currency_decimal_separator') }}</div>
-                                        @endif
+                                            placeholder="{{ translation('e.g. .') }}">
+                                        @error('default_currency_decimal_separator')
+                                            <span class="text-danger small">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
-                                <div class="form-row mb-20">
-                                    <div class="col-md-4">
-                                        <label class="font-14 bold black">{{ translation('Number of decimals') }}</label>
-                                    </div>
-                                    <div class="col-md-8">
+
+                                <div class="form-group row mb-0">
+                                    <label class="col-sm-4 col-form-label">{{ translation('Number of Decimals') }}</label>
+                                    <div class="col-sm-8">
                                         <input type="number" name="default_currency_number_of_decimal" class="form-control"
-                                            value="{{ getGeneralSetting('default_currency_number_of_decimal') }}"
-                                            placeholder="0">
-                                        @if ($errors->has('default_currency_number_of_decimal'))
-                                            <div class="invalid-input">
-                                                {{ $errors->first('default_currency_number_of_decimal') }}</div>
-                                        @endif
+                                            value="{{ getGeneralSetting('default_currency_number_of_decimal', 2) }}"
+                                            min="0" max="8" placeholder="2">
+                                        @error('default_currency_number_of_decimal')
+                                            <span class="text-danger small">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="col-md-12 text-right">
-                                        <button type="submit" class="btn long">{{ translation('Save Changes') }}</button>
-                                    </div>
-                                </div>
-                            </form>
+
+                            </div>
+                            <div class="card-footer text-right">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save mr-1"></i> {{ translation('Save Changes') }}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ translation('Preview') }}</h3>
+                        </div>
+                        <div class="card-body text-center">
+                            <p class="text-muted mb-1 small">{{ translation('Amount will display as:') }}</p>
+                            <h3 class="text-primary mb-0" id="currency-preview">{{ format_amount(1234.56) }}</h3>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 @endsection
