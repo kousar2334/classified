@@ -71,9 +71,9 @@
 
                 <!--Payments Module-->
                 <li
-                    class="nav-item has-treeview {{ Request::routeIs(['admin.bank.payments', 'admin.payment.settings']) ? 'menu-open' : '' }}">
+                    class="nav-item has-treeview {{ Request::routeIs(['admin.bank.payments', 'admin.payment.settings', 'classified.settings.currency']) ? 'menu-open' : '' }}">
                     <a href="#"
-                        class="nav-link {{ Request::routeIs(['admin.bank.payments', 'admin.payment.settings']) ? 'active' : '' }}">
+                        class="nav-link {{ Request::routeIs(['admin.bank.payments', 'admin.payment.settings', 'classified.settings.currency']) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-dollar-sign"></i>
                         <p>
                             {{ translation('Payments') }}
@@ -86,6 +86,13 @@
                                 class="nav-link {{ Request::routeIs(['admin.bank.payments']) ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>{{ translation('Transactions') }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('classified.settings.currency') }}"
+                                class="nav-link {{ Request::routeIs(['classified.settings.currency']) ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ translation('Currency Settings') }}</p>
                             </a>
                         </li>
                         <li class="nav-item">

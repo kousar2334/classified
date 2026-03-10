@@ -255,7 +255,7 @@
                 </div>
                 <div class="sc-summary-row">
                     <span class="sc-total-label">{{ translation('Total') }}</span>
-                    <span class="sc-total-value">${{ number_format($plan->price, 2) }}</span>
+                    <span class="sc-total-value">{{ format_amount($plan->price) }}</span>
                 </div>
             </div>
         </div>
@@ -293,7 +293,7 @@
                         <input type="hidden" name="membership_id" value="{{ $plan->id }}">
                         <button type="submit" class="cmn-btn sc-btn-full">
                             <i class="fas fa-lock me-2"></i>
-                            {{ translation('Pay') }} ${{ number_format($plan->price, 2) }} {{ translation('Online') }}
+                            {{ translation('Pay') }} {{ format_amount($plan->price) }} {{ translation('Online') }}
                         </button>
                     </form>
                 </div>

@@ -9,26 +9,119 @@
     View Conversation
 @endsection
 @section('page-style')
-<style>
-    .conv-card { border-radius: 10px; overflow: hidden; }
-    .conv-meta { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
-    .conv-meta p { margin: 0 0 6px; font-size: 13px; }
-    .conv-meta p:last-child { margin: 0; }
-    .conv-meta strong { color: #1e293b; }
-    .msg-thread { display: flex; flex-direction: column; gap: 14px; padding: 20px; background: #f8fafc; border-radius: 8px; max-height: 60vh; overflow-y: auto; }
-    .msg-row { display: flex; gap: 10px; }
-    .msg-row.right { flex-direction: row-reverse; }
-    .msg-row-avatar { width: 36px; height: 36px; border-radius: 50%; background: #cbd5e1; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; color: #475569; flex-shrink: 0; }
-    .msg-row-avatar img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
-    .msg-bubble { max-width: 60%; }
-    .msg-bubble-sender { font-size: 11px; color: #64748b; margin-bottom: 3px; font-weight: 600; }
-    .msg-row.right .msg-bubble-sender { text-align: right; }
-    .msg-bubble-text { padding: 10px 14px; border-radius: 14px; font-size: 13px; line-height: 1.55; word-break: break-word; }
-    .msg-row:not(.right) .msg-bubble-text { background: #fff; border: 1px solid #e2e8f0; border-top-left-radius: 4px; }
-    .msg-row.right .msg-bubble-text { background: #3B82F6; color: #fff; border-top-right-radius: 4px; }
-    .msg-bubble-time { font-size: 11px; color: #94a3b8; margin-top: 4px; }
-    .msg-row.right .msg-bubble-time { text-align: right; }
-</style>
+    <style>
+        .conv-card {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .conv-meta {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+
+        .conv-meta p {
+            margin: 0 0 6px;
+            font-size: 13px;
+        }
+
+        .conv-meta p:last-child {
+            margin: 0;
+        }
+
+        .conv-meta strong {
+            color: #1e293b;
+        }
+
+        .msg-thread {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .msg-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .msg-row.right {
+            flex-direction: row-reverse;
+        }
+
+        .msg-row-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 13px;
+            color: #475569;
+            flex-shrink: 0;
+        }
+
+        .msg-row-avatar img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .msg-bubble {
+            max-width: 60%;
+        }
+
+        .msg-bubble-sender {
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+
+        .msg-row.right .msg-bubble-sender {
+            text-align: right;
+        }
+
+        .msg-bubble-text {
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 13px;
+            line-height: 1.55;
+            word-break: break-word;
+        }
+
+        .msg-row:not(.right) .msg-bubble-text {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-top-left-radius: 4px;
+        }
+
+        .msg-row.right .msg-bubble-text {
+            background: #3B82F6;
+            color: #fff;
+            border-top-right-radius: 4px;
+        }
+
+        .msg-bubble-time {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        .msg-row.right .msg-bubble-time {
+            text-align: right;
+        }
+    </style>
 @endsection
 @section('page-content')
     <x-admin-page-header title="View Conversation" :links="$links" />
@@ -58,7 +151,7 @@
                                             {{ $chat->ad->title }}
                                         </a>
                                     </p>
-                                    <p><strong>Price:</strong> ${{ number_format($chat->ad->price, 2) }}</p>
+                                    <p><strong>Price:</strong> {{ format_amount($chat->ad->price) }}</p>
                                 @endif
                             </div>
                             <div class="col-md-4">
@@ -80,7 +173,8 @@
                                     <div class="msg-row {{ $isReceiver ? 'right' : '' }}">
                                         <div class="msg-row-avatar">
                                             @if ($msg->sender && $msg->sender->image)
-                                                <img src="{{ getFilePath($msg->sender->image) }}" alt="{{ $msg->sender->name }}">
+                                                <img src="{{ getFilePath($msg->sender->image) }}"
+                                                    alt="{{ $msg->sender->name }}">
                                             @else
                                                 {{ strtoupper(substr($msg->sender->name ?? 'U', 0, 1)) }}
                                             @endif
@@ -88,7 +182,8 @@
                                         <div class="msg-bubble">
                                             <div class="msg-bubble-sender">{{ $msg->sender->name ?? 'Unknown' }}</div>
                                             <div class="msg-bubble-text">{{ $msg->message }}</div>
-                                            <div class="msg-bubble-time">{{ $msg->created_at->format('d M Y, h:i A') }}</div>
+                                            <div class="msg-bubble-time">{{ $msg->created_at->format('d M Y, h:i A') }}
+                                            </div>
                                         </div>
                                     </div>
                                 @empty
@@ -109,10 +204,10 @@
     </section>
 @endsection
 @section('page-script')
-<script>
-    (function () {
-        var el = document.getElementById('msgThread');
-        if (el) el.scrollTop = el.scrollHeight;
-    })();
-</script>
+    <script>
+        (function() {
+            var el = document.getElementById('msgThread');
+            if (el) el.scrollTop = el.scrollHeight;
+        })();
+    </script>
 @endsection

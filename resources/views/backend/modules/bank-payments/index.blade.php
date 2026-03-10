@@ -114,7 +114,7 @@
                                         <small class="text-muted">{{ $pay->user->email ?? '' }}</small>
                                     </td>
                                     <td>{{ $pay->plan->title ?? '—' }}</td>
-                                    <td><strong>${{ number_format($pay->amount, 2) }}</strong></td>
+                                    <td><strong>{{ format_amount($pay->amount) }}</strong></td>
                                     <td>
                                         @if ($pay->payment_method === 'bank_transfer')
                                             <span class="badge badge-primary">Bank Transfer</span>

@@ -27,7 +27,7 @@
                                 <div class="product-name">{{ $ad->title }}</div>
                                 <div class="right-part text-right">
                                     <div class="price text-end">
-                                        <span>${{ number_format($ad->price, 2) }}</span>
+                                        <span>{{ format_amount($ad->price) }}</span>
                                         @if ($ad->is_negotiable == config('settings.general_status.active'))
                                             <div class="token">{{ translation('NEGOTIABLE') }}</div>
                                         @endif
@@ -206,7 +206,7 @@
                                                     </span>
                                                 @endif
                                             </div>
-                                            <div class="pricing head4">${{ number_format($relAd->price, 2) }}</div>
+                                            <div class="pricing head4">{{ format_amount($relAd->price) }}</div>
                                             <p class="featureCap d-flex align-items-center gap-1">
                                                 <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">

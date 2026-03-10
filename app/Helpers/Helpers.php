@@ -303,6 +303,42 @@ if (!function_exists('p_trans')) {
     }
 }
 
+if (!function_exists('getGeneralSetting')) {
+    function getGeneralSetting($key, $default = null)
+    {
+        return get_setting($key, $default);
+    }
+}
+
+if (!function_exists('setGeneralSetting')) {
+    function setGeneralSetting($key, $value = null)
+    {
+        return set_setting($key, $value);
+    }
+}
+
+if (!function_exists('getCurrencyPosition')) {
+    function getCurrencyPosition()
+    {
+        return config('settings.currency_position');
+    }
+}
+
+if (!function_exists('format_amount')) {
+    function format_amount($amount)
+    {
+        $decimals      = (int) get_setting('default_currency_number_of_decimal', 2);
+        $decimalSep    = get_setting('default_currency_decimal_separator', '.');
+        $thousandSep   = get_setting('default_currency_thousand_separator', ',');
+        $symbol        = get_setting('default_currency_symbol', '$');
+        $position      = (int) get_setting('default_currency_position', 1); // 1 = [Currency][Amount], 2 = [Amount][Currency]
+
+        $formatted = number_format((float) $amount, $decimals, $decimalSep, $thousandSep);
+
+        return $position === 2 ? $formatted . $symbol : $symbol . $formatted;
+    }
+}
+
 if (!function_exists('xss_clean')) {
     /**
      * get the filtered text

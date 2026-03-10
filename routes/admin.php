@@ -270,7 +270,7 @@ Route::prefix('admin')->group(function () {
          */
         Route::group(['prefix' => 'classified-settings'], function () {
             Route::get('general', [ClassifiedSettingController::class, 'generalSettings'])->name('classified.settings.general')->middleware('can:Manage General Settings');
-            Route::get('currency', [ClassifiedSettingController::class, 'currencySettings'])->name('classified.settings.currency')->middleware(['can:Manage Currency Settings']);
+            Route::get('currency', [ClassifiedSettingController::class, 'currencySettings'])->name('classified.settings.currency');
             Route::get('member', [ClassifiedSettingController::class, 'memberSettings'])->name('classified.settings.member')->middleware('can:Manage Member Settings');
             Route::post('member/update', [ClassifiedSettingController::class, 'updateMemberSetting'])->name('classified.member.settings.update')->middleware(['can:Manage Member Settings', 'demo']);
             Route::get('ads', [ClassifiedSettingController::class, 'adsSettings'])->name('classified.settings.ads')->middleware('can:Manage Ads Settings');
@@ -285,7 +285,7 @@ Route::prefix('admin')->group(function () {
             Route::get('share-options', [ClassifiedSettingController::class, 'shareOptions'])->name('classified.settings.share.options.list')->middleware(['can:Manage Ad Share Options']);
             Route::post('share-option-update-status', [ClassifiedSettingController::class, 'shareOptionUpdateStatus'])->name('classified.settings.share.options.status.update')->middleware(['can:Manage Ad Share Options', 'demo']);
 
-            Route::post('update', [ClassifiedSettingController::class, 'updateSetting'])->name('classified.settings.update')->middleware(['can:Manage Classified Settings', 'demo']);
+            Route::post('update', [ClassifiedSettingController::class, 'updateSetting'])->name('classified.settings.update');
         });
         /**
          * Safety Tips

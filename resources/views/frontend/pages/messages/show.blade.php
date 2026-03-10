@@ -40,7 +40,7 @@
                                 alt="{{ $chat->ad->title }}">
                             <div>
                                 <div class="ad-banner-title">{{ Str::limit($chat->ad->title, 30) }}</div>
-                                <div class="ad-banner-price">${{ number_format($chat->ad->price, 2) }}</div>
+                                <div class="ad-banner-price">{{ format_amount($chat->ad->price) }}</div>
                             </div>
                         </div>
                     @endif

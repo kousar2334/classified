@@ -1,6 +1,6 @@
 <div class="singlePrice mb-24 wow fadeInLeft" data-wow-delay="0.{{ $loop->iteration ?? 1 }}s">
     <h4 class="priceTittle">{{ $plan->translation('title') }}</h4>
-    <span class="price">${{ number_format($plan->price, 2) }}
+    <span class="price">{{ format_amount($plan->price) }}
         <span class="subTittle">{{ $plan->duration_days }} {{ translation('days') }}</span>
     </span>
     <div class="btn-wrapper">

@@ -57,7 +57,7 @@ class ClassifiedSettingController extends Controller
             DB::commit();
             toastNotification('success', 'Settings updated successfully', 'Success');
             return to_route('classified.settings.member');
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             DB::rollBack();
             toastNotification('error', 'Settings update failed', 'Error');
             return to_route('classified.settings.member');

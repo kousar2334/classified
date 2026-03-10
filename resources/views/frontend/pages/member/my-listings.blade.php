@@ -124,7 +124,7 @@
                         </div>
 
                         <div class="listing-footer">
-                            <span class="listing-price">${{ number_format($ad->price, 2) }}</span>
+                            <span class="listing-price">{{ format_amount($ad->price) }}</span>
                             <span class="listing-views">
                                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">

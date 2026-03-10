@@ -133,7 +133,7 @@
                                             </td>
                                             <td>
                                                 @if ($sub->amount > 0)
-                                                    <strong>${{ number_format($sub->amount, 2) }}</strong>
+                                                    <strong>{{ format_amount($sub->amount) }}</strong>
                                                 @else
                                                     <span class="badge badge-success">Free</span>
                                                 @endif

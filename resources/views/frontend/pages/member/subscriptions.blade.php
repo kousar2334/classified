@@ -79,7 +79,7 @@
                                 <td class="td-txn">{{ $sub->transaction_id }}</td>
                                 <td class="td-amount">
                                     @if ($sub->amount > 0)
-                                        ${{ number_format($sub->amount, 2) }}
+                                        {{ format_amount($sub->amount) }}
                                     @else
                                         <span class="sub-free-badge">{{ translation('Free') }}</span>
                                     @endif

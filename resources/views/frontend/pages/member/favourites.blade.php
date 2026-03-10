@@ -94,7 +94,7 @@
                         </div>
 
                         <div class="listing-footer">
-                            <span class="listing-price">${{ number_format($ad->price, 2) }}</span>
+                            <span class="listing-price">{{ format_amount($ad->price) }}</span>
                         </div>
 
                         <div class="listing-date">

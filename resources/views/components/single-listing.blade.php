@@ -42,7 +42,7 @@
         @endif
 
         <span class="featurePricing d-flex justify-content-between align-items-center">
-            <span class="money">${{ number_format($ad->price, 2) }}</span>
+            <span class="money">{{ format_amount($ad->price) }}</span>
             <span class="date">
                 {{ $ad->created_at->diffForHumans() }}
             </span>
