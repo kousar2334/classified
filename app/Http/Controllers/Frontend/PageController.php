@@ -33,7 +33,7 @@ class PageController extends Controller
         // Fetch featured/top listings
         $topListings = Ad::where('status', $activeStatus)
             ->where('is_featured', $activeStatus)
-            ->with(['cityInfo', 'stateInfo'])
+            ->with(['cityInfo.city_translations', 'stateInfo.state_translations'])
             ->latest()
             ->take(8)
             ->get();
@@ -43,7 +43,7 @@ class PageController extends Controller
 
         // Fetch recent listings
         $recentListings = Ad::where('status', $activeStatus)
-            ->with(['cityInfo', 'stateInfo'])
+            ->with(['cityInfo.city_translations', 'stateInfo.state_translations'])
             ->latest()
             ->take(8)
             ->get();
@@ -71,7 +71,7 @@ class PageController extends Controller
         $allCategoryIds = collect($categoryIdMap)->flatten()->unique()->toArray();
         $allAds = Ad::where('status', $activeStatus)
             ->whereIn('category_id', $allCategoryIds)
-            ->with(['cityInfo', 'stateInfo'])
+            ->with(['cityInfo.city_translations', 'stateInfo.state_translations'])
             ->latest()
             ->get();
 
