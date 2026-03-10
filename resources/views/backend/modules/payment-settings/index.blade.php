@@ -9,14 +9,14 @@
     <x-admin-page-header title="Payment Settings" :links="$links" />
     <section class="content">
         <div class="container-fluid">
-            <form action="{{ route('admin.payment.settings.update') }}" method="POST">
-                @csrf
+            <div class="row">
 
-                <div class="row">
-
-                    {{-- SSLCommerz Settings --}}
-                    <div class="col-lg-6 mb-4">
-                        <div class="card card-outline card-primary">
+                {{-- SSLCommerz Settings --}}
+                <div class="col-lg-6 mb-4">
+                    <form action="{{ route('admin.payment.settings.update') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="section" value="ssl">
+                        <div class="card card-outline card-primary h-100">
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <i class="fas fa-credit-card mr-2"></i>
@@ -50,7 +50,7 @@
                                         maxlength="10">
                                     <small class="form-text text-muted">e.g. BDT, USD, EUR</small>
                                 </div>
-                                <div class="form-group mb-0">
+                                <div class="form-group">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="sslcommerz_sandbox"
                                             name="sslcommerz_sandbox" value="1"
@@ -64,12 +64,21 @@
                                     </small>
                                 </div>
                             </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save mr-1"></i> {{ translation('Save SSLCommerz Settings') }}
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
+                </div>
 
-                    {{-- Bank Transfer Settings --}}
-                    <div class="col-lg-6 mb-4">
-                        <div class="card card-outline card-success">
+                {{-- Bank Transfer Settings --}}
+                <div class="col-lg-6 mb-4">
+                    <form action="{{ route('admin.payment.settings.update') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="section" value="bank">
+                        <div class="card card-outline card-success h-100">
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <i class="fas fa-university mr-2"></i>
@@ -119,18 +128,16 @@
                                     </small>
                                 </div>
                             </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save mr-1"></i> {{ translation('Save Bank Transfer Settings') }}
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
-                <div class="row">
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary px-5">
-                            <i class="fas fa-save mr-1"></i> {{ translation('Save Settings') }}
-                        </button>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </section>
 @endsection
