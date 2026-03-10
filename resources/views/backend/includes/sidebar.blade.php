@@ -69,27 +69,35 @@
                     </a>
                 </li>
 
-                <!--Payment Transactions Module-->
-                <li class="nav-item">
-                    <a href="{{ route('admin.bank.payments') }}"
-                        class="nav-link {{ Request::routeIs(['admin.bank.payments']) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-receipt"></i>
+                <!--Payments Module-->
+                <li
+                    class="nav-item has-treeview {{ Request::routeIs(['admin.bank.payments', 'admin.payment.settings']) ? 'menu-open' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ Request::routeIs(['admin.bank.payments', 'admin.payment.settings']) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-dollar-sign"></i>
                         <p>
-                            {{ translation('Payment Transactions') }}
+                            {{ translation('Payments') }}
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.bank.payments') }}"
+                                class="nav-link {{ Request::routeIs(['admin.bank.payments']) ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ translation('Transactions') }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.payment.settings') }}"
+                                class="nav-link {{ Request::routeIs(['admin.payment.settings']) ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ translation('Payment Settings') }}</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-
-                <!--Payment Settings Module-->
-                <li class="nav-item">
-                    <a href="{{ route('admin.payment.settings') }}"
-                        class="nav-link {{ Request::routeIs(['admin.payment.settings']) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-money-check-alt"></i>
-                        <p>
-                            {{ translation('Payment Settings') }}
-                        </p>
-                    </a>
-                </li>
+                <!--End Payments Module-->
 
                 <!--Listings Module-->
                 <li
