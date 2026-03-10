@@ -236,7 +236,10 @@
                                         </div>
                                         <div class="favourite-icon">
                                             <a href="javascript:void(0)" class="click_to_favorite_add_remove"
-                                                data-listing_id="{{ $relAd->id }}">
+                                                data-listing_id="{{ $relAd->id }}"
+                                                data-toggle-url="{{ route('ad.favourite.toggle') }}"
+                                                data-is-auth="{{ auth()->check() ? 'true' : 'false' }}"
+                                                data-login-url="{{ route('member.login') }}">
                                                 <i class="lar la-heart icon favorite_add_icon"></i>
                                             </a>
                                         </div>
