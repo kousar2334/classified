@@ -10,7 +10,7 @@
     <div class="list-info-card">
         <div class="sid-seller-top">
             <div class="sid-avatar-wrap">
-                <img src="{{ getFilePath($user->image) }}" alt="{{ $user->name }}" class="sid-avatar" />
+                <img src="{{ asset(getFilePath($user->image)) }}" alt="{{ $user->name }}" class="sid-avatar" />
                 <span class="sid-member-label">{{ translation('Member') }}</span>
             </div>
             <div class="sid-seller-info">

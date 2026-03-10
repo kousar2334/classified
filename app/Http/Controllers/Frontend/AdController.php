@@ -400,7 +400,14 @@ class AdController extends Controller
         }
 
         // Build query for ads
-        $query = Ad::with(['categoryInfo', 'cityInfo', 'stateInfo'])
+        $query = Ad::with([
+            'categoryInfo',
+            'categoryInfo.ads_category_translations',
+            'cityInfo',
+            'cityInfo.city_translations',
+            'stateInfo',
+            'stateInfo.state_translations',
+        ])
             ->where('status', config('settings.general_status.active'))
             ->where('payment_status', config('settings.general_status.active'));
 
@@ -516,12 +523,17 @@ class AdController extends Controller
     {
         $ad = Ad::with([
             'categoryInfo',
+            'categoryInfo.ads_category_translations',
             'cityInfo',
+            'cityInfo.city_translations',
             'stateInfo',
+            'stateInfo.state_translations',
             'countryInfo',
+            'countryInfo.country_translations',
             'galleryImages',
             'tags',
             'condition',
+            'condition.condition_translations',
             'userInfo' => function ($q) {
                 $q->withCount(['ads' => function ($q2) {
                     $q2->where('status', config('settings.general_status.active'));
@@ -541,7 +553,14 @@ class AdController extends Controller
         }
 
         // Get relevant ads from the same category
-        $relevantAds = Ad::with(['categoryInfo', 'cityInfo', 'stateInfo'])
+        $relevantAds = Ad::with([
+            'categoryInfo',
+            'categoryInfo.ads_category_translations',
+            'cityInfo',
+            'cityInfo.city_translations',
+            'stateInfo',
+            'stateInfo.state_translations',
+        ])
             ->where('status', config('settings.general_status.active'))
             ->where('payment_status', config('settings.general_status.active'))
             ->where('id', '!=', $ad->id)
@@ -574,7 +593,14 @@ class AdController extends Controller
 
     public function myFavourites(Request $request)
     {
-        $query = Ad::with(['categoryInfo', 'cityInfo', 'stateInfo'])
+        $query = Ad::with([
+            'categoryInfo',
+            'categoryInfo.ads_category_translations',
+            'cityInfo',
+            'cityInfo.city_translations',
+            'stateInfo',
+            'stateInfo.state_translations',
+        ])
             ->whereIn('id', SavedAd::where('user_id', auth()->id())->pluck('ad_id'))
             ->where('status', config('settings.general_status.active'));
 
@@ -669,7 +695,14 @@ class AdController extends Controller
 
     public function myListings(Request $request)
     {
-        $query = Ad::with(['categoryInfo', 'cityInfo', 'stateInfo'])
+        $query = Ad::with([
+            'categoryInfo',
+            'categoryInfo.ads_category_translations',
+            'cityInfo',
+            'cityInfo.city_translations',
+            'stateInfo',
+            'stateInfo.state_translations',
+        ])
             ->where('user_id', auth()->id());
 
         // Filter by status
@@ -1040,7 +1073,7 @@ class AdController extends Controller
         $hierarchy = [$current];
 
         while ($current->parent) {
-            $parent = AdsCategory::find($current->parent);
+            $parent = AdsCategory::with('ads_category_translations')->find($current->parent);
             if ($parent) {
                 $hierarchy[] = $parent;
                 $current = $parent;

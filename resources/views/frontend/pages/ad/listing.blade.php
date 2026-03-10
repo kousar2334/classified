@@ -66,9 +66,6 @@
                         <input type="hidden" name="sortby" id="sortby_hidden" value="{{ request('sortby') }}">
 
                         <div class="cateSidebar1">
-
-
-
                             <!-- All Categories -->
                             <div class="catagoriesWraper mb-4">
                                 <div class="catagories w-100">
@@ -405,6 +402,10 @@
                 const STATES_ENDPOINT = '/ad/states';
                 const CITIES_ENDPOINT = '/ad/cities';
 
+                const TRANS_BACK_TO = '{{ translation('Back to') }}';
+                const TRANS_CATEGORIES = '{{ translation('Categories') }}';
+                const TRANS_NO_COUNTRIES = '{{ translation('No countries available') }}';
+
                 // ========== Category Navigation System ==========
 
                 let categoryHierarchy = {}; // Store parent relationships as we navigate
@@ -470,7 +471,7 @@
 
                             // Extract parent info from first child (all children share same parent)
                             const currentCategoryTitle = children[0].parent_title ||
-                                'Selected Category';
+                                '{{ translation('Selected Category') }}';
                             const currentCategoryParentId = children[0].parent_id || null;
                             const currentCategoryGrandparentTitle = children[0].grandparent_title ||
                                 null;
@@ -511,17 +512,17 @@
                             if (currentCategoryParentId) {
                                 categoryHierarchy[selectedCategoryId] = {
                                     parentId: currentCategoryParentId,
-                                    parentName: currentCategoryGrandparentTitle || 'Categories'
+                                    parentName: currentCategoryGrandparentTitle || TRANS_CATEGORIES
                                 };
-                                $('#back-button-text').text('Back to ' +
+                                $('#back-button-text').text(TRANS_BACK_TO + ' ' +
                                     currentCategoryGrandparentTitle);
                             } else {
                                 // Current category is at root level
                                 categoryHierarchy[selectedCategoryId] = {
                                     parentId: null,
-                                    parentName: 'Categories'
+                                    parentName: TRANS_CATEGORIES
                                 };
-                                $('#back-button-text').text('Back to Categories');
+                                $('#back-button-text').text(TRANS_BACK_TO + ' ' + TRANS_CATEGORIES);
                             }
 
                             $('#back-button-container').show();
@@ -541,7 +542,7 @@
                             const parentName = $selectedItem.data('parent-name');
 
                             if (parentName) {
-                                $('#back-button-text').text('Back to ' + parentName);
+                                $('#back-button-text').text(TRANS_BACK_TO + ' ' + parentName);
 
                                 // Store for back navigation
                                 if (!categoryHierarchy[selectedCategoryId]) {
@@ -551,7 +552,7 @@
                                     };
                                 }
                             } else {
-                                $('#back-button-text').text('Back to Categories');
+                                $('#back-button-text').text(TRANS_BACK_TO + ' ' + TRANS_CATEGORIES);
                             }
 
                             $('#back-button-container').show();
@@ -599,7 +600,7 @@
                             });
                         } else {
                             $countryList.append(
-                                '<li class="text-muted small p-2">No countries available</li>');
+                                `<li class="text-muted small p-2">${TRANS_NO_COUNTRIES}</li>`);
                         }
 
                         if (callback) callback();
