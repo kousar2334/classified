@@ -20,7 +20,7 @@ class Page extends Model
 
     public function translation($field = '', $lang = false)
     {
-        $lang = $lang == false ? app()->getLocale() : $lang;
+        $lang = $lang == false ? session()->get('locale') : $lang;
         $page_translations = $this->page_translations->where('lang', $lang)->first();
         return $page_translations != null ? $page_translations->$field : $this->$field;
     }

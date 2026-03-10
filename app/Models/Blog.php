@@ -26,7 +26,7 @@ class Blog extends Model
 
     public function translation($field = '', $lang = false)
     {
-        $lang = $lang == false ? app()->getLocale() : $lang;
+        $lang = $lang == false ? session()->get('locale') : $lang;
         $blog_translations = $this->blog_translations->where('lang', $lang)->first();
         return $blog_translations != null ? $blog_translations->$field : $this->$field;
     }

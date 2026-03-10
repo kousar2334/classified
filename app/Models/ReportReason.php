@@ -16,7 +16,7 @@ class ReportReason extends Model
 
     public function translation($field = '', $lang = false)
     {
-        $lang = $lang == false ? app()->getLocale() : $lang;
+        $lang = $lang == false ? session()->get('locale') : $lang;
         $translation = $this->reason_translations->where('lang', $lang)->first();
         return $translation != null ? $translation->$field : $this->$field;
     }

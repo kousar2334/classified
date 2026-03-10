@@ -14,7 +14,7 @@ class MenuItem extends Model
 
     public function translation($field = '', $lang = false)
     {
-        $lang = $lang == false ? app()->getLocale() : $lang;
+        $lang = $lang == false ? session()->get('locale') : $lang;
         $menu_translations = $this->menu_translations->where('lang', $lang)->first();
         return $menu_translations != null ? $menu_translations->$field : $this->$field;
     }

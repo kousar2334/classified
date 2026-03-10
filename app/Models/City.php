@@ -21,7 +21,7 @@ class City extends Model
 
     public function translation(string $field = 'name', $lang = false): string
     {
-        $lang = $lang == false ? app()->getLocale() : $lang;
+        $lang = $lang == false ? session()->get('locale') : $lang;
         $translation = $this->city_translations->where('lang', $lang)->first();
         return $translation != null ? $translation->$field : $this->$field;
     }
