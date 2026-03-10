@@ -69,6 +69,17 @@
                     </a>
                 </li>
 
+                <!--Bank Payments Module-->
+                <li class="nav-item">
+                    <a href="{{ route('admin.bank.payments') }}"
+                        class="nav-link {{ Request::routeIs(['admin.bank.payments']) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-university"></i>
+                        <p>
+                            {{ translation('Bank Payments') }}
+                        </p>
+                    </a>
+                </li>
+
                 <!--Payment Settings Module-->
                 <li class="nav-item">
                     <a href="{{ route('admin.payment.settings') }}"

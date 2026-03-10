@@ -359,6 +359,21 @@
                         <input type="hidden" name="membership_id" value="{{ $plan->id }}">
                         <div class="sc-file-group">
                             <label class="sc-file-label">
+                                {{ translation('Bank Transaction Number') }}
+                                <span class="sc-file-required">*</span>
+                            </label>
+                            <input type="text" name="bank_transaction_number" class="sc-file-input"
+                                value="{{ old('bank_transaction_number') }}"
+                                placeholder="{{ translation('e.g. TRN123456789') }}" required>
+                            <small class="sc-file-hint">
+                                {{ translation('Enter the transaction/reference number from your bank receipt.') }}
+                            </small>
+                            @error('bank_transaction_number')
+                                <span class="sc-file-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="sc-file-group">
+                            <label class="sc-file-label">
                                 {{ translation('Upload Payment Slip') }}
                                 <span class="sc-file-required">*</span>
                             </label>

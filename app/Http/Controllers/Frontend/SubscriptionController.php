@@ -107,8 +107,9 @@ class SubscriptionController extends Controller
     public function bankPayment(Request $request)
     {
         $request->validate([
-            'membership_id' => 'required|integer|exists:pricing_plans,id',
-            'bank_slip'     => 'required|file|mimes:jpg,jpeg,png,pdf|max:4096',
+            'membership_id'          => 'required|integer|exists:pricing_plans,id',
+            'bank_transaction_number' => 'required|string|max:200',
+            'bank_slip'              => 'required|file|mimes:jpg,jpeg,png,pdf|max:4096',
         ]);
 
         if (!get_setting('bank_transfer_enabled', 0)) {
@@ -143,15 +144,16 @@ class SubscriptionController extends Controller
             $transactionId = 'BANK-' . strtoupper(Str::random(14));
 
             UserSubscription::create([
-                'user_id'        => $user->id,
-                'plan_id'        => $plan->id,
-                'transaction_id' => $transactionId,
-                'amount'         => $plan->price,
-                'payment_method' => 'bank_transfer',
-                'status'         => 'pending',
-                'bank_slip'      => $slipPath,
-                'starts_at'      => null,
-                'expires_at'     => null,
+                'user_id'                 => $user->id,
+                'plan_id'                 => $plan->id,
+                'transaction_id'          => $transactionId,
+                'amount'                  => $plan->price,
+                'payment_method'          => 'bank_transfer',
+                'status'                  => 'pending',
+                'bank_transaction_number' => $request->bank_transaction_number,
+                'bank_slip'               => $slipPath,
+                'starts_at'               => null,
+                'expires_at'              => null,
             ]);
 
             DB::commit();

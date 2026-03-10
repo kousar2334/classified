@@ -17,6 +17,7 @@ class UserSubscription extends Model
         'ssl_session_key',
         'ssl_val_id',
         'bank_slip',
+        'bank_transaction_number',
         'admin_note',
         'starts_at',
         'expires_at',

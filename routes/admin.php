@@ -31,6 +31,7 @@ use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Backend\HomePageBuilderController;
 use App\Http\Controllers\Backend\NewsletterController as BackendNewsletterController;
 use App\Http\Controllers\Backend\PaymentSettingsController;
+use App\Http\Controllers\Backend\BankPaymentController;
 
 Route::prefix('admin')->group(function () {
     //Admin Auth
@@ -233,6 +234,15 @@ Route::prefix('admin')->group(function () {
             Route::post('approve', [SubscriptionController::class, 'approve'])->name('admin.subscriptions.approve');
             Route::post('reject', [SubscriptionController::class, 'reject'])->name('admin.subscriptions.reject');
             Route::post('delete', [SubscriptionController::class, 'delete'])->name('admin.subscriptions.delete');
+        });
+
+        /**
+         * Bank Payments Module
+         */
+        Route::group(['prefix' => 'bank-payments'], function () {
+            Route::get('/', [BankPaymentController::class, 'index'])->name('admin.bank.payments');
+            Route::post('approve', [BankPaymentController::class, 'approve'])->name('admin.bank.payments.approve');
+            Route::post('reject', [BankPaymentController::class, 'reject'])->name('admin.bank.payments.reject');
         });
 
         /**
