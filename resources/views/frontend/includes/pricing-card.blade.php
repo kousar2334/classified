@@ -16,11 +16,9 @@
             @endauth
         @else
             @auth
-                <form action="{{ route('membership.initiate.payment') }}" method="post">
-                    @csrf
-                    <input type="hidden" name="membership_id" value="{{ $plan->id }}">
-                    <button type="submit" class="cmn-btn-outline1">{{ translation('Buy Now') }}</button>
-                </form>
+                <a href="{{ route('subscription.confirm', $plan->id) }}" class="cmn-btn-outline1">
+                    {{ translation('Buy Now') }}
+                </a>
             @else
                 <button class="cmn-btn-outline1 choose_membership_plan" data-bs-toggle="modal"
                     data-id="{{ $plan->id }}" data-price="{{ $plan->price }}" data-bs-target="#loginModal">

@@ -30,6 +30,7 @@ use App\Http\Controllers\Backend\SubscriptionController;
 use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Backend\HomePageBuilderController;
 use App\Http\Controllers\Backend\NewsletterController as BackendNewsletterController;
+use App\Http\Controllers\Backend\PaymentSettingsController;
 
 Route::prefix('admin')->group(function () {
     //Admin Auth
@@ -229,7 +230,17 @@ Route::prefix('admin')->group(function () {
          */
         Route::group(['prefix' => 'subscriptions'], function () {
             Route::get('/', [SubscriptionController::class, 'index'])->name('admin.subscriptions.list');
+            Route::post('approve', [SubscriptionController::class, 'approve'])->name('admin.subscriptions.approve');
+            Route::post('reject', [SubscriptionController::class, 'reject'])->name('admin.subscriptions.reject');
             Route::post('delete', [SubscriptionController::class, 'delete'])->name('admin.subscriptions.delete');
+        });
+
+        /**
+         * Payment Settings Module
+         */
+        Route::group(['prefix' => 'payment-settings'], function () {
+            Route::get('/', [PaymentSettingsController::class, 'index'])->name('admin.payment.settings');
+            Route::post('update', [PaymentSettingsController::class, 'update'])->name('admin.payment.settings.update');
         });
 
         /**

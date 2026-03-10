@@ -40,7 +40,11 @@
                     <div class="small-box bg-warning">
                         <div class="inner">
                             <h3>{{ $stats['pending'] }}</h3>
-                            <p>Pending</p>
+                            <p>Pending
+                                @if ($stats['bank_pending'] > 0)
+                                    <small>({{ $stats['bank_pending'] }} bank)</small>
+                                @endif
+                            </p>
                         </div>
                         <div class="icon"><i class="fas fa-clock"></i></div>
                     </div>
@@ -68,18 +72,30 @@
                                         placeholder="{{ translation('Search member...') }}" value="{{ request('q') }}">
                                     <select name="status" class="form-control form-control-sm" style="width: auto;">
                                         <option value="">{{ translation('All Status') }}</option>
-                                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Active
-                                        </option>
+                                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>
+                                            Active</option>
                                         <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>
                                             Pending</option>
                                         <option value="failed" {{ request('status') === 'failed' ? 'selected' : '' }}>
                                             Failed</option>
                                         <option value="cancelled"
                                             {{ request('status') === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                        <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>
+                                            Rejected</option>
+                                    </select>
+                                    <select name="method" class="form-control form-control-sm" style="width: auto;">
+                                        <option value="">{{ translation('All Methods') }}</option>
+                                        <option value="sslcommerz"
+                                            {{ request('method') === 'sslcommerz' ? 'selected' : '' }}>SSLCommerz</option>
+                                        <option value="bank_transfer"
+                                            {{ request('method') === 'bank_transfer' ? 'selected' : '' }}>Bank Transfer
+                                        </option>
+                                        <option value="trial" {{ request('method') === 'trial' ? 'selected' : '' }}>Trial
+                                        </option>
                                     </select>
                                     <button type="submit"
                                         class="btn btn-primary btn-sm">{{ translation('Search') }}</button>
-                                    @if (request('q') || request('status'))
+                                    @if (request('q') || request('status') || request('method'))
                                         <a href="{{ route('admin.subscriptions.list') }}"
                                             class="btn btn-secondary btn-sm">{{ translation('Reset') }}</a>
                                     @endif
@@ -105,7 +121,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($subscriptions as $key => $sub)
-                                        <tr>
+                                        <tr @if ($sub->payment_method === 'bank_transfer' && $sub->status === 'pending') class="table-warning" @endif>
                                             <td>{{ $subscriptions->firstItem() + $key }}</td>
                                             <td>
                                                 <strong>{{ $sub->user->name ?? '—' }}</strong><br>
@@ -125,6 +141,8 @@
                                             <td>
                                                 @if ($sub->payment_method === 'sslcommerz')
                                                     <span class="badge badge-info">SSLCommerz</span>
+                                                @elseif ($sub->payment_method === 'bank_transfer')
+                                                    <span class="badge badge-primary">Bank Transfer</span>
                                                 @else
                                                     <span class="badge badge-secondary">Trial</span>
                                                 @endif
@@ -142,10 +160,18 @@
                                                     <span class="badge badge-warning">Pending</span>
                                                 @elseif ($sub->status === 'failed')
                                                     <span class="badge badge-danger">Failed</span>
+                                                @elseif ($sub->status === 'rejected')
+                                                    <span class="badge badge-danger">Rejected</span>
                                                 @elseif ($sub->status === 'cancelled')
                                                     <span class="badge badge-danger">Cancelled</span>
                                                 @else
                                                     <span class="badge badge-secondary">{{ ucfirst($sub->status) }}</span>
+                                                @endif
+                                                @if ($sub->admin_note)
+                                                    <br><small class="text-muted" title="{{ $sub->admin_note }}">
+                                                        <i class="fas fa-comment-alt"></i>
+                                                        {{ Str::limit($sub->admin_note, 30) }}
+                                                    </small>
                                                 @endif
                                             </td>
                                             <td>{{ $sub->starts_at?->format('M d, Y') ?? '—' }}</td>
@@ -163,7 +189,31 @@
                                                 @endif
                                             </td>
                                             <td>{{ $sub->created_at->format('M d, Y') }}</td>
-                                            <td class="text-right">
+                                            <td class="text-right" style="white-space: nowrap;">
+                                                {{-- Bank transfer pending: show approve/reject --}}
+                                                @if ($sub->payment_method === 'bank_transfer' && $sub->status === 'pending')
+                                                    @if ($sub->bank_slip)
+                                                        <a href="{{ asset('storage/' . $sub->bank_slip) }}" target="_blank"
+                                                            class="btn btn-info btn-sm"
+                                                            title="{{ translation('View Slip') }}">
+                                                            <i class="fas fa-file-image"></i>
+                                                        </a>
+                                                    @endif
+                                                    <button class="btn btn-success btn-sm approve-item"
+                                                        data-id="{{ $sub->id }}"
+                                                        data-name="{{ $sub->user->name ?? '' }}"
+                                                        data-plan="{{ $sub->plan->title ?? '' }}"
+                                                        title="{{ translation('Approve') }}">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                    <button class="btn btn-warning btn-sm reject-item"
+                                                        data-id="{{ $sub->id }}"
+                                                        data-name="{{ $sub->user->name ?? '' }}"
+                                                        data-plan="{{ $sub->plan->title ?? '' }}"
+                                                        title="{{ translation('Reject') }}">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                @endif
                                                 <button class="btn btn-danger btn-sm delete-item"
                                                     data-id="{{ $sub->id }}">
                                                     <i class="fas fa-trash"></i>
@@ -190,6 +240,83 @@
             </div>
         </div>
     </section>
+
+    {{-- Approve Modal --}}
+    <div class="modal fade" id="approve-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h4 class="modal-title h6">
+                        <i class="fas fa-check-circle mr-2"></i>{{ translation('Approve Subscription') }}
+                    </h4>
+                    <button type="button" class="close text-white" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{{ route('admin.subscriptions.approve') }}">
+                    @csrf
+                    <input type="hidden" id="approve-item-id" name="id">
+                    <div class="modal-body">
+                        <p class="mb-3">
+                            {{ translation('Approve bank transfer for') }}
+                            <strong id="approve-member-name"></strong> &mdash;
+                            {{ translation('plan') }} <strong id="approve-plan-name"></strong>?
+                        </p>
+                        <div class="form-group mb-0">
+                            <label>{{ translation('Admin Note (optional, sent to user)') }}</label>
+                            <textarea name="admin_note" class="form-control" rows="2" placeholder="e.g. Payment verified successfully."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">{{ translation('Cancel') }}</button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-check mr-1"></i> {{ translation('Approve & Activate') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- Reject Modal --}}
+    <div class="modal fade" id="reject-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h4 class="modal-title h6">
+                        <i class="fas fa-times-circle mr-2"></i>{{ translation('Reject Subscription') }}
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{{ route('admin.subscriptions.reject') }}">
+                    @csrf
+                    <input type="hidden" id="reject-item-id" name="id">
+                    <div class="modal-body">
+                        <p class="mb-3">
+                            {{ translation('Reject bank transfer for') }}
+                            <strong id="reject-member-name"></strong> &mdash;
+                            {{ translation('plan') }} <strong id="reject-plan-name"></strong>?
+                        </p>
+                        <div class="form-group mb-0">
+                            <label>{{ translation('Rejection Reason (sent to user via notification & email)') }}</label>
+                            <textarea name="admin_note" class="form-control" rows="2"
+                                placeholder="e.g. Payment slip could not be verified."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">{{ translation('Cancel') }}</button>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-times mr-1"></i> {{ translation('Reject') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     {{-- Delete Confirmation Modal --}}
     <div class="modal fade" id="delete-item-modal">
@@ -225,6 +352,20 @@
                 var id = $(this).data('id');
                 $('#delete-item-id').val(id);
                 $('#delete-item-modal').modal('show');
+            });
+
+            $('.approve-item').on('click', function() {
+                $('#approve-item-id').val($(this).data('id'));
+                $('#approve-member-name').text($(this).data('name'));
+                $('#approve-plan-name').text($(this).data('plan'));
+                $('#approve-modal').modal('show');
+            });
+
+            $('.reject-item').on('click', function() {
+                $('#reject-item-id').val($(this).data('id'));
+                $('#reject-member-name').text($(this).data('name'));
+                $('#reject-plan-name').text($(this).data('plan'));
+                $('#reject-modal').modal('show');
             });
         })(jQuery);
     </script>

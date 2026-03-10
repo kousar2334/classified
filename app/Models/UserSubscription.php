@@ -16,6 +16,8 @@ class UserSubscription extends Model
         'status',
         'ssl_session_key',
         'ssl_val_id',
+        'bank_slip',
+        'admin_note',
         'starts_at',
         'expires_at',
     ];

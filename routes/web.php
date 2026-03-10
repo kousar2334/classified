@@ -105,6 +105,8 @@ Route::group(['middleware' => ['auth']], function () {
     // Subscriptions
     Route::get('/member/subscriptions', [SubscriptionController::class, 'mySubscriptions'])->name('member.subscriptions');
     Route::post('/membership/buy', [SubscriptionController::class, 'buy'])->name('membership.buy');
+    Route::get('/membership/confirm/{planId}', [SubscriptionController::class, 'confirm'])->name('subscription.confirm');
+    Route::post('/membership/bank-payment', [SubscriptionController::class, 'bankPayment'])->name('membership.bank.payment');
     Route::post('/membership/initiate-payment', [SubscriptionController::class, 'initiatePayment'])->name('membership.initiate.payment');
 });
 require __DIR__ . '/admin.php';

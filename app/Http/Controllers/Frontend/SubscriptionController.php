@@ -8,10 +8,47 @@ use App\Models\UserSubscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class SubscriptionController extends Controller
 {
+    /**
+     * Show the subscription confirmation / payment method selection page.
+     */
+    public function confirm(int $planId)
+    {
+        $plan = PricingPlan::where('id', $planId)
+            ->where('status', config('settings.general_status.active'))
+            ->firstOrFail();
+
+        // Free plans don't need a confirmation page
+        if ($plan->price <= 0) {
+            return redirect()->route('membership.buy.free', ['membership_id' => $plan->id]);
+        }
+
+        $user = Auth::user();
+
+        $activeSubscription = UserSubscription::where('user_id', $user->id)
+            ->where('status', 'active')
+            ->where('expires_at', '>', now())
+            ->first();
+
+        if ($activeSubscription) {
+            return redirect()->route('member.subscriptions')
+                ->with('error', 'You already have an active subscription expiring on ' . $activeSubscription->expires_at->format('M d, Y') . '.');
+        }
+
+        $sslEnabled          = (bool) get_setting('ssl_enabled', 0);
+        $bankTransferEnabled = (bool) get_setting('bank_transfer_enabled', 0);
+
+        return view('frontend.pages.member.subscription-confirm', compact(
+            'plan',
+            'sslEnabled',
+            'bankTransferEnabled'
+        ));
+    }
+
     /**
      * Activate a free/trial plan directly.
      */
@@ -31,7 +68,6 @@ class SubscriptionController extends Controller
 
         $user = Auth::user();
 
-        // Check if user already has an active subscription
         $activeSubscription = UserSubscription::where('user_id', $user->id)
             ->where('status', 'active')
             ->where('expires_at', '>', now())
@@ -44,7 +80,7 @@ class SubscriptionController extends Controller
         try {
             DB::beginTransaction();
 
-            $subscription = UserSubscription::create([
+            UserSubscription::create([
                 'user_id'        => $user->id,
                 'plan_id'        => $plan->id,
                 'transaction_id' => 'TRIAL-' . strtoupper(Str::random(12)),
@@ -66,13 +102,18 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Initiate SSLCommerz payment for a paid plan.
+     * Handle bank transfer payment submission.
      */
-    public function initiatePayment(Request $request)
+    public function bankPayment(Request $request)
     {
         $request->validate([
             'membership_id' => 'required|integer|exists:pricing_plans,id',
+            'bank_slip'     => 'required|file|mimes:jpg,jpeg,png,pdf|max:4096',
         ]);
+
+        if (!get_setting('bank_transfer_enabled', 0)) {
+            return back()->with('error', 'Bank transfer payment is not available at this time.');
+        }
 
         $plan = PricingPlan::where('id', $request->membership_id)
             ->where('status', config('settings.general_status.active'))
@@ -84,7 +125,68 @@ class SubscriptionController extends Controller
 
         $user = Auth::user();
 
-        // Check if user already has an active subscription
+        $activeSubscription = UserSubscription::where('user_id', $user->id)
+            ->where('status', 'active')
+            ->where('expires_at', '>', now())
+            ->first();
+
+        if ($activeSubscription) {
+            return back()->with('error', 'You already have an active subscription.');
+        }
+
+        try {
+            DB::beginTransaction();
+
+            // Store the bank slip
+            $slipPath = $request->file('bank_slip')->store('bank-slips', 'public');
+
+            $transactionId = 'BANK-' . strtoupper(Str::random(14));
+
+            UserSubscription::create([
+                'user_id'        => $user->id,
+                'plan_id'        => $plan->id,
+                'transaction_id' => $transactionId,
+                'amount'         => $plan->price,
+                'payment_method' => 'bank_transfer',
+                'status'         => 'pending',
+                'bank_slip'      => $slipPath,
+                'starts_at'      => null,
+                'expires_at'     => null,
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('member.subscriptions')
+                ->with('success', 'Your payment slip has been submitted. Your subscription will be activated after admin verification.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Failed to submit payment. Please try again.');
+        }
+    }
+
+    /**
+     * Initiate SSLCommerz payment for a paid plan.
+     */
+    public function initiatePayment(Request $request)
+    {
+        $request->validate([
+            'membership_id' => 'required|integer|exists:pricing_plans,id',
+        ]);
+
+        if (!get_setting('ssl_enabled', 0)) {
+            return back()->with('error', 'Online payment is not available at this time.');
+        }
+
+        $plan = PricingPlan::where('id', $request->membership_id)
+            ->where('status', config('settings.general_status.active'))
+            ->firstOrFail();
+
+        if ($plan->price <= 0) {
+            return back()->with('error', 'This is a free plan. No payment required.');
+        }
+
+        $user = Auth::user();
+
         $activeSubscription = UserSubscription::where('user_id', $user->id)
             ->where('status', 'active')
             ->where('expires_at', '>', now())
@@ -94,10 +196,15 @@ class SubscriptionController extends Controller
             return back()->with('error', 'You already have an active subscription. It expires on ' . $activeSubscription->expires_at->format('M d, Y') . '.');
         }
 
+        // Read credentials from settings (admin-configurable)
+        $storeId   = get_setting('sslcommerz_store_id', config('sslcommerz.store_id'));
+        $storePass = get_setting('sslcommerz_store_password', config('sslcommerz.store_password'));
+        $isSandbox = (bool) get_setting('sslcommerz_sandbox', config('sslcommerz.sandbox', true));
+        $currency  = get_setting('sslcommerz_currency', config('sslcommerz.currency', 'BDT'));
+
         try {
             DB::beginTransaction();
 
-            // Create a pending subscription record
             $transactionId = 'TXN-' . strtoupper(Str::random(16));
 
             $subscription = UserSubscription::create([
@@ -113,37 +220,29 @@ class SubscriptionController extends Controller
 
             DB::commit();
 
-            // SSLCommerz payment initiation
-            $storeId   = config('sslcommerz.store_id');
-            $storePass = config('sslcommerz.store_password');
-            $isSandbox = config('sslcommerz.sandbox', true);
-
             $sslApiUrl = $isSandbox
                 ? 'https://sandbox.sslcommerz.com/gwprocess/v4/api.php'
                 : 'https://securepay.sslcommerz.com/gwprocess/v4/api.php';
 
             $postData = [
-                'store_id'      => $storeId,
-                'store_passwd'  => $storePass,
-                'total_amount'  => $plan->price,
-                'currency'      => config('sslcommerz.currency', 'BDT'),
-                'tran_id'       => $transactionId,
-                'success_url'   => route('subscription.ssl.success'),
-                'fail_url'      => route('subscription.ssl.fail'),
-                'cancel_url'    => route('subscription.ssl.cancel'),
-                'ipn_url'       => route('subscription.ssl.ipn'),
-                // Customer info
-                'cus_name'      => $user->name,
-                'cus_email'     => $user->email,
-                'cus_add1'      => 'N/A',
-                'cus_city'      => 'N/A',
-                'cus_country'   => 'Bangladesh',
-                'cus_phone'     => $user->phone ?? '01700000000',
-                // Product info
-                'product_name'  => $plan->title . ' Subscription',
+                'store_id'         => $storeId,
+                'store_passwd'     => $storePass,
+                'total_amount'     => $plan->price,
+                'currency'         => $currency,
+                'tran_id'          => $transactionId,
+                'success_url'      => route('subscription.ssl.success'),
+                'fail_url'         => route('subscription.ssl.fail'),
+                'cancel_url'       => route('subscription.ssl.cancel'),
+                'ipn_url'          => route('subscription.ssl.ipn'),
+                'cus_name'         => $user->name,
+                'cus_email'        => $user->email,
+                'cus_add1'         => 'N/A',
+                'cus_city'         => 'N/A',
+                'cus_country'      => 'Bangladesh',
+                'cus_phone'        => $user->phone ?? '01700000000',
+                'product_name'     => $plan->title . ' Subscription',
                 'product_category' => 'Subscription',
                 'product_profile'  => 'general',
-                // Shipping (not physical, set same as customer)
                 'shipping_method'  => 'NO',
                 'num_of_item'      => 1,
                 'weight_of_items'  => 0,
@@ -167,14 +266,12 @@ class SubscriptionController extends Controller
             $sslData = json_decode($response, true);
 
             if (isset($sslData['GatewayPageURL']) && $sslData['GatewayPageURL'] != '') {
-                // Save the session key for later validation
                 $subscription->ssl_session_key = $sslData['sessionkey'] ?? null;
                 $subscription->save();
 
                 return redirect($sslData['GatewayPageURL']);
             }
 
-            // Payment initiation failed — remove the pending subscription
             $subscription->update(['status' => 'failed']);
 
             return back()->with('error', 'Payment initiation failed. Please try again.');
@@ -198,15 +295,14 @@ class SubscriptionController extends Controller
                 ->with('error', 'Subscription not found.');
         }
 
-        // Validate the payment with SSLCommerz
         $validated = $this->validateSslPayment($request->val_id);
 
         if ($validated && $validated['status'] === 'VALID') {
             $subscription->update([
-                'status'       => 'active',
-                'ssl_val_id'   => $request->val_id,
-                'starts_at'    => now(),
-                'expires_at'   => now()->addDays($subscription->plan->duration_days),
+                'status'     => 'active',
+                'ssl_val_id' => $request->val_id,
+                'starts_at'  => now(),
+                'expires_at' => now()->addDays($subscription->plan->duration_days),
             ]);
 
             return redirect()->route('member.subscriptions')
@@ -254,7 +350,7 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Handle SSLCommerz IPN (Instant Payment Notification).
+     * Handle SSLCommerz IPN.
      */
     public function sslIpn(Request $request)
     {
@@ -310,9 +406,9 @@ class SubscriptionController extends Controller
      */
     private function validateSslPayment(string $valId): ?array
     {
-        $storeId   = config('sslcommerz.store_id');
-        $storePass = config('sslcommerz.store_password');
-        $isSandbox = config('sslcommerz.sandbox', true);
+        $storeId   = get_setting('sslcommerz_store_id', config('sslcommerz.store_id'));
+        $storePass = get_setting('sslcommerz_store_password', config('sslcommerz.store_password'));
+        $isSandbox = (bool) get_setting('sslcommerz_sandbox', config('sslcommerz.sandbox', true));
 
         $validateUrl = $isSandbox
             ? 'https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php'
