@@ -76,7 +76,7 @@
                         class="nav-link {{ Request::routeIs(['classified.ads.report.reasons.list', 'classified.ads.report.reasons.edit', 'classified.ads.reports.list', 'classified.ads.list.featured', 'classified.ads.list', 'classified.ads.custom.field.options', 'classified.ads.custom.field.list', 'classified.ads.tag.list', 'classified.ads.condition.list', 'classified.ads.categories.list']) ? 'active ' : '' }}">
                         <i class="nav-icon fas fa-list"></i>
                         <p>
-                            {{ translation('Listings') }}
+                            {{ translation('Ads Management') }}
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
@@ -86,7 +86,7 @@
                                 class="nav-link {{ Request::routeIs(['classified.ads.list']) ? 'active' : '' }}">
                                 <i class="fa fa-minus nav-icon"></i>
                                 <p>
-                                    {{ translation('All Listing') }}
+                                    {{ translation('All Ads') }}
                                 </p>
                             </a>
                         </li>
@@ -95,7 +95,7 @@
                                 class="nav-link {{ Request::routeIs(['classified.ads.list.featured']) ? 'active' : '' }}">
                                 <i class="fa fa-minus nav-icon"></i>
                                 <p>
-                                    {{ translation('Featured Listing') }}
+                                    {{ translation('Featured Ads') }}
                                 </p>
                             </a>
                         </li>
@@ -216,8 +216,7 @@
 
                 <!--Newsletter Module-->
                 <li class="nav-item has-treeview {{ Request::routeIs('admin.newsletter.*') ? 'menu-open' : '' }}">
-                    <a href="#"
-                        class="nav-link {{ Request::routeIs('admin.newsletter.*') ? 'active' : '' }}">
+                    <a href="#" class="nav-link {{ Request::routeIs('admin.newsletter.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-paper-plane"></i>
                         <p>
                             {{ translation('Newsletter') }}
