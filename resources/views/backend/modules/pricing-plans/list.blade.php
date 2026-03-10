@@ -32,7 +32,7 @@
                                         <th>{{ translation('Title') }}</th>
                                         <th>{{ translation('Duration') }}</th>
                                         <th>{{ translation('Price') }}</th>
-                                        <th>{{ translation('Listings') }}</th>
+                                        <th>{{ translation('Ad Posting Quantity') }}</th>
                                         <th>{{ translation('Featured') }}</th>
                                         <th>{{ translation('Gallery Images') }}</th>
                                         <th>{{ translation('Membership Badge') }}</th>
@@ -150,7 +150,7 @@
 
                             <div class="form-row">
                                 <div class="form-group col-lg-4">
-                                    <label class="black font-14">{{ translation('Listing Quantity') }} *</label>
+                                    <label class="black font-14">{{ translation('Ad Posting Quantity') }} *</label>
                                     <input type="number" name="listing_quantity" class="form-control" min="0"
                                         value="0" placeholder="{{ translation('Number of listings') }}">
                                 </div>

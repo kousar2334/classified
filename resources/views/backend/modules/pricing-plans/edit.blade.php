@@ -44,7 +44,7 @@
 
         <div class="form-row">
             <div class="form-group col-lg-4">
-                <label class="black font-14">{{ translation('Listing Quantity') }} *</label>
+                <label class="black font-14">{{ translation('Ad Posting Quantity') }} *</label>
                 <input type="number" name="listing_quantity" class="form-control" min="0"
                     value="{{ $plan->listing_quantity }}" placeholder="{{ translation('Number of listings') }}">
             </div>
