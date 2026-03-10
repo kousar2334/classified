@@ -1,12 +1,12 @@
 @php
-    $links = [['title' => 'Bank Payments', 'route' => '', 'active' => true]];
+    $links = [['title' => 'Payment Transactions', 'route' => '', 'active' => true]];
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    Bank Payments
+    Payment Transactions
 @endsection
 @section('page-content')
-    <x-admin-page-header title="Bank Payments" :links="$links" />
+    <x-admin-page-header title="Payment Transactions" :links="$links" />
     <section class="content">
         <div class="container-fluid">
 
@@ -18,14 +18,14 @@
                             <h3>{{ $stats['total'] }}</h3>
                             <p>Total</p>
                         </div>
-                        <div class="icon"><i class="fas fa-university"></i></div>
+                        <div class="icon"><i class="fas fa-receipt"></i></div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-warning">
                         <div class="inner">
                             <h3>{{ $stats['pending'] }}</h3>
-                            <p>Pending Approval</p>
+                            <p>Pending</p>
                         </div>
                         <div class="icon"><i class="fas fa-clock"></i></div>
                     </div>
@@ -42,33 +42,46 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>{{ $stats['rejected'] }}</h3>
-                            <p>Rejected</p>
+                            <h3>{{ $stats['bank_pending'] }}</h3>
+                            <p>Bank Pending Approval</p>
                         </div>
-                        <div class="icon"><i class="fas fa-times-circle"></i></div>
+                        <div class="icon"><i class="fas fa-university"></i></div>
                     </div>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ translation('Bank Transfer Payments') }}</h3>
+                    <h3 class="card-title">{{ translation('Payment Transactions') }}</h3>
                     <div class="card-tools">
                         <form method="GET" action="{{ route('admin.bank.payments') }}" class="d-flex"
                             style="gap: 0.5rem;">
                             <input type="text" name="q" class="form-control form-control-sm"
-                                placeholder="{{ translation('Search member or txn ref...') }}" value="{{ request('q') }}">
+                                placeholder="{{ translation('Search member, txn ID or ref...') }}"
+                                value="{{ request('q') }}">
+                            <select name="method" class="form-control form-control-sm" style="width: auto;">
+                                <option value="">{{ translation('All Methods') }}</option>
+                                <option value="sslcommerz" {{ request('method') === 'sslcommerz' ? 'selected' : '' }}>
+                                    SSLCommerz</option>
+                                <option value="bank_transfer"
+                                    {{ request('method') === 'bank_transfer' ? 'selected' : '' }}>Bank Transfer</option>
+                                <option value="trial" {{ request('method') === 'trial' ? 'selected' : '' }}>Trial</option>
+                            </select>
                             <select name="status" class="form-control form-control-sm" style="width: auto;">
                                 <option value="">{{ translation('All Status') }}</option>
                                 <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending
                                 </option>
-                                <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Approved
+                                <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Active
                                 </option>
                                 <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Rejected
                                 </option>
+                                <option value="expired" {{ request('status') === 'expired' ? 'selected' : '' }}>Expired
+                                </option>
+                                <option value="failed" {{ request('status') === 'failed' ? 'selected' : '' }}>Failed
+                                </option>
                             </select>
                             <button type="submit" class="btn btn-primary btn-sm">{{ translation('Search') }}</button>
-                            @if (request('q') || request('status'))
+                            @if (request('q') || request('status') || request('method'))
                                 <a href="{{ route('admin.bank.payments') }}"
                                     class="btn btn-secondary btn-sm">{{ translation('Reset') }}</a>
                             @endif
@@ -83,18 +96,18 @@
                                 <th>{{ translation('Member') }}</th>
                                 <th>{{ translation('Plan') }}</th>
                                 <th>{{ translation('Amount') }}</th>
-                                <th>{{ translation('Bank Txn Ref') }}</th>
-                                <th>{{ translation('System Txn ID') }}</th>
+                                <th>{{ translation('Method') }}</th>
+                                <th>{{ translation('Txn ID / Bank Ref') }}</th>
                                 <th>{{ translation('Slip') }}</th>
                                 <th>{{ translation('Status') }}</th>
                                 <th>{{ translation('Admin Note') }}</th>
-                                <th>{{ translation('Submitted') }}</th>
+                                <th>{{ translation('Date') }}</th>
                                 <th class="text-right">{{ translation('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($payments as $key => $pay)
-                                <tr @if ($pay->status === 'pending') class="table-warning" @endif>
+                                <tr @if ($pay->status === 'pending' && $pay->payment_method === 'bank_transfer') class="table-warning" @endif>
                                     <td>{{ $payments->firstItem() + $key }}</td>
                                     <td>
                                         <strong>{{ $pay->user->name ?? '—' }}</strong><br>
@@ -103,14 +116,28 @@
                                     <td>{{ $pay->plan->title ?? '—' }}</td>
                                     <td><strong>${{ number_format($pay->amount, 2) }}</strong></td>
                                     <td>
-                                        @if ($pay->bank_transaction_number)
-                                            <code>{{ $pay->bank_transaction_number }}</code>
+                                        @if ($pay->payment_method === 'bank_transfer')
+                                            <span class="badge badge-primary">Bank Transfer</span>
+                                        @elseif ($pay->payment_method === 'sslcommerz')
+                                            <span class="badge badge-info">SSLCommerz</span>
+                                        @elseif ($pay->payment_method === 'trial')
+                                            <span class="badge badge-secondary">Trial</span>
                                         @else
-                                            <span class="text-muted">—</span>
+                                            <span class="badge badge-light">{{ ucfirst($pay->payment_method) }}</span>
                                         @endif
                                     </td>
                                     <td>
-                                        <code style="font-size: 0.75rem;">{{ $pay->transaction_id }}</code>
+                                        @if ($pay->bank_transaction_number)
+                                            <small class="text-muted d-block">Bank Ref:</small>
+                                            <code>{{ $pay->bank_transaction_number }}</code>
+                                        @endif
+                                        @if ($pay->transaction_id)
+                                            <small class="text-muted d-block">Txn ID:</small>
+                                            <code style="font-size: 0.72rem;">{{ $pay->transaction_id }}</code>
+                                        @endif
+                                        @if (!$pay->bank_transaction_number && !$pay->transaction_id)
+                                            <span class="text-muted">—</span>
+                                        @endif
                                     </td>
                                     <td class="text-center">
                                         @if ($pay->bank_slip)
@@ -124,13 +151,17 @@
                                     </td>
                                     <td>
                                         @if ($pay->status === 'active')
-                                            <span class="badge badge-success">{{ translation('Approved') }}</span>
+                                            <span class="badge badge-success">{{ translation('Active') }}</span>
                                         @elseif ($pay->status === 'pending')
                                             <span class="badge badge-warning">{{ translation('Pending') }}</span>
                                         @elseif ($pay->status === 'rejected')
                                             <span class="badge badge-danger">{{ translation('Rejected') }}</span>
+                                        @elseif ($pay->status === 'expired')
+                                            <span class="badge badge-secondary">{{ translation('Expired') }}</span>
+                                        @elseif ($pay->status === 'failed')
+                                            <span class="badge badge-dark">{{ translation('Failed') }}</span>
                                         @else
-                                            <span class="badge badge-secondary">{{ ucfirst($pay->status) }}</span>
+                                            <span class="badge badge-light">{{ ucfirst($pay->status) }}</span>
                                         @endif
                                     </td>
                                     <td>
@@ -140,7 +171,7 @@
                                         <small class="text-muted">{{ $pay->created_at->format('h:i A') }}</small>
                                     </td>
                                     <td class="text-right" style="white-space: nowrap;">
-                                        @if ($pay->status === 'pending')
+                                        @if ($pay->status === 'pending' && $pay->payment_method === 'bank_transfer')
                                             <button class="btn btn-success btn-sm approve-item"
                                                 data-id="{{ $pay->id }}" data-name="{{ $pay->user->name ?? '' }}"
                                                 data-plan="{{ $pay->plan->title ?? '' }}"
@@ -163,7 +194,7 @@
                             @empty
                                 <tr>
                                     <td colspan="11" class="text-center py-3">
-                                        {{ translation('No bank transfer payments found.') }}
+                                        {{ translation('No transactions found.') }}
                                     </td>
                                 </tr>
                             @endforelse

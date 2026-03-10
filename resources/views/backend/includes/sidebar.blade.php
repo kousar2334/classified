@@ -69,13 +69,13 @@
                     </a>
                 </li>
 
-                <!--Bank Payments Module-->
+                <!--Payment Transactions Module-->
                 <li class="nav-item">
                     <a href="{{ route('admin.bank.payments') }}"
                         class="nav-link {{ Request::routeIs(['admin.bank.payments']) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-university"></i>
+                        <i class="nav-icon fas fa-receipt"></i>
                         <p>
-                            {{ translation('Bank Payments') }}
+                            {{ translation('Payment Transactions') }}
                         </p>
                     </a>
                 </li>

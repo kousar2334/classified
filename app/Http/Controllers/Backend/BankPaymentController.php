@@ -13,17 +13,20 @@ class BankPaymentController extends Controller
 {
     public function index(Request $request)
     {
-        $query = UserSubscription::with(['user', 'plan'])
-            ->where('payment_method', 'bank_transfer')
-            ->latest();
+        $query = UserSubscription::with(['user', 'plan'])->latest();
 
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
+        if ($request->filled('method')) {
+            $query->where('payment_method', $request->method);
+        }
+
         if ($request->filled('q')) {
             $query->where(function ($q) use ($request) {
                 $q->where('bank_transaction_number', 'like', '%' . $request->q . '%')
+                    ->orWhere('transaction_id', 'like', '%' . $request->q . '%')
                     ->orWhereHas('user', function ($uq) use ($request) {
                         $uq->where('name', 'like', '%' . $request->q . '%')
                             ->orWhere('email', 'like', '%' . $request->q . '%');
@@ -34,10 +37,10 @@ class BankPaymentController extends Controller
         $payments = $query->paginate(20)->withQueryString();
 
         $stats = [
-            'total'    => UserSubscription::where('payment_method', 'bank_transfer')->count(),
-            'pending'  => UserSubscription::where('payment_method', 'bank_transfer')->where('status', 'pending')->count(),
-            'approved' => UserSubscription::where('payment_method', 'bank_transfer')->where('status', 'active')->count(),
-            'rejected' => UserSubscription::where('payment_method', 'bank_transfer')->where('status', 'rejected')->count(),
+            'total'        => UserSubscription::count(),
+            'pending'      => UserSubscription::where('status', 'pending')->count(),
+            'approved'     => UserSubscription::where('status', 'active')->count(),
+            'bank_pending' => UserSubscription::where('payment_method', 'bank_transfer')->where('status', 'pending')->count(),
         ];
 
         return view('backend.modules.bank-payments.index', compact('payments', 'stats'));
