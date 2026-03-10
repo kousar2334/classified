@@ -7,6 +7,13 @@
 @section('content')
     @php $sellerUser = $ad->userInfo; @endphp
 
+    {{-- Advertisements: details_top --}}
+    @include('frontend.components.ad-slot', [
+        'position' => 'details_top',
+        'advertisements' => $advertisementsTop,
+    ])
+    {{-- End Advertisements --}}
+
     <!--Listing Details-->
     <div class="container">
         <div class="proDetails proDetails-content">

@@ -15,7 +15,7 @@ class AdvertisementRequest extends FormRequest
     {
         return [
             'title'      => 'required|max:255',
-            'position'   => 'required|in:home_top,listing_top,details_sidebar',
+            'position'   => 'required|in:home_top,listing_top,details_sidebar,details_top',
             'type'       => 'required|in:image,html',
             'image_path' => 'required_if:type,image',
             'click_url'  => 'nullable|url|max:500',

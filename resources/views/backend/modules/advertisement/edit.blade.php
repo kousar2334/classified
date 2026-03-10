@@ -23,6 +23,8 @@
                     Listing Page — Top of Results</option>
                 <option value="details_sidebar" {{ $advertisement->position === 'details_sidebar' ? 'selected' : '' }}>
                     Ad Details — Sidebar</option>
+                <option value="details_top" {{ $advertisement->position === 'details_top' ? 'selected' : '' }}>
+                    Ad Details — Top</option>
             </select>
         </div>
         <div class="form-group col-lg-6">

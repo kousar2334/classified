@@ -72,6 +72,10 @@
                                                             'label' => 'Details — Sidebar',
                                                             'badge' => 'badge-secondary',
                                                         ],
+                                                        'details_top' => [
+                                                            'label' => 'Details — Top',
+                                                            'badge' => 'badge-success',
+                                                        ],
                                                     ];
                                                     $pos = $positionLabels[$advertisement->position] ?? [
                                                         'label' => $advertisement->position,
@@ -199,6 +203,7 @@
                                         <option value="home_top">Homepage — After Hero Banner</option>
                                         <option value="listing_top">Listing Page — Top of Results</option>
                                         <option value="details_sidebar">Ad Details — Sidebar</option>
+                                        <option value="details_top">Ad Details — Top</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-6">

@@ -585,10 +585,11 @@ class AdController extends Controller
             ? SavedAd::where('user_id', auth()->id())->where('ad_id', $ad->id)->exists()
             : false;
 
-        // Advertisements for details page sidebar
+        // Advertisements for details page
         $advertisements = $this->advertisement_repository->getActiveByPosition('details_sidebar');
+        $advertisementsTop = $this->advertisement_repository->getActiveByPosition('details_top');
 
-        return view('frontend.pages.ad.details', compact('ad', 'relevantAds', 'customFields', 'fieldModels', 'safetyTips', 'reportReasons', 'isFavourited', 'advertisements'));
+        return view('frontend.pages.ad.details', compact('ad', 'relevantAds', 'customFields', 'fieldModels', 'safetyTips', 'reportReasons', 'isFavourited', 'advertisements', 'advertisementsTop'));
     }
 
     public function myFavourites(Request $request)
