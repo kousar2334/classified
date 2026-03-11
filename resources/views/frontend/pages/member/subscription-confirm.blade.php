@@ -242,7 +242,7 @@
                     <strong>{{ $plan->duration_days }} {{ translation('days') }}</strong>
                 </div>
                 <div class="sc-summary-row">
-                    <span class="sc-summary-label">{{ translation('Listings') }}</span>
+                    <span class="sc-summary-label">{{ translation('Ad Posting') }}</span>
                     <strong>{{ $plan->listing_quantity }}</strong>
                 </div>
                 <div class="sc-summary-row">

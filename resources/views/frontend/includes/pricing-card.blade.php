@@ -41,7 +41,7 @@
             @else
                 <div class="me-2">{!! $crossSvg !!}</div>
             @endif
-            {{ translation('Listings') }}: {{ $plan->listing_quantity }}
+            {{ translation('Ad Posting') }}: {{ $plan->listing_quantity }}
         </li>
         <li class="listItem {{ $plan->gallery_image_quantity > 0 ? 'check' : '' }}">
             @if ($plan->gallery_image_quantity > 0)

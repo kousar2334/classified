@@ -29,7 +29,7 @@
                     <div class="sub-limits-label">{{ translation('Plan Limits') }}</div>
                     <div class="sub-limits-detail">
                         <i class="fas fa-list-ul"></i> {{ $activeSubscription->plan->listing_quantity }}
-                        {{ translation('Listings') }}<br>
+                        {{ translation('Ad Posting') }}<br>
                         <i class="fas fa-star"></i> {{ $activeSubscription->plan->featured_listing_quantity }}
                         {{ translation('Featured') }}<br>
                         <i class="fas fa-images"></i> {{ $activeSubscription->plan->gallery_image_quantity }}
