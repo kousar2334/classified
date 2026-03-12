@@ -179,7 +179,7 @@ class UserController extends Controller
      */
     public function permissions(): View
     {
-        $permissions = Permission::all();
+        $permissions = Permission::orderBy('module')->orderBy('name')->get();
         return view('backend.modules.users.permissions', ['permissions' => $permissions]);
     }
 
@@ -293,7 +293,7 @@ class UserController extends Controller
         }
         try {
             DB::beginTransaction();
-            $role = Role::find($request['id']);
+            $role = Role::findOrFail($request['id']);
             $role->name = $request['name'];
             $role->save();
 

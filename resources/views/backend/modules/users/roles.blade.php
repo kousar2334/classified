@@ -1,15 +1,7 @@
 @php
     $links = [
-        [
-            'title' => 'Users',
-            'route' => 'admin.users.list',
-            'active' => false,
-        ],
-        [
-            'title' => 'Roles',
-            'route' => '',
-            'active' => true,
-        ],
+        ['title' => 'Users', 'route' => 'admin.users.list', 'active' => false],
+        ['title' => 'Roles', 'route' => '', 'active' => true],
     ];
 @endphp
 @extends('backend.layouts.dashboard_layout')
@@ -21,6 +13,28 @@
         href="{{ asset('public/web-assets/backend/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet"
         href="{{ asset('public/web-assets/backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <style>
+        .permission-module-card .card-header {
+            background: #f4f6f9;
+        }
+
+        .permission-module-card .card-header:hover {
+            background: #e9ecef;
+        }
+
+        .custom-control-label {
+            font-size: 0.82rem;
+        }
+
+        .module-modal-body {
+            max-height: 65vh;
+            overflow-y: auto;
+        }
+
+        .collapse-icon {
+            transition: transform 0.2s;
+        }
+    </style>
 @endsection
 @section('page-content')
     <x-admin-page-header title="Roles" :links="$links" />
@@ -32,7 +46,9 @@
                         <div class="card-header">
                             <h3 class="card-title">{{ translation('Roles') }}</h3>
                             <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
-                                data-target="#role-create-modal">{{translation('Add New Role')}}</button>
+                                data-target="#role-create-modal">
+                                <i class="fas fa-plus mr-1"></i>{{ translation('Add New Role') }}
+                            </button>
                         </div>
                         <div class="card-body">
                             <table id="rolesTable" class="table table-bordered table-hover">
@@ -41,6 +57,7 @@
                                         <th>{{ translation('ID') }}</th>
                                         <th>{{ translation('Name') }}</th>
                                         <th>{{ translation('Guard') }}</th>
+                                        <th>{{ translation('Permissions') }}</th>
                                         <th class="text-right">{{ translation('Action') }}</th>
                                     </tr>
                                 </thead>
@@ -48,26 +65,32 @@
                                     @foreach ($roles as $role)
                                         <tr>
                                             <td>{{ $role->id }}</td>
-                                            <td class="text-capitalize">{{ $role->name }}</td>
+                                            <td class="text-capitalize font-weight-bold">{{ $role->name }}</td>
                                             <td>{{ $role->guard_name }}</td>
+                                            <td>
+                                                <span class="badge badge-primary">
+                                                    {{ $role->permissions->count() }} {{ translation('permissions') }}
+                                                </span>
+                                            </td>
                                             <td class="text-right">
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-default">{{ translation('Action') }}
+                                                    <button type="button" class="btn btn-sm btn-default">
+                                                        {{ translation('Action') }}
                                                     </button>
                                                     <button type="button"
-                                                        class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
-                                                        data-toggle="dropdown" aria-expanded="false">
+                                                        class="btn btn-sm btn-default dropdown-toggle dropdown-toggle-split"
+                                                        data-toggle="dropdown">
+                                                        <span class="sr-only">Toggle Dropdown</span>
                                                     </button>
-                                                    <div class="dropdown-menu" role="menu">
-                                                        <button class="dropdown-item edit-role"
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item edit-role" href="#"
                                                             data-id="{{ $role->id }}">
-                                                            {{ translation('Edit') }}
-                                                        </button>
-                                                        <div class="dropdown-divider"></div>
-                                                        <button class="dropdown-item delete-role"
+                                                            <i class="fas fa-edit mr-1"></i>{{ translation('Edit') }}
+                                                        </a>
+                                                        <a class="dropdown-item delete-role text-danger" href="#"
                                                             data-id="{{ $role->id }}">
-                                                            {{ translation('Delete') }}
-                                                        </button>
+                                                            <i class="fas fa-trash mr-1"></i>{{ translation('Delete') }}
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -80,108 +103,155 @@
                 </div>
             </div>
         </div>
-        <!--New Role Modal-->
-        <div class="modal fade" id="role-create-modal">
-            <div class="modal-dialog modal-lg">
+
+        {{-- ── CREATE ROLE MODAL ── --}}
+        <div class="modal fade" id="role-create-modal" tabindex="-1">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">{{ translation('New Role') }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <form id="new-role-form">
                             @csrf
                             <div class="form-group">
-                                <label>{{ translation('Role Name') }}</label>
+                                <label class="font-weight-bold">{{ translation('Role Name') }}</label>
                                 <input type="text" class="form-control" name="name"
                                     placeholder="{{ translation('Enter Role Name') }}">
                             </div>
-                            <div class="form-group">
-                                <label>{{ translation('Permissions') }}</label>
-                                <table class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>{{ translation('Feature') }}</th>
-                                            <th>{{ translation('Capabilities') }}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($permissions as $permission_module => $permission_list)
-                                            <tr>
-                                                <td>{{ $permission_module }}</td>
-                                                <td>
-                                                    @foreach ($permission_list as $permission)
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" id="{{ $permission->id }}"
-                                                                name="permission[]" type="checkbox"
-                                                                value="{{ $permission->name }}">
-                                                            <label class="form-check-label text-capitalize"
-                                                                for="{{ $permission->id }}">{{ $permission->name }}</label>
-                                                        </div>
-                                                    @endforeach
-                                                </td>
-                                            </tr>
-                                        @endforeach
 
-                                    </tbody>
-                                </table>
+                            <div class="form-group mb-0">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <label class="font-weight-bold mb-0">{{ translation('Permissions') }}</label>
+                                    <div>
+                                        <button type="button"
+                                            class="btn btn-xs btn-outline-success create-select-all-global">
+                                            <i class="fas fa-check-square mr-1"></i>{{ translation('Select All') }}
+                                        </button>
+                                        <button type="button"
+                                            class="btn btn-xs btn-outline-secondary create-deselect-all-global ml-1">
+                                            <i class="fas fa-square mr-1"></i>{{ translation('Deselect All') }}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="module-modal-body">
+                                    @foreach ($permissions as $module => $permission_list)
+                                        <div class="card mb-3 permission-module-card">
+                                            <div class="card-header p-2" style="cursor:pointer;" data-toggle="collapse"
+                                                data-target="#create-module-{{ Str::slug($module) }}">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="fas fa-chevron-down mr-2 collapse-icon"
+                                                            style="font-size:11px;"></i>
+                                                        <span class="font-weight-bold text-sm">{{ $module }}</span>
+                                                        <span
+                                                            class="badge badge-secondary ml-2">{{ $permission_list->count() }}</span>
+                                                    </div>
+                                                    <div onclick="event.stopPropagation();">
+                                                        <div class="form-check form-check-inline mb-0">
+                                                            <input class="form-check-input create-module-select-all"
+                                                                type="checkbox"
+                                                                data-module="create-{{ Str::slug($module) }}"
+                                                                id="create-select-all-{{ Str::slug($module) }}">
+                                                            <label class="form-check-label text-sm"
+                                                                for="create-select-all-{{ Str::slug($module) }}">
+                                                                {{ translation('All') }}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="collapse show" id="create-module-{{ Str::slug($module) }}">
+                                                <div class="card-body p-2">
+                                                    <div class="row">
+                                                        @foreach ($permission_list as $permission)
+                                                            <div class="col-sm-6 col-md-4 col-lg-3 py-1">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input
+                                                                        class="custom-control-input create-module-permission-{{ Str::slug($module) }}"
+                                                                        id="create-perm-{{ $permission->id }}"
+                                                                        name="permission[]" type="checkbox"
+                                                                        value="{{ $permission->name }}">
+                                                                    <label class="custom-control-label text-sm"
+                                                                        for="create-perm-{{ $permission->id }}"
+                                                                        style="cursor:pointer;">
+                                                                        {{ $permission->name }}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </form>
-                        <div class="d-flex justify-content-between">
-                            <button type="button"
-                                class="btn btn-primary create-new-role-btn">{{ translation('Create Role') }}</button>
-                        </div>
                     </div>
-
-                </div>
-            </div>
-        </div>
-        <!--End New Role Modal-->
-        <!--Role Edit Modal-->
-        <div class="modal fade" id="role-edit-modal">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('Role Information') }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            {{ translation('Cancel') }}
+                        </button>
+                        <button type="button" class="btn btn-success create-new-role-btn">
+                            <i class="fas fa-plus mr-1"></i>{{ translation('Create Role') }}
                         </button>
                     </div>
-                    <div class="modal-body role-edit-content">
+                </div>
+            </div>
+        </div>
+        {{-- ── END CREATE ROLE MODAL ── --}}
 
+        {{-- ── EDIT ROLE MODAL ── --}}
+        <div class="modal fade" id="role-edit-modal" tabindex="-1">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ translation('Edit Role') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body module-modal-body role-edit-content">
+                        {{-- content loaded via AJAX --}}
                     </div>
                 </div>
             </div>
         </div>
-        <!--End Role Edit Modal-->
-        <!--Role Delete Modal-->
+        {{-- ── END EDIT ROLE MODAL ── --}}
+
+        {{-- ── DELETE ROLE MODAL ── --}}
         <div class="modal fade" id="role-delete-modal">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                     </div>
                     <div class="modal-body text-center">
+                        <i class="fas fa-exclamation-triangle text-warning fa-2x mb-2"></i>
                         <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete role ?') }}</h4>
                         <form method="POST" action="{{ route('admin.users.role.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-role-id" name="id">
-                            <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                            <button type="button" class="btn mt-2 btn-secondary"
+                                data-dismiss="modal">{{ translation('Cancel') }}</button>
+                            <button type="submit" class="btn btn-danger mt-2">
+                                <i class="fas fa-trash mr-1"></i>{{ translation('Delete') }}
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!--End Role Delete Modal-->
+        {{-- ── END DELETE ROLE MODAL ── --}}
     </section>
 @endsection
+
 @section('page-script')
     <script src="{{ asset('public/web-assets/backend/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('public/web-assets/backend/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -190,26 +260,63 @@
     <script>
         (function($) {
             "use strict";
-            //data table
+
+            // DataTable
             $('#rolesTable').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
+                paging: true,
+                lengthChange: false,
+                searching: true,
+                ordering: true,
+                info: true,
+                autoWidth: false,
+                responsive: true,
             });
 
-            //Create new role 
+            // ── Create modal: module select-all ──────────────────────────────
+            $(document).on('change', '.create-module-select-all', function() {
+                var module = $(this).data('module');
+                var checked = $(this).is(':checked');
+                $('.create-module-permission-' + module.replace('create-', '')).prop('checked', checked);
+            });
+
+            $(document).on('change', '[class*="create-module-permission-"]', function() {
+                var cls = $(this).attr('class').split(' ').find(c => c.startsWith('create-module-permission-'));
+                if (!cls) return;
+                var module = cls.replace('create-module-permission-', '');
+                var total = $('.create-module-permission-' + module).length;
+                var checked = $('.create-module-permission-' + module + ':checked').length;
+                $('[data-module="create-' + module + '"]').prop('checked', total === checked);
+            });
+
+            $('#role-create-modal').on('click', '.create-select-all-global', function() {
+                $(this).closest('.modal').find('[name="permission[]"]').prop('checked', true);
+                $(this).closest('.modal').find('.create-module-select-all').prop('checked', true);
+            });
+            $('#role-create-modal').on('click', '.create-deselect-all-global', function() {
+                $(this).closest('.modal').find('[name="permission[]"]').prop('checked', false);
+                $(this).closest('.modal').find('.create-module-select-all').prop('checked', false);
+            });
+
+            // Reset create form on close
+            $('#role-create-modal').on('hidden.bs.modal', function() {
+                $('#new-role-form')[0].reset();
+                $('.create-module-select-all').prop('checked', false);
+            });
+
+            // ── Collapse chevron (create modal) ──────────────────────────────
+            $('#role-create-modal').on('click', '[data-target^="#create-module-"]', function() {
+                $(this).find('.collapse-icon').toggleClass('fa-chevron-down fa-chevron-right');
+            });
+
+            // ── Create role AJAX ──────────────────────────────────────────────
             $('.create-new-role-btn').on('click', function(e) {
                 e.preventDefault();
-                $(document).find(".invalid-input").remove();
+                $(document).find('.invalid-input').remove();
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     },
-                    type: "POST",
+                    type: 'POST',
                     data: $('#new-role-form').serialize(),
                     url: '{{ route('admin.users.role.store') }}',
                     success: function(response) {
@@ -218,7 +325,7 @@
                             $('#role-create-modal').modal('hide');
                             location.reload();
                         } else {
-                            toastr.error(response.message, 'Error')
+                            toastr.error(response.message, 'Error');
                         }
                     },
                     error: function(response) {
@@ -226,8 +333,9 @@
                             $.each(response.responseJSON.errors, function(field_name, error) {
                                 $(document).find('[name=' + field_name + ']').after(
                                     '<div class="error text-danger mb-0 invalid-input">' +
-                                    error + '</div>');
-                            })
+                                    error + '</div>'
+                                );
+                            });
                         } else {
                             toastr.error('Role create failed', 'Error');
                         }
@@ -235,22 +343,22 @@
                 });
             });
 
-            //Visible role delete modal
+            // ── Delete modal ──────────────────────────────────────────────────
             $('.delete-role').on('click', function(e) {
                 e.preventDefault();
-                let role_id = $(this).data('id');
-                $('#delete-role-id').val(role_id);
+                $('#delete-role-id').val($(this).data('id'));
                 $('#role-delete-modal').modal('show');
             });
-            //Edit role form
+
+            // ── Edit role (AJAX load) ─────────────────────────────────────────
             $('.edit-role').on('click', function(e) {
                 e.preventDefault();
-                let role_id = $(this).data('id');
+                var role_id = $(this).data('id');
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     },
-                    type: "POST",
+                    type: 'POST',
                     data: {
                         id: role_id
                     },
@@ -258,16 +366,17 @@
                     success: function(response) {
                         if (response.success) {
                             $('.role-edit-content').html(response.data);
-                            $("#role-edit-modal").modal('show');
+                            $('#role-edit-modal').modal('show');
                         } else {
                             toastr.error('Role not found', 'Error');
                         }
                     },
-                    error: function(response) {
+                    error: function() {
                         toastr.error('Role not found', 'Error');
                     }
                 });
-            })
+            });
+
         })(jQuery);
     </script>
 @endsection
