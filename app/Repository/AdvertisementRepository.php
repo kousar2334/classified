@@ -103,7 +103,7 @@ class AdvertisementRepository
             $ad->end_date   = $request['end_date'] ?? null;
 
             if ($request['type'] === 'image') {
-                $ad->image_path = $request['image_path'];
+                $ad->image_path = $request['edit_image_path'];
                 $ad->click_url  = $request['click_url'] ?? null;
                 $ad->html_code  = null;
             } else {

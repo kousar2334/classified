@@ -62,7 +62,7 @@
     <div id="edit-image-fields" class="ad-type-fields {{ $advertisement->type === 'image' ? 'active' : '' }}">
         <div class="form-group">
             <label class="black font-14">Banner Image <span class="text-danger">*</span></label>
-            <x-media name="image_path" :value="$advertisement->image_path ?? ''"></x-media>
+            <x-media name="edit_image_path" :value="$advertisement->image_path ?? ''"></x-media>
         </div>
         <div class="form-group">
             <label class="black font-14">Click-through URL</label>

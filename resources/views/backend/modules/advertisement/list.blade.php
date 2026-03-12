@@ -317,6 +317,7 @@
     <script>
         (function($) {
             "use strict";
+            initMediaManager();
 
             // ── Type toggle (create form) ────────────────────────────────
             function toggleCreateTypeFields(val) {
