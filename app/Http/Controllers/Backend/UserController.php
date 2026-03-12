@@ -188,7 +188,7 @@ class UserController extends Controller
      */
     public function roles(): View
     {
-        $roles = Role::all();
+        $roles = Role::with('permissions')->get();
         $permissions = Permission::orderBy('created_at')->get()->groupBy(function ($data) {
             return $data->module;
         });
