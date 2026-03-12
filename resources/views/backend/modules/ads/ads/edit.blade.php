@@ -379,7 +379,7 @@
                                             ? $ad_details->galleryImages->pluck('image_id')->implode(',')
                                             : '';
                                     @endphp
-                                    {{-- <x-media-multi name="gallery_images" :value="$galleryImages"></x-media-multi> --}}
+                                    <x-media name="gallery_images" :value="$galleryImages" :multiple="true"></x-media>
                                     @if ($errors->has('gallery_images'))
                                         <div class="error text-danger mb-0 invalid-input">
                                             {{ $errors->first('gallery_images') }}</div>

@@ -10,7 +10,7 @@ use Illuminate\Contracts\View\View;
 class Media extends Component
 {
 
-    public $is_multiple = false;
+    public $multiple = false;
     public $name;
     public $value;
     public $media_ids;
@@ -18,18 +18,19 @@ class Media extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($name, $value = null, $width = false, $is_multiple = false)
+    public function __construct($name, $value = null, $width = false, $multiple = false)
     {
-        $this->is_multiple = $is_multiple;
+        $this->multiple = $multiple;
         $this->name = $name;
         $this->value = $value;
         $this->width = $width;
 
-        if ($is_multiple) {
-            $this->media_ids = MediaModel::whereIn('path', $value)->pluck('id');
+        if ($multiple) {
+            $paths = $value ? array_filter(array_map('trim', explode(',', $value))) : [];
+            $this->media_ids = MediaModel::whereIn('path', $paths)->pluck('id');
         }
 
-        if (!$is_multiple) {
+        if (!$multiple) {
             $this->media_ids = MediaModel::where('path', $value)->take(1)->pluck('id');
         }
     }

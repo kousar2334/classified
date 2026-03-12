@@ -213,7 +213,37 @@
             //Hide media modal
             $("#mediaManagerModal").modal('hide');
             return;
+        }
 
+        // Set multiple input field values
+        if (is_multiple) {
+            let inputEl = document.getElementById('input-' + input_name);
+            let thumbsEl = document.getElementById('multi-thumbs-' + input_name);
+            let currentPaths = inputEl.value ? inputEl.value.split(',').filter(function(p) {
+                return p.trim();
+            }) : [];
+
+            ready_for_insert_items.forEach(function(item) {
+                let p = item.path;
+                if (!currentPaths.includes(p)) {
+                    currentPaths.push(p);
+                    // Remove placeholder if present
+                    let placeholder = document.getElementById('multi-placeholder-' + input_name);
+                    if (placeholder) placeholder.remove();
+
+                    let div = document.createElement('div');
+                    div.className = 'media-input-container';
+                    div.dataset.path = p;
+                    div.innerHTML = '<img src="/public/' + p + '" class="media-input-preview" alt="">' +
+                        '<button type="button" class="input-remove-btn multi-remove-btn" data-input="' +
+                        input_name + '" data-path="' + p + '"><i class="fas fa-times"></i></button>';
+                    thumbsEl.appendChild(div);
+                }
+            });
+
+            inputEl.value = currentPaths.join(',');
+            $('#mediaManagerModal').modal('hide');
+            return;
         }
     }
 
@@ -378,6 +408,27 @@
                 error: function(response) {}
             })
         });
+    });
+
+    // Remove individual image from multiple media input
+    $(document).on('click', '.multi-remove-btn', function() {
+        var inputName = $(this).data('input');
+        var path = $(this).data('path');
+        var inputEl = document.getElementById('input-' + inputName);
+        var paths = inputEl.value.split(',').filter(function(p) {
+            return p.trim() && p.trim() !== path;
+        });
+        inputEl.value = paths.join(',');
+        $(this).closest('.media-input-container').remove();
+        // Show placeholder when no images remain
+        if (paths.length === 0) {
+            var thumbsEl = document.getElementById('multi-thumbs-' + inputName);
+            var placeholder = document.createElement('div');
+            placeholder.className = 'multi-media-placeholder';
+            placeholder.id = 'multi-placeholder-' + inputName;
+            placeholder.innerHTML = '<i class="fas fa-images"></i><span>No images selected</span>';
+            thumbsEl.appendChild(placeholder);
+        }
     });
 
     // Copy URL button in media preview sidebar (delegated — content is AJAX-injected)

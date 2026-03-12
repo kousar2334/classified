@@ -150,6 +150,27 @@
     margin: 8px;
 }
 
+.multi-media-thumbs {
+    gap: 8px;
+    min-height: 60px;
+}
+
+.multi-media-placeholder {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 2px dashed #dcdcde;
+    border-radius: 6px;
+    color: #adb5bd;
+    font-size: 13px;
+    width: 100%;
+}
+
+.multi-media-placeholder i {
+    font-size: 18px;
+}
+
 .media-input-container {
     position: relative;
     display: inline-block;

@@ -66,9 +66,6 @@
     </div>
 @endif
 @if ($files->count() > 1)
-    <h6 class="media-attachments-filter-heading mb-2">
-        {{ $files->count() }} {{ translation('items selected') }}
-    </h6>
     <div class="row">
         @foreach ($files as $file)
             <div class="col-lg-4 gap-1">
