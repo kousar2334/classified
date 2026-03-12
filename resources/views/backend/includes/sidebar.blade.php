@@ -46,66 +46,6 @@
                         </p>
                     </a>
                 </li>
-
-                <!--Pricing Plans Module-->
-                <li class="nav-item">
-                    <a href="{{ route('admin.pricing.plans.list') }}"
-                        class="nav-link {{ Request::routeIs(['admin.pricing.plans.list']) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-tags"></i>
-                        <p>
-                            {{ translation('Pricing Plans') }}
-                        </p>
-                    </a>
-                </li>
-
-                <!--Subscriptions Module-->
-                <li class="nav-item">
-                    <a href="{{ route('admin.subscriptions.list') }}"
-                        class="nav-link {{ Request::routeIs(['admin.subscriptions.list']) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-crown"></i>
-                        <p>
-                            {{ translation('Subscriptions') }}
-                        </p>
-                    </a>
-                </li>
-
-                <!--Payments Module-->
-                <li
-                    class="nav-item has-treeview {{ Request::routeIs(['admin.bank.payments', 'admin.payment.settings', 'classified.settings.currency']) ? 'menu-open' : '' }}">
-                    <a href="#"
-                        class="nav-link {{ Request::routeIs(['admin.bank.payments', 'admin.payment.settings', 'classified.settings.currency']) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-dollar-sign"></i>
-                        <p>
-                            {{ translation('Payments') }}
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.bank.payments') }}"
-                                class="nav-link {{ Request::routeIs(['admin.bank.payments']) ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ translation('Transactions') }}</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('classified.settings.currency') }}"
-                                class="nav-link {{ Request::routeIs(['classified.settings.currency']) ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ translation('Currency Settings') }}</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.payment.settings') }}"
-                                class="nav-link {{ Request::routeIs(['admin.payment.settings']) ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>{{ translation('Payment Settings') }}</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <!--End Payments Module-->
-
                 <!--Listings Module-->
                 <li
                     class="nav-item {{ Request::routeIs(['classified.ads.report.reasons.list', 'classified.ads.report.reasons.edit', 'classified.ads.reports.list', 'classified.ads.list.featured', 'classified.ads.list', 'classified.ads.custom.field.options', 'classified.ads.custom.field.list', 'classified.ads.tag.list', 'classified.ads.condition.list', 'classified.ads.categories.list']) ? 'menu-open ' : '' }}">
@@ -192,6 +132,65 @@
                         </li>
                     </ul>
                 </li>
+
+                <!--Pricing Plans Module-->
+                <li class="nav-item">
+                    <a href="{{ route('admin.pricing.plans.list') }}"
+                        class="nav-link {{ Request::routeIs(['admin.pricing.plans.list']) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tags"></i>
+                        <p>
+                            {{ translation('Pricing Plans') }}
+                        </p>
+                    </a>
+                </li>
+
+                <!--Subscriptions Module-->
+                <li class="nav-item">
+                    <a href="{{ route('admin.subscriptions.list') }}"
+                        class="nav-link {{ Request::routeIs(['admin.subscriptions.list']) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-crown"></i>
+                        <p>
+                            {{ translation('Subscriptions') }}
+                        </p>
+                    </a>
+                </li>
+
+                <!--Payments Module-->
+                <li
+                    class="nav-item has-treeview {{ Request::routeIs(['admin.bank.payments', 'admin.payment.settings', 'classified.settings.currency']) ? 'menu-open' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ Request::routeIs(['admin.bank.payments', 'admin.payment.settings', 'classified.settings.currency']) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-dollar-sign"></i>
+                        <p>
+                            {{ translation('Payments') }}
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.bank.payments') }}"
+                                class="nav-link {{ Request::routeIs(['admin.bank.payments']) ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ translation('Transactions') }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('classified.settings.currency') }}"
+                                class="nav-link {{ Request::routeIs(['classified.settings.currency']) ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ translation('Currency Settings') }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.payment.settings') }}"
+                                class="nav-link {{ Request::routeIs(['admin.payment.settings']) ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ translation('Payment Settings') }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--End Payments Module-->
 
                 <!--Locations Module-->
                 <li
