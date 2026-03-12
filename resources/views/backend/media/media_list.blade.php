@@ -34,14 +34,14 @@
         <div class="media-container row m-0">
 
             {{-- Media grid --}}
-            <div class="media-list-wrapper col-12 col-lg-9 mt-1 p-1">
+            <div class="media-list-wrapper col-12 col-lg-10 mt-1 p-1">
                 <div class="media-list mt-0">
                     <div id="filtered_media"></div>
                 </div>
             </div>
 
             {{-- Preview sidebar: always visible, stacks below grid on mobile --}}
-            <div class="media-preview-sidebar col-12 col-lg-3 border-left p-0" id="media-preview-section">
+            <div class="media-preview-sidebar col-12 col-lg-2 border-left p-0" id="media-preview-section">
                 <h6 class="media-attachments-filter-heading mb-2 px-2 pt-2">
                     {{ translation('Media Details') }}
                 </h6>
