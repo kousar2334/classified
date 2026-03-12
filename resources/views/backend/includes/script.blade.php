@@ -380,6 +380,24 @@
         });
     });
 
+    // Copy URL button in media preview sidebar (delegated — content is AJAX-injected)
+    $(document).on('click', '.copy-url-btn', function() {
+        var url = $(this).closest('.input-group').find('.media-url-input').val();
+        if (!url) return;
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(url).then(function() {
+                toastr.success('URL copied to clipboard', 'Copied');
+            });
+        } else {
+            var $tmp = $('<input>');
+            $('body').append($tmp);
+            $tmp.val(url).select();
+            document.execCommand('copy');
+            $tmp.remove();
+            toastr.success('URL copied to clipboard', 'Copied');
+        }
+    });
+
     function sendFile(image, editor, section_id) {
         "use strict";
         let data = new FormData();

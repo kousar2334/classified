@@ -7,10 +7,10 @@
         <a class="nav-link" id="upload-files-tab" data-toggle="tab" href="#upload-files" role="tab"
             aria-controls="upload-files" aria-selected="true">{{ translation('Upload') }}</a>
     </li>
-
 </ul>
 <div class="tab-content" id="mediaTabContent">
-    <!--Media upload Tab-->
+
+    {{-- Upload Tab --}}
     <div class="tab-pane fade" id="upload-files" role="tabpanel" aria-labelledby="upload-files-tab">
         <div id="file-drop-area-wrappper" class="dz-wrapper">
             <form method="post" action="#" id="media-upload" enctype="multipart/form-data"
@@ -28,54 +28,48 @@
             </form>
         </div>
     </div>
-    <!-- End Media upload Tab -->
 
-    <!--Media Listing Tab-->
+    {{-- Media Library Tab --}}
     <div class="tab-pane fade show active" id="media-library" role="tabpanel" aria-labelledby="media-library-tab">
         <div class="media-container row m-0">
-            <!--Media List-->
-            <div class="media-list-wrapper col-lg-10 mt-1">
-                <div class="media-list mt-0">
-                    <div id="filtered_media">
 
-                    </div>
+            {{-- Media grid --}}
+            <div class="media-list-wrapper col-12 col-lg-9 mt-1 p-1">
+                <div class="media-list mt-0">
+                    <div id="filtered_media"></div>
                 </div>
             </div>
-            <!--End Media List-->
-            <!--Media details-->
-            <div class="media-preview-sidebar col-lg-2 border border-bottom-0 border-top-0 p-0 d-none d-lg-block"
-                id="media-preview-section">
-                <h6 class="media-attachments-filter-heading mb-2">
+
+            {{-- Preview sidebar: always visible, stacks below grid on mobile --}}
+            <div class="media-preview-sidebar col-12 col-lg-3 border-left p-0" id="media-preview-section">
+                <h6 class="media-attachments-filter-heading mb-2 px-2 pt-2">
                     {{ translation('Media Details') }}
                 </h6>
             </div>
-            <!--End Media Details-->
+
         </div>
 
-        <div class="row media-footer border-top pt-2 m-0">
-            <div class="col-lg-10 text-center">
-                <div class="d-flex justify-content-center gap-10" id="load_more">
-                    <button type="button" class="btn btn-primary media-load-more-btn"
-                        onclick="getMediaItemsList(true)">
-                        <span class="media-load-more-btn-text">{{ translation('Load more') }}</span>
-                        <div class="spinner">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </button>
-                </div>
+        {{-- Footer: always side-by-side on all screen sizes --}}
+        <div class="row media-footer border-top pt-2 pb-1 m-0 align-items-center">
+            <div class="col-6 text-center">
+                <button type="button" class="btn btn-sm btn-primary media-load-more-btn"
+                    onclick="getMediaItemsList(true)">
+                    <span class="media-load-more-btn-text">{{ translation('Load more') }}</span>
+                    <div class="spinner">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </button>
             </div>
-            <div class="col-lg-2">
-                <div class="d-flex justify-content-end gap-10">
-                    <button type="button" class="btn btn-primary py-1 d-none media-input-insert-btn"
-                        onclick="setMediaInputValue()">
-                        {{ translation('Insert Media') }}
-                    </button>
-                </div>
+            <div class="col-6 text-right">
+                <button type="button" class="btn btn-sm btn-success d-none media-input-insert-btn"
+                    onclick="setMediaInputValue()">
+                    <i class="fas fa-check mr-1"></i>{{ translation('Insert Media') }}
+                </button>
             </div>
         </div>
     </div>
-    <!--End Media Listing Tab-->
+
 </div>

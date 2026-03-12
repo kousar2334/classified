@@ -13,12 +13,36 @@
 .modal-dialog.modal-full .modal-body {
     height: calc(100% - 54px);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
 }
 
-/* Upload tab — full height chain */
-#mediaTabContent,
-#upload-files {
-    height: 100%;
+/* Nav tabs: fixed height, never shrink */
+.modal-dialog.modal-full .modal-body>.nav-tabs {
+    flex-shrink: 0;
+}
+
+/* Full height chain for both tabs */
+#mediaTabContent {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#upload-files,
+#media-library {
+    flex: 1;
+    min-height: 0;
+}
+
+/* Media library tab: flex column so footer sticks to bottom */
+#media-library {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 /* Dropzone wrapper */
@@ -152,7 +176,6 @@
 }
 
 div#filtered_media {
-    max-block-size: 70vh;
     overflow-y: auto;
     margin-block-start: 0px;
     padding: 5px;
@@ -249,13 +272,65 @@ div#filtered_media {
 }
 
 .media-container {
-    height: 75vh;
-    max-height: 75vh;
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
+}
+
+/* Column wrappers must fill the row height */
+.media-list-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.media-list {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+div#filtered_media {
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+/* Footer always visible at bottom */
+.media-footer {
+    flex-shrink: 0;
+}
+
+/* On mobile: stack naturally, remove fixed heights */
+@media (max-width: 991px) {
+    #media-library {
+        display: block;
+        height: auto;
+        flex: none;
+    }
+
+    .media-container {
+        flex: none;
+        overflow: visible;
+        height: auto;
+    }
+
+    div#filtered_media {
+        height: auto;
+        max-height: 40vh;
+    }
+
+    .media-preview-sidebar {
+        height: auto !important;
+        max-height: 220px;
+        border-left: none !important;
+        border-top: 1px solid #dee2e6;
+    }
 }
 
 .media-preview-sidebar {
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin !important;
 }

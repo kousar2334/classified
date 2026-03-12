@@ -1,14 +1,19 @@
 @if ($files->count() == 1)
     <div class="single-media-details mt-30 mt-md-0">
         <div class="file-preview p-2 border-bottom">
-            @if($files[0]->mime_type == 'png' || $files[0]->mime_type == 'jpg' || $files[0]->mime_type == 'jpeg' || $files[0]->mime_type == 'gif' || $files[0]->mime_type == 'webp')
+            @if (
+                $files[0]->mime_type == 'png' ||
+                    $files[0]->mime_type == 'jpg' ||
+                    $files[0]->mime_type == 'jpeg' ||
+                    $files[0]->mime_type == 'gif' ||
+                    $files[0]->mime_type == 'webp')
                 <img src="{{ asset(getFilePath($files[0]->path)) }}" alt="{{ $files[0]->alt }}" class="w-100" />
             @endif
 
-              @if($files[0]->mime_type == 'pdf')
-              <h1 class="text-center mt-3">Pdf</h1>
-              @endif 
-           
+            @if ($files[0]->mime_type == 'pdf')
+                <h1 class="text-center mt-3">Pdf</h1>
+            @endif
+
         </div>
         <div class="single-media-info p-2">
             <div class="media-form">
@@ -17,10 +22,14 @@
             </div>
             <div class="media-form">
                 <p class="mb-1">{{ translation('Full URL') }}</p>
-                <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                    <input type="text" class="form-control" value="{{ asset(getFilePath($files[0]->path)) }}">
+                <div class="input-group">
+                    <input type="text" class="form-control media-url-input" readonly
+                        value="{{ asset(getFilePath($files[0]->path)) }}">
                     <div class="input-group-append">
-                        <div class="input-group-text cursor-pointer"><i class="fa fa-copy"></i></div>
+                        <button type="button" class="btn btn-outline-secondary copy-url-btn"
+                            title="{{ translation('Copy URL') }}">
+                            <i class="fa fa-copy"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -71,6 +80,6 @@
 
 @if ($files->count() == 0)
     <div class="no-media p-2 border-bottom text-center">
-        <img src="{{ asset('/public/web-assets/backend/img/media/place_holder.jpg') }}"  alt="No Media">
+        <img src="{{ asset('/public/web-assets/backend/img/media/place_holder.jpg') }}" alt="No Media">
     </div>
 @endif
