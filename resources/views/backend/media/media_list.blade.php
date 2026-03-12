@@ -12,16 +12,18 @@
 <div class="tab-content" id="mediaTabContent">
     <!--Media upload Tab-->
     <div class="tab-pane fade" id="upload-files" role="tabpanel" aria-labelledby="upload-files-tab">
-        <div id="file-drop-area-wrappper" class="p-4 bg-white">
+        <div id="file-drop-area-wrappper" class="dz-wrapper">
             <form method="post" action="#" id="media-upload" enctype="multipart/form-data"
                 class="dropzone media-upload">
                 @csrf
-                <div class="d-flex justify-content-center flex-column align-items-center align-self-center"
-                    data-dz-message>
-                    <div class="bold dz-message h4 text-center">
-                        {{ translation('Click or Drop files here to upload') }}
+                <div class="dz-message" data-dz-message>
+                    <div class="dz-icon-wrap">
                         <i class="fas fa-cloud-upload-alt"></i>
                     </div>
+                    <p class="dz-label">{{ translation('Drop files here or click to upload') }}</p>
+                    <p class="dz-sublabel">{{ translation('Drag and drop your files anywhere in this area') }}</p>
+                    <span class="dz-hint">JPEG &bull; PNG &bull; GIF &bull; WEBP &bull; SVG &bull; PDF &bull; ZIP &bull;
+                        MP4 &mdash; max 256 MB</span>
                 </div>
             </form>
         </div>
@@ -41,7 +43,8 @@
             </div>
             <!--End Media List-->
             <!--Media details-->
-            <div class="media-preview-sidebar col-lg-2 border border-bottom-0 border-top-0 p-0 d-none d-lg-block" id="media-preview-section">
+            <div class="media-preview-sidebar col-lg-2 border border-bottom-0 border-top-0 p-0 d-none d-lg-block"
+                id="media-preview-section">
                 <h6 class="media-attachments-filter-heading mb-2">
                     {{ translation('Media Details') }}
                 </h6>

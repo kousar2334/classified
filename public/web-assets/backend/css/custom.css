@@ -1,6 +1,129 @@
 .modal-dialog.modal-full {
-    max-width: 100%;
-    margin: 30px;
+    max-width: calc(100% - 40px);
+    width: calc(100% - 40px);
+    margin: 20px auto;
+    height: calc(100vh - 40px);
+}
+
+.modal-dialog.modal-full .modal-content {
+    height: 100%;
+    overflow: hidden;
+}
+
+.modal-dialog.modal-full .modal-body {
+    height: calc(100% - 54px);
+    overflow: hidden;
+}
+
+/* Upload tab — full height chain */
+#mediaTabContent,
+#upload-files {
+    height: 100%;
+}
+
+/* Dropzone wrapper */
+.dz-wrapper {
+    height: 100%;
+    padding: 2.5rem;
+    background: #f4f6f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Dropzone area */
+.dropzone.media-upload {
+    width: 100%;
+    max-width: 760px;
+    min-height: 380px;
+    background: #fff;
+    border: 2px dashed #c8d0da;
+    border-radius: 12px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 3.5rem 2rem;
+    cursor: pointer;
+    transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.dropzone.media-upload:hover {
+    border-color: #3d8ef8;
+    background: #f5f9ff;
+    box-shadow: 0 4px 20px rgba(61, 142, 248, 0.1);
+}
+
+.dropzone.media-upload.dz-drag-hover {
+    border-color: #1a6fe8;
+    background: #eaf2ff;
+    box-shadow: 0 6px 24px rgba(26, 111, 232, 0.18);
+}
+
+/* Message container */
+.dropzone.media-upload .dz-message {
+    margin: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    pointer-events: none;
+}
+
+/* Icon circle */
+.dropzone.media-upload .dz-message .dz-icon-wrap {
+    width: 80px;
+    height: 80px;
+    background: #eef4ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    transition: background 0.25s;
+}
+
+.dropzone.media-upload:hover .dz-message .dz-icon-wrap {
+    background: #ddeaff;
+}
+
+.dropzone.media-upload .dz-message .dz-icon-wrap .fas {
+    font-size: 2rem;
+    color: #3d8ef8;
+}
+
+/* Primary label */
+.dropzone.media-upload .dz-message .dz-label {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 0.35rem;
+}
+
+/* Sub-label */
+.dropzone.media-upload .dz-message .dz-sublabel {
+    display: block;
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+/* Supported formats pill */
+.dropzone.media-upload .dz-message .dz-hint {
+    display: inline-block;
+    background: #f4f6f9;
+    border: 1px solid #e3e6ea;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.72rem;
+    color: #868e96;
+    letter-spacing: 0.02em;
+}
+
+.dropzone.media-upload .dz-preview {
+    margin: 8px;
 }
 
 .media-input-container {
