@@ -22632,7 +22632,7 @@ select.input-style {
    Subscriptions Page
    ============================================================ */
 .sub-active-banner {
-    background: linear-gradient(135deg, #0f4c81, #1a73e8);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-color-light));
     border-radius: 12px;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
