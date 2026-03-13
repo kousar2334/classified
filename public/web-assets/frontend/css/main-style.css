@@ -1,13 +1,11 @@
 :root {
 
     /* ─── Semantic palette ─── */
-    --color1: #fde0d6;
     --color2: #475569;
     --color3: #334155;
     --color4: #fff4ed;
     --color-1: #bde1ff;
     --color-4: #eef7ff;
-    --color-5: #fffcf8;
     --color-6: #f97316;
     --color-7: #ef6262;
     --color-8: #0f172a;
@@ -8174,7 +8172,7 @@ object {
     color: var(--hover-color-two);
 }
 
-.featureListing .singleFeature .featureImg img {
+.featureListing .singleFeature .listing-Img img {
     width: 100%;
     border-radius: 10px;
 }
@@ -8267,21 +8265,21 @@ object {
     }
 }
 
-.featureListing .singleFeature .featureCaption .featureCap {
+.featureListing .singleFeature .featureCaption .listing-title {
     font-family: var(--heading-font);
     font-size: 15px;
     color: var(--heading-font);
     margin-bottom: 2px;
 }
 
-.featureListing .singleFeature .featureCaption .featureCap .subCap {
+.featureListing .singleFeature .featureCaption .listing-title.subCap {
     font-family: var(--heading-font);
     font-family: var(--heading-font);
     color: var(--main-color-two);
     font-weight: 400;
 }
 
-.featureListing .singleFeature .featureCaption .featurePricing {
+.featureListing .singleFeature .featureCaption .listing-pricing {
     margin-bottom: 18px;
     font-family: var(--heading-font);
     color: var(--heading-color);
@@ -8290,7 +8288,7 @@ object {
     display: block;
 }
 
-.main-body .singleFeatureCard {
+.main-body .listing-card {
     width: calc(20% - 26px);
     border: 1px solid transparent;
     border-radius: 10px;
@@ -8298,11 +8296,11 @@ object {
     transition: all 0.3s;
 }
 
-.main-body .singleFeatureCard .featureImg {
+.main-body .listing-card .listing-Img {
     position: relative;
 }
 
-.main-body .singleFeatureCard .featureImg .favourite-icon {
+.main-body .listing-card .listing-Img .favourite-icon {
     position: absolute;
     height: 36px;
     width: 36px;
@@ -8336,12 +8334,12 @@ object {
     }
 }
 
-.main-body .singleFeatureCard .featureImg img {
+.main-body .listing-card .listing-Img img {
     width: 100%;
     border-radius: 10px;
 }
 
-.main-body .singleFeatureCard .featurebody {
+.main-body .listing-card .listing-body {
     padding: 10px;
     border-radius: 0 0 10px 10px;
     height: 150px;
@@ -8350,53 +8348,53 @@ object {
     justify-content: space-between;
 }
 
-.main-body .singleFeatureCard .featurebody .head4 {
+.main-body .listing-card .listing-body .head4 {
     font-size: 16px;
 }
 
-.main-body .singleFeatureCard .featurebody .pro-btn1 {
+.main-body .listing-card .listing-body .pro-btn1 {
     background: var(--color-7);
     color: #fff;
     font-family: var(--body-font1);
     font-size: 10px;
 }
 
-.main-body .singleFeatureCard .featurebody .pro-btn2 {
+.main-body .listing-card .listing-body .pro-btn2 {
     background: var(--color-6);
     color: #fff;
     font-family: var(--body-font1);
     font-size: 10px;
 }
 
-.main-body .singleFeatureCard .featurebody .pro-btn1,
-.main-body .singleFeatureCard .featurebody .pro-btn2 {
+.main-body .listing-card .listing-body .pro-btn1,
+.main-body .listing-card .listing-body .pro-btn2 {
     padding-top: 3px;
     padding-bottom: 3px;
     border-radius: 3px;
     line-height: 1;
 }
 
-.main-body .singleFeatureCard .featurebody h4 {
+.main-body .listing-card .listing-body h4 {
     margin: 10px 0 8px 0;
 }
 
-.main-body .singleFeatureCard .featurebody p {
+.main-body .listing-card .listing-body p {
     margin-bottom: 12px;
     font-size: 14px;
 }
 
-.main-body .singleFeatureCard .featurebody .featurePricing {
+.main-body .listing-card .listing-body .listing-pricing {
     font-size: 14px;
     flex-wrap: wrap;
 }
 
 @media only screen and (max-width: 1599.99px) {
-    .main-body .singleFeatureCard .featurebody p {
+    .main-body .listing-card .listing-body p {
         font-size: 14px;
     }
 }
 
-.main-body .singleFeatureCard .featurebody .money {
+.main-body .listing-card .listing-body .money {
     color: var(--main-color-one);
     font-size: 18;
     line-height: 24px;
@@ -8404,25 +8402,25 @@ object {
 }
 
 @media only screen and (max-width: 1599.99px) {
-    .main-body .singleFeatureCard .featurebody .money {
+    .main-body .listing-card .listing-body .money {
         font-size: 14px;
     }
 }
 
 @media only screen and (max-width: 1599.99px) {
-    .main-body .singleFeatureCard .featurebody .date {
+    .main-body .listing-card .listing-body .date {
         font-size: 14px;
     }
 }
 
-.main-body .singleFeatureCard:hover,
-.main-body .singleFeatureCard.active {
-    background: var(--color-5);
-    border: 1px solid var(--color-6);
+.main-body .listing-card:hover,
+.main-body .listing-card.active {
+    background: #ffffff;
+    border: 1px solid var(--primary-color);
 }
 
-.main-body .singleFeatureCard:hover .featureImg img,
-.main-body .singleFeatureCard.active .featureImg img {
+.main-body .listing-card:hover .listing-Img img,
+.main-body .listing-card.active .listing-Img img {
     border-radius: 10px 10px 0 0;
 }
 
@@ -8451,23 +8449,23 @@ object {
 }
 
 /*for google map card hover none*/
-.main-body .inside_google_map_card.singleFeatureCard:hover,
-.main-body .inside_google_map_card.singleFeatureCard.active {
+.main-body .inside_google_map_card.listing-card:hover,
+.main-body .inside_google_map_card.listing-card.active {
     background: #ffffff;
     border: 1px solid transparent;
 }
 
-/*.main-body .singleFeatureCard:hover .featureImg .favourite-icon,*/
-/*.main-body .singleFeatureCard.active .featureImg .favourite-icon {*/
+/*.main-body .listing-card:hover .listing-Img .favourite-icon,*/
+/*.main-body .listing-card.active .listing-Img .favourite-icon {*/
 /*  background: var(--color-6);*/
 /*}*/
-.main-body .singleFeatureCard:hover .featureImg .favourite-icon path,
-.main-body .singleFeatureCard.active .featureImg .favourite-icon path {
+.main-body .listing-card:hover .listing-Img .favourite-icon path,
+.main-body .listing-card.active .listing-Img .favourite-icon path {
     stroke: #fff;
 }
 
-.main-body .singleFeatureCard:hover .featurebody,
-.main-body .singleFeatureCard.active .featurebody {
+.main-body .listing-card:hover .listing-body,
+.main-body .listing-card.active .listing-body {
     border-color: transparent;
 }
 
@@ -8588,7 +8586,7 @@ object {
     }
 }
 
-.recentListing .singleFlexitem .recentCaption .featureCap {
+.recentListing .singleFlexitem .recentCaption .listing-title {
     font-family: var(--heading-font);
     font-size: 15px;
     color: var(--heading-font);
@@ -8596,13 +8594,13 @@ object {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399.99px) {
-    .recentListing .singleFlexitem .recentCaption .featureCap {
+    .recentListing .singleFlexitem .recentCaption .listing-title {
         font-size: 12px;
         margin-bottom: 7px;
     }
 }
 
-.recentListing .singleFlexitem .recentCaption .featureCap .subCap {
+.recentListing .singleFlexitem .recentCaption .listing-title.subCap {
     font-family: var(--heading-font);
     font-family: var(--heading-font);
     color: var(--main-color-two);
@@ -8610,12 +8608,12 @@ object {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399.99px) {
-    .recentListing .singleFlexitem .recentCaption .featureCap .subCap {
+    .recentListing .singleFlexitem .recentCaption .listing-title.subCap {
         font-size: 12px;
     }
 }
 
-.recentListing .singleFlexitem .recentCaption .featurePricing {
+.recentListing .singleFlexitem .recentCaption .listing-pricing {
     margin-bottom: 18px;
     font-family: var(--heading-font);
     color: var(--heading-color);
@@ -8625,7 +8623,7 @@ object {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399.99px) {
-    .recentListing .singleFlexitem .recentCaption .featurePricing {
+    .recentListing .singleFlexitem .recentCaption .listing-pricing {
         font-size: 17px;
         margin-bottom: 7px;
     }
@@ -9800,7 +9798,7 @@ object {
     color: #ffffff;
 }
 
-.viewItems .SearchWrapper {
+.items-list .listing-header {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -9813,25 +9811,25 @@ object {
 }
 
 @media (max-width: 575px) {
-    .viewItems .SearchWrapper {
+    .items-list .listing-header {
         -ms-flex-wrap: wrap;
         flex-wrap: wrap;
     }
 }
 
-.viewItems .SearchWrapper .searchBox-wrapper {
+.items-list .listing-header .searchBox-wrapper {
     width: 100%;
 }
 
-.viewItems .SearchWrapper .search-box {
+.items-list .listing-header .search-box {
     width: 100%;
 }
 
-.viewItems .SearchWrapper .search-box .input-form {
+.items-list .listing-header .search-box .input-form {
     position: relative;
 }
 
-.viewItems .SearchWrapper .search-box .input-form input {
+.items-list .listing-header .search-box .input-form input {
     background: none;
     color: var(--heading-color);
     height: 60px;
@@ -9846,81 +9844,81 @@ object {
     margin-bottom: 20px;
 }
 
-.viewItems .SearchWrapper .search-box .input-form input::-webkit-input-placeholder {
+.items-list .listing-header .search-box .input-form input::-webkit-input-placeholder {
     color: var(--paragraph-color);
     font-size: 16px;
     font-weight: 400;
 }
 
-.viewItems .SearchWrapper .search-box .input-form input::-moz-placeholder {
+.items-list .listing-header .search-box .input-form input::-moz-placeholder {
     color: var(--paragraph-color);
     font-size: 16px;
     font-weight: 400;
 }
 
-.viewItems .SearchWrapper .search-box .input-form input:-ms-input-placeholder {
+.items-list .listing-header .search-box .input-form input:-ms-input-placeholder {
     color: var(--paragraph-color);
     font-size: 16px;
     font-weight: 400;
 }
 
-.viewItems .SearchWrapper .search-box .input-form input::-ms-input-placeholder {
+.items-list .listing-header .search-box .input-form input::-ms-input-placeholder {
     color: var(--paragraph-color);
     font-size: 16px;
     font-weight: 400;
 }
 
-.viewItems .SearchWrapper .search-box .input-form input::placeholder {
+.items-list .listing-header .search-box .input-form input::placeholder {
     color: var(--paragraph-color);
     font-size: 16px;
     font-weight: 400;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-    .viewItems .SearchWrapper .search-box .input-form input::-webkit-input-placeholder {
+    .items-list .listing-header .search-box .input-form input::-webkit-input-placeholder {
         font-size: 13px;
     }
 
-    .viewItems .SearchWrapper .search-box .input-form input::-moz-placeholder {
+    .items-list .listing-header .search-box .input-form input::-moz-placeholder {
         font-size: 13px;
     }
 
-    .viewItems .SearchWrapper .search-box .input-form input:-ms-input-placeholder {
+    .items-list .listing-header .search-box .input-form input:-ms-input-placeholder {
         font-size: 13px;
     }
 
-    .viewItems .SearchWrapper .search-box .input-form input::-ms-input-placeholder {
+    .items-list .listing-header .search-box .input-form input::-ms-input-placeholder {
         font-size: 13px;
     }
 
-    .viewItems .SearchWrapper .search-box .input-form input::placeholder {
+    .items-list .listing-header .search-box .input-form input::placeholder {
         font-size: 13px;
     }
 }
 
 @media (max-width: 575px) {
-    .viewItems .SearchWrapper .search-box .input-form input::-webkit-input-placeholder {
+    .items-list .listing-header .search-box .input-form input::-webkit-input-placeholder {
         font-size: 13px;
     }
 
-    .viewItems .SearchWrapper .search-box .input-form input::-moz-placeholder {
+    .items-list .listing-header .search-box .input-form input::-moz-placeholder {
         font-size: 13px;
     }
 
-    .viewItems .SearchWrapper .search-box .input-form input:-ms-input-placeholder {
+    .items-list .listing-header .search-box .input-form input:-ms-input-placeholder {
         font-size: 13px;
     }
 
-    .viewItems .SearchWrapper .search-box .input-form input::-ms-input-placeholder {
+    .items-list .listing-header .search-box .input-form input::-ms-input-placeholder {
         font-size: 13px;
     }
 
-    .viewItems .SearchWrapper .search-box .input-form input::placeholder {
+    .items-list .listing-header .search-box .input-form input::placeholder {
         font-size: 13px;
     }
 }
 
-.viewItems .SearchWrapper .search-box .input-form .icon {
+.items-list .listing-header .search-box .input-form .icon {
     background: var(--main-color-one);
     position: absolute;
     right: 0;
@@ -9936,7 +9934,7 @@ object {
     color: #fff;
 }
 
-.viewItems .SearchWrapper .view {
+.items-list .listing-header .view {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -9946,7 +9944,7 @@ object {
     margin-bottom: 20px;
 }
 
-.viewItems .SearchWrapper .view button {
+.items-list .listing-header .view button {
     color: var(--main-color-one);
     background: none;
     border: 1px solid var(--color-16);
@@ -9960,11 +9958,11 @@ object {
     margin-left: 17px;
 }
 
-.viewItems .select-itms {
+.items-list .select-itms {
     position: relative;
 }
 
-.viewItems .select-itms .icon {
+.items-list .select-itms .icon {
     position: absolute;
     left: 15px;
     display: inline-block;
@@ -9972,7 +9970,7 @@ object {
     font-size: 24px;
 }
 
-.viewItems .select-itms .nice-select {
+.items-list .select-itms .nice-select {
     border: 1px solid #ddd;
     width: 100%;
     height: 60px;
@@ -9988,23 +9986,23 @@ object {
 }
 
 @media (max-width: 575px) {
-    .viewItems .select-itms .nice-select {
+    .items-list .select-itms .nice-select {
         height: 60px;
         line-height: 40px;
     }
 }
 
-.viewItems .select-itms .nice-select .list {
+.items-list .select-itms .nice-select .list {
     width: 100%;
 }
 
-.viewItems .select-itms .nice-select.open .list {
+.items-list .select-itms .nice-select.open .list {
     width: 100%;
     border-radius: 0;
     border: 0;
 }
 
-.viewItems .select-itms .nice-select::after {
+.items-list .select-itms .nice-select::after {
     border-bottom: 2px solid #76787a;
     border-right: 2px solid #76787a;
     height: 11px;
@@ -10013,9 +10011,9 @@ object {
     right: 29px;
 }
 
-.viewItems .select-itms .nice-select .option:hover,
-.viewItems .select-itms .nice-select .nice-select .option.focus,
-.viewItems .select-itms .nice-select .nice-select .option.selected.focus {
+.items-list .select-itms .nice-select .option:hover,
+.items-list .select-itms .nice-select .nice-select .option.focus,
+.items-list .select-itms .nice-select .nice-select .option.selected.focus {
     background-color: var(--main-color-one);
     color: white;
 }
@@ -10215,20 +10213,20 @@ object {
     margin-bottom: 20px;
 }
 
-.customTab-content {
+.custom-tab-content {
     display: none;
 }
 
-.customTab-content.active {
+.custom-tab-content.active {
     display: block;
 }
 
-.gridView .singleFeature .featureImg img {
+.grid-view .singleFeature .listing-Img img {
     width: 100%;
     border-radius: 10px;
 }
 
-.gridView .singleFeature .featureCaption {
+.grid-view .singleFeature .featureCaption {
     background: #ffffff;
     padding: 18px 31px 25px 25px;
     left: 0;
@@ -10244,41 +10242,41 @@ object {
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-    .gridView .singleFeature .featureCaption {
+    .grid-view .singleFeature .featureCaption {
         width: 95%;
     }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-    .gridView .singleFeature .featureCaption {
+    .grid-view .singleFeature .featureCaption {
         width: 94%;
         padding: 33px 15px 16px 15px;
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-    .gridView .singleFeature .featureCaption {
+    .grid-view .singleFeature .featureCaption {
         width: 94%;
         padding: 33px 15px 16px 15px;
     }
 }
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
-    .gridView .singleFeature .featureCaption {
+    .grid-view .singleFeature .featureCaption {
         width: 94%;
         padding: 33px 15px 16px 15px;
     }
 }
 
 @media (max-width: 575px) {
-    .gridView .singleFeature .featureCaption {
+    .grid-view .singleFeature .featureCaption {
         width: 97%;
         padding: 33px 16px 16px 16px;
         margin-top: -30px;
     }
 }
 
-.gridView .singleFeature .featureCaption .featureTittle {
+.grid-view .singleFeature .featureCaption .featureTittle {
     font-family: var(--heading-font);
     margin-bottom: 2px;
     line-height: 1.5;
@@ -10288,49 +10286,49 @@ object {
     display: block;
 }
 
-.gridView .singleFeature .featureCaption .featureTittle:hover {
+.grid-view .singleFeature .featureCaption .featureTittle:hover {
     color: var(--heading-color);
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399.99px) {
-    .gridView .singleFeature .featureCaption .featureTittle {
+    .grid-view .singleFeature .featureCaption .featureTittle {
         font-size: 21px;
     }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-    .gridView .singleFeature .featureCaption .featureTittle {
+    .grid-view .singleFeature .featureCaption .featureTittle {
         font-size: 21px;
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-    .gridView .singleFeature .featureCaption .featureTittle {
+    .grid-view .singleFeature .featureCaption .featureTittle {
         font-size: 18px;
     }
 }
 
 @media (max-width: 575px) {
-    .gridView .singleFeature .featureCaption .featureTittle {
+    .grid-view .singleFeature .featureCaption .featureTittle {
         font-size: 18px;
     }
 }
 
-.gridView .singleFeature .featureCaption .featureCap {
+.grid-view .singleFeature .featureCaption .listing-title {
     font-family: var(--heading-font);
     font-size: 15px;
     color: var(--heading-font);
     margin-bottom: 2px;
 }
 
-.gridView .singleFeature .featureCaption .featureCap .subCap {
+.grid-view .singleFeature .featureCaption .listing-title.subCap {
     font-family: var(--heading-font);
     font-family: var(--heading-font);
     color: var(--main-color-two);
     font-weight: 400;
 }
 
-.gridView .singleFeature .featureCaption .featurePricing {
+.grid-view .singleFeature .featureCaption .listing-pricing {
     margin-bottom: 18px;
     font-family: var(--heading-font);
     color: var(--heading-color);
@@ -10451,7 +10449,7 @@ object {
     }
 }
 
-.listingView .singleFlexitem .recentCaption .featureCap {
+.listingView .singleFlexitem .recentCaption .listing-title {
     font-family: var(--heading-font);
     font-size: 15px;
     color: var(--heading-font);
@@ -10459,13 +10457,13 @@ object {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399.99px) {
-    .listingView .singleFlexitem .recentCaption .featureCap {
+    .listingView .singleFlexitem .recentCaption .listing-title {
         font-size: 12px;
         margin-bottom: 7px;
     }
 }
 
-.listingView .singleFlexitem .recentCaption .featureCap .subCap {
+.listingView .singleFlexitem .recentCaption .listing-title.subCap {
     font-family: var(--heading-font);
     font-family: var(--heading-font);
     color: var(--main-color-two);
@@ -10473,12 +10471,12 @@ object {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399.99px) {
-    .listingView .singleFlexitem .recentCaption .featureCap .subCap {
+    .listingView .singleFlexitem .recentCaption .listing-title.subCap {
         font-size: 12px;
     }
 }
 
-.listingView .singleFlexitem .recentCaption .featurePricing {
+.listingView .singleFlexitem .recentCaption .listing-pricing {
     margin-bottom: 18px;
     font-family: var(--heading-font);
     color: var(--heading-color);
@@ -10488,7 +10486,7 @@ object {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399.99px) {
-    .listingView .singleFlexitem .recentCaption .featurePricing {
+    .listingView .singleFlexitem .recentCaption .listing-pricing {
         font-size: 17px;
         margin-bottom: 7px;
     }
@@ -10499,7 +10497,7 @@ object {
     font-size: 16px;
 }
 
-.main-body .catabody-wraper {
+.main-body .listing-page-container {
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -10507,10 +10505,11 @@ object {
     -webkit-box-align: start;
     -ms-flex-align: start;
     align-items: start;
-    gap: 22px;
+    gap: 40px;
+    padding: 40px 0px;
 }
 
-.main-body .catabody-wraper .cateLeftContent {
+.main-body .listing-page-container .listing-filter-area {
     min-width: 256px;
     -webkit-box-flex: 1;
     -ms-flex: 1;
@@ -10518,7 +10517,7 @@ object {
 }
 
 @media only screen and (max-width: 991.92px) {
-    .main-body .catabody-wraper .cateLeftContent {
+    .main-body .listing-page-container .listing-filter-area {
         position: absolute;
         background: #fff;
         border-radius: 8px;
@@ -10530,52 +10529,52 @@ object {
         border-radius: 8px;
     }
 
-    .main-body .catabody-wraper .cateLeftContent.show {
+    .main-body .listing-page-container .listing-filter-area.show {
         left: 0;
     }
 }
 
-.main-body .catabody-wraper .cateRightContent .cateRightContentWraper {
+.main-body .listing-page-container .listing-content-area .listing-items-wrapper {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     gap: 22px;
 }
 
-.main-body .catabody-wraper .cateRightContent .cateRightContentWraper .google-maps {
+.main-body .listing-page-container .listing-content-area .listing-items-wrapper .google-maps {
     display: none;
 }
 
-.main-body .catabody-wraper .cateRightContent .customTab-content {
+.main-body .listing-page-container .listing-content-area .custom-tab-content {
     max-width: 1084px;
 }
 
-.main-body .catabody-wraper .cateRightContent .gridView .singleFeatureCard {
+.main-body .listing-page-container .listing-content-area .grid-view .listing-card {
     width: calc(25% - 15px);
 }
 
-.main-body .catabody-wraper .cateRightContent .listingView .singleFeatureCardWraper {
+.main-body .listing-page-container .listing-content-area .listingView .listing-card-wrapper {
     gap: 20px;
 }
 
-.main-body .catabody-wraper .cateRightContent .listingView .singleFeatureCard {
+.main-body .listing-page-container .listing-content-area .listingView .listing-card {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     width: calc(50% - 10px);
 }
 
-.main-body .catabody-wraper .cateRightContent .listingView .singleFeatureCard .featureImg {
+.main-body .listing-page-container .listing-content-area .listingView .listing-card .listing-Img {
     -ms-flex-negative: 0;
     flex-shrink: 0;
 }
 
-.main-body .catabody-wraper .cateRightContent .listingView .singleFeatureCard .featureImg .main-card-image {
+.main-body .listing-page-container .listing-content-area .listingView .listing-card .listing-Img .main-card-image {
     height: 168px;
     width: 200px;
 }
 
-.main-body .catabody-wraper .cateRightContent .listingView .singleFeatureCard .featureImg img {
+.main-body .listing-page-container .listing-content-area .listingView .listing-card .listing-Img img {
     width: 100%;
     border-radius: 6px;
     height: 100%;
@@ -10583,71 +10582,71 @@ object {
     object-fit: cover;
 }
 
-.main-body .catabody-wraper .cateRightContent .listingView .list_divider {
+.main-body .listing-page-container .listing-content-area .listingView .list_divider {
     width: 100%;
     height: 1px;
     background: var(--color-15);
 }
 
-.main-body .catabody-wraper .cateRightContent .singleFeatureCardWraper {
+.main-body .listing-page-container .listing-content-area .listing-card-wrapper {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-.main-body .catabody-wraper .cateRightContent.active-map .customTab-content {
+.main-body .listing-page-container .listing-content-area.active-map .custom-tab-content {
     max-width: 808px;
 }
 
-.main-body .catabody-wraper .cateRightContent.active-map .customTab-content.gridView .singleFeatureCard {
+.main-body .listing-page-container .listing-content-area.active-map .custom-tab-content.grid-view .listing-card {
     width: calc(33.3333333333% - 13.33px);
 }
 
-.main-body .catabody-wraper .cateRightContent {
+.main-body .listing-page-container .listing-content-area {
     flex: 1;
 }
 
-.main-body .catabody-wraper .cateRightContent .cateRightContentWraper .content-part {
+.main-body .listing-page-container .listing-content-area .listing-items-wrapper .content-part {
     flex: 1;
 }
 
-.main-body .catabody-wraper .cateRightContent.active-map .customTab-content.listingView .singleFeatureCardWraper .singleFeatureCard {
+.main-body .listing-page-container .listing-content-area.active-map .custom-tab-content.listingView .listing-card-wrapper .listing-card {
     width: calc(100% - 0px);
 }
 
-.main-body .catabody-wraper .cateRightContent.active-map .customTab-content.listingView .singleFeatureCardWraper .singleFeatureCard .featurebody {
+.main-body .listing-page-container .listing-content-area.active-map .custom-tab-content.listingView .listing-card-wrapper .listing-card .listing-body {
     width: 100%;
     padding-top: 0;
     padding-bottom: 0;
 }
 
-.main-body .catabody-wraper .cateRightContent.active-map .customTab-content.listingView .singleFeatureCardWraper .singleFeatureCard .featurebody .featurePricing {
+.main-body .listing-page-container .listing-content-area.active-map .custom-tab-content.listingView .listing-card-wrapper .listing-card .listing-body .listing-pricing {
     justify-content: initial !important;
     gap: 20px;
 }
 
-.main-body .catabody-wraper .cateRightContent.active-map .google-maps {
+.main-body .listing-page-container .listing-content-area.active-map .google-maps {
     display: inline-block;
 }
 
-.main-body .catabody-wraper .cateRightContent.active-map .rightpart .googleAdd {
+.main-body .listing-page-container .listing-content-area.active-map .rightpart .googleAdd {
     width: 160px;
 }
 
 @media only screen and (max-width: 1599.98px) {
-    .main-body .catabody-wraper .cateRightContent .gridView .singleFeatureCard {
+    .main-body .listing-page-container .listing-content-area .grid-view .listing-card {
         width: calc(33.3333333333% - 13.33px);
     }
 }
 
 @media only screen and (max-width: 1199.98px) {
-    .main-body .catabody-wraper .cateRightContent .gridView .singleFeatureCard {
+    .main-body .listing-page-container .listing-content-area .grid-view .listing-card {
         width: calc(50% - 10px);
     }
 }
 
 @media only screen and (max-width: 702.98px) {
-    .main-body .catabody-wraper .cateRightContent .gridView .singleFeatureCard {
+    .main-body .listing-page-container .listing-content-area .grid-view .listing-card {
         width: calc(100% - 0px);
     }
 }
@@ -10730,7 +10729,7 @@ object {
     transform: translationY(-50%);
 }
 
-.main-body .cateSidebar1 .catagoriesWraper {
+.main-body .filter-items-wrapper .filter-item {
     padding: 16px;
     border: 1px solid var(--color-15);
     border-radius: 8px;
@@ -10746,7 +10745,7 @@ object {
     gap: 12px;
 }
 
-.main-body .cateSidebar1 .catagoriesWraper .cateTitle {
+.main-body .filter-items-wrapper .filter-item .cateTitle {
     font-family: var(--body-font1);
     font-weight: 500;
     font-size: 14px;
@@ -10754,7 +10753,7 @@ object {
     color: var(--color2);
 }
 
-.main-body .cateSidebar1 .catagoriesWraper .search-input,
+.main-body .filter-items-wrapper .filter-item .search-input,
 .select2-container .select2-selection--single {
     padding: 10px 16px;
     border: 1px solid var(--color-19);
@@ -10798,15 +10797,15 @@ object {
     background: var(--main-color-one);
 }
 
-.main-body .cateSidebar1 .catagoriesWraper .search-input::placeholder {
+.main-body .filter-items-wrapper .filter-item .search-input::placeholder {
     color: var(--color2);
 }
 
-.main-body .cateSidebar1 .catagoriesWraper .suburb_section_start {
+.main-body .filter-items-wrapper .filter-item .suburb_section_start {
     margin-bottom: 12px;
 }
 
-.main-body .cateSidebar1 .catagoriesWraper .filter-btn {
+.main-body .filter-items-wrapper .filter-item .filter-btn {
     padding: 8px;
     border: 1px solid var(--main-color-one);
     border-radius: 6px;
@@ -10837,18 +10836,18 @@ object {
     border: 3px solid #fff;
 }
 
-.main-body .cateSidebar1 .catagoriesWraper .postdate li a {
+.main-body .filter-items-wrapper .filter-item .postdate li a {
     display: block;
     padding: 12px 16px;
     font-size: 14px;
 }
 
-.main-body .cateSidebar1 .catagoriesWraper .postdate li.active a {
+.main-body .filter-items-wrapper .filter-item .postdate li.active a {
     color: var(--main-color-one);
     background: var(--color4);
 }
 
-.main-body .cateSidebar1 .catagoriesWraper .price-input {
+.main-body .filter-items-wrapper .filter-item .price-input {
     margin: 0 0 16px 0;
     align-items: center;
     justify-content: space-between;
@@ -10856,43 +10855,43 @@ object {
     display: flex;
 }
 
-.main-body .cateSidebar1 .catagoriesWraper .price-input .field {
+.main-body .filter-items-wrapper .filter-item .price-input .field {
     margin: 0;
     height: auto;
 }
 
-.main-body .cateSidebar1 .catagoriesWraper .priceRangeWraper {
+.main-body .filter-items-wrapper .filter-item .priceRangeWraper {
     position: relative;
     width: 102px;
 }
 
-.main-body .cateSidebar1 .catagoriesWraper .priceRangeWraper input {
+.main-body .filter-items-wrapper .filter-item .priceRangeWraper input {
     font-size: 14px;
     padding: 6px 12px 6px 22px;
     text-align: left;
     width: 100%;
 }
 
-.cateSidebar1 .catagoriesWraper .priceRangeWraper .site_currency_symbol {
+.filter-items-wrapper .filter-item .priceRangeWraper .site_currency_symbol {
     position: absolute;
     left: 12px;
     top: 50%;
     transform: translationY(-50%);
 }
 
-.cateSidebar1 .catagoriesWraper .noUi-horizontal {
+.filter-items-wrapper .filter-item .noUi-horizontal {
     height: 8px;
     overflow: initial;
     box-shadow: none;
     border: none;
 }
 
-.main-body .viewItems .SearchWrapper {
+.main-body .items-list .listing-header {
     margin-bottom: 24px;
     padding: 16px;
 }
 
-.main-body .viewItems .SearchWrapper .views {
+.main-body .items-list .listing-header .views {
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -10900,7 +10899,7 @@ object {
     gap: 15px;
 }
 
-.main-body .viewItems .SearchWrapper .views .shortby {
+.main-body .items-list .listing-header .views .shortby {
     padding: 8px 16px;
     border: 1px solid var(--color-15);
     border-radius: 6px;
@@ -10912,7 +10911,7 @@ object {
     font-size: 14px;
 }
 
-.main-body .viewItems .SearchWrapper .views .shortbytype {
+.main-body .items-list .listing-header .views .shortbytype {
     position: absolute;
     border-radius: 6px;
     border: 1px solid var(--color-17);
@@ -10928,25 +10927,25 @@ object {
     top: calc(100% + 20px);
 }
 
-.main-body .viewItems .SearchWrapper .views .shortbytype.show {
+.main-body .items-list .listing-header .views .shortbytype.show {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
 }
 
-.main-body .viewItems .SearchWrapper .views .shortbytype ul {
+.main-body .items-list .listing-header .views .shortbytype ul {
     padding: 6px;
 }
 
-.main-body .viewItems .SearchWrapper .views .shortbytype ul:first-child {
+.main-body .items-list .listing-header .views .shortbytype ul:first-child {
     border-bottom: 1px solid var(--color-16);
 }
 
-.main-body .viewItems .SearchWrapper .views .shortbytype ul li {
+.main-body .items-list .listing-header .views .shortbytype ul li {
     padding: 6px 8px;
 }
 
-.main-body .viewItems .SearchWrapper .views .shortbytype ul li a {
+.main-body .items-list .listing-header .views .shortbytype ul li a {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -10955,7 +10954,7 @@ object {
     font-weight: 500;
 }
 
-.main-body .viewItems .SearchWrapper .views .listing-btn {
+.main-body .items-list .listing-header .views .listing-btn {
     display: flex;
     align-items: center;
     background: var(--color-17);
@@ -10963,7 +10962,7 @@ object {
     overflow: hidden;
 }
 
-.main-body .viewItems .SearchWrapper .views .listing-btn button {
+.main-body .items-list .listing-header .views .listing-btn button {
     padding: 3px 8px;
     border: 6px solid var(--color-17);
     background: var(--color-17);
@@ -10974,11 +10973,11 @@ object {
     align-items: center;
 }
 
-.main-body .viewItems .SearchWrapper .views .listing-btn button.customTab1 {
+.main-body .items-list .listing-header .views .listing-btn button.customTab1 {
     border-radius: 0 6px 6px 0;
 }
 
-.main-body .viewItems .SearchWrapper .views .listing-btn button.active {
+.main-body .items-list .listing-header .views .listing-btn button.active {
     background: #fff;
 }
 
@@ -11444,7 +11443,7 @@ object {
     }
 }
 
-.sellerMessage .singleFlexitem .recentCaption .featureCap {
+.sellerMessage .singleFlexitem .recentCaption .listing-title {
     font-family: var(--heading-font);
     font-size: 15px;
     color: var(--heading-font);
@@ -11452,12 +11451,12 @@ object {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399.99px) {
-    .sellerMessage .singleFlexitem .recentCaption .featureCap {
+    .sellerMessage .singleFlexitem .recentCaption .listing-title {
         font-size: 12px;
     }
 }
 
-.sellerMessage .singleFlexitem .recentCaption .featureCap .subCap {
+.sellerMessage .singleFlexitem .recentCaption .listing-title.subCap {
     font-family: var(--heading-font);
     font-family: var(--heading-font);
     color: var(--main-color-two);
@@ -11465,7 +11464,7 @@ object {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399.99px) {
-    .sellerMessage .singleFlexitem .recentCaption .featureCap .subCap {
+    .sellerMessage .singleFlexitem .recentCaption .listing-title.subCap {
         font-size: 12px;
     }
 }
@@ -11774,7 +11773,7 @@ object {
     margin-bottom: 0;
 }
 
-.main-body .proDetails .relevant-ads .featureCap {
+.main-body .proDetails .relevant-ads .listing-title {
     margin-bottom: 5px;
 }
 
@@ -12009,7 +12008,7 @@ object {
     }
 }
 
-.myListing .singleFlexitem .listCap .recentCaption .featureCap {
+.myListing .singleFlexitem .listCap .recentCaption .listing-title {
     font-family: var(--heading-font);
     font-size: 15px;
     color: var(--heading-font);
@@ -12017,13 +12016,13 @@ object {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399.99px) {
-    .myListing .singleFlexitem .listCap .recentCaption .featureCap {
+    .myListing .singleFlexitem .listCap .recentCaption .listing-title {
         font-size: 12px;
         margin-bottom: 7px;
     }
 }
 
-.myListing .singleFlexitem .listCap .recentCaption .featureCap .subCap {
+.myListing .singleFlexitem .listCap .recentCaption .listing-title.subCap {
     font-family: var(--heading-font);
     font-family: var(--heading-font);
     color: var(--main-color-two);
@@ -12031,12 +12030,12 @@ object {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399.99px) {
-    .myListing .singleFlexitem .listCap .recentCaption .featureCap .subCap {
+    .myListing .singleFlexitem .listCap .recentCaption .listing-title.subCap {
         font-size: 12px;
     }
 }
 
-.myListing .singleFlexitem .listCap .recentCaption .featurePricing {
+.myListing .singleFlexitem .listCap .recentCaption .listing-pricing {
     margin-bottom: 18px;
     font-family: var(--heading-font);
     color: var(--heading-color);
@@ -12046,7 +12045,7 @@ object {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399.99px) {
-    .myListing .singleFlexitem .listCap .recentCaption .featurePricing {
+    .myListing .singleFlexitem .listCap .recentCaption .listing-pricing {
         font-size: 17px;
         margin-bottom: 7px;
     }
@@ -12170,7 +12169,7 @@ object {
     }
 }
 
-.accountWrapper .userProfile .recentCaption .featureCap {
+.accountWrapper .userProfile .recentCaption .listing-title {
     font-family: var(--heading-font);
     font-size: 15px;
     color: var(--heading-font);
@@ -12178,12 +12177,12 @@ object {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399.99px) {
-    .accountWrapper .userProfile .recentCaption .featureCap {
+    .accountWrapper .userProfile .recentCaption .listing-title {
         font-size: 12px;
     }
 }
 
-.accountWrapper .userProfile .recentCaption .featureCap .subCap {
+.accountWrapper .userProfile .recentCaption .listing-title.subCap {
     font-family: var(--heading-font);
     font-family: var(--heading-font);
     color: var(--main-color-two);
@@ -12191,7 +12190,7 @@ object {
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399.99px) {
-    .accountWrapper .userProfile .recentCaption .featureCap .subCap {
+    .accountWrapper .userProfile .recentCaption .listing-title.subCap {
         font-size: 12px;
     }
 }
@@ -13535,7 +13534,7 @@ object {
     }
 }
 
-.HelpSearch .SearchWrapper {
+.HelpSearch .listing-header {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -13548,29 +13547,29 @@ object {
 }
 
 @media (max-width: 575px) {
-    .HelpSearch .SearchWrapper {
+    .HelpSearch .listing-header {
         -ms-flex-wrap: wrap;
         flex-wrap: wrap;
     }
 }
 
-.HelpSearch .SearchWrapper .searchBox-wrapper {
+.HelpSearch .listing-header .searchBox-wrapper {
     width: 100%;
 }
 
-.HelpSearch .SearchWrapper .searchBox-wrapper .category-searchbar {
+.HelpSearch .listing-header .searchBox-wrapper .category-searchbar {
     max-height: 350px;
 }
 
-.HelpSearch .SearchWrapper .searchBox-wrapper .search-box {
+.HelpSearch .listing-header .searchBox-wrapper .search-box {
     width: 100%;
 }
 
-.HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form {
+.HelpSearch .listing-header .searchBox-wrapper .search-box .input-form {
     position: relative;
 }
 
-.HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input {
+.HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input {
     background: none;
     color: var(--heading-color);
     height: 60px;
@@ -13585,81 +13584,81 @@ object {
     margin-bottom: 20px;
 }
 
-.HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input::-webkit-input-placeholder {
+.HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input::-webkit-input-placeholder {
     color: var(--paragraph-color);
     font-size: 16px;
     font-weight: 400;
 }
 
-.HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input::-moz-placeholder {
+.HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input::-moz-placeholder {
     color: var(--paragraph-color);
     font-size: 16px;
     font-weight: 400;
 }
 
-.HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input:-ms-input-placeholder {
+.HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input:-ms-input-placeholder {
     color: var(--paragraph-color);
     font-size: 16px;
     font-weight: 400;
 }
 
-.HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input::-ms-input-placeholder {
+.HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input::-ms-input-placeholder {
     color: var(--paragraph-color);
     font-size: 16px;
     font-weight: 400;
 }
 
-.HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input::placeholder {
+.HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input::placeholder {
     color: var(--paragraph-color);
     font-size: 16px;
     font-weight: 400;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-    .HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input::-webkit-input-placeholder {
+    .HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input::-webkit-input-placeholder {
         font-size: 13px;
     }
 
-    .HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input::-moz-placeholder {
+    .HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input::-moz-placeholder {
         font-size: 13px;
     }
 
-    .HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input:-ms-input-placeholder {
+    .HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input:-ms-input-placeholder {
         font-size: 13px;
     }
 
-    .HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input::-ms-input-placeholder {
+    .HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input::-ms-input-placeholder {
         font-size: 13px;
     }
 
-    .HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input::placeholder {
+    .HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input::placeholder {
         font-size: 13px;
     }
 }
 
 @media (max-width: 575px) {
-    .HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input::-webkit-input-placeholder {
+    .HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input::-webkit-input-placeholder {
         font-size: 13px;
     }
 
-    .HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input::-moz-placeholder {
+    .HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input::-moz-placeholder {
         font-size: 13px;
     }
 
-    .HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input:-ms-input-placeholder {
+    .HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input:-ms-input-placeholder {
         font-size: 13px;
     }
 
-    .HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input::-ms-input-placeholder {
+    .HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input::-ms-input-placeholder {
         font-size: 13px;
     }
 
-    .HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form input::placeholder {
+    .HelpSearch .listing-header .searchBox-wrapper .search-box .input-form input::placeholder {
         font-size: 13px;
     }
 }
 
-.HelpSearch .SearchWrapper .searchBox-wrapper .search-box .input-form .icon {
+.HelpSearch .listing-header .searchBox-wrapper .search-box .input-form .icon {
     background: var(--main-color-two);
     position: absolute;
     right: 0;
@@ -19046,7 +19045,7 @@ object {
 }
 
 @media only screen and (max-width: 1590.95px) {
-    .main-body .catabody-wraper .cateRightContent.active-map .customTab-content.gridView .singleFeatureCard {
+    .main-body .listing-page-container .listing-content-area.active-map .custom-tab-content.grid-view .listing-card {
         width: calc(50% - 10px);
     }
 
@@ -19093,7 +19092,7 @@ object {
         padding-right: 30px;
     }
 
-    .main-body .all-listing .cateRightContent.active-map .googleMapWraper {
+    .main-body .all-listing .listing-content-area.active-map .googleMapWraper {
         display: none;
     }
 
@@ -19234,24 +19233,24 @@ object {
             gap: 20px;
         }
 
-        .singleFeatureCard {
+        .listing-card {
             width: calc(25% - 15px);
         }
 
         /* All Listing */
-        .catabody-wraper .cateRightContent .cateRightContentWraper {
+        .listing-page-container .listing-content-area .listing-items-wrapper {
             gap: 14px;
         }
 
-        .catabody-wraper .cateLeftContent {
+        .listing-page-container .listing-filter-area {
             min-width: 234px;
         }
 
-        .cateSidebar1 .catagoriesWraper .priceRangeWraper {
+        .filter-items-wrapper .filter-item .priceRangeWraper {
             width: 88px;
         }
 
-        .catabody-wraper .cateRightContent.active-map .customTab-content.gridView .singleFeatureCard {
+        .listing-page-container .listing-content-area.active-map .custom-tab-content.grid-view .listing-card {
             width: calc(50% - 10px);
         }
 
@@ -19413,7 +19412,7 @@ object {
             border-radius: 8px;
         }
 
-        .singleFeatureCard {
+        .listing-card {
             width: calc(33.33% - 13.33px);
         }
 
@@ -19587,7 +19586,7 @@ object {
             align-items: start !important;
         }
 
-        .catabody-wraper .cateRightContent .cateRightContentWraper {
+        .listing-page-container .listing-content-area .listing-items-wrapper {
             flex-direction: column;
         }
 
@@ -19600,7 +19599,7 @@ object {
             height: 350px !important;
         }
 
-        .singleFeatureCard {
+        .listing-card {
             width: calc(50% - 10px);
         }
 
@@ -19816,7 +19815,7 @@ object {
             }
         }
 
-        .singleFeatureCard {
+        .listing-card {
             width: 100%;
         }
 
@@ -19873,7 +19872,7 @@ object {
         }
     }
 
-    .main-body .catabody-wraper .cateRightContent .listingView .singleFeatureCard .featureImg {
+    .main-body .listing-page-container .listing-content-area .listingView .listing-card .listing-Img {
         max-width: 126px;
     }
 
@@ -19894,23 +19893,23 @@ object {
 }
 
 @media only screen and (max-width: 374.95px) {
-    .main-body .catabody-wraper .cateRightContent.active-map .customTab-content.gridView .singleFeatureCard {
+    .main-body .listing-page-container .listing-content-area.active-map .custom-tab-content.grid-view .listing-card {
         width: 100%;
     }
 
-    .main-body .catabody-wraper .cateRightContent.active-map .customTab-content.gridView .singleFeatureCard .featurebody {
+    .main-body .listing-page-container .listing-content-area.active-map .custom-tab-content.grid-view .listing-card .listing-body {
         height: auto;
     }
 
-    .main-body .catabody-wraper .cateRightContent.active-map .customTab-content.listingView .singleFeatureCardWraper .singleFeatureCard .featurebody .featurePricing {
+    .main-body .listing-page-container .listing-content-area.active-map .custom-tab-content.listingView .listing-card-wrapper .listing-card .listing-body .listing-pricing {
         gap: 2px;
     }
 
-    .main-body .catabody-wraper .cateRightContent .listingView .singleFeatureCard .featureImg .main-card-image {
+    .main-body .listing-page-container .listing-content-area .listingView .listing-card .listing-Img .main-card-image {
         height: 190px;
     }
 
-    .main-body .catabody-wraper .cateRightContent.active-map .customTab-content.listingView .singleFeatureCardWraper .singleFeatureCard .featurebody {
+    .main-body .listing-page-container .listing-content-area.active-map .custom-tab-content.listingView .listing-card-wrapper .listing-card .listing-body {
         height: 190px;
     }
 
@@ -23551,7 +23550,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* Fix dollar sign vertical alignment */
-.cateSidebar1 .catagoriesWraper .priceRangeWraper .site_currency_symbol {
+.filter-items-wrapper .filter-item .priceRangeWraper .site_currency_symbol {
     position: absolute;
     left: 8px;
     top: 50%;
@@ -23562,7 +23561,7 @@ input[type="range"]::-moz-range-thumb {
     z-index: 1;
 }
 
-.cateSidebar1 .catagoriesWraper .priceRangeWraper input {
+.filter-items-wrapper .filter-item .priceRangeWraper input {
     padding-left: 20px;
 }
 
@@ -23573,8 +23572,8 @@ input[type="range"]::-moz-range-thumb {
     padding: 8px 0;
 }
 
-/* Use 3-class specificity to beat .cateSidebar1 .catagoriesWraper .noUi-horizontal (also 3 classes) */
-.catagoriesWraper .price_range_setup .noUi-horizontal {
+/* Use 3-class specificity to beat .filter-items-wrapper .filter-item .noUi-horizontal (also 3 classes) */
+.filter-item .price_range_setup .noUi-horizontal {
     height: 4px;
     border: none;
     box-shadow: none;
@@ -23583,12 +23582,12 @@ input[type="range"]::-moz-range-thumb {
     overflow: visible;
 }
 
-.catagoriesWraper .price_range_setup .noUi-connect {
+.filter-item .price_range_setup .noUi-connect {
     background: var(--main-color-one);
 }
 
 /* 3-class specificity ensures handle size beats all global rules */
-.catagoriesWraper .price_range_setup .noUi-handle {
+.filter-item .price_range_setup .noUi-handle {
     width: 16px;
     height: 16px;
     border-radius: 50%;
@@ -23600,8 +23599,8 @@ input[type="range"]::-moz-range-thumb {
     right: -8px;
 }
 
-.catagoriesWraper .price_range_setup .noUi-handle::before,
-.catagoriesWraper .price_range_setup .noUi-handle::after {
+.filter-item .price_range_setup .noUi-handle::before,
+.filter-item .price_range_setup .noUi-handle::after {
     display: none;
 }
 
@@ -23652,40 +23651,40 @@ input[type="range"]::-moz-range-thumb {
     color: #fff;
 }
 
-/* SearchWrapper layout */
-.SearchWrapper .search-top-row {
+/* listing-header layout */
+.listing-header .search-top-row {
     width: 100%;
 }
 
-.SearchWrapper .content-title h4 {
+.listing-header .content-title h4 {
     margin: 0;
     font-size: 18px;
 }
 
-.SearchWrapper .content-title p {
+.listing-header .content-title p {
     font-size: 13px;
     color: var(--paragraph-color);
     margin: 0;
 }
 
-.SearchWrapper .sort-by-wrapper .form-select {
+.listing-header .sort-by-wrapper .form-select {
     width: max-content;
     font-size: 14px;
 }
 
 @media only screen and (max-width: 991.92px) {
-    .SearchWrapper .sort-by-wrapper {
+    .listing-header .sort-by-wrapper {
         width: 100%;
     }
 
-    .SearchWrapper .sort-by-wrapper .form-select {
+    .listing-header .sort-by-wrapper .form-select {
         width: 100%;
     }
 }
 
 /* Mobile sidebar overlay */
 @media only screen and (max-width: 991.92px) {
-    .main-body .catabody-wraper .cateLeftContent {
+    .main-body .listing-page-container .listing-filter-area {
         position: fixed;
         top: 0;
         left: -100%;
@@ -23701,7 +23700,7 @@ input[type="range"]::-moz-range-thumb {
         transition: left 0.3s ease;
     }
 
-    .main-body .catabody-wraper .cateLeftContent.show {
+    .main-body .listing-page-container .listing-filter-area.show {
         left: 0;
     }
 

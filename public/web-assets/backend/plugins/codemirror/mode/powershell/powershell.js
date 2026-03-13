@@ -90,7 +90,7 @@ CodeMirror.defineMode('powershell', function() {
     /Move-Item(Property)?/,
     new RegExp('New-(Alias|Event|EventLog|Item(Property)?|Module|ModuleManifest|Object|PSDrive|PSSession|PSSessionConfigurationFile'
       + '|PSSessionOption|PSTransportOption|Service|TimeSpan|Variable|WebServiceProxy|WinEvent)'),
-    /Out-(Default|File|GridView|Host|Null|Printer|String)/,
+    /Out-(Default|File|grid-view|Host|Null|Printer|String)/,
     /Pause/,
     /(Pop|Push)-Location/,
     /Read-Host/,

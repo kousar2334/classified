@@ -1,5 +1,5 @@
-<div class="singleFeatureCard">
-    <div class="featureImg">
+<div class="listing-card">
+    <div class="listing-Img">
         <div class="favourite-icon">
             <a href="javascript:void(0)" class="click_to_favorite_add_remove" data-listing_id="{{ $ad->id }}">
                 <i class="lar la-heart icon favorite_add_icon"></i>
@@ -9,7 +9,7 @@
             <img src="{{ asset(getFilePath($ad->thumbnail_image)) }}" alt="{{ $ad->title }}" />
         </a>
     </div>
-    <div class="featurebody">
+    <div class="listing-body">
         <div class="card-body-top">
             <h4>
                 <a href="{{ route('ad.details.page', $ad->uid) }}"
@@ -17,7 +17,7 @@
             </h4>
         </div>
 
-        <p class="featureCap d-flex align-items-center gap-1">
+        <p class="listing-title d-flex align-items-center gap-1">
             <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M5.99984 7.83332C5.99984 8.36376 6.21055 8.87246 6.58562 9.24754C6.9607 9.62261 7.4694 9.83332 7.99984 9.83332C8.53027 9.83332 9.03898 9.62261 9.41405 9.24754C9.78912 8.87246 9.99984 8.36376 9.99984 7.83332C9.99984 7.30289 9.78912 6.79418 9.41405 6.41911C9.03898 6.04404 8.53027 5.83332 7.99984 5.83332C7.4694 5.83332 6.9607 6.04404 6.58562 6.41911C6.21055 6.79418 5.99984 7.30289 5.99984 7.83332Z"
@@ -41,7 +41,7 @@
             </div>
         @endif
 
-        <span class="featurePricing d-flex justify-content-between align-items-center">
+        <span class="listing-pricing d-flex justify-content-between align-items-center">
             <span class="money">{{ format_amount($ad->price) }}</span>
             <span class="date">
                 {{ $ad->created_at->diffForHumans() }}

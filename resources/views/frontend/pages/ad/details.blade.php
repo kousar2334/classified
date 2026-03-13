@@ -207,7 +207,7 @@
                                                 @endif
                                             </div>
                                             <div class="pricing head4">{{ format_amount($relAd->price) }}</div>
-                                            <p class="featureCap d-flex align-items-center gap-1">
+                                            <p class="listing-titled-flex align-items-center gap-1">
                                                 <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path

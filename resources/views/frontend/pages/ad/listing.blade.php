@@ -6,349 +6,339 @@
 @endsection
 @section('content')
     <div class="container">
-        <div class="all-listing">
-            <!-- Sidebar backdrop overlay -->
-            <div class="sidebar-overlay" id="sidebar_overlay"></div>
+        <div class="sidebar-overlay" id="sidebar_overlay"></div>
 
-            <div class="catabody-wraper">
-                <!-- Left Content -->
-                <div class="cateLeftContent">
-                    <button type="button" class="sidebar-close-btn d-lg-none" id="sidebar_close_btn">
-                        <i class="las la-times"></i>
-                    </button>
-                    @if (request()->hasAny([
-                            'q',
-                            'cat',
-                            'subcat',
-                            'child_cat',
-                            'country',
-                            'state',
-                            'city',
-                            'min_price',
-                            'max_price',
-                            'condition',
-                            'type',
-                            'date_posted',
-                            'sortby',
-                        ]))
-                        <div class="reset-btn cmn-filter-btn mb-3">
-                            <a href="{{ route('ad.listing.page', $category_slug ?? '') }}" class="btn w-100"
-                                style="background-color: var(--primary-color); color: #fff;">
-                                <i class="las la-undo-alt"></i> {{ translation('Reset Filters') }}
-                            </a>
-                        </div>
-                    @endif
-                    <!--Search any title filter start -->
-                    <div class="catagoriesWraper mb-4">
-                        <div class="catagories w-100">
-                            <div class="single-category-service">
-                                <div class="single-select position-relative">
-                                    <input type="text" class="search-input form-control pe-5" id="search_by_query"
-                                        placeholder="{{ translation('Search here you want') }}" value="{{ request('q') }}">
-                                    <button type="button" id="search_by_query_btn" class="btn position-absolute border-0">
-                                        <i class="las la-search"></i>
-                                    </button>
-                                </div>
+        <div class="listing-page-container">
+            <!-- Left Content -->
+            <div class="listing-filter-area">
+                <button type="button" class="sidebar-close-btn d-lg-none" id="sidebar_close_btn">
+                    <i class="las la-times"></i>
+                </button>
+                @if (request()->hasAny([
+                        'q',
+                        'cat',
+                        'subcat',
+                        'child_cat',
+                        'country',
+                        'state',
+                        'city',
+                        'min_price',
+                        'max_price',
+                        'condition',
+                        'type',
+                        'date_posted',
+                        'sortby',
+                    ]))
+                    <div class="reset-btn cmn-filter-btn mb-3">
+                        <a href="{{ route('ad.listing.page', $category_slug ?? '') }}" class="btn w-100"
+                            style="background-color: var(--primary-color); color: #fff;">
+                            <i class="las la-undo-alt"></i> {{ translation('Reset Filters') }}
+                        </a>
+                    </div>
+                @endif
+                <!--Search any title filter start -->
+                <div class="filter-item mb-4">
+                    <div class="filter-item-content w-100">
+                        <div class="single-category-service">
+                            <div class="single-select position-relative">
+                                <input type="text" class="search-input form-control pe-5" id="search_by_query"
+                                    placeholder="{{ translation('Search here you want') }}" value="{{ request('q') }}">
+                                <button type="button" id="search_by_query_btn" class="btn position-absolute border-0">
+                                    <i class="las la-search"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <!--Search any title filter end -->
-                    <!-- Sort By Dropdown -->
+                </div>
+                <!--Search any title filter end -->
+                <!-- Sort By Dropdown -->
 
-                    <form id="search_listings_form" method="GET"
-                        action="{{ route('ad.listing.page', $category_slug ?? '') }}">
-                        <!-- Hidden inputs for filter state -->
-                        <input type="hidden" name="q" id="search_q_hidden" value="{{ request('q') }}">
-                        <input type="hidden" name="min_price" id="min_price" value="{{ request('min_price') }}">
-                        <input type="hidden" name="max_price" id="max_price" value="{{ request('max_price') }}">
-                        <input type="hidden" name="condition" id="condition" value="{{ request('condition') }}">
-                        <input type="hidden" name="type" id="type" value="{{ request('type') }}">
-                        <input type="hidden" name="date_posted" id="date_posted" value="{{ request('date_posted') }}">
-                        <input type="hidden" name="sortby" id="sortby_hidden" value="{{ request('sortby') }}">
+                <form id="search_listings_form" method="GET"
+                    action="{{ route('ad.listing.page', $category_slug ?? '') }}">
+                    <!-- Hidden inputs for filter state -->
+                    <input type="hidden" name="q" id="search_q_hidden" value="{{ request('q') }}">
+                    <input type="hidden" name="min_price" id="min_price" value="{{ request('min_price') }}">
+                    <input type="hidden" name="max_price" id="max_price" value="{{ request('max_price') }}">
+                    <input type="hidden" name="condition" id="condition" value="{{ request('condition') }}">
+                    <input type="hidden" name="type" id="type" value="{{ request('type') }}">
+                    <input type="hidden" name="date_posted" id="date_posted" value="{{ request('date_posted') }}">
+                    <input type="hidden" name="sortby" id="sortby_hidden" value="{{ request('sortby') }}">
 
-                        <div class="cateSidebar1">
-                            <!-- All Categories -->
-                            <div class="catagoriesWraper mb-4">
-                                <div class="catagories w-100">
-                                    <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Categories') }}</h5>
-                                    <input type="hidden" name="cat_id" id="selected_category_id"
-                                        value="{{ request('cat_id') }}">
+                    <div class="filter-items-wrapper">
+                        <!-- All Categories -->
+                        <div class="filter-item mb-4">
+                            <div class="filter-item-content w-100">
+                                <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Categories') }}</h5>
+                                <input type="hidden" name="cat_id" id="selected_category_id"
+                                    value="{{ request('cat_id') }}">
 
-                                    <!-- Category Section -->
-                                    <div id="category-section">
-                                        <!-- Back button (hidden for root level) -->
-                                        <div id="back-button-container" class="mb-2" style="display: none;">
-                                            <a href="javascript:void(0)" id="back-button" class="text-primary small">
-                                                <i class="las la-arrow-left"></i> <span
-                                                    id="back-button-text">{{ translation('Back to Categories') }}</span>
-                                            </a>
+                                <!-- Category Section -->
+                                <div id="category-section">
+                                    <!-- Back button (hidden for root level) -->
+                                    <div id="back-button-container" class="mb-2" style="display: none;">
+                                        <a href="javascript:void(0)" id="back-button" class="text-primary small">
+                                            <i class="las la-arrow-left"></i> <span
+                                                id="back-button-text">{{ translation('Back to Categories') }}</span>
+                                        </a>
+                                    </div>
+
+                                    <!-- Selected Category Display (when has children) -->
+                                    @if ($selectedCategory && $selectedCategoryId)
+                                        <div id="selected-category-display" class="selected-cat-display">
+                                            <strong class="selected-cat-name">
+                                                <i class="las la-folder-open icon-mr-sm"></i>
+                                                {{ $selectedCategory->translation('title') }}
+                                            </strong>
                                         </div>
+                                    @endif
 
-                                        <!-- Selected Category Display (when has children) -->
-                                        @if ($selectedCategory && $selectedCategoryId)
-                                            <div id="selected-category-display" class="selected-cat-display">
-                                                <strong class="selected-cat-name">
-                                                    <i class="las la-folder-open icon-mr-sm"></i>
-                                                    {{ $selectedCategory->translation('title') }}
-                                                </strong>
-                                            </div>
-                                        @endif
-
-                                        <!-- Category List -->
-                                        <ul class="category-list" id="category-list">
-                                            @foreach ($categories as $category)
-                                                <li class="category-item {{ request('cat_id') == $category->id ? 'active' : '' }}"
-                                                    data-category-id="{{ $category->id }}"
-                                                    data-category-name="{{ $category->translation('title') }}"
-                                                    data-parent-id="{{ $category->parent_id ?? '' }}"
-                                                    data-parent-name="{{ $category->parent_title ?? '' }}">
-                                                    <a href="javascript:void(0)" class="category-link">
-                                                        <i class="las la-angle-right"></i>
-                                                        {{ $category->translation('title') }}
-                                                    </a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Location Filter -->
-                            <div class="catagoriesWraper mb-4">
-                                <div class="catagories w-100">
-                                    <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Location') }}</h5>
-                                    <input type="hidden" name="country" id="selected_country"
-                                        value="{{ request('country') }}">
-                                    <input type="hidden" name="state" id="selected_state"
-                                        value="{{ request('state') }}">
-                                    <input type="hidden" name="city" id="selected_city"
-                                        value="{{ request('city') }}">
-
-                                    <!-- Country List -->
-                                    <div id="country-section">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <span class="text-muted small">{{ translation('Select Country') }}</span>
-                                        </div>
-                                        <ul class="location-list" id="country-list">
-                                            <!-- Countries will be loaded here -->
-                                        </ul>
-                                    </div>
-
-                                    <!-- State List -->
-                                    <div id="state-section" style="display: none;">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <a href="javascript:void(0)" id="back-to-countries"
-                                                class="text-primary small">
-                                                <i class="las la-arrow-left"></i> {{ translation('Back to Countries') }}
-                                            </a>
-                                            <span class="text-muted small" id="selected-country-name"></span>
-                                        </div>
-                                        <ul class="location-list" id="state-list">
-                                            <!-- States will be loaded here -->
-                                        </ul>
-                                    </div>
-
-                                    <!-- City List -->
-                                    <div id="city-section" style="display: none;">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <a href="javascript:void(0)" id="back-to-states" class="text-primary small">
-                                                <i class="las la-arrow-left"></i> {{ translation('Back to States') }}
-                                            </a>
-                                            <span class="text-muted small" id="selected-state-name"></span>
-                                        </div>
-                                        <ul class="location-list" id="city-list">
-                                            <!-- Cities will be loaded here -->
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!--price range filter -->
-                            <div class="catagoriesWraper mb-4">
-                                <div class="catagories priceRange">
-                                    <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Price Range') }}</h5>
-                                    <input type="hidden" name="price_range_value" id="price_range_value">
-                                    <div class="price-input">
-                                        <div class="field">
-                                            <div class="min_price_range priceRangeWraper">
-                                                <span class="site_currency_symbol">$</span>
-                                                <input type="number" class="input-min"
-                                                    value="{{ request('min_price', 0) }}">
-                                            </div>
-                                        </div>
-                                        <div class="separator">-</div>
-                                        <div class="field">
-                                            <div class="max_price_range priceRangeWraper">
-                                                <span class="site_currency_symbol">$</span>
-                                                <input type="number" class="input-max"
-                                                    value="{{ request('max_price', 50000) }}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="price_range_setup">
-                                        <div id="price-slider"></div>
-                                    </div>
-                                    <!-- cancel and apply button start -->
-                                    <div class="cancel_apply_section_start mt-3">
-                                        <button type="button" class="filter-btn w-100"
-                                            id="price_wise_filter_apply">{{ translation('Filter') }}</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--price range filter end -->
-
-                            <div class="catagoriesWraper mb-4">
-                                <div class="catagories">
-                                    <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Types') }}</h5>
-                                    <div class="filter-radio-group">
-                                        <label class="filter-radio-label">
-                                            <input type="radio" name="type_radio" value="featured"
-                                                {{ request('type') == 'featured' ? 'checked' : '' }}>
-                                            <span>{{ translation('Featured') }}</span>
-                                        </label>
-                                        <label class="filter-radio-label">
-                                            <input type="radio" name="type_radio" value="top_listing"
-                                                {{ request('type') == 'top_listing' ? 'checked' : '' }}>
-                                            <span>{{ translation('Top Listing') }}</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="catagoriesWraper mb-4">
-                                <div class="catagories">
-                                    <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Condition') }}</h5>
-                                    <div class="filter-radio-group">
-                                        @foreach ($conditions as $condition)
-                                            <label class="filter-radio-label">
-                                                <input type="radio" name="condition_radio"
-                                                    value="{{ $condition->id }}"
-                                                    {{ request('condition') == $condition->id ? 'checked' : '' }}>
-                                                <span>{{ $condition->translation('title') }}</span>
-                                            </label>
+                                    <!-- Category List -->
+                                    <ul class="category-list" id="category-list">
+                                        @foreach ($categories as $category)
+                                            <li class="category-item {{ request('cat_id') == $category->id ? 'active' : '' }}"
+                                                data-category-id="{{ $category->id }}"
+                                                data-category-name="{{ $category->translation('title') }}"
+                                                data-parent-id="{{ $category->parent_id ?? '' }}"
+                                                data-parent-name="{{ $category->parent_title ?? '' }}">
+                                                <a href="javascript:void(0)" class="category-link">
+                                                    <i class="las la-angle-right"></i>
+                                                    {{ $category->translation('title') }}
+                                                </a>
+                                            </li>
                                         @endforeach
-                                    </div>
+                                    </ul>
                                 </div>
                             </div>
-
-                            <div class="catagoriesWraper mb-4">
-                                <div class="catagories">
-                                    <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Date Posted') }}</h5>
-                                    <div class="filter-radio-group">
-                                        <label class="filter-radio-label">
-                                            <input type="radio" name="date_posted_radio" value="today"
-                                                {{ request('date_posted') == 'today' ? 'checked' : '' }}>
-                                            <span>{{ translation('Today') }}</span>
-                                        </label>
-                                        <label class="filter-radio-label">
-                                            <input type="radio" name="date_posted_radio" value="yesterday"
-                                                {{ request('date_posted') == 'yesterday' ? 'checked' : '' }}>
-                                            <span>{{ translation('Yesterday') }}</span>
-                                        </label>
-                                        <label class="filter-radio-label">
-                                            <input type="radio" name="date_posted_radio" value="last_week"
-                                                {{ request('date_posted') == 'last_week' ? 'checked' : '' }}>
-                                            <span>{{ translation('Last Week') }}</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
-                    </form>
-                </div>
 
-                <!-- Right Content -->
-                <div class="cateRightContent">
+                        <!-- Location Filter -->
+                        <div class="filter-item mb-4">
+                            <div class="filter-item-content w-100">
+                                <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Location') }}</h5>
+                                <input type="hidden" name="country" id="selected_country"
+                                    value="{{ request('country') }}">
+                                <input type="hidden" name="state" id="selected_state" value="{{ request('state') }}">
+                                <input type="hidden" name="city" id="selected_city" value="{{ request('city') }}">
 
-                    <div class="cateRightContentWraper">
-                        <div class="content-part">
-                            <div class="viewItems">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="SearchWrapper p-2">
-                                            <div class="search-top-row d-flex justify-content-between align-items-center">
-                                                <div class="content-title">
-                                                    <h4>
-                                                        @if ($breadcrumbChildCategory)
-                                                            {{ $breadcrumbChildCategory->translation('title') }}
-                                                        @elseif($breadcrumbSubcategory)
-                                                            {{ $breadcrumbSubcategory->translation('title') }}
-                                                        @elseif($breadcrumbCategory)
-                                                            {{ $breadcrumbCategory->translation('title') }}
-                                                        @else
-                                                            {{ translation('All Ads') }}
-                                                        @endif
-                                                    </h4>
-                                                    <p class="mb-0">{{ $ads->total() }}
-                                                        {{ $ads->total() == 1 ? translation('Ad') : translation('Ads') }}
-                                                        {{ translation('found') }}</p>
-                                                </div>
-                                                <div class="sidebar-btn d-lg-none">
-                                                    <a href="javascript:void(0)"><i class="las la-bars"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="sort-by-wrapper mt-2">
-                                                <select id="search_by_sorting" class="form-select">
-                                                    <option value="">{{ translation('Sort By') }}</option>
-                                                    <option value="latest_listing"
-                                                        {{ request('sortby') == 'latest_listing' ? 'selected' : '' }}>
-                                                        {{ translation('Latest Listing') }}
-                                                    </option>
-                                                    <option value="lowest_price"
-                                                        {{ request('sortby') == 'lowest_price' ? 'selected' : '' }}>
-                                                        {{ translation('Lowest Price') }}
-                                                    </option>
-                                                    <option value="highest_price"
-                                                        {{ request('sortby') == 'highest_price' ? 'selected' : '' }}>
-                                                        {{ translation('Highest Price') }}
-                                                    </option>
-                                                </select>
-                                            </div>
+                                <!-- Country List -->
+                                <div id="country-section">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-muted small">{{ translation('Select Country') }}</span>
+                                    </div>
+                                    <ul class="location-list" id="country-list">
+                                        <!-- Countries will be loaded here -->
+                                    </ul>
+                                </div>
+
+                                <!-- State List -->
+                                <div id="state-section" style="display: none;">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <a href="javascript:void(0)" id="back-to-countries" class="text-primary small">
+                                            <i class="las la-arrow-left"></i> {{ translation('Back to Countries') }}
+                                        </a>
+                                        <span class="text-muted small" id="selected-country-name"></span>
+                                    </div>
+                                    <ul class="location-list" id="state-list">
+                                        <!-- States will be loaded here -->
+                                    </ul>
+                                </div>
+
+                                <!-- City List -->
+                                <div id="city-section" style="display: none;">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <a href="javascript:void(0)" id="back-to-states" class="text-primary small">
+                                            <i class="las la-arrow-left"></i> {{ translation('Back to States') }}
+                                        </a>
+                                        <span class="text-muted small" id="selected-state-name"></span>
+                                    </div>
+                                    <ul class="location-list" id="city-list">
+                                        <!-- Cities will be loaded here -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--price range filter -->
+                        <div class="filter-item mb-4">
+                            <div class="filter-item-content priceRange">
+                                <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Price Range') }}</h5>
+                                <input type="hidden" name="price_range_value" id="price_range_value">
+                                <div class="price-input">
+                                    <div class="field">
+                                        <div class="min_price_range priceRangeWraper">
+                                            <span class="site_currency_symbol">$</span>
+                                            <input type="number" class="input-min"
+                                                value="{{ request('min_price', 0) }}">
                                         </div>
-
+                                    </div>
+                                    <div class="separator">-</div>
+                                    <div class="field">
+                                        <div class="max_price_range priceRangeWraper">
+                                            <span class="site_currency_symbol">$</span>
+                                            <input type="number" class="input-max"
+                                                value="{{ request('max_price', 50000) }}">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            {{-- Advertisements: listing_top --}}
-                            @include('frontend.components.ad-slot', ['position' => 'listing_top'])
-                            {{-- End Advertisements --}}
-
-                            <div class="gridView customTab-content customTab-content-1 active">
-                                <div class="gridViews">
-                                    <div class="singleFeatureCardWraper d-flex" id="ads-container">
-                                        @forelse($ads as $ad)
-                                            <x-single-listing :ad="$ad" />
-                                        @empty
-                                            <x-empty-result :title="translation('No Ads found')" :message="translation(
-                                                'Try adjusting your filters to find what you\'re looking for',
-                                            )" />
-                                        @endforelse
-                                    </div>
+                                <div class="price_range_setup">
+                                    <div id="price-slider"></div>
+                                </div>
+                                <!-- cancel and apply button start -->
+                                <div class="cancel_apply_section_start mt-3">
+                                    <button type="button" class="filter-btn w-100"
+                                        id="price_wise_filter_apply">{{ translation('Filter') }}</button>
                                 </div>
                             </div>
-
                         </div>
+                        <!--price range filter end -->
+
+                        <div class="filter-item mb-4">
+                            <div class="filter-item-content">
+                                <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Types') }}</h5>
+                                <div class="filter-radio-group">
+                                    <label class="filter-radio-label">
+                                        <input type="radio" name="type_radio" value="featured"
+                                            {{ request('type') == 'featured' ? 'checked' : '' }}>
+                                        <span>{{ translation('Featured') }}</span>
+                                    </label>
+                                    <label class="filter-radio-label">
+                                        <input type="radio" name="type_radio" value="top_listing"
+                                            {{ request('type') == 'top_listing' ? 'checked' : '' }}>
+                                        <span>{{ translation('Top Listing') }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-item mb-4">
+                            <div class="filter-item-content">
+                                <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Condition') }}</h5>
+                                <div class="filter-radio-group">
+                                    @foreach ($conditions as $condition)
+                                        <label class="filter-radio-label">
+                                            <input type="radio" name="condition_radio" value="{{ $condition->id }}"
+                                                {{ request('condition') == $condition->id ? 'checked' : '' }}>
+                                            <span>{{ $condition->translation('title') }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-item mb-4">
+                            <div class="filter-item-content">
+                                <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Date Posted') }}</h5>
+                                <div class="filter-radio-group">
+                                    <label class="filter-radio-label">
+                                        <input type="radio" name="date_posted_radio" value="today"
+                                            {{ request('date_posted') == 'today' ? 'checked' : '' }}>
+                                        <span>{{ translation('Today') }}</span>
+                                    </label>
+                                    <label class="filter-radio-label">
+                                        <input type="radio" name="date_posted_radio" value="yesterday"
+                                            {{ request('date_posted') == 'yesterday' ? 'checked' : '' }}>
+                                        <span>{{ translation('Yesterday') }}</span>
+                                    </label>
+                                    <label class="filter-radio-label">
+                                        <input type="radio" name="date_posted_radio" value="last_week"
+                                            {{ request('date_posted') == 'last_week' ? 'checked' : '' }}>
+                                        <span>{{ translation('Last Week') }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-
-                    <!-- Pagination -->
-                    @if ($ads->hasPages())
-                        <div class="row justify-content-center">
-                            <div class="col-lg-12">
-                                <div class="pagination mt-60">
-                                    <div class="blog-pagination">
-                                        <div class="custom-pagination mt-4 mt-lg-5">
-                                            {{ $ads->links() }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-                </div>
+                </form>
             </div>
 
+            <!-- Right Content -->
+            <div class="listing-content-area">
+
+                <div class="listing-items-wrapper">
+                    <div class="content-part">
+                        <div class="items-list">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="listing-header p-2 gap-3">
+                                        <div class="search-top-row d-flex justify-content-between align-items-center">
+                                            <div class="content-title">
+                                                <h4>
+                                                    @if ($breadcrumbChildCategory)
+                                                        {{ $breadcrumbChildCategory->translation('title') }}
+                                                    @elseif($breadcrumbSubcategory)
+                                                        {{ $breadcrumbSubcategory->translation('title') }}
+                                                    @elseif($breadcrumbCategory)
+                                                        {{ $breadcrumbCategory->translation('title') }}
+                                                    @else
+                                                        {{ translation('All Ads') }}
+                                                    @endif
+                                                </h4>
+                                                <p class="mb-0">{{ $ads->total() }}
+                                                    {{ $ads->total() == 1 ? translation('Ad') : translation('Ads') }}
+                                                    {{ translation('found') }}</p>
+                                            </div>
+                                            <div class="sidebar-btn d-lg-none">
+                                                <a href="javascript:void(0)"><i class="las la-bars"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="sort-by-wrapper d-flex justify-content-end">
+                                            <select id="search_by_sorting" class="form-select">
+                                                <option value="">{{ translation('Sort By') }}</option>
+                                                <option value="latest_listing"
+                                                    {{ request('sortby') == 'latest_listing' ? 'selected' : '' }}>
+                                                    {{ translation('Latest Listing') }}
+                                                </option>
+                                                <option value="lowest_price"
+                                                    {{ request('sortby') == 'lowest_price' ? 'selected' : '' }}>
+                                                    {{ translation('Lowest Price') }}
+                                                </option>
+                                                <option value="highest_price"
+                                                    {{ request('sortby') == 'highest_price' ? 'selected' : '' }}>
+                                                    {{ translation('Highest Price') }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Advertisements: listing_top --}}
+                        @include('frontend.components.ad-slot', ['position' => 'listing_top'])
+                        {{-- End Advertisements --}}
+
+                        <div class="grid-view custom-tab-content active">
+                            <div class="listing-card-wrapper d-flex" id="ads-container">
+                                @forelse($ads as $ad)
+                                    <x-single-listing :ad="$ad" />
+                                @empty
+                                    <x-empty-result :title="translation('No Ads found')" :message="translation(
+                                        'Try adjusting your filters to find what you\'re looking for',
+                                    )" />
+                                @endforelse
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                @if ($ads->hasPages())
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="pagination mt-60">
+                                <div class="blog-pagination">
+                                    <div class="custom-pagination mt-4 mt-lg-5">
+                                        {{ $ads->links() }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 @endsection
