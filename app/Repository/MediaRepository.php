@@ -135,23 +135,39 @@ class MediaRepository
      */
     public function mediaLists($request)
     {
-
         $query = Media::query();
 
         $selected_items = json_decode($request['selected_items'], true);
 
-        $query = $query->whereIn('id', $selected_items)
-            ->orWhereNotIn('id', $selected_items);
+        // Search by title or file name
+        if (!empty($request['search'])) {
+            $search = $request['search'];
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('file_name', 'like', '%' . $search . '%');
+            });
+        }
 
+        // Filter by file type
+        if (!empty($request['filter_type']) && $request['filter_type'] !== 'all') {
+            $typeMap = [
+                'image'    => ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'],
+                'video'    => ['mp4', 'webm', 'avi', 'mov'],
+                'document' => ['pdf', 'zip', 'doc', 'docx', 'xls', 'xlsx'],
+            ];
+            $mimeTypes = $typeMap[$request['filter_type']] ?? [];
+            if (!empty($mimeTypes)) {
+                $query->whereIn('mime_type', $mimeTypes);
+            }
+        }
 
+        // Order selected items first, then newest
         if (sizeof($selected_items) > 0) {
-            $query = $query->orderByRaw('case when id=? then -1 else 0 end, id desc', [$selected_items]);
+            $placeholders = implode(',', array_fill(0, count($selected_items), '?'));
+            $query->orderByRaw("CASE WHEN id IN ({$placeholders}) THEN 0 ELSE 1 END, id DESC", $selected_items);
+        } else {
+            $query->orderBy('id', 'DESC');
         }
-
-        if (sizeof($selected_items) < 1) {
-            $query = $query->orderBy('id', 'DESC');
-        }
-
 
         return $query->paginate($request['per_page']);
     }

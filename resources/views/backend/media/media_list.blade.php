@@ -31,6 +31,37 @@
 
     {{-- Media Library Tab --}}
     <div class="tab-pane fade show active" id="media-library" role="tabpanel" aria-labelledby="media-library-tab">
+
+        {{-- Toolbar: Search + Filter + Multi-select --}}
+        <div class="media-toolbar border-bottom px-2 py-2 d-flex align-items-center flex-wrap">
+            <div class="input-group input-group-sm media-search-group mr-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+                <input type="text" class="form-control" id="media-search-input"
+                    placeholder="{{ translation('Search files...') }}">
+                <div class="input-group-append d-none" id="media-search-clear-btn">
+                    <button type="button" class="btn btn-outline-secondary" onclick="clearMediaSearch()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="btn-group btn-group-sm media-type-filters mr-2" role="group">
+                <button type="button" class="btn btn-outline-secondary media-filter-btn active"
+                    data-type="all">{{ translation('All') }}</button>
+                <button type="button" class="btn btn-outline-secondary media-filter-btn"
+                    data-type="image">{{ translation('Images') }}</button>
+                <button type="button" class="btn btn-outline-secondary media-filter-btn"
+                    data-type="video">{{ translation('Videos') }}</button>
+                <button type="button" class="btn btn-outline-secondary media-filter-btn"
+                    data-type="document">{{ translation('Docs') }}</button>
+            </div>
+            <div class="custom-control custom-switch ml-auto">
+                <input type="checkbox" class="custom-control-input" id="multi-select-toggle">
+                <label class="custom-control-label" for="multi-select-toggle">{{ translation('Multi Select') }}</label>
+            </div>
+        </div>
+
         <div class="media-container row m-0">
 
             {{-- Media grid --}}

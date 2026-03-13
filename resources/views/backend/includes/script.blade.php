@@ -17,6 +17,10 @@
     let total_items = 0;
     let for_media_manager = true;
     let ready_for_insert_items = [];
+    let media_search_query = "";
+    let media_filter_type = "all";
+    let multi_select_mode = false;
+    let media_search_timer = null;
     /**
      * 
      *Initinalization media Manager
@@ -127,30 +131,27 @@
      **/
     function selectMedia(e, id) {
         "use strict";
-        //If not press ctrl and shift key
-        if (!e.ctrlKey && !e.shiftKey) {
+        let item_id = "list-item-" + id;
+
+        if (!e.ctrlKey && !e.shiftKey && !multi_select_mode) {
+            // Single-select: deselect all others
             $('.single-media-item').removeClass('selected');
             selected_items = [];
             selected_items.push(id);
-        }
-        //selected sigle item
-        let item_id = "list-item-" + id;
-        $("#" + item_id).addClass('selected');
-
-        //Remove duplicate items
-        if (e.ctrlKey || e.shiftKey) {
+            $("#" + item_id).addClass('selected');
+        } else {
+            // Multi-select: toggle clicked item
             let duplicate_item = selected_items.includes(id);
             if (duplicate_item) {
                 $("#" + item_id).removeClass('selected');
                 selected_items = selected_items.filter(x => x !== id);
-            }
-            if (!duplicate_item) {
+            } else {
                 selected_items.push(id);
+                $("#" + item_id).addClass('selected');
             }
         }
 
         previewSelectedFiles();
-
     }
     /**
      * Display selected files details
@@ -263,7 +264,9 @@
                 page: current_page,
                 per_page: perPage,
                 selected_items: JSON.stringify(selected_items),
-                filter_by_user: filter_by_user
+                filter_by_user: filter_by_user,
+                search: media_search_query,
+                filter_type: media_filter_type
             },
             function(response, status) {
                 if (pagination) {
@@ -429,6 +432,63 @@
             placeholder.innerHTML = '<i class="fas fa-images"></i><span>No images selected</span>';
             thumbsEl.appendChild(placeholder);
         }
+    });
+
+    // Media search input (debounced)
+    $(document).on('input', '#media-search-input', function() {
+        var val = $(this).val();
+        $('#media-search-clear-btn').toggleClass('d-none', val.length === 0);
+        clearTimeout(media_search_timer);
+        media_search_timer = setTimeout(function() {
+            media_search_query = val;
+            current_page = 1;
+            getMediaItemsList();
+        }, 400);
+    });
+
+    // Clear search
+    function clearMediaSearch() {
+        $('#media-search-input').val('');
+        $('#media-search-clear-btn').addClass('d-none');
+        media_search_query = '';
+        current_page = 1;
+        getMediaItemsList();
+    }
+
+    // Media type filter buttons
+    $(document).on('click', '.media-filter-btn', function() {
+        $('.media-filter-btn').removeClass('active');
+        $(this).addClass('active');
+        media_filter_type = $(this).data('type');
+        current_page = 1;
+        getMediaItemsList();
+    });
+
+    // Multi-select toggle
+    $(document).on('change', '#multi-select-toggle', function() {
+        multi_select_mode = $(this).is(':checked');
+        if (!multi_select_mode) {
+            // When turning off, keep only the last selected item
+            if (selected_items.length > 1) {
+                var last = selected_items[selected_items.length - 1];
+                $('.single-media-item').removeClass('selected');
+                $('#list-item-' + last).addClass('selected');
+                selected_items = [last];
+                previewSelectedFiles();
+            }
+        }
+    });
+
+    // Reset toolbar state when media modal opens
+    $(document).on('show.bs.modal', '#mediaManagerModal', function() {
+        media_search_query = '';
+        media_filter_type = 'all';
+        multi_select_mode = false;
+        $('#media-search-input').val('');
+        $('#media-search-clear-btn').addClass('d-none');
+        $('.media-filter-btn').removeClass('active');
+        $('.media-filter-btn[data-type="all"]').addClass('active');
+        $('#multi-select-toggle').prop('checked', false);
     });
 
     // Copy URL button in media preview sidebar (delegated — content is AJAX-injected)
