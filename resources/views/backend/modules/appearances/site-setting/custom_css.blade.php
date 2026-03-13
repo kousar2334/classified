@@ -1,6 +1,5 @@
 @php
     $links = [
-        
         [
             'title' => 'Seo Setting',
             'route' => '',
@@ -10,7 +9,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Custom Css') }}
+    {{ __tr('Custom Css') }}
 @endsection
 @section('page-style')
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
@@ -25,7 +24,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Custom Css') }}</h3>
+                            <h3 class="card-title">{{ __tr('Custom Css') }}</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -36,7 +35,7 @@
                                     <div class="tab-content" id="vert-tabs-tabContent">
                                         <div
                                             class="tab-pane text-left fade {{ Request::routeIs(['admin.appearance.site.setting.custom.css']) ? 'show active' : '' }}">
-                                            <h4>{{ translation('Custom Css') }}</h4>
+                                            <h4>{{ __tr('Custom Css') }}</h4>
                                             <form method="POST"
                                                 action="{{ route('admin.appearance.site.setting.custom.css.update') }}">
                                                 @csrf
@@ -45,7 +44,7 @@
                                                 </div>
                                                 <div class="form-row justify-content-end">
                                                     <button type="submit" class="btn btn-primary">
-                                                        {{ translation('Save Change') }}
+                                                        {{ __tr('Save Change') }}
                                                     </button>
                                                 </div>
                                             </form>

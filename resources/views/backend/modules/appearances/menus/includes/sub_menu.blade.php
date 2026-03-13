@@ -24,26 +24,26 @@
                 <div class="border bg-white menu-item-content-body p-2">
                     <div class="menu-item-content">
                         <div class="form-group">
-                            <label>{{ translation('Text') }}</label>
+                            <label>{{ __tr('Text') }}</label>
                             <input type="text" id="text-{{ $subitem->id }}" class="form-control" name="text"
                                 value="{{ $subitem->translation('title', $selected_language) }}"
-                                placeholder="{{ translation('Enter Text') }}">
+                                placeholder="{{ __tr('Enter Text') }}">
                         </div>
                         <div class="form-group">
-                            <label>{{ translation('URL') }}</label>
+                            <label>{{ __tr('URL') }}</label>
                             <input type="text" id="link-{{ $subitem->id }}" class="form-control" name="link"
                                 value="{{ $subitem->link }}" {{ $subitem->linkable_type != null ? 'disabled' : '' }}
-                                placeholder="{{ translation('https://') }}">
+                                placeholder="{{ __tr('https://') }}">
                         </div>
                     </div>
                     <div class="d-flex justify-content-between menu-item-update-actions">
                         <button class="btn btn-outline-danger btn-sm menu-item-remove-btn"
                             data-id="{{ $subitem->id }}">
-                            {{ translation('Remove Item') }}
+                            {{ __tr('Remove Item') }}
                         </button>
                         <button class="btn btn-outline-primary btn-sm menu-item-update-btn"
                             data-id="{{ $subitem->id }}">
-                            {{ translation('Save Change') }}
+                            {{ __tr('Save Change') }}
                         </button>
 
                     </div>

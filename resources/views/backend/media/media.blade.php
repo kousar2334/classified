@@ -15,7 +15,7 @@
         @else
             <div class="multi-media-placeholder" id="multi-placeholder-{{ $name }}">
                 <i class="fas fa-images"></i>
-                <span>{{ translation('No images selected') }}</span>
+                <span>{{ __tr('No images selected') }}</span>
             </div>
         @endif
     </div>
@@ -23,7 +23,7 @@
         <button type="button" class="btn-link bg-transparent border-0 media-choose-btn" data-toggle="modal"
             data-target="#mediaManagerModal"
             onclick="getMediaModalData('{{ $name }}', {{ $media_ids }}, 'true')">
-            {{ translation('Choose Files') }}
+            {{ __tr('Choose Files') }}
         </button>
     </div>
 @else
@@ -34,7 +34,7 @@
             <div class="single-media-placeholder {{ $value ? 'media-hidden' : '' }}"
                 id="single-placeholder-{{ $name }}">
                 <i class="fas fa-image"></i>
-                <span>{{ translation('No image selected') }}</span>
+                <span>{{ __tr('No image selected') }}</span>
             </div>
             {{-- Image container: shown when image selected --}}
             <div class="media-input-container {{ $width == '100' ? 'w-100' : '' }} {{ !$value ? 'media-hidden' : '' }}"
@@ -52,7 +52,7 @@
             <button type="button" class="btn-link bg-transparent border-0 media-choose-btn" data-toggle="modal"
                 data-target="#mediaManagerModal"
                 onclick="getMediaModalData('{{ $name }}', {{ $media_ids }}, 'false')">
-                {{ translation('Choose File') }}
+                {{ __tr('Choose File') }}
             </button>
         </div>
     </div>

@@ -1,11 +1,9 @@
 @php
-    $links = [
-        ['title' => 'Report Reasons', 'route' => 'classified.ads.report.reasons.list', 'active' => true],
-    ];
+    $links = [['title' => 'Report Reasons', 'route' => 'classified.ads.report.reasons.list', 'active' => true]];
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Report Reasons') }}
+    {{ __tr('Report Reasons') }}
 @endsection
 @section('page-content')
     <x-admin-page-header title="Report Reasons" :links="$links" />
@@ -15,20 +13,20 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Report Reasons') }}</h3>
+                            <h3 class="card-title">{{ __tr('Report Reasons') }}</h3>
                             <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
                                 data-target="#new-reason-modal">
-                                {{ translation('Add New Reason') }}
+                                {{ __tr('Add New Reason') }}
                             </button>
                         </div>
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover text-nowrap table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('#') }}</th>
-                                        <th>{{ translation('Title') }}</th>
-                                        <th>{{ translation('Status') }}</th>
-                                        <th class="text-right">{{ translation('Action') }}</th>
+                                        <th>{{ __tr('#') }}</th>
+                                        <th>{{ __tr('Title') }}</th>
+                                        <th>{{ __tr('Status') }}</th>
+                                        <th class="text-right">{{ __tr('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,15 +38,15 @@
                                             </td>
                                             <td>
                                                 @if ($reason->status == config('settings.general_status.active'))
-                                                    <span class="badge badge-success">{{ translation('Active') }}</span>
+                                                    <span class="badge badge-success">{{ __tr('Active') }}</span>
                                                 @else
-                                                    <span class="badge badge-danger">{{ translation('Inactive') }}</span>
+                                                    <span class="badge badge-danger">{{ __tr('Inactive') }}</span>
                                                 @endif
                                             </td>
                                             <td class="text-right">
                                                 <div class="btn-group">
                                                     <button type="button"
-                                                        class="btn btn-default">{{ translation('Action') }}</button>
+                                                        class="btn btn-default">{{ __tr('Action') }}</button>
                                                     <button type="button"
                                                         class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
                                                         data-toggle="dropdown" aria-expanded="false">
@@ -56,12 +54,12 @@
                                                     <div class="dropdown-menu dropdown-menu-right" role="menu">
                                                         <a class="dropdown-item"
                                                             href="{{ route('classified.ads.report.reasons.edit', ['id' => $reason->id, 'lang' => defaultLangCode()]) }}">
-                                                            {{ translation('Edit') }}
+                                                            {{ __tr('Edit') }}
                                                         </a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item delete-reason" href="#"
                                                             data-id="{{ $reason->id }}">
-                                                            {{ translation('Delete') }}
+                                                            {{ __tr('Delete') }}
                                                         </a>
                                                     </div>
                                                 </div>
@@ -71,7 +69,7 @@
                                         <tr>
                                             <td colspan="4">
                                                 <p class="alert alert-default-danger text-center">
-                                                    {{ translation('No Item Found') }}
+                                                    {{ __tr('No Item Found') }}
                                                 </p>
                                             </td>
                                         </tr>
@@ -94,7 +92,7 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Add New Report Reason') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Add New Report Reason') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -102,23 +100,23 @@
                     <div class="modal-body">
                         <form id="new-reason-form">
                             <div class="form-group">
-                                <label>{{ translation('Title') }}</label>
+                                <label>{{ __tr('Title') }}</label>
                                 <input type="text" name="title" class="form-control"
-                                    placeholder="{{ translation('Enter reason title') }}">
+                                    placeholder="{{ __tr('Enter reason title') }}">
                             </div>
                             <div class="form-group">
-                                <label>{{ translation('Status') }}</label>
+                                <label>{{ __tr('Status') }}</label>
                                 <select name="status" class="form-control">
                                     <option value="{{ config('settings.general_status.active') }}">
-                                        {{ translation('Active') }}
+                                        {{ __tr('Active') }}
                                     </option>
                                     <option value="{{ config('settings.general_status.in_active') }}">
-                                        {{ translation('Inactive') }}
+                                        {{ __tr('Inactive') }}
                                     </option>
                                 </select>
                             </div>
                             <button type="button"
-                                class="btn btn-success mt-2 store-reason-btn">{{ translation('Save') }}</button>
+                                class="btn btn-success mt-2 store-reason-btn">{{ __tr('Save') }}</button>
                         </form>
                     </div>
                 </div>
@@ -130,19 +128,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete this reason?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete this reason?') }}</h4>
                         <form method="POST" action="{{ route('classified.ads.report.reasons.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-reason-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>
@@ -168,21 +166,22 @@
                     data: $('#new-reason-form').serialize(),
                     success: function(response) {
                         if (response.success) {
-                            toastr.success('{{ translation('Report reason created successfully') }}');
+                            toastr.success('{{ __tr('Report reason created successfully') }}');
                             location.reload();
                         } else {
-                            toastr.error('{{ translation('Failed to create reason') }}');
+                            toastr.error('{{ __tr('Failed to create reason') }}');
                         }
                     },
                     error: function(response) {
                         if (response.status === 422) {
                             $.each(response.responseJSON.errors, function(field, error) {
                                 $('[name=' + field + ']').closest('.form-group').append(
-                                    '<div class="invalid-input text-danger mt-1">' + error +
+                                    '<div class="invalid-input text-danger mt-1">' +
+                                    error +
                                     '</div>');
                             });
                         } else {
-                            toastr.error('{{ translation('Failed to create reason') }}');
+                            toastr.error('{{ __tr('Failed to create reason') }}');
                         }
                     }
                 });

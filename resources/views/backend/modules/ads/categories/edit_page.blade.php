@@ -15,7 +15,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Edit Category') }}
+    {{ __tr('Edit Category') }}
 @endsection
 @section('page-style')
     <link rel="stylesheet" href="{{ asset('/public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
@@ -30,14 +30,14 @@
                 <div class="col-8 mx-auto">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Category Information') }}</h3>
+                            <h3 class="card-title">{{ __tr('Category Information') }}</h3>
                         </div>
                         <div class="card-body">
                             {{-- Language tabs --}}
                             <div class="lang-switcher-wrap mb-3">
                                 <div class="lang-switcher-label">
                                     <i class="fas fa-globe-americas"></i>
-                                    <span>{{ translation('Language') }}</span>
+                                    <span>{{ __tr('Language') }}</span>
                                 </div>
                                 <div class="lang-switcher-tabs">
                                     @foreach (activeLanguages() as $language)
@@ -58,10 +58,10 @@
 
                                 {{-- Title (translatable) --}}
                                 <div class="form-group">
-                                    <label class="black font-14">{{ translation('Title') }}</label>
+                                    <label class="black font-14">{{ __tr('Title') }}</label>
                                     <input type="text" name="title" class="form-control"
                                         value="{{ $category->translation('title', $lang) }}"
-                                        placeholder="{{ translation('Enter title') }}">
+                                        placeholder="{{ __tr('Enter title') }}">
                                     @error('title')
                                         <div class="text-danger mt-1">{{ $message }}</div>
                                     @enderror
@@ -71,17 +71,17 @@
                                 @if ($lang == defaultLangCode())
                                     <div class="form-row mb-3">
                                         <div class="form-group col-lg-6">
-                                            <label class="black font-14">{{ translation('Icon') }}</label>
+                                            <label class="black font-14">{{ __tr('Icon') }}</label>
                                             <x-media name="icon_edit" :value="$category->icon"></x-media>
                                         </div>
                                         <div class="form-group col-lg-6">
-                                            <label class="black font-14">{{ translation('Featured Image') }}</label>
+                                            <label class="black font-14">{{ __tr('Featured Image') }}</label>
                                             <x-media name="image_edit" :value="$category->image"></x-media>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="font-14 bold black w-100">{{ translation('Parent') }}</label>
+                                        <label class="font-14 bold black w-100">{{ __tr('Parent') }}</label>
                                         <select class="parent-options form-control w-100" name="parent">
                                             @if ($category->parentCategory != null)
                                                 <option value="{{ $category->parentCategory->id }}" selected>
@@ -92,15 +92,15 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="black font-14">{{ translation('Status') }}</label>
+                                        <label class="black font-14">{{ __tr('Status') }}</label>
                                         <select name="status" class="form-control">
                                             <option value="{{ config('settings.general_status.active') }}"
                                                 @selected($category->status == config('settings.general_status.active'))>
-                                                {{ translation('Active') }}
+                                                {{ __tr('Active') }}
                                             </option>
                                             <option value="{{ config('settings.general_status.in_active') }}"
                                                 @selected($category->status == config('settings.general_status.in_active'))>
-                                                {{ translation('Inactive') }}
+                                                {{ __tr('Inactive') }}
                                             </option>
                                         </select>
                                     </div>
@@ -108,10 +108,10 @@
 
                                 <div class="d-flex justify-content-between mt-3">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ translation('Save Changes') }}
+                                        {{ __tr('Save Changes') }}
                                     </button>
                                     <a href="{{ route('classified.ads.categories.list') }}" class="btn btn-secondary">
-                                        {{ translation('Back') }}
+                                        {{ __tr('Back') }}
                                     </a>
                                 </div>
                             </form>
@@ -132,7 +132,7 @@
             @if ($lang == defaultLangCode())
                 $('.parent-options').select2({
                     theme: "bootstrap4",
-                    placeholder: '{{ translation('Select parent category') }}',
+                    placeholder: '{{ __tr('Select parent category') }}',
                     closeOnSelect: true,
                     width: '100%',
                     ajax: {
@@ -183,7 +183,7 @@
                                 );
                             });
                         } else {
-                            toastr.error('{{ translation('Category update failed') }}', 'Error');
+                            toastr.error('{{ __tr('Category update failed') }}', 'Error');
                         }
                     }
                 });

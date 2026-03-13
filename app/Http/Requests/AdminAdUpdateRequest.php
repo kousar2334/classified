@@ -25,14 +25,14 @@ class AdminAdUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => translation('Title is required', session()->get('api_local')),
-            'price.required' => translation('Price is required', session()->get('api_local')),
-            'description.required' => translation('Description is required', session()->get('api_local')),
-            'city.required' => translation('Please select a city', session()->get('api_local')),
-            'category.required' => translation('Please select a category', session()->get('api_local')),
-            'thumbnail_image.required' => translation('Thumbnail image is required', session()->get('api_local')),
-            'contact_email.required' => translation('Email is required', session()->get('api_local')),
-            'contact_phone.required' => translation('Phone is required', session()->get('api_local')),
+            'title.required' => __tr('Title is required', session()->get('api_local')),
+            'price.required' => __tr('Price is required', session()->get('api_local')),
+            'description.required' => __tr('Description is required', session()->get('api_local')),
+            'city.required' => __tr('Please select a city', session()->get('api_local')),
+            'category.required' => __tr('Please select a category', session()->get('api_local')),
+            'thumbnail_image.required' => __tr('Thumbnail image is required', session()->get('api_local')),
+            'contact_email.required' => __tr('Email is required', session()->get('api_local')),
+            'contact_phone.required' => __tr('Phone is required', session()->get('api_local')),
         ];
     }
 }

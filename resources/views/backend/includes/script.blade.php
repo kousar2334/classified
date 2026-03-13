@@ -345,7 +345,7 @@
                             }
                         } else {
                             $(".notification-list-items").html(
-                                '<p class="p-2">{{ translation('You have no unread notification') }}</p>'
+                                '<p class="p-2">{{ __tr('You have no unread notification') }}</p>'
                             );
                             $('.mark-as-read-all').addClass('d-none');
                         }
@@ -353,7 +353,7 @@
                 },
                 error: function(response) {
                     $(".notification-list-items").html(
-                        '<p class="p-2">{{ translation('You have no unread notification') }}</p>'
+                        '<p class="p-2">{{ __tr('You have no unread notification') }}</p>'
                     );
                 }
             })
@@ -403,7 +403,7 @@
                     if (response.success) {
                         $('.notification-counter').html(0);
                         $(".notification-list-items").html(
-                            '{{ translation('You have no unread notification') }}');
+                            '{{ __tr('You have no unread notification') }}');
                         $('.mark-as-all-read').addClass('d-none');
                     }
                 },

@@ -14,7 +14,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('SMTP Setup') }}
+    {{ __tr('SMTP Setup') }}
 @endsection
 @section('page-style')
 @endsection
@@ -30,7 +30,7 @@
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h6 class="mb-0">{{ translation('SMTP Configuration') }}</h6>
+                                    <h6 class="mb-0">{{ __tr('SMTP Configuration') }}</h6>
                                 </div>
                                 <div class="card-body">
                                     <form method="POST" action="{{ route('admin.system.settings.smtp.update') }}">
@@ -73,7 +73,8 @@
 
 
                                         <div class="form-row justify-content-end">
-                                            <button type="submit" class="btn btn-primary">{{ translation('Save Change') }}</button>
+                                            <button type="submit"
+                                                class="btn btn-primary">{{ __tr('Save Change') }}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -82,13 +83,13 @@
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h6 class="mb-0">{{ translation('Test Mail') }}</h6>
+                                    <h6 class="mb-0">{{ __tr('Test Mail') }}</h6>
                                 </div>
                                 <div class="card-body">
                                     <form method="POST" action="{{ route('admin.system.settings.smtp.mail.test') }}">
                                         @csrf
                                         <div class="form-group">
-                                            <label>{{ translation('Email') }}</label>
+                                            <label>{{ __tr('Email') }}</label>
                                             <input type="email" class="form-control" name="email"
                                                 placeholder="Enter Email">
                                             @if ($errors->has('email'))
@@ -97,7 +98,7 @@
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label>{{ translation('Email Subject') }}</label>
+                                            <label>{{ __tr('Email Subject') }}</label>
                                             <input type="text" class="form-control" name="subject"
                                                 placeholder="Enter Mail Subject">
                                             @if ($errors->has('subject'))
@@ -106,7 +107,7 @@
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label>{{ translation('Message') }}</label>
+                                            <label>{{ __tr('Message') }}</label>
                                             <textarea name="message" class="form-control" placeholder="Enter Message"></textarea>
                                             @if ($errors->has('message'))
                                                 <div class="error text-danger mb-0 invalid-input">
@@ -116,7 +117,7 @@
 
 
                                         <div class="form-row justify-content-end">
-                                            <button type="submit" class="btn btn-primary">{{ translation('Send Now') }}</button>
+                                            <button type="submit" class="btn btn-primary">{{ __tr('Send Now') }}</button>
                                         </div>
                                     </form>
                                 </div>

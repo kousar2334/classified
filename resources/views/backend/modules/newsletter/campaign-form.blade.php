@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
-                        {{ isset($campaign) ? translation('Edit Campaign') : translation('Create Campaign') }}</h3>
+                        {{ isset($campaign) ? __tr('Edit Campaign') : __tr('Create Campaign') }}</h3>
                 </div>
                 <div class="card-body">
                     @if (isset($campaign))
@@ -19,7 +19,7 @@
                     @endif
                     @csrf
                     <div class="form-group">
-                        <label class="black font-14">{{ translation('Subject') }} <span class="text-danger">*</span></label>
+                        <label class="black font-14">{{ __tr('Subject') }} <span class="text-danger">*</span></label>
                         <input type="text" name="subject" class="form-control @error('subject') is-invalid @enderror"
                             value="{{ old('subject', $campaign->subject ?? '') }}" placeholder="Email subject line">
                         @error('subject')
@@ -27,7 +27,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label class="black font-14">{{ translation('Content') }} <span class="text-danger">*</span></label>
+                        <label class="black font-14">{{ __tr('Content') }} <span class="text-danger">*</span></label>
                         <textarea name="content" id="newsletter-content" class="form-control @error('content') is-invalid @enderror"
                             rows="20">{{ old('content', $campaign->content ?? '') }}</textarea>
                         @error('content')
@@ -36,10 +36,10 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <a href="{{ route('admin.newsletter.campaigns') }}" class="btn btn-secondary">
-                            {{ translation('Back') }}
+                            {{ __tr('Back') }}
                         </a>
                         <button type="submit" class="btn btn-primary">
-                            {{ isset($campaign) ? translation('Update Campaign') : translation('Save Campaign') }}
+                            {{ isset($campaign) ? __tr('Update Campaign') : __tr('Save Campaign') }}
                         </button>
                     </div>
                     </form>

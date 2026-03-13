@@ -1,15 +1,15 @@
 @php
     $links = [
         [
-            'title'  => 'Contact Messages',
-            'route'  => '',
+            'title' => 'Contact Messages',
+            'route' => '',
             'active' => true,
         ],
     ];
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Contact Messages') }}
+    {{ __tr('Contact Messages') }}
 @endsection
 
 @section('page-content')
@@ -21,34 +21,39 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Manage Contact Messages') }}</h3>
+                            <h3 class="card-title">{{ __tr('Manage Contact Messages') }}</h3>
                         </div>
 
                         <!-- Filters -->
                         <div class="card-body border-bottom pb-3">
-                            <form method="GET" action="{{ route('admin.contact.us.message.list') }}" class="row g-2 align-items-end">
+                            <form method="GET" action="{{ route('admin.contact.us.message.list') }}"
+                                class="row g-2 align-items-end">
                                 <div class="col-md-5">
                                     <input type="text" name="search" value="{{ request('search') }}"
                                         class="form-control form-control-sm"
-                                        placeholder="{{ translation('Search by name, email or subject...') }}">
+                                        placeholder="{{ __tr('Search by name, email or subject...') }}">
                                 </div>
                                 <div class="col-md-3">
                                     <select name="status" class="form-control form-control-sm">
-                                        <option value="">{{ translation('All Messages') }}</option>
-                                        <option value="unread" {{ request('status') === 'unread' ? 'selected' : '' }}>{{ translation('Unread') }}</option>
-                                        <option value="read"   {{ request('status') === 'read'   ? 'selected' : '' }}>{{ translation('Read') }}</option>
-                                        <option value="replied"{{ request('status') === 'replied' ? 'selected' : '' }}>{{ translation('Replied') }}</option>
+                                        <option value="">{{ __tr('All Messages') }}</option>
+                                        <option value="unread" {{ request('status') === 'unread' ? 'selected' : '' }}>
+                                            {{ __tr('Unread') }}</option>
+                                        <option value="read" {{ request('status') === 'read' ? 'selected' : '' }}>
+                                            {{ __tr('Read') }}</option>
+                                        <option value="replied"{{ request('status') === 'replied' ? 'selected' : '' }}>
+                                            {{ __tr('Replied') }}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2">
                                     <button type="submit" class="btn btn-primary btn-sm w-100">
-                                        <i class="fas fa-search me-1"></i> {{ translation('Filter') }}
+                                        <i class="fas fa-search me-1"></i> {{ __tr('Filter') }}
                                     </button>
                                 </div>
-                                @if(request('search') || request('status'))
+                                @if (request('search') || request('status'))
                                     <div class="col-md-2">
-                                        <a href="{{ route('admin.contact.us.message.list') }}" class="btn btn-secondary btn-sm w-100">
-                                            {{ translation('Clear') }}
+                                        <a href="{{ route('admin.contact.us.message.list') }}"
+                                            class="btn btn-secondary btn-sm w-100">
+                                            {{ __tr('Clear') }}
                                         </a>
                                     </div>
                                 @endif
@@ -59,12 +64,12 @@
                             <table class="table table-bordered table-hover mb-0">
                                 <thead>
                                     <tr>
-                                        <th style="width:40px">{{ translation('#') }}</th>
-                                        <th>{{ translation('From') }}</th>
-                                        <th>{{ translation('Subject') }}</th>
-                                        <th style="width:90px">{{ translation('Status') }}</th>
-                                        <th style="width:120px">{{ translation('Received') }}</th>
-                                        <th class="text-right" style="width:140px">{{ translation('Action') }}</th>
+                                        <th style="width:40px">{{ __tr('#') }}</th>
+                                        <th>{{ __tr('From') }}</th>
+                                        <th>{{ __tr('Subject') }}</th>
+                                        <th style="width:90px">{{ __tr('Status') }}</th>
+                                        <th style="width:120px">{{ __tr('Received') }}</th>
+                                        <th class="text-right" style="width:140px">{{ __tr('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,38 +82,37 @@
                                             </td>
                                             <td>{{ \Illuminate\Support\Str::limit($msg->subject, 60) }}</td>
                                             <td>
-                                                @if($msg->replied_at)
-                                                    <span class="badge badge-success">{{ translation('Replied') }}</span>
+                                                @if ($msg->replied_at)
+                                                    <span class="badge badge-success">{{ __tr('Replied') }}</span>
                                                 @elseif($msg->is_read)
-                                                    <span class="badge badge-info">{{ translation('Read') }}</span>
+                                                    <span class="badge badge-info">{{ __tr('Read') }}</span>
                                                 @else
-                                                    <span class="badge badge-warning">{{ translation('New') }}</span>
+                                                    <span class="badge badge-warning">{{ __tr('New') }}</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 <small>{{ $msg->created_at->format('d M Y') }}</small>
-                                                <br><small class="text-muted">{{ $msg->created_at->format('h:i A') }}</small>
+                                                <br><small
+                                                    class="text-muted">{{ $msg->created_at->format('h:i A') }}</small>
                                             </td>
                                             <td class="text-right">
                                                 <button type="button"
                                                     class="btn btn-sm btn-info text-white view-message-btn"
-                                                    data-id="{{ $msg->id }}"
-                                                    data-name="{{ $msg->name }}"
-                                                    data-email="{{ $msg->email }}"
-                                                    data-subject="{{ $msg->subject }}"
+                                                    data-id="{{ $msg->id }}" data-name="{{ $msg->name }}"
+                                                    data-email="{{ $msg->email }}" data-subject="{{ $msg->subject }}"
                                                     data-message="{{ $msg->message }}"
                                                     data-replied="{{ $msg->replied_at ? 'yes' : 'no' }}"
-                                                    data-reply-message="{{ $msg->reply_message }}"
-                                                    data-toggle="modal"
-                                                    data-target="#view-message-modal"
-                                                    title="{{ translation('View & Reply') }}">
+                                                    data-reply-message="{{ $msg->reply_message }}" data-toggle="modal"
+                                                    data-target="#view-message-modal" title="{{ __tr('View & Reply') }}">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <form action="{{ route('admin.contact.us.message.delete') }}" method="POST" class="d-inline"
-                                                    onsubmit="return confirm('{{ translation('Are you sure you want to delete this message?') }}')">
+                                                <form action="{{ route('admin.contact.us.message.delete') }}"
+                                                    method="POST" class="d-inline"
+                                                    onsubmit="return confirm('{{ __tr('Are you sure you want to delete this message?') }}')">
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{ $msg->id }}">
-                                                    <button type="submit" class="btn btn-sm btn-danger" title="{{ translation('Delete') }}">
+                                                    <button type="submit" class="btn btn-sm btn-danger"
+                                                        title="{{ __tr('Delete') }}">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
@@ -118,7 +122,7 @@
                                         <tr>
                                             <td colspan="6" class="text-center py-4 text-muted">
                                                 <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
-                                                {{ translation('No messages found.') }}
+                                                {{ __tr('No messages found.') }}
                                             </td>
                                         </tr>
                                     @endforelse
@@ -126,7 +130,7 @@
                             </table>
                         </div>
 
-                        @if($messages->hasPages())
+                        @if ($messages->hasPages())
                             <div class="card-footer">
                                 {{ $messages->withQueryString()->onEachSide(1)->links('pagination::bootstrap-5') }}
                             </div>
@@ -144,7 +148,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title">
                         <i class="fas fa-envelope me-2"></i>
-                        {{ translation('Message Details') }}
+                        {{ __tr('Message Details') }}
                     </h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
@@ -154,25 +158,26 @@
                     <!-- Sender Info -->
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label class="text-muted small">{{ translation('From') }}</label>
+                            <label class="text-muted small">{{ __tr('From') }}</label>
                             <p class="mb-0 fw-bold" id="modal-name"></p>
                             <a id="modal-email" href="#" class="text-muted small"></a>
                         </div>
                         <div class="col-md-6">
-                            <label class="text-muted small">{{ translation('Subject') }}</label>
+                            <label class="text-muted small">{{ __tr('Subject') }}</label>
                             <p class="mb-0 fw-bold" id="modal-subject"></p>
                         </div>
                     </div>
 
                     <!-- Message Content -->
                     <div class="form-group">
-                        <label class="text-muted small">{{ translation('Message') }}</label>
-                        <div id="modal-message" class="p-3 bg-light rounded" style="white-space: pre-wrap; min-height: 80px;"></div>
+                        <label class="text-muted small">{{ __tr('Message') }}</label>
+                        <div id="modal-message" class="p-3 bg-light rounded"
+                            style="white-space: pre-wrap; min-height: 80px;"></div>
                     </div>
 
                     <!-- Previous Reply -->
                     <div id="previous-reply-section" class="alert alert-success d-none">
-                        <strong><i class="fas fa-check-circle me-1"></i>{{ translation('Already Replied:') }}</strong>
+                        <strong><i class="fas fa-check-circle me-1"></i>{{ __tr('Already Replied:') }}</strong>
                         <div id="modal-reply-message" class="mt-2" style="white-space: pre-wrap;"></div>
                     </div>
 
@@ -183,20 +188,18 @@
                         <input type="hidden" name="id" id="reply-msg-id">
                         <div class="form-group">
                             <label class="fw-bold">
-                                <i class="fas fa-reply me-1"></i>{{ translation('Reply Message') }}
+                                <i class="fas fa-reply me-1"></i>{{ __tr('Reply Message') }}
                                 <span class="text-danger">*</span>
                             </label>
-                            <textarea name="reply_message" id="reply-message-textarea" rows="5"
-                                class="form-control"
-                                placeholder="{{ translation('Type your reply here...') }}"
-                                required></textarea>
+                            <textarea name="reply_message" id="reply-message-textarea" rows="5" class="form-control"
+                                placeholder="{{ __tr('Type your reply here...') }}" required></textarea>
                         </div>
                         <div class="text-right">
                             <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">
-                                {{ translation('Close') }}
+                                {{ __tr('Close') }}
                             </button>
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-paper-plane me-1"></i>{{ translation('Send Reply') }}
+                                <i class="fas fa-paper-plane me-1"></i>{{ __tr('Send Reply') }}
                             </button>
                         </div>
                     </form>
@@ -204,38 +207,37 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('page-script')
-<script>
-    document.querySelectorAll('.view-message-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            const id            = this.dataset.id;
-            const name          = this.dataset.name;
-            const email         = this.dataset.email;
-            const subject       = this.dataset.subject;
-            const message       = this.dataset.message;
-            const replied       = this.dataset.replied;
-            const replyMessage  = this.dataset.replyMessage;
+    <script>
+        document.querySelectorAll('.view-message-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const name = this.dataset.name;
+                const email = this.dataset.email;
+                const subject = this.dataset.subject;
+                const message = this.dataset.message;
+                const replied = this.dataset.replied;
+                const replyMessage = this.dataset.replyMessage;
 
-            document.getElementById('modal-name').textContent    = name;
-            document.getElementById('modal-email').textContent   = email;
-            document.getElementById('modal-email').href          = 'mailto:' + email;
-            document.getElementById('modal-subject').textContent = subject;
-            document.getElementById('modal-message').textContent = message;
-            document.getElementById('reply-msg-id').value        = id;
-            document.getElementById('reply-message-textarea').value = '';
+                document.getElementById('modal-name').textContent = name;
+                document.getElementById('modal-email').textContent = email;
+                document.getElementById('modal-email').href = 'mailto:' + email;
+                document.getElementById('modal-subject').textContent = subject;
+                document.getElementById('modal-message').textContent = message;
+                document.getElementById('reply-msg-id').value = id;
+                document.getElementById('reply-message-textarea').value = '';
 
-            const prevSection = document.getElementById('previous-reply-section');
-            if (replied === 'yes' && replyMessage) {
-                prevSection.classList.remove('d-none');
-                document.getElementById('modal-reply-message').textContent = replyMessage;
-            } else {
-                prevSection.classList.add('d-none');
-            }
+                const prevSection = document.getElementById('previous-reply-section');
+                if (replied === 'yes' && replyMessage) {
+                    prevSection.classList.remove('d-none');
+                    document.getElementById('modal-reply-message').textContent = replyMessage;
+                } else {
+                    prevSection.classList.add('d-none');
+                }
 
+            });
         });
-    });
-</script>
+    </script>
 @endsection

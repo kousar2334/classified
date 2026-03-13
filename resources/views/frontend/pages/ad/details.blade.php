@@ -29,17 +29,17 @@
                                     <div class="price text-end">
                                         <span>{{ format_amount($ad->price) }}</span>
                                         @if ($ad->is_negotiable == config('settings.general_status.active'))
-                                            <div class="token">{{ translation('NEGOTIABLE') }}</div>
+                                            <div class="token">{{ __tr('NEGOTIABLE') }}</div>
                                         @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="date-location">
-                                <span>{{ translation('Posted on') }} <span
+                                <span>{{ __tr('Posted on') }} <span
                                         class="posted">{{ $ad->created_at->format('d F Y') }}</span></span>
                                 @if ($ad->categoryInfo)
                                     <span class="vartical-devider"></span>
-                                    <span>{{ translation('Category') }} <span
+                                    <span>{{ __tr('Category') }} <span
                                             class="posted">{{ $ad->categoryInfo->title }}</span></span>
                                 @endif
                                 @php
@@ -51,7 +51,7 @@
                                 @endphp
                                 @if (count($locationParts) > 0)
                                     <span class="vartical-devider"></span>
-                                    <span>{{ translation('Location') }} <span
+                                    <span>{{ __tr('Location') }} <span
                                             class="posted">{{ implode(', ', $locationParts) }}</span></span>
                                 @endif
                             </div>
@@ -129,7 +129,7 @@
                                 <div class="row gy-4">
                                     @if ($ad->condition)
                                         <div class="col-4">
-                                            {{ translation('Condition') }}: <span
+                                            {{ __tr('Condition') }}: <span
                                                 class="text-bold">{{ $ad->condition->title }}</span>
                                         </div>
                                     @endif
@@ -153,15 +153,15 @@
 
                         {{-- Description --}}
                         <div class="descriptionMid">
-                            <h4 class="disTittle">{{ translation('Description') }}</h4>
+                            <h4 class="disTittle">{{ __tr('Description') }}</h4>
                             <div class="product__details__para" id="description">{!! $ad->description !!}</div>
-                            <button id="showMoreButton" class="show-more-btn">{{ translation('Show More') }}</button>
+                            <button id="showMoreButton" class="show-more-btn">{{ __tr('Show More') }}</button>
                         </div>
 
                         {{-- Tags --}}
                         @if ($ad->tags->count() > 0)
                             <div class="descriptionFooter">
-                                <h4 class="disTittle">{{ translation('Tags') }}</h4>
+                                <h4 class="disTittle">{{ __tr('Tags') }}</h4>
                                 <div class="tags">
                                     @foreach ($ad->tags as $tag)
                                         <a
@@ -180,7 +180,7 @@
                     {{-- Relevant Ads --}}
                     @if ($relevantAds->count() > 0)
                         <div class="relevant-ads box-shadow1">
-                            <h4 class="disTittle">{{ translation('Relevant Ads') }}</h4>
+                            <h4 class="disTittle">{{ __tr('Relevant Ads') }}</h4>
                             <div class="add-wraper relevant-listing-wrapper">
                                 @foreach ($relevantAds as $relAd)
                                     <div class="single-add-card">
@@ -202,7 +202,7 @@
                                                             xmlns="http://www.w3.org/2000/svg">
                                                             <path d="M4 0V3.88889H7L3 10V6.11111H0L4 0Z" fill="white" />
                                                         </svg>
-                                                        {{ translation('FEATURED') }}
+                                                        {{ __tr('FEATURED') }}
                                                     </span>
                                                 @endif
                                             </div>
@@ -271,7 +271,7 @@
                                     data-is-auth="{{ auth()->check() ? 'true' : 'false' }}"
                                     data-login-url="{{ route('member.login') }}">
                                     <i class="{{ $isFavourited ? 'las' : 'lar' }} la-heart icon favorite_add_icon"></i>
-                                    <span>{{ $isFavourited ? translation('Saved') : translation('Save') }}</span>
+                                    <span>{{ $isFavourited ? __tr('Saved') : __tr('Save') }}</span>
                                 </a>
                                 <div class="sid-quick-sep"></div>
                                 <a href="javascript:void(0)" class="sid-quick-btn sid-report-btn"
@@ -282,11 +282,11 @@
                                         <path d="M1 10H15L10.5 5.5L15 1H1V17" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
-                                    <span>{{ translation('Report') }}</span>
+                                    <span>{{ __tr('Report') }}</span>
                                 </a>
                             </div>
                             <div class="sid-share-row">
-                                <span class="sid-share-label">{{ translation('Share') }}</span>
+                                <span class="sid-share-label">{{ __tr('Share') }}</span>
                                 <div class="sid-share-icons">
                                     <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->url()) }}"
                                         target="_blank" rel="noopener" class="sid-share-icon sid-share-fb"
@@ -319,7 +319,7 @@
                         {{-- Safety Tips --}}
                         @if (isset($safetyTips) && $safetyTips->count() > 0)
                             <div class="safety-tips">
-                                <h3 class="head5">{{ translation('Safety Tips') }}</h3>
+                                <h3 class="head5">{{ __tr('Safety Tips') }}</h3>
                                 <div class="safety-wraper">
                                     <ol>
                                         @foreach ($safetyTips as $tip)
@@ -352,7 +352,7 @@
                                         d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
                                         stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                                <h5 class="modal-title">{{ translation('Message') }} {{ $sellerUser->name }}</h5>
+                                <h5 class="modal-title">{{ __tr('Message') }} {{ $sellerUser->name }}</h5>
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -366,27 +366,27 @@
                                             alt="{{ $ad->title }}" class="msg-listing-img">
                                     @endif
                                     <div>
-                                        <div class="msg-listing-label">{{ translation('Ad') }}</div>
+                                        <div class="msg-listing-label">{{ __tr('Ad') }}</div>
                                         <strong>{{ Str::limit($ad->title, 55) }}</strong>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="form-label msg-form-label">{{ translation('Message') }}</label>
+                                    <label class="form-label msg-form-label">{{ __tr('Message') }}</label>
                                     <textarea name="message" class="form-control" rows="5"
-                                        placeholder="{{ translation('Hi, I am interested in your listing. Is it still available?') }}" required
+                                        placeholder="{{ __tr('Hi, I am interested in your listing. Is it still available?') }}" required
                                         maxlength="2000"></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm"
-                                    data-bs-dismiss="modal">{{ translation('Cancel') }}</button>
+                                    data-bs-dismiss="modal">{{ __tr('Cancel') }}</button>
                                 <button type="submit" class="modal-send-btn">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="white" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
-                                    {{ translation(' Send Message') }}
+                                    {{ __tr(' Send Message') }}
                                 </button>
                             </div>
                         </form>
@@ -401,7 +401,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reportModalLabel">{{ translation(key: 'Report this ad') }}</h5>
+                    <h5 class="modal-title" id="reportModalLabel">{{ __tr(key: 'Report this ad') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -409,26 +409,25 @@
                         @csrf
                         <input type="hidden" name="ad_id" value="{{ $ad->id }}">
                         <div class="form-group mb-20">
-                            <label for="reportReason">{{ translation('Reason') }}</label>
+                            <label for="reportReason">{{ __tr('Reason') }}</label>
                             <select class="form-select" id="reportReason" name="reason_id">
                                 @forelse ($reportReasons as $reason)
                                     <option value="{{ $reason->id }}">{{ $reason->translation('title') }}</option>
                                 @empty
-                                    <option value="" disabled>{{ translation('No reasons found') }}</option>
+                                    <option value="" disabled>{{ __tr('No reasons found') }}</option>
                                 @endforelse
                             </select>
                         </div>
                         <div class="form-group mb-20">
-                            <label for="reportMessage">{{ translation('Message') }}</label>
+                            <label for="reportMessage">{{ __tr('Message') }}</label>
                             <textarea class="form-control" id="reportMessage" name="message" rows="3"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">{{ translation('Cancel') }}</button>
-                    <button type="button" class="btn btn-danger"
-                        id="submitReport">{{ translation('Submit Report') }}</button>
+                        data-bs-dismiss="modal">{{ __tr('Cancel') }}</button>
+                    <button type="button" class="btn btn-danger" id="submitReport">{{ __tr('Submit Report') }}</button>
                 </div>
             </div>
         </div>

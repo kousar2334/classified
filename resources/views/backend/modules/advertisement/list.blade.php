@@ -30,26 +30,26 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Manage Advertisements') }}</h3>
+                            <h3 class="card-title">{{ __tr('Manage Advertisements') }}</h3>
                             <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
                                 data-target="#create-ad-modal">
-                                {{ translation('Add New Advertisement') }}
+                                {{ __tr('Add New Advertisement') }}
                             </button>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('#') }}</th>
-                                        <th>{{ translation('Title') }}</th>
-                                        <th>{{ translation('Position') }}</th>
-                                        <th>{{ translation('Type') }}</th>
-                                        <th>{{ translation('Status') }}</th>
-                                        <th>{{ translation('Dates') }}</th>
-                                        <th>{{ translation('Order') }}</th>
-                                        <th class="text-center">{{ translation('Views') }}</th>
-                                        <th class="text-center">{{ translation('Clicks') }}</th>
-                                        <th class="text-right">{{ translation('Action') }}</th>
+                                        <th>{{ __tr('#') }}</th>
+                                        <th>{{ __tr('Title') }}</th>
+                                        <th>{{ __tr('Position') }}</th>
+                                        <th>{{ __tr('Type') }}</th>
+                                        <th>{{ __tr('Status') }}</th>
+                                        <th>{{ __tr('Dates') }}</th>
+                                        <th>{{ __tr('Order') }}</th>
+                                        <th class="text-center">{{ __tr('Views') }}</th>
+                                        <th class="text-center">{{ __tr('Clicks') }}</th>
+                                        <th class="text-right">{{ __tr('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -93,9 +93,9 @@
                                             </td>
                                             <td>
                                                 @if ($advertisement->status == 1)
-                                                    <span class="badge badge-success">{{ translation('Active') }}</span>
+                                                    <span class="badge badge-success">{{ __tr('Active') }}</span>
                                                 @else
-                                                    <span class="badge badge-danger">{{ translation('Inactive') }}</span>
+                                                    <span class="badge badge-danger">{{ __tr('Inactive') }}</span>
                                                 @endif
                                             </td>
                                             <td>
@@ -123,7 +123,7 @@
                                             <td class="text-right">
                                                 <div class="btn-group">
                                                     <button type="button"
-                                                        class="btn btn-default">{{ translation('Action') }}</button>
+                                                        class="btn btn-default">{{ __tr('Action') }}</button>
                                                     <button type="button"
                                                         class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
                                                         data-toggle="dropdown" aria-expanded="false">
@@ -131,17 +131,17 @@
                                                     <div class="dropdown-menu" role="menu">
                                                         <a class="dropdown-item"
                                                             href="{{ route('admin.advertisement.analytics', $advertisement->id) }}">
-                                                            {{ translation('Analytics') }}
+                                                            {{ __tr('Analytics') }}
                                                         </a>
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item edit-ad-btn"
                                                             data-id="{{ $advertisement->id }}">
-                                                            {{ translation('Edit') }}
+                                                            {{ __tr('Edit') }}
                                                         </button>
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item delete-ad-btn"
                                                             data-id="{{ $advertisement->id }}">
-                                                            {{ translation('Delete') }}
+                                                            {{ __tr('Delete') }}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -150,7 +150,7 @@
                                     @empty
                                         <tr>
                                             <td colspan="10">
-                                                <div class="text-center">{{ translation('No advertisements found') }}</div>
+                                                <div class="text-center">{{ __tr('No advertisements found') }}</div>
                                             </td>
                                         </tr>
                                     @endforelse
@@ -174,7 +174,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('New Advertisement') }}</h5>
+                        <h5 class="modal-title">{{ __tr('New Advertisement') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -183,20 +183,20 @@
                         <form id="create-ad-form">
                             <div class="form-row">
                                 <div class="form-group col-lg-8">
-                                    <label class="black font-14">{{ translation('Title') }} <span
+                                    <label class="black font-14">{{ __tr('Title') }} <span
                                             class="text-danger">*</span></label>
                                     <input type="text" name="title" class="form-control"
-                                        placeholder="{{ translation('Internal label e.g. Homepage Top Banner') }}">
+                                        placeholder="{{ __tr('Internal label e.g. Homepage Top Banner') }}">
                                 </div>
                                 <div class="form-group col-lg-4">
-                                    <label class="black font-14">{{ translation('Sort Order') }}</label>
+                                    <label class="black font-14">{{ __tr('Sort Order') }}</label>
                                     <input type="number" name="sort_order" class="form-control" value="0"
                                         min="0">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
-                                    <label class="black font-14">{{ translation('Position') }} <span
+                                    <label class="black font-14">{{ __tr('Position') }} <span
                                             class="text-danger">*</span></label>
                                     <select name="position" class="form-control">
                                         <option value="">-- Select Position --</option>
@@ -207,26 +207,26 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="black font-14">{{ translation('Status') }} <span
+                                    <label class="black font-14">{{ __tr('Status') }} <span
                                             class="text-danger">*</span></label>
                                     <select name="status" class="form-control">
-                                        <option value="1">{{ translation('Active') }}</option>
-                                        <option value="2">{{ translation('Inactive') }}</option>
+                                        <option value="1">{{ __tr('Active') }}</option>
+                                        <option value="2">{{ __tr('Inactive') }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
-                                    <label class="black font-14">{{ translation('Start Date') }}</label>
+                                    <label class="black font-14">{{ __tr('Start Date') }}</label>
                                     <input type="date" name="start_date" class="form-control">
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="black font-14">{{ translation('End Date') }}</label>
+                                    <label class="black font-14">{{ __tr('End Date') }}</label>
                                     <input type="date" name="end_date" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="black font-14">{{ translation('Ad Type') }} <span
+                                <label class="black font-14">{{ __tr('Ad Type') }} <span
                                         class="text-danger">*</span></label>
                                 <select name="type" id="create-type-select" class="form-control">
                                     <option value="">-- Select Type --</option>
@@ -238,12 +238,12 @@
                             {{-- Image fields --}}
                             <div id="create-image-fields" class="ad-type-fields">
                                 <div class="form-group">
-                                    <label class="black font-14">{{ translation('Banner Image') }} <span
+                                    <label class="black font-14">{{ __tr('Banner Image') }} <span
                                             class="text-danger">*</span></label>
                                     <x-media name="image_path" value=""></x-media>
                                 </div>
                                 <div class="form-group">
-                                    <label class="black font-14">{{ translation('Click-through URL') }}</label>
+                                    <label class="black font-14">{{ __tr('Click-through URL') }}</label>
                                     <input type="url" name="click_url" class="form-control"
                                         placeholder="https://example.com (optional)">
                                 </div>
@@ -252,7 +252,7 @@
                             {{-- HTML / AdSense fields --}}
                             <div id="create-html-fields" class="ad-type-fields">
                                 <div class="form-group">
-                                    <label class="black font-14">{{ translation('Ad Code (HTML / Google AdSense)') }}
+                                    <label class="black font-14">{{ __tr('Ad Code (HTML / Google AdSense)') }}
                                         <span class="text-danger">*</span></label>
                                     <textarea name="html_code" class="form-control" rows="8"
                                         placeholder="Paste your Google AdSense code, ad script, or any HTML here..."></textarea>
@@ -263,7 +263,7 @@
 
                             <div class="btn-area d-flex justify-content-between">
                                 <button type="submit"
-                                    class="btn btn-primary mt-2">{{ translation('Save Advertisement') }}</button>
+                                    class="btn btn-primary mt-2">{{ __tr('Save Advertisement') }}</button>
                             </div>
                         </form>
                     </div>
@@ -277,7 +277,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('Edit Advertisement') }}</h5>
+                        <h5 class="modal-title">{{ __tr('Edit Advertisement') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -293,19 +293,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete?') }}</h4>
                         <form method="POST" action="{{ route('admin.advertisement.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-ad-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>

@@ -9,17 +9,17 @@
     <section class="contact-breadcrumb-area">
         <div class="container">
             <div class="breadcrumb-content text-center">
-                <span class="page-tag">{{ translation('Our Plans') }}</span>
-                <h1>{{ translation('Pricing Plans') }}</h1>
+                <span class="page-tag">{{ __tr('Our Plans') }}</span>
+                <h1>{{ __tr('Pricing Plans') }}</h1>
                 <p class="sub-text">
-                    {{ translation('Select a membership plan that suits your needs') }}
+                    {{ __tr('Select a membership plan that suits your needs') }}
                 </p>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('home') }}">{{ translation('Home') }}</a>
+                            <a href="{{ route('home') }}">{{ __tr('Home') }}</a>
                         </li>
-                        <li class="breadcrumb-item active">{{ translation('Pricing Plans') }}</li>
+                        <li class="breadcrumb-item active">{{ __tr('Pricing Plans') }}</li>
                     </ol>
                 </nav>
             </div>
@@ -32,8 +32,8 @@
             <div class="row justify-content-center">
                 <div class="col-xl-8 col-lg-7 col-md-10 col-sm-10">
                     <div class="section-tittle text-center mb-50">
-                        <h2 class="head3">{{ translation('Choose Your Plan') }}</h2>
-                        <p class="pera mt-3">{{ translation('Select a membership plan that suits your needs') }}</p>
+                        <h2 class="head3">{{ __tr('Choose Your Plan') }}</h2>
+                        <p class="pera mt-3">{{ __tr('Select a membership plan that suits your needs') }}</p>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                 @empty
                     <div class="col-12">
                         <div class="text-center">
-                            <p class="pera">{{ translation('No pricing plans available at the moment.') }}</p>
+                            <p class="pera">{{ __tr('No pricing plans available at the moment.') }}</p>
                         </div>
                     </div>
                 @endforelse

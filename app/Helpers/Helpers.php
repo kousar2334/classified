@@ -161,7 +161,7 @@ if (!function_exists('getPlaceHolder')) {
 }
 
 if (!function_exists('translation')) {
-    function translation($key, $lang = null, $addslashes = false)
+    function __tr($key, $lang = null, $addslashes = false)
     {
         if ($lang == null) {
             $lang = session()->get('locale');

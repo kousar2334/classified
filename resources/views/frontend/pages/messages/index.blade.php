@@ -1,6 +1,6 @@
 @extends('frontend.layouts.dashboard')
 @section('dash-meta')
-    <title>{{ translation('Messages') }} - {{ get_setting('site_name') }}</title>
+    <title>{{ __tr('Messages') }} - {{ get_setting('site_name') }}</title>
 @endsection
 
 @section('dashboard-content')
@@ -8,17 +8,17 @@
         <div class="dashboard-content">
             <div class="msg-card">
                 <div class="msg-card-header">
-                    <h5>{{ translation('My Messages') }}</h5>
+                    <h5>{{ __tr('My Messages') }}</h5>
                     <span class="text-muted msg-count-label">{{ $chats->total() }}
-                        {{ translation('conversation(s)') }}</span>
+                        {{ __tr('conversation(s)') }}</span>
                 </div>
 
                 @if ($chats->isEmpty())
                     <div class="empty-state">
                         <i class="las la-comments"></i>
-                        <p>{{ translation('No conversations yet.') }}</p>
+                        <p>{{ __tr('No conversations yet.') }}</p>
                         <a href="{{ route('ad.listing.page') }}"
-                            class="btn btn-primary btn-sm mt-2">{{ translation('Browse Ads') }}</a>
+                            class="btn btn-primary btn-sm mt-2">{{ __tr('Browse Ads') }}</a>
                     </div>
                 @else
                     <ul class="msg-list">
@@ -40,17 +40,17 @@
                                     @endif
                                     <div class="msg-info">
                                         <div class="msg-top">
-                                            <span class="msg-name">{{ $other->name ?? translation('Unknown') }}</span>
+                                            <span class="msg-name">{{ $other->name ?? __tr('Unknown') }}</span>
                                             <span class="msg-time">
                                                 {{ $chat->lastMessage ? $chat->lastMessage->created_at->diffForHumans() : '' }}
                                             </span>
                                         </div>
                                         @if ($chat->ad)
-                                            <div class="msg-ad-title">{{ translation('Re') }}: {{ $chat->ad->title }}
+                                            <div class="msg-ad-title">{{ __tr('Re') }}: {{ $chat->ad->title }}
                                             </div>
                                         @endif
                                         <div class="msg-preview">
-                                            {{ $chat->lastMessage ? Str::limit($chat->lastMessage->message, 70) : translation('No messages yet') }}
+                                            {{ $chat->lastMessage ? Str::limit($chat->lastMessage->message, 70) : __tr('No messages yet') }}
                                         </div>
                                     </div>
                                     @if ($unread > 0)

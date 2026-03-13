@@ -26,10 +26,10 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('home') }}">{{ translation('Home') }}</a>
+                            <a href="{{ route('home') }}">{{ __tr('Home') }}</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ route('frontend.blog.list') }}">{{ translation('Blog') }}</a>
+                            <a href="{{ route('frontend.blog.list') }}">{{ __tr('Blog') }}</a>
                         </li>
                         <li class="breadcrumb-item active">{{ Str::limit($blog->translation('title'), 50) }}</li>
                     </ol>
@@ -70,7 +70,7 @@
                         @if ($blog->comments->count())
                             <span class="blog-meta-item">
                                 <i class="las la-comments"></i>
-                                {{ $blog->comments->count() }} {{ translation('Comments') }}
+                                {{ $blog->comments->count() }} {{ __tr('Comments') }}
                             </span>
                         @endif
                     </div>
@@ -103,7 +103,7 @@
                             <a href="{{ $blog->video }}" target="_blank" rel="noopener noreferrer"
                                 class="cmn-btn d-inline-flex align-items-center gap-2">
                                 <i class="las la-play-circle"></i>
-                                {{ translation('Watch Video') }}
+                                {{ __tr('Watch Video') }}
                             </a>
                         </div>
                     @endif
@@ -113,7 +113,7 @@
 
                         @if ($blog->comments->count())
                             <h4 class="blog-section-heading mb-4">
-                                {{ $blog->comments->count() }} {{ translation('Comments') }}
+                                {{ $blog->comments->count() }} {{ __tr('Comments') }}
                             </h4>
 
                             @foreach ($blog->comments as $comment)
@@ -146,7 +146,7 @@
 
                         {{-- Comment form --}}
                         <div class="blog-comment-form mt-5">
-                            <h4 class="blog-section-heading mb-4">{{ translation('Leave a Comment') }}</h4>
+                            <h4 class="blog-section-heading mb-4">{{ __tr('Leave a Comment') }}</h4>
 
                             @if (session('comment_success'))
                                 <div class="contact-alert contact-alert-success mb-3">
@@ -163,30 +163,30 @@
                                     <div class="row g-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="fe-label">
-                                                {{ translation('Name') }} <span class="required">*</span>
+                                                {{ __tr('Name') }} <span class="required">*</span>
                                             </label>
                                             <input type="text" name="guest_name" class="input-style"
-                                                value="{{ old('guest_name') }}" placeholder="{{ translation('Your name') }}"
+                                                value="{{ old('guest_name') }}" placeholder="{{ __tr('Your name') }}"
                                                 required>
                                             @error('guest_name')
                                                 <span class="fe-invalid-feedback">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="fe-label">{{ translation('Email') }}</label>
+                                            <label class="fe-label">{{ __tr('Email') }}</label>
                                             <input type="email" name="guest_email" class="input-style"
                                                 value="{{ old('guest_email') }}"
-                                                placeholder="{{ translation('Your email (optional)') }}">
+                                                placeholder="{{ __tr('Your email (optional)') }}">
                                         </div>
                                     </div>
                                 @endguest
 
                                 <div class="mb-3">
                                     <label class="fe-label">
-                                        {{ translation('Comment') }} <span class="required">*</span>
+                                        {{ __tr('Comment') }} <span class="required">*</span>
                                     </label>
-                                    <textarea name="comment" rows="5" class="input-style"
-                                        placeholder="{{ translation('Write your comment here...') }}" required>{{ old('comment') }}</textarea>
+                                    <textarea name="comment" rows="5" class="input-style" placeholder="{{ __tr('Write your comment here...') }}"
+                                        required>{{ old('comment') }}</textarea>
                                     @error('comment')
                                         <span class="fe-invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -194,7 +194,7 @@
 
                                 <button type="submit" class="cmn-btn">
                                     <i class="las la-paper-plane"></i>
-                                    {{ translation('Post Comment') }}
+                                    {{ __tr('Post Comment') }}
                                 </button>
                             </form>
                         </div>
@@ -209,10 +209,10 @@
 
                     {{-- Search --}}
                     <div class="blog-sidebar-widget mb-4">
-                        <h5 class="blog-sidebar-title">{{ translation('Search') }}</h5>
+                        <h5 class="blog-sidebar-title">{{ __tr('Search') }}</h5>
                         <form action="{{ route('frontend.blog.list') }}" method="GET" class="d-flex gap-2">
                             <input type="text" name="search" class="input-style"
-                                placeholder="{{ translation('Search articles...') }}">
+                                placeholder="{{ __tr('Search articles...') }}">
                             <button type="submit" class="cmn-btn px-3">
                                 <i class="las la-search"></i>
                             </button>
@@ -222,7 +222,7 @@
                     {{-- Recent posts --}}
                     @if ($recentBlogs->count())
                         <div class="blog-sidebar-widget mb-4">
-                            <h5 class="blog-sidebar-title">{{ translation('Recent Posts') }}</h5>
+                            <h5 class="blog-sidebar-title">{{ __tr('Recent Posts') }}</h5>
                             @foreach ($recentBlogs as $recent)
                                 <div class="blog-recent-item d-flex gap-3 mb-3">
                                     <a href="{{ route('frontend.new.details', ['permalink' => $recent->permalink]) }}"
@@ -247,7 +247,7 @@
                     {{-- Tags --}}
                     @if ($blog->tags->count())
                         <div class="blog-sidebar-widget mb-4">
-                            <h5 class="blog-sidebar-title">{{ translation('Tags') }}</h5>
+                            <h5 class="blog-sidebar-title">{{ __tr('Tags') }}</h5>
                             <div class="d-flex flex-wrap gap-2">
                                 @foreach ($blog->tags as $tag)
                                     <span class="blog-tag-badge">

@@ -7,7 +7,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Edit Report Reason') }}
+    {{ __tr('Edit Report Reason') }}
 @endsection
 @section('page-content')
     <x-admin-page-header title="Edit Report Reason" :links="$links" />
@@ -26,7 +26,7 @@
                             <div class="lang-switcher-wrap mb-0">
                                 <div class="lang-switcher-label">
                                     <i class="fas fa-globe-americas"></i>
-                                    <span>{{ translation('Language') }}</span>
+                                    <span>{{ __tr('Language') }}</span>
                                 </div>
                                 <div class="lang-switcher-tabs">
                                     @foreach (activeLanguages() as $language)
@@ -41,10 +41,10 @@
 
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>{{ translation('Title') }}</label>
+                                    <label>{{ __tr('Title') }}</label>
                                     <input type="text" name="title" class="form-control"
                                         value="{{ $reason->translation('title', $lang) }}"
-                                        placeholder="{{ translation('Enter reason title') }}">
+                                        placeholder="{{ __tr('Enter reason title') }}">
                                     @error('title')
                                         <div class="text-danger mt-1">{{ $message }}</div>
                                     @enderror
@@ -59,20 +59,20 @@
                             <div class="card-body">
                                 <div
                                     class="form-group {{ !empty($lang) && $lang != defaultLangCode() ? 'area-disabled' : '' }}">
-                                    <label>{{ translation('Status') }}</label>
+                                    <label>{{ __tr('Status') }}</label>
                                     <select name="status" class="form-control">
                                         <option value="{{ config('settings.general_status.active') }}"
                                             @selected($reason->status == config('settings.general_status.active'))>
-                                            {{ translation('Active') }}
+                                            {{ __tr('Active') }}
                                         </option>
                                         <option value="{{ config('settings.general_status.in_active') }}"
                                             @selected($reason->status == config('settings.general_status.in_active'))>
-                                            {{ translation('Inactive') }}
+                                            {{ __tr('Inactive') }}
                                         </option>
                                     </select>
                                 </div>
                                 <button type="submit"
-                                    class="btn btn-primary btn-block">{{ translation('Save Changes') }}</button>
+                                    class="btn btn-primary btn-block">{{ __tr('Save Changes') }}</button>
                             </div>
                         </div>
                     </div>

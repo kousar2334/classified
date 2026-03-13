@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 @section('meta')
-    <title>{{ translation('Ads') }} - {{ get_setting('site_name') }}</title>
+    <title>{{ __tr('Ads') }} - {{ get_setting('site_name') }}</title>
     <!-- page css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css">
 @endsection
@@ -32,7 +32,7 @@
                     <div class="reset-btn cmn-filter-btn mb-3">
                         <a href="{{ route('ad.listing.page', $category_slug ?? '') }}" class="btn w-100"
                             style="background-color: var(--primary-color); color: #fff;">
-                            <i class="las la-undo-alt"></i> {{ translation('Reset Filters') }}
+                            <i class="las la-undo-alt"></i> {{ __tr('Reset Filters') }}
                         </a>
                     </div>
                 @endif
@@ -42,7 +42,7 @@
                         <div class="single-category-service">
                             <div class="single-select position-relative">
                                 <input type="text" class="search-input form-control pe-5" id="search_by_query"
-                                    placeholder="{{ translation('Search here you want') }}" value="{{ request('q') }}">
+                                    placeholder="{{ __tr('Search here you want') }}" value="{{ request('q') }}">
                                 <button type="button" id="search_by_query_btn" class="btn position-absolute border-0">
                                     <i class="las la-search"></i>
                                 </button>
@@ -68,7 +68,7 @@
                         <!-- All Categories -->
                         <div class="filter-item mb-4">
                             <div class="filter-item-content w-100">
-                                <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Categories') }}</h5>
+                                <h5 class="cateTitle mb-2 postdateTitle">{{ __tr('Categories') }}</h5>
                                 <input type="hidden" name="cat_id" id="selected_category_id"
                                     value="{{ request('cat_id') }}">
 
@@ -78,7 +78,7 @@
                                     <div id="back-button-container" class="mb-2" style="display: none;">
                                         <a href="javascript:void(0)" id="back-button" class="text-primary small">
                                             <i class="las la-arrow-left"></i> <span
-                                                id="back-button-text">{{ translation('Back to Categories') }}</span>
+                                                id="back-button-text">{{ __tr('Back to Categories') }}</span>
                                         </a>
                                     </div>
 
@@ -114,7 +114,7 @@
                         <!-- Location Filter -->
                         <div class="filter-item mb-4">
                             <div class="filter-item-content w-100">
-                                <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Location') }}</h5>
+                                <h5 class="cateTitle mb-2 postdateTitle">{{ __tr('Location') }}</h5>
                                 <input type="hidden" name="country" id="selected_country"
                                     value="{{ request('country') }}">
                                 <input type="hidden" name="state" id="selected_state" value="{{ request('state') }}">
@@ -123,7 +123,7 @@
                                 <!-- Country List -->
                                 <div id="country-section">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="text-muted small">{{ translation('Select Country') }}</span>
+                                        <span class="text-muted small">{{ __tr('Select Country') }}</span>
                                     </div>
                                     <ul class="location-list" id="country-list">
                                         <!-- Countries will be loaded here -->
@@ -134,7 +134,7 @@
                                 <div id="state-section" style="display: none;">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <a href="javascript:void(0)" id="back-to-countries" class="text-primary small">
-                                            <i class="las la-arrow-left"></i> {{ translation('Back to Countries') }}
+                                            <i class="las la-arrow-left"></i> {{ __tr('Back to Countries') }}
                                         </a>
                                         <span class="text-muted small" id="selected-country-name"></span>
                                     </div>
@@ -147,7 +147,7 @@
                                 <div id="city-section" style="display: none;">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <a href="javascript:void(0)" id="back-to-states" class="text-primary small">
-                                            <i class="las la-arrow-left"></i> {{ translation('Back to States') }}
+                                            <i class="las la-arrow-left"></i> {{ __tr('Back to States') }}
                                         </a>
                                         <span class="text-muted small" id="selected-state-name"></span>
                                     </div>
@@ -161,7 +161,7 @@
                         <!--price range filter -->
                         <div class="filter-item mb-4">
                             <div class="filter-item-content priceRange">
-                                <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Price Range') }}</h5>
+                                <h5 class="cateTitle mb-2 postdateTitle">{{ __tr('Price Range') }}</h5>
                                 <input type="hidden" name="price_range_value" id="price_range_value">
                                 <div class="price-input">
                                     <div class="field">
@@ -186,7 +186,7 @@
                                 <!-- cancel and apply button start -->
                                 <div class="cancel_apply_section_start mt-3">
                                     <button type="button" class="filter-btn w-100"
-                                        id="price_wise_filter_apply">{{ translation('Filter') }}</button>
+                                        id="price_wise_filter_apply">{{ __tr('Filter') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -194,17 +194,17 @@
 
                         <div class="filter-item mb-4">
                             <div class="filter-item-content">
-                                <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Types') }}</h5>
+                                <h5 class="cateTitle mb-2 postdateTitle">{{ __tr('Types') }}</h5>
                                 <div class="filter-radio-group">
                                     <label class="filter-radio-label">
                                         <input type="radio" name="type_radio" value="featured"
                                             {{ request('type') == 'featured' ? 'checked' : '' }}>
-                                        <span>{{ translation('Featured') }}</span>
+                                        <span>{{ __tr('Featured') }}</span>
                                     </label>
                                     <label class="filter-radio-label">
                                         <input type="radio" name="type_radio" value="top_listing"
                                             {{ request('type') == 'top_listing' ? 'checked' : '' }}>
-                                        <span>{{ translation('Top Listing') }}</span>
+                                        <span>{{ __tr('Top Listing') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -212,7 +212,7 @@
 
                         <div class="filter-item mb-4">
                             <div class="filter-item-content">
-                                <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Condition') }}</h5>
+                                <h5 class="cateTitle mb-2 postdateTitle">{{ __tr('Condition') }}</h5>
                                 <div class="filter-radio-group">
                                     @foreach ($conditions as $condition)
                                         <label class="filter-radio-label">
@@ -227,22 +227,22 @@
 
                         <div class="filter-item mb-4">
                             <div class="filter-item-content">
-                                <h5 class="cateTitle mb-2 postdateTitle">{{ translation('Date Posted') }}</h5>
+                                <h5 class="cateTitle mb-2 postdateTitle">{{ __tr('Date Posted') }}</h5>
                                 <div class="filter-radio-group">
                                     <label class="filter-radio-label">
                                         <input type="radio" name="date_posted_radio" value="today"
                                             {{ request('date_posted') == 'today' ? 'checked' : '' }}>
-                                        <span>{{ translation('Today') }}</span>
+                                        <span>{{ __tr('Today') }}</span>
                                     </label>
                                     <label class="filter-radio-label">
                                         <input type="radio" name="date_posted_radio" value="yesterday"
                                             {{ request('date_posted') == 'yesterday' ? 'checked' : '' }}>
-                                        <span>{{ translation('Yesterday') }}</span>
+                                        <span>{{ __tr('Yesterday') }}</span>
                                     </label>
                                     <label class="filter-radio-label">
                                         <input type="radio" name="date_posted_radio" value="last_week"
                                             {{ request('date_posted') == 'last_week' ? 'checked' : '' }}>
-                                        <span>{{ translation('Last Week') }}</span>
+                                        <span>{{ __tr('Last Week') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -271,12 +271,12 @@
                                                     @elseif($breadcrumbCategory)
                                                         {{ $breadcrumbCategory->translation('title') }}
                                                     @else
-                                                        {{ translation('All Ads') }}
+                                                        {{ __tr('All Ads') }}
                                                     @endif
                                                 </h4>
                                                 <p class="mb-0">{{ $ads->total() }}
-                                                    {{ $ads->total() == 1 ? translation('Ad') : translation('Ads') }}
-                                                    {{ translation('found') }}</p>
+                                                    {{ $ads->total() == 1 ? __tr('Ad') : __tr('Ads') }}
+                                                    {{ __tr('found') }}</p>
                                             </div>
                                             <div class="sidebar-btn d-lg-none">
                                                 <a href="javascript:void(0)"><i class="las la-bars"></i></a>
@@ -284,18 +284,18 @@
                                         </div>
                                         <div class="sort-by-wrapper d-flex justify-content-end">
                                             <select id="search_by_sorting" class="form-select">
-                                                <option value="">{{ translation('Sort By') }}</option>
+                                                <option value="">{{ __tr('Sort By') }}</option>
                                                 <option value="latest_listing"
                                                     {{ request('sortby') == 'latest_listing' ? 'selected' : '' }}>
-                                                    {{ translation('Latest Listing') }}
+                                                    {{ __tr('Latest Listing') }}
                                                 </option>
                                                 <option value="lowest_price"
                                                     {{ request('sortby') == 'lowest_price' ? 'selected' : '' }}>
-                                                    {{ translation('Lowest Price') }}
+                                                    {{ __tr('Lowest Price') }}
                                                 </option>
                                                 <option value="highest_price"
                                                     {{ request('sortby') == 'highest_price' ? 'selected' : '' }}>
-                                                    {{ translation('Highest Price') }}
+                                                    {{ __tr('Highest Price') }}
                                                 </option>
                                             </select>
                                         </div>
@@ -393,9 +393,9 @@
                 const STATES_ENDPOINT = '/ad/states';
                 const CITIES_ENDPOINT = '/ad/cities';
 
-                const TRANS_BACK_TO = '{{ translation('Back to') }}';
-                const TRANS_CATEGORIES = '{{ translation('Categories') }}';
-                const TRANS_NO_COUNTRIES = '{{ translation('No countries available') }}';
+                const TRANS_BACK_TO = '{{ __tr('Back to') }}';
+                const TRANS_CATEGORIES = '{{ __tr('Categories') }}';
+                const TRANS_NO_COUNTRIES = '{{ __tr('No countries available') }}';
 
                 // ========== Category Navigation System ==========
 
@@ -462,7 +462,7 @@
 
                             // Extract parent info from first child (all children share same parent)
                             const currentCategoryTitle = children[0].parent_title ||
-                                '{{ translation('Selected Category') }}';
+                                '{{ __tr('Selected Category') }}';
                             const currentCategoryParentId = children[0].parent_id || null;
                             const currentCategoryGrandparentTitle = children[0].grandparent_title ||
                                 null;

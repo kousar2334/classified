@@ -87,12 +87,12 @@ class CategoryController extends Controller
         if ($res) {
             return response()->json([
                 'success' => true,
-                'message' => translation('Category updated successfully'),
+                'message' => __tr('Category updated successfully'),
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => translation('Category update failed'),
+                'message' => __tr('Category update failed'),
             ]);
         }
     }

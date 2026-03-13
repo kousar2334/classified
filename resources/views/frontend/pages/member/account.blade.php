@@ -1,6 +1,6 @@
 @extends('frontend.layouts.dashboard')
 @section('dash-meta')
-    <title>{{ translation('Account') }} - {{ get_setting('site_name') }}</title>
+    <title>{{ __tr('Account') }} - {{ get_setting('site_name') }}</title>
     <style>
         .account-grid {
             display: grid;
@@ -132,15 +132,14 @@
 
 @section('dashboard-content')
     <div class="my-listings-header">
-        <h1>{{ translation('Account Settings') }}</h1>
+        <h1>{{ __tr('Account Settings') }}</h1>
     </div>
 
     {{-- ── Profile Photo ── --}}
     <div class="dashboard-card p-0 avatar-card">
         <div class="card-header">
             <h3 class="card-title">
-                <i class="fa-solid fa-camera"
-                    style="margin-right:.5rem;color:var(--primary)"></i>{{ translation('Profile Photo') }}
+                <i class="fa-solid fa-camera" style="margin-right:.5rem;color:var(--primary)"></i>{{ __tr('Profile Photo') }}
             </h3>
         </div>
 
@@ -160,14 +159,14 @@
 
                 <div class="avatar-upload-info">
                     <label for="profileImageInput" class="avatar-file-label">
-                        <i class="fa-solid fa-arrow-up-from-bracket"></i> {{ translation('Choose Photo') }}
+                        <i class="fa-solid fa-arrow-up-from-bracket"></i> {{ __tr('Choose Photo') }}
                     </label>
                     <button type="submit" class="cmn-btn" id="avatarSaveBtn" style="display:none">
-                        {{ translation('Upload') }}
+                        {{ __tr('Upload') }}
                     </button>
                     <input type="file" name="profile_image" id="profileImageInput" class="avatar-file-input"
                         accept="image/jpeg,image/png,image/jpg,image/webp">
-                    <p>{{ translation('JPG, PNG or WEBP. Max 2 MB.') }}</p>
+                    <p>{{ __tr('JPG, PNG or WEBP. Max 2 MB.') }}</p>
                     @error('profile_image')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
@@ -183,7 +182,7 @@
             <div class="card-header">
                 <h3 class="card-title">
                     <i class="fa-solid fa-user"
-                        style="margin-right:.5rem;color:var(--primary)"></i>{{ translation('Profile Information') }}
+                        style="margin-right:.5rem;color:var(--primary)"></i>{{ __tr('Profile Information') }}
                 </h3>
             </div>
 
@@ -192,27 +191,27 @@
                 @method('PUT')
 
                 <div class="form-group mb-20">
-                    <label>{{ translation('Full Name') }} <span class="text-danger">*</span></label>
+                    <label>{{ __tr('Full Name') }} <span class="text-danger">*</span></label>
                     <input type="text" name="name" class="input-style @error('name') is-invalid @enderror"
-                        value="{{ old('name', $user->name) }}" placeholder="{{ translation('Your full name') }}">
+                        value="{{ old('name', $user->name) }}" placeholder="{{ __tr('Your full name') }}">
                     @error('name')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="form-group mb-20">
-                    <label>{{ translation('Email Address') }} <span class="text-danger">*</span></label>
+                    <label>{{ __tr('Email Address') }} <span class="text-danger">*</span></label>
                     <input type="email" name="email" class="input-style @error('email') is-invalid @enderror"
-                        value="{{ old('email', $user->email) }}" placeholder="{{ translation('your@email.com') }}">
+                        value="{{ old('email', $user->email) }}" placeholder="{{ __tr('your@email.com') }}">
                     @error('email')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="form-group mb-20">
-                    <label>{{ translation('Phone Number') }}</label>
+                    <label>{{ __tr('Phone Number') }}</label>
                     <input type="text" name="phone" class="input-style @error('phone') is-invalid @enderror"
-                        value="{{ old('phone', $user->phone) }}" placeholder="{{ translation('+1 234 567 8900') }}">
+                        value="{{ old('phone', $user->phone) }}" placeholder="{{ __tr('+1 234 567 8900') }}">
                     @error('phone')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
@@ -220,7 +219,7 @@
 
                 <div class="form-group mb-0">
                     <button type="submit" class="cmn-btn">
-                        {{ translation('Save Changes') }}
+                        {{ __tr('Save Changes') }}
                     </button>
                 </div>
             </form>
@@ -231,16 +230,16 @@
             <div class="card-header">
                 <h3 class="card-title">
                     <i class="fa-solid fa-lock"
-                        style="margin-right:.5rem;color:var(--primary)"></i>{{ translation('Change Password') }}
+                        style="margin-right:.5rem;color:var(--primary)"></i>{{ __tr('Change Password') }}
                 </h3>
             </div>
 
             @if ($user->social_provider)
                 <div class="social-notice p-3">
                     <i class="fa-solid fa-circle-info"></i>
-                    {{ translation('Your account is linked via') }}
+                    {{ __tr('Your account is linked via') }}
                     <strong>{{ ucfirst($user->social_provider) }}</strong>.
-                    {{ translation('Password change is not available for social login accounts.') }}
+                    {{ __tr('Password change is not available for social login accounts.') }}
                 </div>
             @else
                 <form class="p-3" action="{{ route('member.account.update.password') }}" method="POST" novalidate>
@@ -248,11 +247,11 @@
                     @method('PUT')
 
                     <div class="form-group mb-20">
-                        <label>{{ translation('Current Password') }} <span class="text-danger">*</span></label>
+                        <label>{{ __tr('Current Password') }} <span class="text-danger">*</span></label>
                         <div class="password-field">
                             <input type="password" name="current_password" id="currentPassword"
                                 class="input-style @error('current_password') is-invalid @enderror"
-                                placeholder="{{ translation('Enter current password') }}">
+                                placeholder="{{ __tr('Enter current password') }}">
                             <button type="button" class="toggle-pw" onclick="togglePw('currentPassword', this)">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
@@ -263,11 +262,11 @@
                     </div>
 
                     <div class="form-group mb-20">
-                        <label>{{ translation('New Password') }} <span class="text-danger">*</span></label>
+                        <label>{{ __tr('New Password') }} <span class="text-danger">*</span></label>
                         <div class="password-field">
                             <input type="password" name="new_password" id="newPassword"
                                 class="input-style @error('new_password') is-invalid @enderror"
-                                placeholder="{{ translation('Min. 8 characters') }}">
+                                placeholder="{{ __tr('Min. 8 characters') }}">
                             <button type="button" class="toggle-pw" onclick="togglePw('newPassword', this)">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
@@ -278,10 +277,10 @@
                     </div>
 
                     <div class="form-group mb-20">
-                        <label>{{ translation('Confirm New Password') }} <span class="text-danger">*</span></label>
+                        <label>{{ __tr('Confirm New Password') }} <span class="text-danger">*</span></label>
                         <div class="password-field">
                             <input type="password" name="new_password_confirmation" id="confirmPassword"
-                                class="input-style" placeholder="{{ translation('Repeat new password') }}">
+                                class="input-style" placeholder="{{ __tr('Repeat new password') }}">
                             <button type="button" class="toggle-pw" onclick="togglePw('confirmPassword', this)">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
@@ -290,7 +289,7 @@
 
                     <div class="form-group mb-0">
                         <button type="submit" class="cmn-btn">
-                            {{ translation('Update Password') }}
+                            {{ __tr('Update Password') }}
                         </button>
                     </div>
                 </form>

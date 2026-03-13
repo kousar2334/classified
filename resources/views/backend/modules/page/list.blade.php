@@ -9,7 +9,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Pages') }}
+    {{ __tr('Pages') }}
 @endsection
 @section('page-style')
 @endsection
@@ -21,20 +21,20 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Pages') }}</h3>
+                            <h3 class="card-title">{{ __tr('Pages') }}</h3>
                             <a class="btn btn-success btn-sm float-right text-white"
-                                href="{{ route('admin.page.create') }}">{{ translation('Create New Page') }}</a>
+                                href="{{ route('admin.page.create') }}">{{ __tr('Create New Page') }}</a>
                         </div>
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover text-nowrap table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('#') }}</th>
-                                        <th>{{ translation('Title') }}</th>
-                                        <th>{{ translation('Author') }}</th>
-                                        <th>{{ translation('Created') }}</th>
-                                        <th>{{ translation('Status') }}</th>
-                                        <th class="text-right">{{ translation('Action') }}</th>
+                                        <th>{{ __tr('#') }}</th>
+                                        <th>{{ __tr('Title') }}</th>
+                                        <th>{{ __tr('Author') }}</th>
+                                        <th>{{ __tr('Created') }}</th>
+                                        <th>{{ __tr('Status') }}</th>
+                                        <th class="text-right">{{ __tr('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -48,10 +48,10 @@
                                                         {{ $page->title }}
                                                     </a>
                                                     @if (get_setting('home_page_id') == $page->id)
-                                                        <span class="text-black">- {{ translation('Home Page') }}</span>
+                                                        <span class="text-black">- {{ __tr('Home Page') }}</span>
                                                     @endif
                                                     @if (get_setting('contact_page_id') == $page->id)
-                                                        <span class="text-black">- {{ translation('Contact Page') }}</span>
+                                                        <span class="text-black">- {{ __tr('Contact Page') }}</span>
                                                     @endif
                                                 </td>
                                                 <td>
@@ -66,15 +66,15 @@
                                                 </td>
                                                 <td>
                                                     @if ($page->status == config('settings.page_status.active'))
-                                                        <p class="badge badge-success">{{ translation('Active') }}</p>
+                                                        <p class="badge badge-success">{{ __tr('Active') }}</p>
                                                     @else
-                                                        <p class="badge badge-danger">{{ translation('Inactive') }}</p>
+                                                        <p class="badge badge-danger">{{ __tr('Inactive') }}</p>
                                                     @endif
                                                 </td>
                                                 <td class="text-right">
                                                     <div class="btn-group">
                                                         <button type="button"
-                                                            class="btn btn-default">{{ translation('Action') }}</button>
+                                                            class="btn btn-default">{{ __tr('Action') }}</button>
                                                         <button type="button"
                                                             class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
                                                             data-toggle="dropdown" aria-expanded="false">
@@ -82,13 +82,13 @@
                                                         <div class="dropdown-menu" role="menu">
                                                             <a class="dropdown-item"
                                                                 href="{{ route('admin.page.edit', ['page' => $page->id, 'lang' => defaultLangCode()]) }}">
-                                                                {{ translation('Edit Page') }}
+                                                                {{ __tr('Edit Page') }}
                                                             </a>
                                                             @can('Delete Page')
                                                                 <div class="dropdown-divider"></div>
                                                                 <a class="dropdown-item delete-item" href="#"
                                                                     data-id="{{ $page->id }}">
-                                                                    {{ translation('Delete Page') }}
+                                                                    {{ __tr('Delete Page') }}
                                                                 </a>
                                                             @endcan
                                                         </div>
@@ -100,7 +100,7 @@
                                         <tr>
                                             <td colspan="6">
                                                 <p class="alert alert-default-danger text-center">
-                                                    {{ translation('No item found') }}
+                                                    {{ __tr('No item found') }}
                                                 </p>
                                             </td>
                                         </tr>
@@ -120,19 +120,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete?') }}</h4>
                         <form method="POST" action="{{ route('admin.page.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-item-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>

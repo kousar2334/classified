@@ -5,10 +5,10 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ route('home') }}" target="_blank" class="btn btn-success">{{ translation('Browse Website') }}</a>
+            <a href="{{ route('home') }}" target="_blank" class="btn btn-success">{{ __tr('Browse Website') }}</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block ml-2">
-            <a href="{{ route('utility.clear.cache') }}" class="btn btn-primary">{{ translation('Clear Cache') }}</a>
+            <a href="{{ route('utility.clear.cache') }}" class="btn btn-primary">{{ __tr('Clear Cache') }}</a>
         </li>
 
     </ul>
@@ -38,7 +38,7 @@
                 <div class="notification-list-items">
                 </div>
                 <a href="#"
-                    class="dropdown-item dropdown-footer mark-as-read-all d-none">{{ translation('Clear All Notification') }}</a>
+                    class="dropdown-item dropdown-footer mark-as-read-all d-none">{{ __tr('Clear All Notification') }}</a>
             </div>
         </li>
         <!--End Notification Dropdown-->
@@ -71,11 +71,11 @@
                 </div>
                 <div class="dropdown-divider"></div>
                 <a href="{{ route('admin.auth.profile') }}" class="dropdown-item">
-                    {{ translation('Profile') }}
+                    {{ __tr('Profile') }}
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="{{ route('admin.auth.logout') }}" class="dropdown-item">
-                    {{ translation('Log out') }}
+                    {{ __tr('Log out') }}
                 </a>
             </div>
         </li>

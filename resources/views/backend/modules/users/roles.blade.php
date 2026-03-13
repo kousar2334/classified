@@ -6,7 +6,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Roles') }}
+    {{ __tr('Roles') }}
 @endsection
 @section('page-style')
     <link rel="stylesheet"
@@ -44,21 +44,21 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Roles') }}</h3>
+                            <h3 class="card-title">{{ __tr('Roles') }}</h3>
                             <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
                                 data-target="#role-create-modal">
-                                <i class="fas fa-plus mr-1"></i>{{ translation('Add New Role') }}
+                                <i class="fas fa-plus mr-1"></i>{{ __tr('Add New Role') }}
                             </button>
                         </div>
                         <div class="card-body">
                             <table id="rolesTable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('ID') }}</th>
-                                        <th>{{ translation('Name') }}</th>
-                                        <th>{{ translation('Guard') }}</th>
-                                        <th>{{ translation('Permissions') }}</th>
-                                        <th class="text-right">{{ translation('Action') }}</th>
+                                        <th>{{ __tr('ID') }}</th>
+                                        <th>{{ __tr('Name') }}</th>
+                                        <th>{{ __tr('Guard') }}</th>
+                                        <th>{{ __tr('Permissions') }}</th>
+                                        <th class="text-right">{{ __tr('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -69,13 +69,13 @@
                                             <td>{{ $role->guard_name }}</td>
                                             <td>
                                                 <span class="badge badge-primary">
-                                                    {{ $role->permissions->count() }} {{ translation('permissions') }}
+                                                    {{ $role->permissions->count() }} {{ __tr('permissions') }}
                                                 </span>
                                             </td>
                                             <td class="text-right">
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-sm btn-default">
-                                                        {{ translation('Action') }}
+                                                        {{ __tr('Action') }}
                                                     </button>
                                                     <button type="button"
                                                         class="btn btn-sm btn-default dropdown-toggle dropdown-toggle-split"
@@ -85,11 +85,11 @@
                                                     <div class="dropdown-menu dropdown-menu-right">
                                                         <a class="dropdown-item edit-role" href="#"
                                                             data-id="{{ $role->id }}">
-                                                            <i class="fas fa-edit mr-1"></i>{{ translation('Edit') }}
+                                                            <i class="fas fa-edit mr-1"></i>{{ __tr('Edit') }}
                                                         </a>
                                                         <a class="dropdown-item delete-role text-danger" href="#"
                                                             data-id="{{ $role->id }}">
-                                                            <i class="fas fa-trash mr-1"></i>{{ translation('Delete') }}
+                                                            <i class="fas fa-trash mr-1"></i>{{ __tr('Delete') }}
                                                         </a>
                                                     </div>
                                                 </div>
@@ -109,7 +109,7 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('New Role') }}</h5>
+                        <h5 class="modal-title">{{ __tr('New Role') }}</h5>
                         <button type="button" class="close" data-dismiss="modal">
                             <span>&times;</span>
                         </button>
@@ -118,22 +118,22 @@
                         <form id="new-role-form">
                             @csrf
                             <div class="form-group">
-                                <label class="font-weight-bold">{{ translation('Role Name') }}</label>
+                                <label class="font-weight-bold">{{ __tr('Role Name') }}</label>
                                 <input type="text" class="form-control" name="name"
-                                    placeholder="{{ translation('Enter Role Name') }}">
+                                    placeholder="{{ __tr('Enter Role Name') }}">
                             </div>
 
                             <div class="form-group mb-0">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <label class="font-weight-bold mb-0">{{ translation('Permissions') }}</label>
+                                    <label class="font-weight-bold mb-0">{{ __tr('Permissions') }}</label>
                                     <div>
                                         <button type="button"
                                             class="btn btn-xs btn-outline-success create-select-all-global">
-                                            <i class="fas fa-check-square mr-1"></i>{{ translation('Select All') }}
+                                            <i class="fas fa-check-square mr-1"></i>{{ __tr('Select All') }}
                                         </button>
                                         <button type="button"
                                             class="btn btn-xs btn-outline-secondary create-deselect-all-global ml-1">
-                                            <i class="fas fa-square mr-1"></i>{{ translation('Deselect All') }}
+                                            <i class="fas fa-square mr-1"></i>{{ __tr('Deselect All') }}
                                         </button>
                                     </div>
                                 </div>
@@ -159,7 +159,7 @@
                                                                 id="create-select-all-{{ Str::slug($module) }}">
                                                             <label class="form-check-label text-sm"
                                                                 for="create-select-all-{{ Str::slug($module) }}">
-                                                                {{ translation('All') }}
+                                                                {{ __tr('All') }}
                                                             </label>
                                                         </div>
                                                     </div>
@@ -195,10 +195,10 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            {{ translation('Cancel') }}
+                            {{ __tr('Cancel') }}
                         </button>
                         <button type="button" class="btn btn-success create-new-role-btn">
-                            <i class="fas fa-plus mr-1"></i>{{ translation('Create Role') }}
+                            <i class="fas fa-plus mr-1"></i>{{ __tr('Create Role') }}
                         </button>
                     </div>
                 </div>
@@ -211,7 +211,7 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('Edit Role') }}</h5>
+                        <h5 class="modal-title">{{ __tr('Edit Role') }}</h5>
                         <button type="button" class="close" data-dismiss="modal">
                             <span>&times;</span>
                         </button>
@@ -229,19 +229,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                     </div>
                     <div class="modal-body text-center">
                         <i class="fas fa-exclamation-triangle text-warning fa-2x mb-2"></i>
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete role ?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete role ?') }}</h4>
                         <form method="POST" action="{{ route('admin.users.role.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-role-id" name="id">
                             <button type="button" class="btn mt-2 btn-secondary"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
                             <button type="submit" class="btn btn-danger mt-2">
-                                <i class="fas fa-trash mr-1"></i>{{ translation('Delete') }}
+                                <i class="fas fa-trash mr-1"></i>{{ __tr('Delete') }}
                             </button>
                         </form>
                     </div>

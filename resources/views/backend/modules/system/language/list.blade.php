@@ -14,7 +14,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Languages') }}
+    {{ __tr('Languages') }}
 @endsection
 @section('page-style')
 @endsection
@@ -29,10 +29,10 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">{{ translation('Languages') }}</h3>
+                                    <h3 class="card-title">{{ __tr('Languages') }}</h3>
                                     <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
                                         data-target="#language-create-modal">
-                                        {{ translation('Create New Language') }}
+                                        {{ __tr('Create New Language') }}
                                     </button>
                                 </div>
                                 <div class="card-body">
@@ -41,12 +41,12 @@
                                             <table class="table table-bordered table-hover">
                                                 <thead>
                                                     <tr>
-                                                        <th>{{ translation('#') }}</th>
-                                                        <th>{{ translation('Name') }}</th>
-                                                        <th>{{ translation('Native Name') }}</th>
-                                                        <th>{{ translation('Code') }}</th>
-                                                        <th>{{ translation('Status') }}</th>
-                                                        <th class="text-right">{{ translation('Action') }}</th>
+                                                        <th>{{ __tr('#') }}</th>
+                                                        <th>{{ __tr('Name') }}</th>
+                                                        <th>{{ __tr('Native Name') }}</th>
+                                                        <th>{{ __tr('Code') }}</th>
+                                                        <th>{{ __tr('Status') }}</th>
+                                                        <th class="text-right">{{ __tr('Action') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -60,17 +60,17 @@
                                                             <td>
                                                                 @if ($language->status == config('settings.general_status.active'))
                                                                     <p class=" badge badge-success">
-                                                                        {{ translation('Active') }}
+                                                                        {{ __tr('Active') }}
                                                                     </p>
                                                                 @else
                                                                     <p class=" badge badge-danger">
-                                                                        {{ translation('Inactive') }}</p>
+                                                                        {{ __tr('Inactive') }}</p>
                                                                 @endif
                                                             </td>
                                                             <td class="text-right">
                                                                 <div class="btn-group">
                                                                     <button type="button"
-                                                                        class="btn btn-default">{{ translation('Action') }}
+                                                                        class="btn btn-default">{{ __tr('Action') }}
                                                                     </button>
                                                                     <button type="button"
                                                                         class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
@@ -79,17 +79,17 @@
                                                                     <div class="dropdown-menu" role="menu">
                                                                         <a href="{{ route('admin.system.settings.language.translation', $language->id) }}"
                                                                             class="dropdown-item">
-                                                                            {{ translation('Translation') }}
+                                                                            {{ __tr('Translation') }}
                                                                         </a>
                                                                         <div class="dropdown-divider"></div>
                                                                         <button class="dropdown-item edit-language"
                                                                             data-id="{{ $language->id }}">
-                                                                            {{ translation('Edit') }}
+                                                                            {{ __tr('Edit') }}
                                                                         </button>
                                                                         <div class="dropdown-divider"></div>
                                                                         <button class="dropdown-item delete-language"
                                                                             data-id="{{ $language->id }}">
-                                                                            {{ translation('Delete') }}
+                                                                            {{ __tr('Delete') }}
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -100,7 +100,7 @@
                                             </table>
                                         @else
                                             <div class="text-center">
-                                                <h2>{{ translation('No Language Found') }}</h2>
+                                                <h2>{{ __tr('No Language Found') }}</h2>
                                             </div>
                                         @endif
                                     </div>
@@ -117,7 +117,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('New Language') }}</h5>
+                        <h5 class="modal-title">{{ __tr('New Language') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -126,28 +126,28 @@
                         <form id="new-language-form">
                             @csrf
                             <div class="form-group">
-                                <label>{{ translation('Name') }}</label>
+                                <label>{{ __tr('Name') }}</label>
                                 <input type="text" class="form-control" name="name"
-                                    placeholder="{{ translation('Enter Name') }}">
+                                    placeholder="{{ __tr('Enter Name') }}">
                             </div>
                             <div class="form-group">
-                                <label>{{ translation('Native Name') }}</label>
+                                <label>{{ __tr('Native Name') }}</label>
                                 <input type="text" class="form-control" name="native_name"
-                                    placeholder="{{ translation('Enter Native Name') }}">
+                                    placeholder="{{ __tr('Enter Native Name') }}">
                             </div>
                             <div class="form-group">
-                                <label>{{ translation('Code') }}</label>
+                                <label>{{ __tr('Code') }}</label>
                                 <input type="code" class="form-control" name="code"
-                                    placeholder="{{ translation('Enter code') }}">
+                                    placeholder="{{ __tr('Enter code') }}">
                             </div>
                             <div class="form-group">
-                                <label>{{ translation('Icon') }}</label>
+                                <label>{{ __tr('Icon') }}</label>
                                 <x-media name="icon" value=""></x-media>
                             </div>
                         </form>
                         <div class="d-flex justify-content-between">
                             <button type="button"
-                                class="btn btn-primary language-create-btn">{{ translation('Save Language') }}</button>
+                                class="btn btn-primary language-create-btn">{{ __tr('Save Language') }}</button>
                         </div>
                     </div>
 
@@ -161,19 +161,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete ?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete ?') }}</h4>
                         <form method="POST" action="{{ route('admin.system.settings.language.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>
@@ -186,7 +186,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('Language Information') }}</h5>
+                        <h5 class="modal-title">{{ __tr('Language Information') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

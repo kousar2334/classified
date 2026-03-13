@@ -9,7 +9,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Media Manager') }}
+    {{ __tr('Media Manager') }}
 @endsection
 @section('page-style')
     <style>
@@ -214,7 +214,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Media Manager') }}</h3>
+                            <h3 class="card-title">{{ __tr('Media Manager') }}</h3>
 
                         </div>
                         <div class="card-body">
@@ -245,7 +245,7 @@
                                 <tr>
                                     <td colspan="8">
                                         <p class="alert alert-default-danger text-center">
-                                            {{ translation('No item found') }}
+                                            {{ __tr('No item found') }}
                                         </p>
                                     </td>
                                 </tr>
@@ -262,19 +262,19 @@
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                            <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body text-center">
-                            <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete ?') }}</h4>
+                            <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete ?') }}</h4>
                             <form method="POST" action="{{ route('admin.media.delete') }}">
                                 @csrf
                                 <input type="hidden" id="delete-id" name="id">
                                 <button type="button" class="btn mt-2 btn-danger"
-                                    data-dismiss="modal">{{ translation('Cancel') }}</button>
-                                <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                    data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                                <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                             </form>
                         </div>
                     </div>

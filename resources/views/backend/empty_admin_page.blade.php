@@ -21,9 +21,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('User') }}</h3>
+                            <h3 class="card-title">{{ __tr('User') }}</h3>
                             <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
-                                data-target="#user-create-modal">{{ translation('Add New User') }}</button>
+                                data-target="#user-create-modal">{{ __tr('Add New User') }}</button>
                         </div>
                         <div class="card-body">
 

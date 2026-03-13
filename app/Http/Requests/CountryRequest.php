@@ -32,8 +32,8 @@ class CountryRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => translation('Name is required'),
-            'code.required' => translation('Code is required'),
+            'name.required' => __tr('Name is required'),
+            'code.required' => __tr('Code is required'),
         ];
     }
 }

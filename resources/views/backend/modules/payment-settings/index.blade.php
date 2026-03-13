@@ -20,7 +20,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <i class="fas fa-credit-card mr-2"></i>
-                                    {{ translation('SSLCommerz (Online Payment)') }}
+                                    {{ __tr('SSLCommerz (Online Payment)') }}
                                 </h3>
                                 <div class="card-tools">
                                     <div class="custom-control custom-switch">
@@ -33,18 +33,18 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>{{ translation('Store ID') }}</label>
+                                    <label>{{ __tr('Store ID') }}</label>
                                     <input type="text" name="sslcommerz_store_id" class="form-control"
                                         value="{{ get_setting('sslcommerz_store_id') }}" placeholder="your_store_id">
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Store Password') }}</label>
+                                    <label>{{ __tr('Store Password') }}</label>
                                     <input type="password" name="sslcommerz_store_password" class="form-control"
                                         value="{{ get_setting('sslcommerz_store_password') }}"
                                         placeholder="your_store_password" autocomplete="new-password">
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Currency') }}</label>
+                                    <label>{{ __tr('Currency') }}</label>
                                     <input type="text" name="sslcommerz_currency" class="form-control"
                                         value="{{ get_setting('sslcommerz_currency', 'BDT') }}" placeholder="BDT"
                                         maxlength="10">
@@ -56,17 +56,17 @@
                                             name="sslcommerz_sandbox" value="1"
                                             {{ get_setting('sslcommerz_sandbox', 1) ? 'checked' : '' }}>
                                         <label class="custom-control-label" for="sslcommerz_sandbox">
-                                            {{ translation('Sandbox / Test Mode') }}
+                                            {{ __tr('Sandbox / Test Mode') }}
                                         </label>
                                     </div>
                                     <small class="form-text text-muted">
-                                        {{ translation('Disable sandbox mode for live payments.') }}
+                                        {{ __tr('Disable sandbox mode for live payments.') }}
                                     </small>
                                 </div>
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save mr-1"></i> {{ translation('Save SSLCommerz Settings') }}
+                                    <i class="fas fa-save mr-1"></i> {{ __tr('Save SSLCommerz Settings') }}
                                 </button>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <i class="fas fa-university mr-2"></i>
-                                    {{ translation('Bank Transfer (Manual Approval)') }}
+                                    {{ __tr('Bank Transfer (Manual Approval)') }}
                                 </h3>
                                 <div class="card-tools">
                                     <div class="custom-control custom-switch">
@@ -95,42 +95,42 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>{{ translation('Bank Name') }}</label>
+                                    <label>{{ __tr('Bank Name') }}</label>
                                     <input type="text" name="bank_name" class="form-control"
                                         value="{{ get_setting('bank_name') }}" placeholder="e.g. Dutch Bangla Bank">
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Account Name') }}</label>
+                                    <label>{{ __tr('Account Name') }}</label>
                                     <input type="text" name="bank_account_name" class="form-control"
                                         value="{{ get_setting('bank_account_name') }}" placeholder="Account holder name">
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Account Number') }}</label>
+                                    <label>{{ __tr('Account Number') }}</label>
                                     <input type="text" name="bank_account_number" class="form-control"
                                         value="{{ get_setting('bank_account_number') }}" placeholder="e.g. 1234567890">
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Routing Number') }}</label>
+                                    <label>{{ __tr('Routing Number') }}</label>
                                     <input type="text" name="bank_routing_number" class="form-control"
                                         value="{{ get_setting('bank_routing_number') }}" placeholder="Optional">
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Branch Name') }}</label>
+                                    <label>{{ __tr('Branch Name') }}</label>
                                     <input type="text" name="bank_branch" class="form-control"
                                         value="{{ get_setting('bank_branch') }}" placeholder="e.g. Motijheel Branch">
                                 </div>
                                 <div class="form-group mb-0">
-                                    <label>{{ translation('Payment Instructions') }}</label>
+                                    <label>{{ __tr('Payment Instructions') }}</label>
                                     <textarea name="bank_instructions" class="form-control" rows="3"
                                         placeholder="Instructions shown to users before they transfer (e.g. include your name in the transfer note)">{{ get_setting('bank_instructions') }}</textarea>
                                     <small class="form-text text-muted">
-                                        {{ translation('Displayed on the checkout page to guide the customer.') }}
+                                        {{ __tr('Displayed on the checkout page to guide the customer.') }}
                                     </small>
                                 </div>
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success">
-                                    <i class="fas fa-save mr-1"></i> {{ translation('Save Bank Transfer Settings') }}
+                                    <i class="fas fa-save mr-1"></i> {{ __tr('Save Bank Transfer Settings') }}
                                 </button>
                             </div>
                         </div>

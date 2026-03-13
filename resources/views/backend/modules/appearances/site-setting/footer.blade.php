@@ -9,7 +9,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Footer Setting') }}
+    {{ __tr('Footer Setting') }}
 @endsection
 @section('page-style')
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/summernote/summernote-bs4.min.css') }}">
@@ -22,7 +22,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Footer Setting') }}</h3>
+                            <h3 class="card-title">{{ __tr('Footer Setting') }}</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -33,7 +33,7 @@
                                     <div class="tab-content">
                                         <div
                                             class="tab-pane text-left fade {{ Request::routeIs(['admin.appearance.site.setting.footer']) ? 'show active' : '' }}">
-                                            <h4>{{ translation('Footer Setting') }}</h4>
+                                            <h4>{{ __tr('Footer Setting') }}</h4>
                                             <hr>
                                             <form method="POST"
                                                 action="{{ route('admin.appearance.site.setting.footer.update') }}">
@@ -50,60 +50,60 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{{ translation('Address') }}</label>
+                                                    <label>{{ __tr('Address') }}</label>
                                                     <input type="text" class="form-control" name="footer_address"
                                                         value="{{ get_setting('footer_address') }}"
-                                                        placeholder="{{ translation('Enter Address') }}">
+                                                        placeholder="{{ __tr('Enter Address') }}">
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{{ translation('Address 2') }}</label>
+                                                    <label>{{ __tr('Address 2') }}</label>
                                                     <input type="text" class="form-control" name="footer_address_2"
                                                         value="{{ get_setting('footer_address_2') }}"
-                                                        placeholder="{{ translation('Enter Address') }}">
+                                                        placeholder="{{ __tr('Enter Address') }}">
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{{ translation('Phone') }}</label>
+                                                    <label>{{ __tr('Phone') }}</label>
                                                     <input type="text" class="form-control" name="footer_phone_number"
                                                         value="{{ get_setting('footer_phone_number') }}"
-                                                        placeholder="{{ translation('Enter Phone') }}">
+                                                        placeholder="{{ __tr('Enter Phone') }}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>{{ translation('Hotline') }}</label>
+                                                    <label>{{ __tr('Hotline') }}</label>
                                                     <input type="text" class="form-control" name="footer_hotline"
                                                         value="{{ get_setting('footer_hotline') }}"
-                                                        placeholder="{{ translation('Enter Number') }}">
+                                                        placeholder="{{ __tr('Enter Number') }}">
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{{ translation('Facebook Account') }}</label>
+                                                    <label>{{ __tr('Facebook Account') }}</label>
                                                     <input type="text" class="form-control" name="site_fb_link"
                                                         value="{{ get_setting('site_fb_link') }}"
-                                                        placeholder="{{ translation('Enter Facebook Account Link') }}">
+                                                        placeholder="{{ __tr('Enter Facebook Account Link') }}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>{{ translation('Linkedin Account') }}</label>
+                                                    <label>{{ __tr('Linkedin Account') }}</label>
                                                     <input type="text" class="form-control" name="site_linkedin_link"
                                                         value="{{ get_setting('site_linkedin_link') }}"
-                                                        placeholder="{{ translation('Enter Linkedin Account Link') }}">
+                                                        placeholder="{{ __tr('Enter Linkedin Account Link') }}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>{{ translation('Youtube Account') }}</label>
+                                                    <label>{{ __tr('Youtube Account') }}</label>
                                                     <input type="text" class="form-control" name="site_youtube_link"
                                                         value="{{ get_setting('site_youtube_link') }}"
-                                                        placeholder="{{ translation('Enter Youtube Account Link') }}">
+                                                        placeholder="{{ __tr('Enter Youtube Account Link') }}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>{{ translation('Instagram Account') }}</label>
+                                                    <label>{{ __tr('Instagram Account') }}</label>
                                                     <input type="text" class="form-control" name="site_instagram_link"
                                                         value="{{ get_setting('site_instagram_link') }}"
-                                                        placeholder="{{ translation('Enter Twitter Account Link') }}">
+                                                        placeholder="{{ __tr('Enter Twitter Account Link') }}">
                                                 </div>
 
                                                 <div class="d-flex justify-content-end">
                                                     <button type="submit"
-                                                        class="btn btn-primary">{{ translation('Save Change') }}
+                                                        class="btn btn-primary">{{ __tr('Save Change') }}
                                                     </button>
                                                 </div>
                                             </form>

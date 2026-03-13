@@ -7,7 +7,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Permissions') }}
+    {{ __tr('Permissions') }}
 @endsection
 @section('page-style')
     <style>
@@ -77,12 +77,12 @@
                 <div class="col-12">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="text-muted" style="font-size:0.85rem;">
-                            <strong>{{ $permissions->count() }}</strong> {{ translation('permissions') }}
+                            <strong>{{ $permissions->count() }}</strong> {{ __tr('permissions') }}
                             &nbsp;&middot;&nbsp;
-                            <strong>{{ $grouped->count() }}</strong> {{ translation('modules') }}
+                            <strong>{{ $grouped->count() }}</strong> {{ __tr('modules') }}
                         </div>
                         <input type="text" id="permission-search" class="form-control form-control-sm"
-                            placeholder="{{ translation('Search permissions...') }}">
+                            placeholder="{{ __tr('Search permissions...') }}">
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
             {{-- No results message --}}
             <div id="no-results" class="text-center text-muted py-4" style="display:none;">
                 <i class="fas fa-search fa-2x mb-2 d-block"></i>
-                {{ translation('No permissions found matching your search.') }}
+                {{ __tr('No permissions found matching your search.') }}
             </div>
 
         </div>

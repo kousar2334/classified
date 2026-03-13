@@ -6,7 +6,7 @@
     <meta name="_token" content="{{ csrf_token() }}">
     <link rel=icon href="{{ asset(getFilePath(get_setting('site_favicon'))) }}" sizes="20x20" type="image/png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('page-title') | {{ translation('Dashboard') }}</title>
+    <title>@yield('page-title') | {{ __tr('Dashboard') }}</title>
     @include('backend.includes.style')
     @yield('page-style')
 </head>

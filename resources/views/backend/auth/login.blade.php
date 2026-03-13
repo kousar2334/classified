@@ -1,6 +1,6 @@
 @extends('backend.layouts.auth_layout')
 @section('page-title')
-    {{ translation('Login') }}
+    {{ __tr('Login') }}
 @endsection
 @section('page-content')
     <div class="card card-outline card-primary">
@@ -15,7 +15,7 @@
             </a>
         </div>
         <div class="card-body">
-            <p class="login-box-msg">{{ translation('Sign in to start your session') }}</p>
+            <p class="login-box-msg">{{ __tr('Sign in to start your session') }}</p>
             @if ($errors->has('login_error'))
                 <p class="alert alert-danger">{{ $errors->first('login_error') }}</p>
             @endif
@@ -52,14 +52,14 @@
                         <div class="icheck-primary">
                             <input type="checkbox" id="remember">
                             <label for="remember">
-                                {{ translation('Remember Me') }}
+                                {{ __tr('Remember Me') }}
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="social-auth-links text-center mt-2 mb-3">
                     <button class="btn btn-block btn-primary">
-                        {{ translation('Login') }}
+                        {{ __tr('Login') }}
                     </button>
                 </div>
             </form>

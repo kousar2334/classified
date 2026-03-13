@@ -1,8 +1,8 @@
 @extends('frontend.layouts.master')
 
 @section('meta')
-    <title>{{ translation('Blog') }} - {{ get_setting('site_name') }}</title>
-    <meta name="description" content="{{ translation('Read our latest articles, news and insights.') }}">
+    <title>{{ __tr('Blog') }} - {{ get_setting('site_name') }}</title>
+    <meta name="description" content="{{ __tr('Read our latest articles, news and insights.') }}">
 @endsection
 
 @section('content')
@@ -11,15 +11,15 @@
     <section class="contact-breadcrumb-area">
         <div class="container">
             <div class="breadcrumb-content text-center">
-                <span class="page-tag">{{ translation('Our Blog') }}</span>
-                <h1>{{ translation('Latest Articles') }}</h1>
-                <p class="sub-text">{{ translation('Read our latest articles, news and insights.') }}</p>
+                <span class="page-tag">{{ __tr('Our Blog') }}</span>
+                <h1>{{ __tr('Latest Articles') }}</h1>
+                <p class="sub-text">{{ __tr('Read our latest articles, news and insights.') }}</p>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('home') }}">{{ translation('Home') }}</a>
+                            <a href="{{ route('home') }}">{{ __tr('Home') }}</a>
                         </li>
-                        <li class="breadcrumb-item active">{{ translation('Blog') }}</li>
+                        <li class="breadcrumb-item active">{{ __tr('Blog') }}</li>
                     </ol>
                 </nav>
             </div>
@@ -36,7 +36,7 @@
                 <div class="col-lg-6 offset-lg-3">
                     <form action="{{ route('frontend.blog.list') }}" method="GET" class="d-flex gap-2">
                         <input type="text" name="search" class="input-style" value="{{ request('search') }}"
-                            placeholder="{{ translation('Search articles...') }}">
+                            placeholder="{{ __tr('Search articles...') }}">
                         <button type="submit" class="cmn-btn">
                             <i class="las la-search"></i>
                         </button>
@@ -105,7 +105,7 @@
 
                                 <a href="{{ route('frontend.new.details', ['permalink' => $blog->permalink]) }}"
                                     class="blog-read-more mt-3 d-inline-flex align-items-center gap-1">
-                                    {{ translation('Read More') }}
+                                    {{ __tr('Read More') }}
                                     <i class="las la-arrow-right"></i>
                                 </a>
                             </div>
@@ -114,10 +114,10 @@
                 @empty
                     <div class="col-12 text-center py-5">
                         <i class="las la-newspaper" style="font-size: 3rem; color: #94a3b8;"></i>
-                        <p class="pera mt-3">{{ translation('No articles found.') }}</p>
+                        <p class="pera mt-3">{{ __tr('No articles found.') }}</p>
                         @if (request('search'))
                             <a href="{{ route('frontend.blog.list') }}" class="cmn-btn mt-2">
-                                {{ translation('Clear Search') }}
+                                {{ __tr('Clear Search') }}
                             </a>
                         @endif
                     </div>

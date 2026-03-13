@@ -23,8 +23,8 @@ class AdsCategoryRequest extends FormRequest
     {
 
         return [
-            'title.required' => translation('Title is required'),
-            'parent.exists' => translation('Selected parent does not exists'),
+            'title.required' => __tr('Title is required'),
+            'parent.exists' => __tr('Selected parent does not exists'),
 
         ];
     }

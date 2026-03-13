@@ -21,38 +21,38 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Members') }}</h3>
+                            <h3 class="card-title">{{ __tr('Members') }}</h3>
                             <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
-                                data-target="#new-member-modal">{{ translation('Add New Member') }}</button>
+                                data-target="#new-member-modal">{{ __tr('Add New Member') }}</button>
                         </div>
                         <div class="card-body">
                             <div class="filter-area mb-3">
                                 <form method="get" action="{{ route('admin.members.list') }}"
                                     class="d-flex align-items-center gap-10">
                                     <select class="form-control mb-10" name="per_page">
-                                        <option value="">{{ translation('Per page') }}</option>
+                                        <option value="">{{ __tr('Per page') }}</option>
                                         <option value="20" @selected(request()->has('per_page') && request()->get('per_page') == '20')>20</option>
                                         <option value="50" @selected(request()->has('per_page') && request()->get('per_page') == '50')>50</option>
                                         <option value="all" @selected(request()->has('per_page') && request()->get('per_page') == 'all')>All</option>
                                     </select>
                                     <select class="form-control mb-10" name="status">
-                                        <option value="">{{ translation('Status') }}</option>
+                                        <option value="">{{ __tr('Status') }}</option>
                                         <option value="{{ config('settings.general_status.active') }}"
                                             @selected(request()->has('status') && request()->get('status') == config('settings.general_status.active'))>
-                                            {{ translation('Active') }}</option>
+                                            {{ __tr('Active') }}</option>
                                         <option value="{{ config('settings.general_status.in_active') }}"
                                             @selected(request()->has('status') && request()->get('status') == config('settings.general_status.in_active'))>
-                                            {{ translation('Inactive') }}</option>
+                                            {{ __tr('Inactive') }}</option>
                                     </select>
 
                                     <input type="text" name="search" class="form-control mb-10"
                                         value="{{ request()->has('search') ? request()->get('search') : '' }}"
                                         placeholder="Enter name, email, phone, uid">
-                                    <button type="submit" class="btn btn-primary">{{ translation('Filter') }}</button>
+                                    <button type="submit" class="btn btn-primary">{{ __tr('Filter') }}</button>
 
                                     @if (request()->has('per_page') || request()->has('status') || request()->has('search'))
                                         <a class="btn btn-danger"
-                                            href="{{ route('admin.members.list') }}">{{ translation('Clear Filter') }}
+                                            href="{{ route('admin.members.list') }}">{{ __tr('Clear Filter') }}
                                         </a>
                                     @endif
                                 </form>
@@ -66,14 +66,14 @@
                                             <th>
                                                 #
                                             </th>
-                                            <th>{{ translation('Image') }}</th>
-                                            <th>{{ translation('Name') }}</th>
-                                            <th>{{ translation('Email') }}</th>
-                                            <th>{{ translation('Email Verified') }}</th>
-                                            <th>{{ translation('Phone') }}</th>
-                                            <th>{{ translation('No. of Ads') }}</th>
-                                            <th>{{ translation('Status') }}</th>
-                                            <th class="text-center">{{ translation('Actions') }}</th>
+                                            <th>{{ __tr('Image') }}</th>
+                                            <th>{{ __tr('Name') }}</th>
+                                            <th>{{ __tr('Email') }}</th>
+                                            <th>{{ __tr('Email Verified') }}</th>
+                                            <th>{{ __tr('Phone') }}</th>
+                                            <th>{{ __tr('No. of Ads') }}</th>
+                                            <th>{{ __tr('Status') }}</th>
+                                            <th class="text-center">{{ __tr('Actions') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -95,7 +95,7 @@
                                                         @if ($member->email_verified_at != null)
                                                             {{ $member->email_verified_at->format('d M Y') }}
                                                         @else
-                                                            <p class="badge badge-danger">{{ translation('Not Verified') }}
+                                                            <p class="badge badge-danger">{{ __tr('Not Verified') }}
                                                             </p>
                                                         @endif
                                                     </td>
@@ -103,16 +103,16 @@
                                                     <td>{{ $member->ads->count() }}</td>
                                                     <td>
                                                         @if ($member->status == config('settings.general_status.active'))
-                                                            <p class="badge badge-success">{{ translation('Active') }}</p>
+                                                            <p class="badge badge-success">{{ __tr('Active') }}</p>
                                                         @else
-                                                            <p class="badge badge-danger">{{ translation('Inactive') }}</p>
+                                                            <p class="badge badge-danger">{{ __tr('Inactive') }}</p>
                                                         @endif
                                                     </td>
 
                                                     <td class="text-right">
                                                         <div class="btn-group">
                                                             <button type="button"
-                                                                class="btn btn-default">{{ translation('Action') }}
+                                                                class="btn btn-default">{{ __tr('Action') }}
                                                             </button>
                                                             <button type="button"
                                                                 class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
@@ -121,17 +121,17 @@
                                                             <div class="dropdown-menu" role="menu">
                                                                 <button class="dropdown-item edit-member-btn"
                                                                     data-id="{{ $member->id }}">
-                                                                    {{ translation('Edit') }}
+                                                                    {{ __tr('Edit') }}
                                                                 </button>
                                                                 <div class="dropdown-divider"></div>
                                                                 <button class="dropdown-item member-reset-password"
                                                                     data-id="{{ $member->id }}">
-                                                                    {{ translation('Reset Password') }}
+                                                                    {{ __tr('Reset Password') }}
                                                                 </button>
                                                                 <div class="dropdown-divider"></div>
                                                                 <button class="dropdown-item delete-member"
                                                                     data-member="{{ $member->id }}">
-                                                                    {{ translation('Delete') }}
+                                                                    {{ __tr('Delete') }}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -142,7 +142,7 @@
                                             <tr>
                                                 <td colspan="9">
                                                     <p class="alert alert-danger text-center">
-                                                        {{ translation('Nothing Found') }}
+                                                        {{ __tr('Nothing Found') }}
                                                     </p>
                                                 </td>
                                             </tr>
@@ -168,7 +168,7 @@
             <div class="modal-content">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title bold h6">{{ translation('Member information') }}</h4>
+                        <h4 class="modal-title bold h6">{{ __tr('Member information') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -176,37 +176,37 @@
                     <div class="modal-body">
                         <form id="new-member-form">
                             <div class="form-row mb-20">
-                                <label class="black font-14 col-12">{{ translation('Image') }}</label>
+                                <label class="black font-14 col-12">{{ __tr('Image') }}</label>
                                 <x-media name="image"></x-media>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
-                                    <label class="black font-14">{{ translation('Name') }}</label>
+                                    <label class="black font-14">{{ __tr('Name') }}</label>
                                     <input type="text" name="name" class="form-control"
-                                        placeholder="{{ translation('Enter Name') }}">
+                                        placeholder="{{ __tr('Enter Name') }}">
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="black font-14">{{ translation('Email') }}</label>
+                                    <label class="black font-14">{{ __tr('Email') }}</label>
                                     <input type="email" name="email" class="form-control"
-                                        placeholder="{{ translation('Enter Email') }}">
+                                        placeholder="{{ __tr('Enter Email') }}">
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
-                                    <label class="black font-14">{{ translation('Phone') }}</label>
+                                    <label class="black font-14">{{ __tr('Phone') }}</label>
                                     <input type="text" name="phone" class="form-control"
-                                        placeholder="{{ translation('Enter Phone') }}">
+                                        placeholder="{{ __tr('Enter Phone') }}">
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="black font-14">{{ translation('Status') }}</label>
+                                    <label class="black font-14">{{ __tr('Status') }}</label>
                                     <select name="status" class="form-control">
                                         <option value="{{ config('settings.general_status.active') }}">
-                                            {{ translation('Active') }}
+                                            {{ __tr('Active') }}
                                         </option>
                                         <option value="{{ config('settings.general_status.in_active') }}">
-                                            {{ translation('Inactive') }}
+                                            {{ __tr('Inactive') }}
                                         </option>
                                     </select>
                                 </div>
@@ -214,18 +214,18 @@
 
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
-                                    <label>{{ translation('New password') }}</label>
+                                    <label>{{ __tr('New password') }}</label>
                                     <input type="password" name="password" class="form-control"
-                                        placeholder="{{ translation('Enter new password') }}">
+                                        placeholder="{{ __tr('Enter new password') }}">
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label>{{ translation('Confirm password') }}</label>
+                                    <label>{{ __tr('Confirm password') }}</label>
                                     <input type="password" name="password_confirmation" class="form-control"
-                                        placeholder="{{ translation('Confirm password') }}">
+                                        placeholder="{{ __tr('Confirm password') }}">
                                 </div>
                             </div>
                             <div class="btn-area d-flex justify-content-between">
-                                <button class="btn mt-2 btn-primary store-member">{{ translation('Save') }}</button>
+                                <button class="btn mt-2 btn-primary store-member">{{ __tr('Save') }}</button>
                             </div>
 
                         </form>
@@ -241,20 +241,20 @@
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                    <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body text-center">
-                    <p class="mt-1">{{ translation('Are you sure to delete this member') }}?</p>
+                    <p class="mt-1">{{ __tr('Are you sure to delete this member') }}?</p>
                     <form method="POST" action="{{ route('admin.members.delete') }}">
                         @csrf
                         <input type="hidden" id="delete-member-id" name="id">
                         <div class="form-row d-flex justify-content-between">
                             <button type="button" class="btn mt-2 btn-primary"
-                                data-dismiss="modal">{{ translation('cancel') }}</button>
-                            <button type="submit" class="btn btn-danger mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('cancel') }}</button>
+                            <button type="submit" class="btn btn-danger mt-2">{{ __tr('Delete') }}</button>
                         </div>
                     </form>
                 </div>
@@ -267,7 +267,7 @@
         <div class="modal-dialog modal-md ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title bold h6">{{ translation('Reset Password') }}</h4>
+                    <h4 class="modal-title bold h6">{{ __tr('Reset Password') }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -275,20 +275,20 @@
                 <div class="modal-body text-center">
                     <form id="reset-passwork-form">
                         <div class="form-row mb-2">
-                            <label>{{ translation('New password') }}</label>
+                            <label>{{ __tr('New password') }}</label>
                             <input type="password" name="password" class="form-control"
-                                placeholder="{{ translation('Enter new password') }}">
+                                placeholder="{{ __tr('Enter new password') }}">
                         </div>
                         <div class="form-row mb-2">
-                            <label>{{ translation('Confirm password') }}</label>
+                            <label>{{ __tr('Confirm password') }}</label>
                             <input type="password" name="password_confirmation" class="form-control"
-                                placeholder="{{ translation('Confirm password') }}">
+                                placeholder="{{ __tr('Confirm password') }}">
                         </div>
                         <input type="hidden" id="reset-password-member-id" name="id">
                         <div class="form-row mt-3 justify-content-between">
                             <button type="button" class="btn btn-danger"
-                                data-dismiss="modal">{{ translation('cancel') }}</button>
-                            <button class="btn btn-primary reset-password-btn">{{ translation('Submit') }}</button>
+                                data-dismiss="modal">{{ __tr('cancel') }}</button>
+                            <button class="btn btn-primary reset-password-btn">{{ __tr('Submit') }}</button>
                         </div>
 
                     </form>
@@ -303,7 +303,7 @@
             <div class="modal-content">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title bold h6">{{ translation('Member information') }}</h4>
+                        <h4 class="modal-title bold h6">{{ __tr('Member information') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -363,9 +363,9 @@
                             $("#reset-password-modal").modal('hide');
                             $(document).find('[name=password]').val('');
                             $(document).find('[name=password_confirmation').val('');
-                            toastr.success('{{ translation('Password updated successfully') }}');
+                            toastr.success('{{ __tr('Password updated successfully') }}');
                         } else {
-                            toastr.error('{{ translation('Update Failed ') }}');
+                            toastr.error('{{ __tr('Update Failed ') }}');
                         }
                     },
                     error: function(response) {
@@ -378,7 +378,7 @@
                                     '</div>')
                             })
                         } else {
-                            toastr.error('{{ translation('Update Failed ') }}');
+                            toastr.error('{{ __tr('Update Failed ') }}');
                         }
                     }
                 });
@@ -405,11 +405,11 @@
                             $('.member-edit-form').html(response.data);
                             $("#edit-member-modal").modal('show');
                         } else {
-                            toastr.error('{{ translation('Member not found') }}');
+                            toastr.error('{{ __tr('Member not found') }}');
                         }
                     },
                     error: function(error) {
-                        toastr.error('{{ translation('Member not found') }}');
+                        toastr.error('{{ __tr('Member not found') }}');
                     }
                 });
             });
@@ -430,10 +430,10 @@
                     success: function(response) {
                         if (response.success) {
                             $("#edit-member-modal").modal('hide');
-                            toastr.success('{{ translation('Member updated successfully') }}');
+                            toastr.success('{{ __tr('Member updated successfully') }}');
                             location.reload();
                         } else {
-                            toastr.error('{{ translation('Member Update Failed') }}');
+                            toastr.error('{{ __tr('Member Update Failed') }}');
                         }
                     },
                     error: function(response) {
@@ -446,7 +446,7 @@
                                     '</div>')
                             })
                         } else {
-                            toastr.error('{{ translation('Member Update Failed') }}');
+                            toastr.error('{{ __tr('Member Update Failed') }}');
                         }
                     }
                 });
@@ -466,10 +466,10 @@
                     success: function(response) {
                         if (response.success) {
                             $("#new-member-modal").modal('hide');
-                            toastr.success('{{ translation('Member Created successfully') }}');
+                            toastr.success('{{ __tr('Member Created successfully') }}');
                             location.reload();
                         } else {
-                            toastr.error('{{ translation('Member Create Failed') }}');
+                            toastr.error('{{ __tr('Member Create Failed') }}');
                         }
                     },
                     error: function(response) {
@@ -482,7 +482,7 @@
                                     '</div>')
                             })
                         } else {
-                            toastr.error('{{ translation('Member Create Failed') }}');
+                            toastr.error('{{ __tr('Member Create Failed') }}');
                         }
                     }
                 });

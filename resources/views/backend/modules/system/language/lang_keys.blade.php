@@ -14,7 +14,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Languages') }}
+    {{ __tr('Languages') }}
 @endsection
 @section('page-style')
 @endsection
@@ -32,7 +32,7 @@
                                     <h3 class="card-title mt-1">{{ $language->title }}</h3>
                                     <a class="btn btn-success btn-sm float-right text-white"
                                         href="{{ route('admin.system.settings.language.list') }}">
-                                        {{ translation('Language List') }}
+                                        {{ __tr('Language List') }}
                                     </a>
 
                                 </div>
@@ -47,7 +47,7 @@
                                         </form>
                                         @if (request()->has('search_key'))
                                             <a class="btn btn-danger mb-auto ml-2"
-                                                href="{{ route('admin.system.settings.language.translation', $language->id) }}">{{ translation('Clear Filter') }}</a>
+                                                href="{{ route('admin.system.settings.language.translation', $language->id) }}">{{ __tr('Clear Filter') }}</a>
                                         @endif
                                     </div>
                                     <form class="form-horizontal"
@@ -60,8 +60,8 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>{{ translation('Key') }}</th>
-                                                        <th>{{ translation('Value') }}</th>
+                                                        <th>{{ __tr('Key') }}</th>
+                                                        <th>{{ __tr('Value') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -91,7 +91,7 @@
                                                         <tr>
                                                             <td colspan="3">
                                                                 <p class="alert alert-danger text-center">
-                                                                    {{ translation('Nothing found') }}</p>
+                                                                    {{ __tr('Nothing found') }}</p>
                                                             </td>
                                                         </tr>
                                                     @endif
@@ -100,7 +100,7 @@
                                             @if ($lang_keys->count() > 0)
                                                 <div class="col-12 my-3">
                                                     <button type="submit"
-                                                        class="btn btn-primary">{{ translation('Save Changes') }}</button>
+                                                        class="btn btn-primary">{{ __tr('Save Changes') }}</button>
                                                 </div>
                                             @endif
                                             <div class="col-12">

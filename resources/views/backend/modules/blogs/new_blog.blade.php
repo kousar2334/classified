@@ -14,7 +14,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Create New Blog') }}
+    {{ __tr('Create New Blog') }}
 @endsection
 @section('page-style')
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
@@ -33,7 +33,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>{{ translation('Blog Title') }}</label>
+                                    <label>{{ __tr('Blog Title') }}</label>
                                     <input type="text" class="form-control blog-title" name="title"
                                         placeholder="Enter Blog Title" value="{{ old('title') }}">
                                     @if ($errors->has('title'))
@@ -45,22 +45,22 @@
                                 <div
                                     class="form-row align-items-center mb-20 permalink-input-group d-none @if ($errors->has('permalink')) d-flex @endif">
                                     <div class="label">
-                                        <label class="font-14 bold black">{{ translation('Permalink') }} </label>
+                                        <label class="font-14 bold black">{{ __tr('Permalink') }} </label>
                                         <input type="hidden" id="permalink_input_field" value="{{ old('permalink') }}"
                                             name="permalink">
                                     </div>
                                     <div class="input ml-1">
                                         <a href="#">{{ url('') }}/blogs/<span
                                                 id="permalink">{{ old('permalink') }}</span><span
-                                                class="btn btn-light ml-1 permalink-edit-btn">{{ translation('Edit') }}</span></a>
+                                                class="btn btn-light ml-1 permalink-edit-btn">{{ __tr('Edit') }}</span></a>
 
                                         <div class="permalink-editor d-none">
                                             <input type="text" class="form-control" id="permalink-updated-input"
-                                                placeholder="{{ translation('Type here') }}">
+                                                placeholder="{{ __tr('Type here') }}">
                                             <button type="button" class="btn mt-2 btn-danger permalink-cancel-btn"
-                                                data-dismiss="modal">{{ translation('Cancel') }}</button>
+                                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
                                             <button type="button"
-                                                class="btn btn-success mt-2 permalink-save-btn">{{ translation('Save') }}</button>
+                                                class="btn btn-success mt-2 permalink-save-btn">{{ __tr('Save') }}</button>
                                         </div>
                                         @if ($errors->has('permalink'))
                                             <div class="error text-danger mb-0 invalid-input">
@@ -70,7 +70,7 @@
                                 </div>
                                 <!--End Permalink-->
                                 <div class="form-group">
-                                    <label>{{ translation('Content') }}</label>
+                                    <label>{{ __tr('Content') }}</label>
                                     <textarea id="contentSummernote" name="content">{{ old('content') }}</textarea>
                                     @if ($errors->has('content'))
                                         <div class="error text-danger mb-0 invalid-input">
@@ -78,7 +78,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Short Description') }}</label>
+                                    <label>{{ __tr('Short Description') }}</label>
                                     <textarea class="form-control" name="short_description">{{ old('short_description') }}</textarea>
                                     @if ($errors->has('short_description'))
                                         <div class="error text-danger mb-0 invalid-input">
@@ -86,9 +86,9 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Video Link') }}</label>
+                                    <label>{{ __tr('Video Link') }}</label>
                                     <input type="text" class="form-control" name="video_link"
-                                        value="{{ old('video_link') }}" placeholder="{{ translation('Enter Youtube link') }}">
+                                        value="{{ old('video_link') }}" placeholder="{{ __tr('Enter Youtube link') }}">
                                     @if ($errors->has('video_link'))
                                         <div class="error text-danger mb-0 invalid-input">
                                             {{ $errors->first('video_link') }}</div>
@@ -97,16 +97,16 @@
 
                                 <!--Seo-->
                                 <div class="form-group">
-                                    <label>{{ translation('Meta Title') }}</label>
+                                    <label>{{ __tr('Meta Title') }}</label>
                                     <input type="text" class="form-control" name="meta_title"
-                                        placeholder="{{ translation('Enter Meta Title') }}" value="{{ old('meta_title') }}">
+                                        placeholder="{{ __tr('Enter Meta Title') }}" value="{{ old('meta_title') }}">
                                     @if ($errors->has('meta_title'))
                                         <div class="error text-danger mb-0 invalid-input">
                                             {{ $errors->first('meta_title') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Meta Description') }}</label>
+                                    <label>{{ __tr('Meta Description') }}</label>
                                     <textarea class="form-control" name="meta_description">{{ old('meta_description') }}</textarea>
                                     @if ($errors->has('meta_description'))
                                         <div class="error text-danger mb-0 invalid-input">
@@ -114,7 +114,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Meta Image') }}</label>
+                                    <label>{{ __tr('Meta Image') }}</label>
                                     <x-media name="meta_image" :value="old('meta_image')"></x-media>
                                     @if ($errors->has('meta_image'))
                                         <div class="error text-danger mb-0 invalid-input">
@@ -129,7 +129,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>{{ translation('Featured Blog') }}</label>
+                                    <label>{{ __tr('Featured Blog') }}</label>
                                     <div
                                         class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                         <input type="checkbox" name="is_featured" class="custom-control-input"
@@ -138,7 +138,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Thumbnail Image') }}</label>
+                                    <label>{{ __tr('Thumbnail Image') }}</label>
                                     <x-media name="thumbnail" :value="old('thumbnail')"></x-media>
                                     @if ($errors->has('thumbnail'))
                                         <div class="error text-danger mb-0 invalid-input">
@@ -146,7 +146,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Featured Image') }}</label>
+                                    <label>{{ __tr('Featured Image') }}</label>
                                     <x-media name="featured_image" :value="old('featured_image')"></x-media>
                                     @if ($errors->has('featured_image'))
                                         <div class="error text-danger mb-0 invalid-input">
@@ -155,13 +155,13 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{ translation('Categories') }}</label>
+                                    <label>{{ __tr('Categories') }}</label>
                                     <select class="categories-select form-control" name="categories[]" multiple>
 
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Tags') }}</label>
+                                    <label>{{ __tr('Tags') }}</label>
                                     <select class="tag-select form-control" name="tags[]" multiple>
 
                                     </select>
@@ -170,10 +170,10 @@
                                 <div class="d-flex justify-content-between">
                                     <button type="submit" name="status"
                                         value="{{ config('settings.blog_status.draft') }}"
-                                        class="btn btn-secondary">{{ translation('Save & Draft') }}</button>
+                                        class="btn btn-secondary">{{ __tr('Save & Draft') }}</button>
                                     <button type="submit" name="status"
                                         value="{{ config('settings.blog_status.publish') }}"
-                                        class="btn btn-primary">{{ translation('Save & Publish') }}</button>
+                                        class="btn btn-primary">{{ __tr('Save & Publish') }}</button>
                                 </div>
                             </div>
                         </div>

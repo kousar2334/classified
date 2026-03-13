@@ -2,14 +2,14 @@
      <div class="container-fluid">
          <div class="row mb-2">
              <div class="col-sm-6">
-                 <h1 class="m-0"> {{ translation($title) }}</h1>
+                 <h1 class="m-0"> {{ __tr($title) }}</h1>
              </div>
              <div class="col-sm-6">
                  <ol class="breadcrumb float-sm-right">
                      @if ($has_home_link)
                          <li class="breadcrumb-item">
                              <a href="{{ route('admin.dashboard') }}">
-                                 {{ translation('Home') }}
+                                 {{ __tr('Home') }}
                              </a>
                          </li>
                      @endif
@@ -17,10 +17,10 @@
                          <li class="breadcrumb-item {{ $link['active'] ? 'active' : '' }}">
                              @if (!$link['active'] && $link['route'] != null)
                                  <a href="{{ route($link['route']) }}">
-                                     {{ translation($link['title']) }}
+                                     {{ __tr($link['title']) }}
                                  </a>
                              @else
-                                 {{ translation($link['title']) }}
+                                 {{ __tr($link['title']) }}
                              @endif
                          </li>
                      @endforeach

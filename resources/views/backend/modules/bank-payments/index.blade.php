@@ -52,15 +52,14 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ translation('Payment Transactions') }}</h3>
+                    <h3 class="card-title">{{ __tr('Payment Transactions') }}</h3>
                     <div class="card-tools">
                         <form method="GET" action="{{ route('admin.bank.payments') }}" class="d-flex"
                             style="gap: 0.5rem;">
                             <input type="text" name="q" class="form-control form-control-sm"
-                                placeholder="{{ translation('Search member, txn ID or ref...') }}"
-                                value="{{ request('q') }}">
+                                placeholder="{{ __tr('Search member, txn ID or ref...') }}" value="{{ request('q') }}">
                             <select name="method" class="form-control form-control-sm" style="width: auto;">
-                                <option value="">{{ translation('All Methods') }}</option>
+                                <option value="">{{ __tr('All Methods') }}</option>
                                 <option value="sslcommerz" {{ request('method') === 'sslcommerz' ? 'selected' : '' }}>
                                     SSLCommerz</option>
                                 <option value="bank_transfer"
@@ -68,7 +67,7 @@
                                 <option value="trial" {{ request('method') === 'trial' ? 'selected' : '' }}>Trial</option>
                             </select>
                             <select name="status" class="form-control form-control-sm" style="width: auto;">
-                                <option value="">{{ translation('All Status') }}</option>
+                                <option value="">{{ __tr('All Status') }}</option>
                                 <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending
                                 </option>
                                 <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Active
@@ -80,10 +79,10 @@
                                 <option value="failed" {{ request('status') === 'failed' ? 'selected' : '' }}>Failed
                                 </option>
                             </select>
-                            <button type="submit" class="btn btn-primary btn-sm">{{ translation('Search') }}</button>
+                            <button type="submit" class="btn btn-primary btn-sm">{{ __tr('Search') }}</button>
                             @if (request('q') || request('status') || request('method'))
                                 <a href="{{ route('admin.bank.payments') }}"
-                                    class="btn btn-secondary btn-sm">{{ translation('Reset') }}</a>
+                                    class="btn btn-secondary btn-sm">{{ __tr('Reset') }}</a>
                             @endif
                         </form>
                     </div>
@@ -93,16 +92,16 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>{{ translation('Member') }}</th>
-                                <th>{{ translation('Plan') }}</th>
-                                <th>{{ translation('Amount') }}</th>
-                                <th>{{ translation('Method') }}</th>
-                                <th>{{ translation('Txn ID / Bank Ref') }}</th>
-                                <th>{{ translation('Slip') }}</th>
-                                <th>{{ translation('Status') }}</th>
-                                <th>{{ translation('Admin Note') }}</th>
-                                <th>{{ translation('Date') }}</th>
-                                <th class="text-right">{{ translation('Action') }}</th>
+                                <th>{{ __tr('Member') }}</th>
+                                <th>{{ __tr('Plan') }}</th>
+                                <th>{{ __tr('Amount') }}</th>
+                                <th>{{ __tr('Method') }}</th>
+                                <th>{{ __tr('Txn ID / Bank Ref') }}</th>
+                                <th>{{ __tr('Slip') }}</th>
+                                <th>{{ __tr('Status') }}</th>
+                                <th>{{ __tr('Admin Note') }}</th>
+                                <th>{{ __tr('Date') }}</th>
+                                <th class="text-right">{{ __tr('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -142,8 +141,8 @@
                                     <td class="text-center">
                                         @if ($pay->bank_slip)
                                             <a href="{{ asset('storage/' . $pay->bank_slip) }}" target="_blank"
-                                                class="btn btn-info btn-xs" title="{{ translation('View Slip') }}">
-                                                <i class="fas fa-file-image"></i> {{ translation('View') }}
+                                                class="btn btn-info btn-xs" title="{{ __tr('View Slip') }}">
+                                                <i class="fas fa-file-image"></i> {{ __tr('View') }}
                                             </a>
                                         @else
                                             <span class="text-muted">—</span>
@@ -151,15 +150,15 @@
                                     </td>
                                     <td>
                                         @if ($pay->status === 'active')
-                                            <span class="badge badge-success">{{ translation('Active') }}</span>
+                                            <span class="badge badge-success">{{ __tr('Active') }}</span>
                                         @elseif ($pay->status === 'pending')
-                                            <span class="badge badge-warning">{{ translation('Pending') }}</span>
+                                            <span class="badge badge-warning">{{ __tr('Pending') }}</span>
                                         @elseif ($pay->status === 'rejected')
-                                            <span class="badge badge-danger">{{ translation('Rejected') }}</span>
+                                            <span class="badge badge-danger">{{ __tr('Rejected') }}</span>
                                         @elseif ($pay->status === 'expired')
-                                            <span class="badge badge-secondary">{{ translation('Expired') }}</span>
+                                            <span class="badge badge-secondary">{{ __tr('Expired') }}</span>
                                         @elseif ($pay->status === 'failed')
-                                            <span class="badge badge-dark">{{ translation('Failed') }}</span>
+                                            <span class="badge badge-dark">{{ __tr('Failed') }}</span>
                                         @else
                                             <span class="badge badge-light">{{ ucfirst($pay->status) }}</span>
                                         @endif
@@ -176,15 +175,15 @@
                                                 data-id="{{ $pay->id }}" data-name="{{ $pay->user->name ?? '' }}"
                                                 data-plan="{{ $pay->plan->title ?? '' }}"
                                                 data-ref="{{ $pay->bank_transaction_number }}"
-                                                title="{{ translation('Approve') }}">
-                                                <i class="fas fa-check"></i> {{ translation('Approve') }}
+                                                title="{{ __tr('Approve') }}">
+                                                <i class="fas fa-check"></i> {{ __tr('Approve') }}
                                             </button>
                                             <button class="btn btn-warning btn-sm reject-item"
                                                 data-id="{{ $pay->id }}" data-name="{{ $pay->user->name ?? '' }}"
                                                 data-plan="{{ $pay->plan->title ?? '' }}"
                                                 data-ref="{{ $pay->bank_transaction_number }}"
-                                                title="{{ translation('Reject') }}">
-                                                <i class="fas fa-times"></i> {{ translation('Reject') }}
+                                                title="{{ __tr('Reject') }}">
+                                                <i class="fas fa-times"></i> {{ __tr('Reject') }}
                                             </button>
                                         @else
                                             <span class="text-muted">—</span>
@@ -194,7 +193,7 @@
                             @empty
                                 <tr>
                                     <td colspan="11" class="text-center py-3">
-                                        {{ translation('No transactions found.') }}
+                                        {{ __tr('No transactions found.') }}
                                     </td>
                                 </tr>
                             @endforelse
@@ -217,7 +216,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-success text-white">
                     <h4 class="modal-title h6">
-                        <i class="fas fa-check-circle mr-2"></i>{{ translation('Approve Payment') }}
+                        <i class="fas fa-check-circle mr-2"></i>{{ __tr('Approve Payment') }}
                     </h4>
                     <button type="button" class="close text-white" data-dismiss="modal"><span>&times;</span></button>
                 </div>
@@ -226,22 +225,22 @@
                     <input type="hidden" id="approve-id" name="id">
                     <div class="modal-body">
                         <p class="mb-1">
-                            {{ translation('Approve payment from') }} <strong id="approve-name"></strong>
-                            {{ translation('for plan') }} <strong id="approve-plan"></strong>?
+                            {{ __tr('Approve payment from') }} <strong id="approve-name"></strong>
+                            {{ __tr('for plan') }} <strong id="approve-plan"></strong>?
                         </p>
                         <p class="text-muted mb-3">
-                            {{ translation('Bank Txn Ref:') }} <code id="approve-ref"></code>
+                            {{ __tr('Bank Txn Ref:') }} <code id="approve-ref"></code>
                         </p>
                         <div class="form-group mb-0">
-                            <label>{{ translation('Admin Note (optional, sent to user)') }}</label>
+                            <label>{{ __tr('Admin Note (optional, sent to user)') }}</label>
                             <textarea name="admin_note" class="form-control" rows="2" placeholder="e.g. Payment verified successfully."></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
-                            data-dismiss="modal">{{ translation('Cancel') }}</button>
+                            data-dismiss="modal">{{ __tr('Cancel') }}</button>
                         <button type="submit" class="btn btn-success">
-                            <i class="fas fa-check mr-1"></i> {{ translation('Approve & Activate') }}
+                            <i class="fas fa-check mr-1"></i> {{ __tr('Approve & Activate') }}
                         </button>
                     </div>
                 </form>
@@ -255,7 +254,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-warning">
                     <h4 class="modal-title h6">
-                        <i class="fas fa-times-circle mr-2"></i>{{ translation('Reject Payment') }}
+                        <i class="fas fa-times-circle mr-2"></i>{{ __tr('Reject Payment') }}
                     </h4>
                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                 </div>
@@ -264,23 +263,23 @@
                     <input type="hidden" id="reject-id" name="id">
                     <div class="modal-body">
                         <p class="mb-1">
-                            {{ translation('Reject payment from') }} <strong id="reject-name"></strong>
-                            {{ translation('for plan') }} <strong id="reject-plan"></strong>?
+                            {{ __tr('Reject payment from') }} <strong id="reject-name"></strong>
+                            {{ __tr('for plan') }} <strong id="reject-plan"></strong>?
                         </p>
                         <p class="text-muted mb-3">
-                            {{ translation('Bank Txn Ref:') }} <code id="reject-ref"></code>
+                            {{ __tr('Bank Txn Ref:') }} <code id="reject-ref"></code>
                         </p>
                         <div class="form-group mb-0">
-                            <label>{{ translation('Rejection Reason (sent to user)') }}</label>
+                            <label>{{ __tr('Rejection Reason (sent to user)') }}</label>
                             <textarea name="admin_note" class="form-control" rows="2"
                                 placeholder="e.g. Payment slip could not be verified."></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
-                            data-dismiss="modal">{{ translation('Cancel') }}</button>
+                            data-dismiss="modal">{{ __tr('Cancel') }}</button>
                         <button type="submit" class="btn btn-warning">
-                            <i class="fas fa-times mr-1"></i> {{ translation('Reject') }}
+                            <i class="fas fa-times mr-1"></i> {{ __tr('Reject') }}
                         </button>
                     </div>
                 </form>

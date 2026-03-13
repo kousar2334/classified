@@ -30,9 +30,9 @@ class MemberLoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'username.required' => translation('Email or Phone is required'),
-            'password.required' => translation('Password is required'),
-            'password.min' => translation('Password is too short'),
+            'username.required' => __tr('Email or Phone is required'),
+            'password.required' => __tr('Password is required'),
+            'password.min' => __tr('Password is too short'),
         ];
     }
 }

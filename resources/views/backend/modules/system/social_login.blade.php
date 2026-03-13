@@ -14,7 +14,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Social Media Logins') }}
+    {{ __tr('Social Media Logins') }}
 @endsection
 @section('page-style')
 @endsection
@@ -30,7 +30,7 @@
                         <div class="col-lg-6">
                             <div class="card google-settings-card">
                                 <div class="card-header">
-                                    <h6 class="mb-0">{{ translation('Google') }}
+                                    <h6 class="mb-0">{{ __tr('Google') }}
                                     </h6>
                                 </div>
                                 <div class="card-body">
@@ -42,32 +42,30 @@
                                                 name="google_login"
                                                 {{ get_setting('google_login') == config('settings.general_status.active') ? 'checked' : '' }}>
                                             <label class="form-check-label" for="google_login">
-                                                {{ translation('Login with Google') }}
+                                                {{ __tr('Login with Google') }}
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <label for="google_client_id">{{ translation('Google Client ID') }}</label>
+                                            <label for="google_client_id">{{ __tr('Google Client ID') }}</label>
                                             <input type="text" class="form-control" name="GOOGLE_CLIENT_ID"
                                                 id="google_client_id" value="{{ env('GOOGLE_CLIENT_ID') }}"
-                                                placeholder="{{ translation('Enter Google Client ID') }}">
+                                                placeholder="{{ __tr('Enter Google Client ID') }}">
                                         </div>
                                         <div class="form-group">
-                                            <label
-                                                for="google_client_secret">{{ translation('Google Client Secret') }}</label>
+                                            <label for="google_client_secret">{{ __tr('Google Client Secret') }}</label>
                                             <input type="text" class="form-control" name="GOOGLE_CLIENT_SECRET"
                                                 id="google_client_secret" value="{{ env('GOOGLE_CLIENT_SECRET') }}"
-                                                placeholder="{{ translation('Enter Google Client Secret') }}">
+                                                placeholder="{{ __tr('Enter Google Client Secret') }}">
                                         </div>
                                         <div class="form-group">
-                                            <label
-                                                for="google_redirect_url">{{ translation('Google Redirect URL') }}</label>
+                                            <label for="google_redirect_url">{{ __tr('Google Redirect URL') }}</label>
                                             <input type="text" class="form-control" name="GOOGLE_REDIRECT_URL"
                                                 id="google_redirect_url" value="{{ env('GOOGLE_REDIRECT_URL') }}"
-                                                placeholder="{{ translation('Enter Google Redirect URL') }}">
+                                                placeholder="{{ __tr('Enter Google Redirect URL') }}">
                                         </div>
                                         <div class="form-row justify-content-end">
                                             <button type="submit"
-                                                class="btn btn-primary">{{ translation('Save Change') }}</button>
+                                                class="btn btn-primary">{{ __tr('Save Change') }}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -79,7 +77,7 @@
                             <div class="card facebook-settings-card">
                                 <div class="card-header">
                                     <h6 class="mb-0">
-                                        {{ translation('Facebook') }}</h6>
+                                        {{ __tr('Facebook') }}</h6>
                                 </div>
                                 <div class="card-body">
                                     <form method="POST" action="{{ route('admin.system.settings.social.login.update') }}">
@@ -90,33 +88,32 @@
                                                 name="facebook_login"
                                                 {{ get_setting('facebook_login') == config('settings.general_status.active') ? 'checked' : '' }}>
                                             <label class="form-check-label" for="facebook_login">
-                                                {{ translation('Login with Facebook') }}
+                                                {{ __tr('Login with Facebook') }}
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <label for="facebook_client_id">{{ translation('Facebook Client ID') }}</label>
+                                            <label for="facebook_client_id">{{ __tr('Facebook Client ID') }}</label>
                                             <input type="text" class="form-control" name="FACEBOOK_CLIENT_ID"
                                                 id="facebook_client_id" value="{{ env('FACEBOOK_CLIENT_ID') }}"
-                                                placeholder="{{ translation('Enter Facebook Client ID') }}">
+                                                placeholder="{{ __tr('Enter Facebook Client ID') }}">
                                         </div>
                                         <div class="form-group">
                                             <label
-                                                for="facebook_client_secret">{{ translation('Facebook Client Secret') }}</label>
+                                                for="facebook_client_secret">{{ __tr('Facebook Client Secret') }}</label>
                                             <input type="text" class="form-control" name="FACEBOOK_CLIENT_SECRET"
                                                 id="facebook_client_secret" value="{{ env('FACEBOOK_CLIENT_SECRET') }}"
-                                                placeholder="{{ translation('Enter Facebook Client Secret') }}">
+                                                placeholder="{{ __tr('Enter Facebook Client Secret') }}">
                                         </div>
                                         <div class="form-group">
-                                            <label
-                                                for="facebook_redirect_url">{{ translation('Facebook Redirect URL') }}</label>
+                                            <label for="facebook_redirect_url">{{ __tr('Facebook Redirect URL') }}</label>
                                             <input type="text" class="form-control" name="FACEBOOK_REDIRECT_URL"
                                                 id="facebook_redirect_url" value="{{ env('FACEBOOK_REDIRECT_URL') }}"
-                                                placeholder="{{ translation('Enter Facebook Redirect URL') }}">
+                                                placeholder="{{ __tr('Enter Facebook Redirect URL') }}">
                                         </div>
 
                                         <div class="form-row justify-content-end">
                                             <button type="submit"
-                                                class="btn btn-primary">{{ translation('Save Change') }}</button>
+                                                class="btn btn-primary">{{ __tr('Save Change') }}</button>
                                         </div>
                                     </form>
                                 </div>

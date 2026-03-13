@@ -7,7 +7,7 @@
     <div class="lang-switcher-wrap mb-3">
         <div class="lang-switcher-label">
             <i class="fas fa-globe-americas"></i>
-            <span>{{ translation('Language') }}</span>
+            <span>{{ __tr('Language') }}</span>
         </div>
         <div class="lang-switcher-tabs">
             @foreach ($languages as $language)
@@ -24,8 +24,8 @@
 
     <div class="form-row">
         <div class="form-group col-lg-12">
-            <label class="black font-14">{{ translation('Name') }}</label>
-            <input type="text" name="name" class="form-control" placeholder="{{ translation('Enter Name') }}"
+            <label class="black font-14">{{ __tr('Name') }}</label>
+            <input type="text" name="name" class="form-control" placeholder="{{ __tr('Enter Name') }}"
                 value="{{ $city->translation('name', $lang) }}">
         </div>
     </div>
@@ -33,9 +33,9 @@
     @if ($lang == defaultLangCode())
         <div class="form-row">
             <div class="form-group col-lg-12">
-                <label class="black font-14">{{ translation('Country') }}</label>
+                <label class="black font-14">{{ __tr('Country') }}</label>
                 <select name="country" class="form-control country-select">
-                    <option value="">{{ translation('Select Country') }}</option>
+                    <option value="">{{ __tr('Select Country') }}</option>
                     @foreach ($countries as $country)
                         <option value="{{ $country->id }}" @selected($city->state?->country_id == $country->id)>{{ $country->name }}</option>
                     @endforeach
@@ -43,7 +43,7 @@
             </div>
 
             <div class="form-group col-lg-12">
-                <label class="black font-14">{{ translation('State') }}</label>
+                <label class="black font-14">{{ __tr('State') }}</label>
                 <select name="state_id" class="form-control state-select">
                     @foreach ($states as $state)
                         <option value="{{ $state->id }}" @selected($city->state_id == $state->id)>{{ $state->name }}</option>
@@ -54,13 +54,13 @@
 
         <div class="form-row">
             <div class="form-group col-lg-12">
-                <label class="black font-14">{{ translation('Status') }}</label>
+                <label class="black font-14">{{ __tr('Status') }}</label>
                 <select name="status" class="form-control" required>
                     <option value="{{ config('settings.general_status.active') }}" @selected($city->status == config('settings.general_status.active'))>
-                        {{ translation('Active') }}
+                        {{ __tr('Active') }}
                     </option>
                     <option value="{{ config('settings.general_status.in_active') }}" @selected($city->status == config('settings.general_status.in_active'))>
-                        {{ translation('Inactive') }}
+                        {{ __tr('Inactive') }}
                     </option>
                 </select>
             </div>
@@ -68,7 +68,7 @@
     @endif
 
     <div class="btn-area d-flex justify-content-between">
-        <button class="btn btn-primary mt-2">{{ translation('Save Changes') }}</button>
+        <button class="btn btn-primary mt-2">{{ __tr('Save Changes') }}</button>
     </div>
 
 </form>

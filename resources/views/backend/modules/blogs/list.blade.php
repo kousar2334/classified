@@ -9,7 +9,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Blogs') }}
+    {{ __tr('Blogs') }}
 @endsection
 @section('page-style')
 @endsection
@@ -21,10 +21,10 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Blogs') }}</h3>
+                            <h3 class="card-title">{{ __tr('Blogs') }}</h3>
                             @can('Create New Blog')
                                 <a class="btn btn-success btn-sm float-right text-white" href="{{ route('admin.blogs.create') }}">
-                                    {{ translation('Create New Blog') }}
+                                    {{ __tr('Create New Blog') }}
                                 </a>
                             @endcan
                         </div>
@@ -32,13 +32,13 @@
                             <table class="table table-hover text-nowrap table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('#') }}</th>
-                                        <th>{{ translation('Title') }}</th>
-                                        <th>{{ translation('Author') }}</th>
-                                        <th>{{ translation('Published At') }}</th>
-                                        <th>{{ translation('Featured') }}</th>
-                                        <th>{{ translation('Status') }}</th>
-                                        <th class="text-right">{{ translation('Action') }}</th>
+                                        <th>{{ __tr('#') }}</th>
+                                        <th>{{ __tr('Title') }}</th>
+                                        <th>{{ __tr('Author') }}</th>
+                                        <th>{{ __tr('Published At') }}</th>
+                                        <th>{{ __tr('Featured') }}</th>
+                                        <th>{{ __tr('Status') }}</th>
+                                        <th class="text-right">{{ __tr('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,26 +64,26 @@
                                                 </td>
                                                 <td>
                                                     @if ($blog->is_featured == config('settings.general_status.active'))
-                                                        <p class="badge badge-success">{{ translation('Active') }}</p>
+                                                        <p class="badge badge-success">{{ __tr('Active') }}</p>
                                                     @else
-                                                        <p class="badge badge-danger">{{ translation('Inactive') }}</p>
+                                                        <p class="badge badge-danger">{{ __tr('Inactive') }}</p>
                                                     @endif
                                                 </td>
                                                 <td>
                                                     @if ($blog->status == config('settings.blog_status.publish'))
-                                                        <p class="badge badge-success">{{ translation('Published') }}</p>
+                                                        <p class="badge badge-success">{{ __tr('Published') }}</p>
                                                     @endif
                                                     @if ($blog->status == config('settings.blog_status.unpublish'))
-                                                        <p class="badge badge-danger">{{ translation('Unpublish') }}</p>
+                                                        <p class="badge badge-danger">{{ __tr('Unpublish') }}</p>
                                                     @endif
                                                     @if ($blog->status == config('settings.blog_status.draft'))
-                                                        <p class="badge badge-secondary">{{ translation('Draft') }}</p>
+                                                        <p class="badge badge-secondary">{{ __tr('Draft') }}</p>
                                                     @endif
                                                 </td>
                                                 <td class="text-right">
                                                     <div class="btn-group">
                                                         <button type="button"
-                                                            class="btn btn-default">{{ translation('Action') }}</button>
+                                                            class="btn btn-default">{{ __tr('Action') }}</button>
                                                         <button type="button"
                                                             class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
                                                             data-toggle="dropdown" aria-expanded="false">
@@ -91,13 +91,13 @@
                                                         <div class="dropdown-menu" role="menu">
                                                             <a class="dropdown-item"
                                                                 href="{{ route('admin.blogs.edit', ['blog' => $blog->id, 'lang' => defaultLangCode()]) }}">
-                                                                {{ translation('Edit') }}
+                                                                {{ __tr('Edit') }}
                                                             </a>
                                                             @can('Delete Blog')
                                                                 <div class="dropdown-divider"></div>
                                                                 <a class="dropdown-item delete-blog" href="#"
                                                                     data-id="{{ $blog->id }}">
-                                                                    {{ translation('Delete') }}
+                                                                    {{ __tr('Delete') }}
                                                                 </a>
                                                             @endcan
                                                         </div>
@@ -109,7 +109,7 @@
                                         <tr>
                                             <td colspan="7">
                                                 <p class="alert alert-default-danger text-center">
-                                                    {{ translation('No Item Found') }}
+                                                    {{ __tr('No Item Found') }}
                                                 </p>
                                             </td>
                                         </tr>
@@ -129,19 +129,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete blog ?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete blog ?') }}</h4>
                         <form method="POST" action="{{ route('admin.blogs.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-blog-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>

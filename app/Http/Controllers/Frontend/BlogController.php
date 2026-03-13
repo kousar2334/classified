@@ -58,6 +58,6 @@ class BlogController extends Controller
 
         $this->blog_repository->storeBlogComment($data);
 
-        return back()->with('comment_success', translation('Your comment has been submitted successfully.'));
+        return back()->with('comment_success', __tr('Your comment has been submitted successfully.'));
     }
 }

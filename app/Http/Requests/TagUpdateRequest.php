@@ -21,7 +21,7 @@ class TagUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => translation('Tag title is required'),
+            'title.required' => __tr('Tag title is required'),
         ];
     }
 }

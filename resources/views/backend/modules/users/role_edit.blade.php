@@ -3,20 +3,20 @@
     <input type="hidden" name="id" value="{{ $role->id }}">
 
     <div class="form-group mb-3">
-        <label class="font-weight-bold">{{ translation('Role Name') }}</label>
-        <input type="text" class="form-control" name="name" placeholder="{{ translation('Enter Role Name') }}"
+        <label class="font-weight-bold">{{ __tr('Role Name') }}</label>
+        <input type="text" class="form-control" name="name" placeholder="{{ __tr('Enter Role Name') }}"
             value="{{ $role->name }}">
     </div>
 
     <div class="form-group mb-0">
         <div class="d-flex justify-content-between align-items-center mb-2">
-            <label class="font-weight-bold mb-0">{{ translation('Permissions') }}</label>
+            <label class="font-weight-bold mb-0">{{ __tr('Permissions') }}</label>
             <div>
                 <button type="button" class="btn btn-xs btn-outline-success select-all-global">
-                    <i class="fas fa-check-square mr-1"></i>{{ translation('Select All') }}
+                    <i class="fas fa-check-square mr-1"></i>{{ __tr('Select All') }}
                 </button>
                 <button type="button" class="btn btn-xs btn-outline-secondary deselect-all-global ml-1">
-                    <i class="fas fa-square mr-1"></i>{{ translation('Deselect All') }}
+                    <i class="fas fa-square mr-1"></i>{{ __tr('Deselect All') }}
                 </button>
             </div>
         </div>
@@ -40,7 +40,7 @@
                                         @if ($role->permissions->whereIn('name', $permission_list->pluck('name'))->count() === $permission_list->count()) checked @endif>
                                     <label class="form-check-label text-sm"
                                         for="edit-select-all-{{ Str::slug($module) }}">
-                                        {{ translation('All') }}
+                                        {{ __tr('All') }}
                                     </label>
                                 </div>
                             </div>
@@ -75,10 +75,10 @@
 
 <div class="d-flex justify-content-end mt-3">
     <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">
-        {{ translation('Cancel') }}
+        {{ __tr('Cancel') }}
     </button>
     <button type="button" class="btn btn-primary update-role-btn">
-        <i class="fas fa-save mr-1"></i>{{ translation('Save Changes') }}
+        <i class="fas fa-save mr-1"></i>{{ __tr('Save Changes') }}
     </button>
 </div>
 

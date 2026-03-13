@@ -3,7 +3,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('title')
-    {{ translation('Edit Quick Sell Tips') }}
+    {{ __tr('Edit Quick Sell Tips') }}
 @endsection
 @section('page-content')
     <div class="theme-option-container">
@@ -14,9 +14,9 @@
                 <div class="tab-pane fade show active">
                     <div class="card">
                         <div class="card-header align-items-center bg-white d-flex justify-content-between">
-                            <h4>{{ translation('Edit Quick Sell Tips') }}</h4>
+                            <h4>{{ __tr('Edit Quick Sell Tips') }}</h4>
                             <a class="btn long"
-                                href="{{ route('classified.settings.quick.sell.tips.list') }}">{{ translation('Quick Sell Tips List') }}
+                                href="{{ route('classified.settings.quick.sell.tips.list') }}">{{ __tr('Quick Sell Tips List') }}
                             </a>
                         </div>
                         <div class="card-body">
@@ -38,14 +38,14 @@
                                 @csrf
                                 <div class="form-row mb-20">
                                     <div class="col-sm-12">
-                                        <label class="font-14 bold black">{{ translation('Title') }} </label>
+                                        <label class="font-14 bold black">{{ __tr('Title') }} </label>
                                     </div>
                                     <div class="col-sm-12">
                                         <input type="hidden" name="id" value="{{ $tips->id }}">
                                         <input type="hidden" name="lang" value="{{ $lang }}">
                                         <input type="text" name="title" class="form-control"
                                             value="{{ $tips->translation('title', $lang) }}"
-                                            placeholder="{{ translation('Type Enter') }}">
+                                            placeholder="{{ __tr('Type Enter') }}">
                                         @if ($errors->has('title'))
                                             <div class="invalid-input">{{ $errors->first('title') }}</div>
                                         @endif
@@ -55,15 +55,15 @@
                                 <div
                                     class="form-row {{ !empty($lang) && $lang != getdefaultlang() ? 'area-disabled' : '' }}">
                                     <div class="form-group col-lg-12">
-                                        <label class="black font-14">{{ translation('Status') }}</label>
+                                        <label class="black font-14">{{ __tr('Status') }}</label>
                                         <select name="status" class="form-control">
                                             <option value="{{ config('settings.general_status.active') }}"
                                                 @selected($tips->status == config('settings.general_status.active'))>
-                                                {{ translation('Active') }}
+                                                {{ __tr('Active') }}
                                             </option>
                                             <option value="{{ config('settings.general_status.in_active') }}"
                                                 @selected($tips->status == config('settings.general_status.in_active'))>
-                                                {{ translation('Inactive') }}
+                                                {{ __tr('Inactive') }}
                                             </option>
                                         </select>
                                     </div>
@@ -72,7 +72,7 @@
 
                                 <div class="form-row">
                                     <div class="col-12 text-right">
-                                        <button type="submit" class="btn long">{{ translation('Save Changes') }}</button>
+                                        <button type="submit" class="btn long">{{ __tr('Save Changes') }}</button>
                                     </div>
                                 </div>
                             </form>

@@ -30,7 +30,7 @@ class ChatController extends ApiController
                 DB::rollBack();
                 return response()->json([
                     'success' => false,
-                    'message' => translation('You already create a chat')
+                    'message' => __tr('You already create a chat')
                 ]);
             } else {
                 $ad_details = Ad::find($request['ad_id']);
@@ -53,13 +53,13 @@ class ChatController extends ApiController
                     DB::commit();
                     return response()->json([
                         'success' => true,
-                        'message' => translation('Chat created successfully', session()->get('api_locale'))
+                        'message' => __tr('Chat created successfully', session()->get('api_locale'))
                     ]);
                 } else {
                     DB::rollBack();
                     return response()->json([
                         'success' => false,
-                        'message' => translation('Invalid ad')
+                        'message' => __tr('Invalid ad')
                     ]);
                 }
             }
@@ -67,7 +67,7 @@ class ChatController extends ApiController
             DB::rollBack();
             return response()->json([
                 'success' => false,
-                'message' => translation('Something went wrong')
+                'message' => __tr('Something went wrong')
             ]);
         }
     }

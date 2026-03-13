@@ -16,7 +16,7 @@
                     {{-- Mobile: user account or sign in (visible only on mobile) --}}
                     @if (auth()->user() == null)
                         <a href="{{ route('member.login') }}" class="cmn-btn sign-in mobile-sign-in d-flex d-lg-none">
-                            {{ translation('Sign In') }}
+                            {{ __tr('Sign In') }}
                         </a>
                     @else
                         <div class="nav-item dropdown mobile-user-dropdown d-flex d-lg-none">
@@ -27,12 +27,12 @@
                             </a>
                             <ul class="dropdown-menu user-dropdown dropdown-menu-end">
                                 <li>
-                                    <span class="dropdown-header">{{ translation('My Account') }}</span>
+                                    <span class="dropdown-header">{{ __tr('My Account') }}</span>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('member.dashboard') }}">
                                         <i class="las la-tachometer-alt"></i>
-                                        {{ translation('Dashboard') }}
+                                        {{ __tr('Dashboard') }}
                                     </a>
                                 </li>
                                 <li>
@@ -41,7 +41,7 @@
                                 <li>
                                     <a class="dropdown-item logout-item" href="{{ route('member.logout') }}">
                                         <i class="las la-sign-out-alt"></i>
-                                        {{ translation('Logout') }}
+                                        {{ __tr('Logout') }}
                                     </a>
                                 </li>
                             </ul>
@@ -109,7 +109,7 @@
                     </ul>
                     <div class="btn-wrapper nav-post-btn d-lg-none d-block">
                         <a href="{{ route('ad.post.page') }}" class="cmn-btn popup-modal text-uppercase">
-                            <span>{{ translation('Post free ad') }}</span>
+                            <span>{{ __tr('Post free ad') }}</span>
                         </a>
                     </div>
                 </div>
@@ -146,7 +146,7 @@
                         <li>
                             <div class="btn-wrapper">
                                 <a href="{{ route('member.login') }}" class="cmn-btn sign-in">
-                                    {{ translation('Sign In') }}
+                                    {{ __tr('Sign In') }}
                                 </a>
                             </div>
                         </li>
@@ -160,12 +160,12 @@
                             </a>
                             <ul class="dropdown-menu user-dropdown dropdown-menu-end">
                                 <li>
-                                    <span class="dropdown-header">{{ translation('My Account') }}</span>
+                                    <span class="dropdown-header">{{ __tr('My Account') }}</span>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('member.dashboard') }}">
                                         <i class="las la-tachometer-alt"></i>
-                                        {{ translation('Dashboard') }}
+                                        {{ __tr('Dashboard') }}
                                     </a>
                                 </li>
                                 <li>
@@ -174,7 +174,7 @@
                                 <li>
                                     <a class="dropdown-item logout-item" href="{{ route('member.logout') }}">
                                         <i class="las la-sign-out-alt"></i>
-                                        {{ translation('Logout') }}
+                                        {{ __tr('Logout') }}
                                     </a>
                                 </li>
                             </ul>
@@ -184,7 +184,7 @@
                 </ul>
                 <div class="btn-wrapper nav-post-btn">
                     <a href="{{ route('ad.post.page') }}" class="cmn-btn popup-modal d-none d-lg-block text-uppercase">
-                        <span>{{ translation('Post free ad') }}</span>
+                        <span>{{ __tr('Post free ad') }}</span>
                     </a>
                 </div>
             </div>

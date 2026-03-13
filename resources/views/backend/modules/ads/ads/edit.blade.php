@@ -14,7 +14,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Edit Ad') }}
+    {{ __tr('Edit Ad') }}
 @endsection
 @section('page-style')
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
@@ -34,13 +34,13 @@
                         <!-- Basic Information -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ translation('Basic Information') }}</h3>
+                                <h3 class="card-title">{{ __tr('Basic Information') }}</h3>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>{{ translation('Title') }}</label>
+                                    <label>{{ __tr('Title') }}</label>
                                     <input type="text" name="title" class="form-control"
-                                        value="{{ $ad_details->title }}" placeholder="{{ translation('Enter title') }}">
+                                        value="{{ $ad_details->title }}" placeholder="{{ __tr('Enter title') }}">
                                     @if ($errors->has('title'))
                                         <div class="error text-danger mb-0 invalid-input">
                                             {{ $errors->first('title') }}</div>
@@ -48,7 +48,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{ translation('Category') }}</label>
+                                    <label>{{ __tr('Category') }}</label>
                                     <select class="category-select form-control" name="category">
                                         @if ($ad_details->categoryInfo != null)
                                             <option value="{{ $ad_details->category_id }}" selected>
@@ -65,9 +65,9 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>{{ translation('Condition') }}</label>
+                                            <label>{{ __tr('Condition') }}</label>
                                             <select class="form-control" name="condition">
-                                                <option value="">{{ translation('Select Condition') }}</option>
+                                                <option value="">{{ __tr('Select Condition') }}</option>
                                                 @foreach ($conditions as $condition)
                                                     <option value="{{ $condition->id }}" @selected($ad_details->condition_id == $condition->id)>
                                                         {{ $condition->title }}
@@ -82,7 +82,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>{{ translation('Price') }}</label>
+                                            <label>{{ __tr('Price') }}</label>
                                             <div class="input-group">
                                                 <input type="number" name="price" value="{{ $ad_details->price }}"
                                                     class="form-control" placeholder="0.00" step="0.01">
@@ -90,7 +90,7 @@
                                                     <div class="input-group-text">
                                                         <input type="checkbox" name="is_negotiable"
                                                             @checked($ad_details->is_negotiable == config('settings.general_status.active'))>
-                                                        <small class="ml-1">{{ translation('Negotiable') }}</small>
+                                                        <small class="ml-1">{{ __tr('Negotiable') }}</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -103,7 +103,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{ translation('Description') }}</label>
+                                    <label>{{ __tr('Description') }}</label>
                                     <textarea id="contentSummernote" name="description">{{ $ad_details->description }}</textarea>
                                     @if ($errors->has('description'))
                                         <div class="error text-danger mb-0 invalid-input">
@@ -112,10 +112,10 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{ translation('Video URL') }}</label>
+                                    <label>{{ __tr('Video URL') }}</label>
                                     <input type="text" class="form-control" name="video_url"
                                         value="{{ $ad_details->video_url }}"
-                                        placeholder="{{ translation('Enter YouTube link') }}">
+                                        placeholder="{{ __tr('Enter YouTube link') }}">
                                     @if ($errors->has('video_url'))
                                         <div class="error text-danger mb-0 invalid-input">
                                             {{ $errors->first('video_url') }}</div>
@@ -127,15 +127,15 @@
                         <!-- Location Information -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ translation('Location Information') }}</h3>
+                                <h3 class="card-title">{{ __tr('Location Information') }}</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>{{ translation('Country') }}</label>
+                                            <label>{{ __tr('Country') }}</label>
                                             <select class="form-control" name="country" id="country-select">
-                                                <option value="">{{ translation('Select Country') }}</option>
+                                                <option value="">{{ __tr('Select Country') }}</option>
                                                 @foreach ($countries as $country)
                                                     <option value="{{ $country->id }}" @selected($ad_details->country_id == $country->id)>
                                                         {{ $country->name }}
@@ -150,9 +150,9 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>{{ translation('State') }}</label>
+                                            <label>{{ __tr('State') }}</label>
                                             <select class="form-control" name="state" id="state-select">
-                                                <option value="">{{ translation('Select State') }}</option>
+                                                <option value="">{{ __tr('Select State') }}</option>
                                                 @foreach ($states as $state)
                                                     <option value="{{ $state->id }}" @selected($ad_details->state_id == $state->id)>
                                                         {{ $state->name }}
@@ -167,9 +167,9 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>{{ translation('City') }}</label>
+                                            <label>{{ __tr('City') }}</label>
                                             <select class="form-control" name="city" id="city-select">
-                                                <option value="">{{ translation('Select City') }}</option>
+                                                <option value="">{{ __tr('Select City') }}</option>
                                                 @foreach ($cities as $city)
                                                     <option value="{{ $city->id }}" @selected($ad_details->city_id == $city->id)>
                                                         {{ $city->name }}
@@ -185,8 +185,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{ translation('Address') }}</label>
-                                    <textarea name="address" class="form-control" rows="2" placeholder="{{ translation('Enter detailed address') }}">{{ $ad_details->address }}</textarea>
+                                    <label>{{ __tr('Address') }}</label>
+                                    <textarea name="address" class="form-control" rows="2" placeholder="{{ __tr('Enter detailed address') }}">{{ $ad_details->address }}</textarea>
                                     @if ($errors->has('address'))
                                         <div class="error text-danger mb-0 invalid-input">
                                             {{ $errors->first('address') }}</div>
@@ -208,16 +208,16 @@
                         <!-- Contact Information -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ translation('Contact Information') }}</h3>
+                                <h3 class="card-title">{{ __tr('Contact Information') }}</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>{{ translation('Contact Email') }}</label>
+                                            <label>{{ __tr('Contact Email') }}</label>
                                             <input type="email" name="contact_email" class="form-control"
                                                 value="{{ $ad_details->contact_email }}"
-                                                placeholder="{{ translation('Enter email') }}">
+                                                placeholder="{{ __tr('Enter email') }}">
                                             @if ($errors->has('contact_email'))
                                                 <div class="error text-danger mb-0 invalid-input">
                                                     {{ $errors->first('contact_email') }}</div>
@@ -226,10 +226,10 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>{{ translation('Contact Phone') }}</label>
+                                            <label>{{ __tr('Contact Phone') }}</label>
                                             <input type="text" name="contact_phone" class="form-control"
                                                 value="{{ $ad_details->contact_phone }}"
-                                                placeholder="{{ translation('Enter phone') }}">
+                                                placeholder="{{ __tr('Enter phone') }}">
                                             @if ($errors->has('contact_phone'))
                                                 <div class="error text-danger mb-0 invalid-input">
                                                     {{ $errors->first('contact_phone') }}</div>
@@ -238,7 +238,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Hide Phone Number') }}</label>
+                                    <label>{{ __tr('Hide Phone Number') }}</label>
                                     <div
                                         class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                         <input type="checkbox" name="contact_is_hide" class="custom-control-input"
@@ -253,7 +253,7 @@
                         @if ($ad_details->customFields() && count($ad_details->customFields()) > 0)
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">{{ translation('Custom Fields') }}</h3>
+                                    <h3 class="card-title">{{ __tr('Custom Fields') }}</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -271,13 +271,13 @@
                                                             <input type="text"
                                                                 name="custom_field[{{ $field->id }}]"
                                                                 class="form-control" value="{{ $cf['value'] }}"
-                                                                placeholder="{{ translation('Enter') }} {{ $field->title }}">
+                                                                placeholder="{{ __tr('Enter') }} {{ $field->title }}">
                                                         @endif
                                                         @if ($cf['type'] == config('settings.input_types.number'))
                                                             <input type="number"
                                                                 name="custom_field[{{ $field->id }}]"
                                                                 class="form-control" value="{{ $cf['value'] }}"
-                                                                placeholder="{{ translation('Enter') }} {{ $field->title }}">
+                                                                placeholder="{{ __tr('Enter') }} {{ $field->title }}">
                                                         @endif
                                                         @if ($cf['type'] == config('settings.input_types.text_area'))
                                                             <textarea name="custom_field[{{ $field->id }}]" class="form-control" rows="2">{{ $cf['value'] }}</textarea>
@@ -290,7 +290,7 @@
                                                         @if ($cf['type'] == config('settings.input_types.select'))
                                                             <select name="custom_field[{{ $field->id }}]"
                                                                 class="form-control">
-                                                                <option value="">{{ translation('Select') }}
+                                                                <option value="">{{ __tr('Select') }}
                                                                 </option>
                                                                 @foreach ($field->options as $option)
                                                                     <option value="{{ $option->id }}"
@@ -354,7 +354,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>{{ translation('Featured Ad') }}</label>
+                                    <label>{{ __tr('Featured Ad') }}</label>
                                     <div
                                         class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                         <input type="checkbox" name="is_featured" class="custom-control-input"
@@ -364,7 +364,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{ translation('Thumbnail Image') }}</label>
+                                    <label>{{ __tr('Thumbnail Image') }}</label>
                                     <x-media name="thumbnail_image" :value="$ad_details->thumbnail_image"></x-media>
                                     @if ($errors->has('thumbnail_image'))
                                         <div class="error text-danger mb-0 invalid-input">
@@ -373,7 +373,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{ translation('Gallery Images') }}</label>
+                                    <label>{{ __tr('Gallery Images') }}</label>
                                     @php
                                         $galleryImages = $ad_details->galleryImages
                                             ? $ad_details->galleryImages->pluck('image_id')->implode(',')
@@ -387,7 +387,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{ translation('Tags') }}</label>
+                                    <label>{{ __tr('Tags') }}</label>
                                     <select class="tag-select form-control" name="tags[]" multiple>
                                         @foreach ($ad_details->tags as $tag)
                                             <option value="{{ $tag->id }}" selected>{{ $tag->title }}</option>
@@ -400,27 +400,27 @@
                                 <!-- Ad Status Info -->
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <small class="text-muted">{{ translation('Status') }}:</small>
+                                        <small class="text-muted">{{ __tr('Status') }}:</small>
                                         <span
                                             class="badge {{ $ad_details->status == config('settings.general_status.active') ? 'badge-success' : 'badge-warning' }}">
-                                            {{ $ad_details->status == config('settings.general_status.active') ? translation('Published') : translation('Pending') }}
+                                            {{ $ad_details->status == config('settings.general_status.active') ? __tr('Published') : __tr('Pending') }}
                                         </span>
                                     </div>
                                     <div class="d-flex justify-content-between mb-2">
-                                        <small class="text-muted">{{ translation('Payment') }}:</small>
+                                        <small class="text-muted">{{ __tr('Payment') }}:</small>
                                         <span
                                             class="badge {{ $ad_details->payment_status == config('settings.general_status.active') ? 'badge-success' : 'badge-danger' }}">
-                                            {{ $ad_details->payment_status == config('settings.general_status.active') ? translation('Paid') : translation('Unpaid') }}
+                                            {{ $ad_details->payment_status == config('settings.general_status.active') ? __tr('Paid') : __tr('Unpaid') }}
                                         </span>
                                     </div>
                                     @if ($ad_details->userInfo)
                                         <div class="d-flex justify-content-between mb-2">
-                                            <small class="text-muted">{{ translation('Owner') }}:</small>
+                                            <small class="text-muted">{{ __tr('Owner') }}:</small>
                                             <small>{{ $ad_details->userInfo->name }}</small>
                                         </div>
                                     @endif
                                     <div class="d-flex justify-content-between mb-2">
-                                        <small class="text-muted">{{ translation('Created') }}:</small>
+                                        <small class="text-muted">{{ __tr('Created') }}:</small>
                                         <small>{{ $ad_details->created_at->format('M d, Y') }}</small>
                                     </div>
                                 </div>
@@ -428,10 +428,10 @@
                                 <div class="d-flex justify-content-between">
                                     <button type="submit" name="status"
                                         value="{{ config('settings.general_status.in_active') }}"
-                                        class="btn btn-secondary">{{ translation('Save & Pending') }}</button>
+                                        class="btn btn-secondary">{{ __tr('Save & Pending') }}</button>
                                     <button type="submit" name="status"
                                         value="{{ config('settings.general_status.active') }}"
-                                        class="btn btn-primary">{{ translation('Save & Publish') }}</button>
+                                        class="btn btn-primary">{{ __tr('Save & Publish') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -496,7 +496,7 @@
             // Category Select
             $('.category-select').select2({
                 theme: "bootstrap4",
-                placeholder: '{{ translation('Select category') }}',
+                placeholder: '{{ __tr('Select category') }}',
                 ajax: {
                     url: '{{ route('classified.ads.categories.options') }}',
                     dataType: 'json',
@@ -516,7 +516,7 @@
             $('.tag-select').select2({
                 theme: "bootstrap4",
                 tags: true,
-                placeholder: '{{ translation('Select or create tags') }}',
+                placeholder: '{{ __tr('Select or create tags') }}',
                 ajax: {
                     url: '{{ route('classified.ads.tag.options') }}',
                     dataType: 'json',
@@ -538,8 +538,8 @@
                 var stateSelect = $('#state-select');
                 var citySelect = $('#city-select');
 
-                stateSelect.html('<option value="">{{ translation('Select State') }}</option>');
-                citySelect.html('<option value="">{{ translation('Select City') }}</option>');
+                stateSelect.html('<option value="">{{ __tr('Select State') }}</option>');
+                citySelect.html('<option value="">{{ __tr('Select City') }}</option>');
 
                 if (countryId) {
                     $.ajax({
@@ -562,7 +562,7 @@
                 var stateId = $(this).val();
                 var citySelect = $('#city-select');
 
-                citySelect.html('<option value="">{{ translation('Select City') }}</option>');
+                citySelect.html('<option value="">{{ __tr('Select City') }}</option>');
 
                 if (stateId) {
                     $.ajax({

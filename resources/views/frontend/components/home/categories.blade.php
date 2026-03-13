@@ -18,7 +18,7 @@
                         <div class="cat-grid-body">
                             <div class="cat-grid-name">{{ $category->translation('title') }}</div>
                             <div class="cat-grid-count">
-                                {{ number_format($category->ads_count) }} {{ translation('ads') ?? 'ads' }}
+                                {{ number_format($category->ads_count) }} {{ __tr('ads') ?? 'ads' }}
                             </div>
                         </div>
                         <span class="cat-grid-arrow"><i class="las la-arrow-right"></i></span>

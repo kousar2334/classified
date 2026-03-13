@@ -9,7 +9,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Colors Setup') }}
+    {{ __tr('Colors Setup') }}
 @endsection
 @section('page-style')
     <style>
@@ -60,7 +60,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Colors Setup') }}</h3>
+                            <h3 class="card-title">{{ __tr('Colors Setup') }}</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -71,18 +71,18 @@
                                     <div class="tab-content">
                                         <div
                                             class="tab-pane text-left fade {{ Request::routeIs(['admin.appearance.site.setting.colors']) ? 'show active' : '' }}">
-                                            <h4>{{ translation('Colors Setup') }}</h4>
+                                            <h4>{{ __tr('Colors Setup') }}</h4>
                                             <hr>
                                             <form method="POST"
                                                 action="{{ route('admin.appearance.site.setting.colors.update') }}">
                                                 @csrf
 
                                                 {{-- Primary Colors --}}
-                                                <p class="color-group-title">{{ translation('Primary Colors') }}</p>
+                                                <p class="color-group-title">{{ __tr('Primary Colors') }}</p>
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label>{{ translation('Primary Color') }} <span
+                                                            <label>{{ __tr('Primary Color') }} <span
                                                                     class="color-var-badge">--primary-color</span></label>
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control color-text"
@@ -99,7 +99,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label>{{ translation('Primary Dark') }} <span
+                                                            <label>{{ __tr('Primary Dark') }} <span
                                                                     class="color-var-badge">--primary-color-dark</span></label>
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control color-text"
@@ -116,7 +116,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label>{{ translation('Primary Light') }} <span
+                                                            <label>{{ __tr('Primary Light') }} <span
                                                                     class="color-var-badge">--primary-color-light</span></label>
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control color-text"
@@ -133,7 +133,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label>{{ translation('Primary Lighter') }} <span
+                                                            <label>{{ __tr('Primary Lighter') }} <span
                                                                     class="color-var-badge">--primary-color-lighter</span></label>
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control color-text"
@@ -150,19 +150,19 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label>{{ translation('Primary Shadow') }} <span
+                                                            <label>{{ __tr('Primary Shadow') }} <span
                                                                     class="color-var-badge">--primary-color-shadow</span></label>
                                                             <input type="text" class="form-control"
                                                                 name="site_primary_color_shadow"
                                                                 value="{{ get_setting('site_primary_color_shadow', '#f766310f') }}"
                                                                 placeholder="#rrggbbaa — 8-digit hex with alpha">
                                                             <small
-                                                                class="text-muted">{{ translation('Supports 8-digit hex with alpha (e.g. #f766310f)') }}</small>
+                                                                class="text-muted">{{ __tr('Supports 8-digit hex with alpha (e.g. #f766310f)') }}</small>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label>{{ translation('Site Header Color') }} <span
+                                                            <label>{{ __tr('Site Header Color') }} <span
                                                                     class="color-var-badge">--header-color</span></label>
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control color-text"
@@ -180,11 +180,11 @@
                                                 </div>
 
                                                 {{-- Accent Colors --}}
-                                                <p class="color-group-title mt-2">{{ translation('Accent Colors') }}</p>
+                                                <p class="color-group-title mt-2">{{ __tr('Accent Colors') }}</p>
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label>{{ translation('Main Color Two') }} <span
+                                                            <label>{{ __tr('Main Color Two') }} <span
                                                                     class="color-var-badge">--main-color-two</span></label>
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control color-text"
@@ -201,7 +201,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label>{{ translation('Main Color Three') }} <span
+                                                            <label>{{ __tr('Main Color Three') }} <span
                                                                     class="color-var-badge">--main-color-three</span></label>
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control color-text"
@@ -219,11 +219,11 @@
                                                 </div>
 
                                                 {{-- Text Colors --}}
-                                                <p class="color-group-title mt-2">{{ translation('Text Colors') }}</p>
+                                                <p class="color-group-title mt-2">{{ __tr('Text Colors') }}</p>
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label>{{ translation('Heading Color') }} <span
+                                                            <label>{{ __tr('Heading Color') }} <span
                                                                     class="color-var-badge">--heading-color</span></label>
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control color-text"
@@ -240,7 +240,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label>{{ translation('Base / Secondary Color') }} <span
+                                                            <label>{{ __tr('Base / Secondary Color') }} <span
                                                                     class="color-var-badge">--secondary-color</span></label>
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control color-text"
@@ -259,7 +259,7 @@
 
                                                 <div class="d-flex justify-content-end mt-2">
                                                     <button type="submit" class="btn btn-primary">
-                                                        {{ translation('Save Changes') }}
+                                                        {{ __tr('Save Changes') }}
                                                     </button>
                                                 </div>
                                             </form>

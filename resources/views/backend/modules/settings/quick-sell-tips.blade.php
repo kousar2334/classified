@@ -1,6 +1,6 @@
 @extends('backend.layouts.dashboard_layout')
 @section('title')
-    {{ translation('Quick Sell Tips') }}
+    {{ __tr('Quick Sell Tips') }}
 @endsection
 @section('page-content')
     <div class="theme-option-container">
@@ -11,9 +11,9 @@
                 <div class="tab-pane fade show active">
                     <div class="card">
                         <div class="card-header align-items-center bg-white d-flex justify-content-between">
-                            <h4>{{ translation('Quick Sell Tips') }}</h4>
+                            <h4>{{ __tr('Quick Sell Tips') }}</h4>
                             <button class="btn long" data-toggle="modal"
-                                data-target="#new-tip-model">{{ translation('Add New Tips') }}
+                                data-target="#new-tip-model">{{ __tr('Add New Tips') }}
                             </button>
                         </div>
                         <div class="card-body pt-0">
@@ -22,9 +22,9 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ translation('Title') }}</th>
-                                            <th>{{ translation('Status') }}</th>
-                                            <th class="text-center">{{ translation('Actions') }}</th>
+                                            <th>{{ __tr('Title') }}</th>
+                                            <th>{{ __tr('Status') }}</th>
+                                            <th class="text-center">{{ __tr('Actions') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -39,9 +39,9 @@
                                                     </td>
                                                     <td>
                                                         @if ($tip->status == config('settings.general_status.active'))
-                                                            <p class="badge badge-success">{{ translation('Active') }}</p>
+                                                            <p class="badge badge-success">{{ __tr('Active') }}</p>
                                                         @else
-                                                            <p class="badge badge-danger">{{ translation('Inactive') }}</p>
+                                                            <p class="badge badge-danger">{{ __tr('Inactive') }}</p>
                                                         @endif
                                                     </td>
                                                     <td>
@@ -58,10 +58,10 @@
                                                             <div class="dropdown-menu dropdown-menu-right">
                                                                 <a
                                                                     href="{{ route('classified.settings.quick.sell.tips.edit', ['id' => $tip->id, 'lang' => getDefaultLang()]) }}">
-                                                                    {{ translation('Edit') }}
+                                                                    {{ __tr('Edit') }}
                                                                 </a>
                                                                 <a href="#" class="delete-tip"
-                                                                    data-tip="{{ $tip->id }}">{{ translation('Delete') }}
+                                                                    data-tip="{{ $tip->id }}">{{ __tr('Delete') }}
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -72,7 +72,7 @@
                                             <tr>
                                                 <td colspan="9">
                                                     <p class="alert alert-danger text-center">
-                                                        {{ translation('Nothing Found') }}</p>
+                                                        {{ __tr('Nothing Found') }}</p>
                                                 </td>
                                             </tr>
                                         @endif
@@ -95,7 +95,7 @@
             <div class="modal-content">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title bold h6">{{ translation('Create New Safety Tips') }}</h4>
+                        <h4 class="modal-title bold h6">{{ __tr('Create New Safety Tips') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -104,26 +104,26 @@
                         <form id="new-tip-form">
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translation('Title') }}</label>
+                                    <label class="black font-14">{{ __tr('Title') }}</label>
                                     <input type="text" name="title" class="form-control slugable_input"
-                                        placeholder="{{ translation('Enter title') }}">
+                                        placeholder="{{ __tr('Enter title') }}">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translation('Status') }}</label>
+                                    <label class="black font-14">{{ __tr('Status') }}</label>
                                     <select name="status" class="form-control">
                                         <option value="{{ config('settings.general_status.active') }}">
-                                            {{ translation('Active') }}
+                                            {{ __tr('Active') }}
                                         </option>
                                         <option value="{{ config('settings.general_status.in_active') }}">
-                                            {{ translation('Inactive') }}
+                                            {{ __tr('Inactive') }}
                                         </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="btn-area d-flex justify-content-between">
-                                <button class="btn long mt-2 store-new-tip">{{ translation('Save') }}</button>
+                                <button class="btn long mt-2 store-new-tip">{{ __tr('Save') }}</button>
                             </div>
                         </form>
                     </div>
@@ -137,20 +137,20 @@
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                    <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body text-center">
-                    <p class="mt-1">{{ translation('Are you sure to delete this  tips') }}?</p>
+                    <p class="mt-1">{{ __tr('Are you sure to delete this  tips') }}?</p>
                     <form method="POST" action="{{ route('classified.settings.quick.sell.tips.delete') }}">
                         @csrf
                         <input type="hidden" id="delete-id" name="id">
                         <div class="form-row d-flex justify-content-between">
                             <button type="button" class="btn long mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('cancel') }}</button>
-                            <button type="submit" class="btn long mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('cancel') }}</button>
+                            <button type="submit" class="btn long mt-2">{{ __tr('Delete') }}</button>
                         </div>
                     </form>
                 </div>
@@ -180,10 +180,10 @@
                     success: function(response) {
                         if (response.success) {
                             toastr.success(
-                                '{{ translation('Quick sell tips created successfully') }}');
+                                '{{ __tr('Quick sell tips created successfully') }}');
                             location.reload();
                         } else {
-                            toastr.error('{{ translation('Quick sell tips create failed') }}');
+                            toastr.error('{{ __tr('Quick sell tips create failed') }}');
                         }
                     },
                     error: function(response) {
@@ -195,7 +195,7 @@
                                     '</div>')
                             })
                         } else {
-                            toastr.error('{{ translation('Quick sell tips create failed') }}');
+                            toastr.error('{{ __tr('Quick sell tips create failed') }}');
                         }
                     }
                 });

@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 @section('meta')
-    <title>{{ translation('Post ad') }} - {{ get_setting('site_name') }}</title>
+    <title>{{ __tr('Post ad') }} - {{ get_setting('site_name') }}</title>
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/summernote/summernote-bs4.min.css') }}">
 @endsection
@@ -31,17 +31,17 @@
                                     <div class="col-lg-8">
                                         <div class="card mb-30">
                                             <div class="card-header">
-                                                <h6 class="card-title">{{ translation('Item Details') }}</h6>
+                                                <h6 class="card-title">{{ __tr('Item Details') }}</h6>
                                             </div>
                                             <div class="card-body">
                                                 <div class="form-group mb-20">
-                                                    <label for="title">{{ translation('Item Name') }}
+                                                    <label for="title">{{ __tr('Item Name') }}
                                                         <span class="text-danger">*</span>
                                                     </label>
                                                     <input type="text" name="title" id="title"
                                                         value="{{ old('title') }}"
                                                         class="input-style @error('title') is-invalid @enderror"
-                                                        placeholder="{{ translation('Item Name') }}">
+                                                        placeholder="{{ __tr('Item Name') }}">
 
                                                     <div class="invalid-feedback @error('title') d-block @enderror">
                                                         @error('title')
@@ -51,11 +51,11 @@
                                                 </div>
                                                 <!-- Category -->
                                                 <div class="form-group mb-20">
-                                                    <label for="category">{{ translation('Category') }}
+                                                    <label for="category">{{ __tr('Category') }}
                                                         <span class="text-danger">*</span>
                                                     </label>
                                                     <select name="" id="select-category" class="input-style">
-                                                        <option value="">{{ translation('Select Category') }}
+                                                        <option value="">{{ __tr('Select Category') }}
                                                         </option>
                                                         @foreach ($categories as $category)
                                                             <option value="{{ $category->id }}">{{ $category->title }}
@@ -67,12 +67,12 @@
                                                 <!-- Subcategory -->
                                                 <div class="form-group mb-20" id="subcategory-wrapper"
                                                     style="display:none;">
-                                                    <label for="subcategory">{{ translation('Subcategory') }}
+                                                    <label for="subcategory">{{ __tr('Subcategory') }}
                                                         <span class="text-danger">*</span>
                                                     </label>
                                                     <select name="" id="select-subcategory"
                                                         class="input-style w-100">
-                                                        <option value="">{{ translation('Select Subcategory') }}
+                                                        <option value="">{{ __tr('Select Subcategory') }}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -80,10 +80,9 @@
                                                 <!-- Sub-subcategory -->
                                                 <div class="form-group mb-20" id="sub-subcategory-wrapper"
                                                     style="display:none;">
-                                                    <label
-                                                        for="sub-subcategory">{{ translation('Sub Subcategory') }}</label>
+                                                    <label for="sub-subcategory">{{ __tr('Sub Subcategory') }}</label>
                                                     <select id="select-sub-subcategory" class="input-style w-100">
-                                                        <option value="">{{ translation('Select Sub Subcategory') }}
+                                                        <option value="">{{ __tr('Select Sub Subcategory') }}
                                                         </option>
                                                     </select>
                                                 </div>
@@ -106,9 +105,9 @@
 
                                                 <!-- Condition -->
                                                 <div class="form-group mb-20">
-                                                    <label for="condition">{{ translation('Item Condition') }}</label>
+                                                    <label for="condition">{{ __tr('Item Condition') }}</label>
                                                     <select name="condition" id="condition" class="input-style">
-                                                        <option value="">{{ translation('Select Condition') }}
+                                                        <option value="">{{ __tr('Select Condition') }}
                                                         </option>
                                                         @foreach ($conditions as $condition)
                                                             <option value="{{ $condition->id }}"
@@ -119,10 +118,10 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group mb-20">
-                                                    <label for="description">{{ translation('Description') }}</label>
+                                                    <label for="description">{{ __tr('Description') }}</label>
                                                     <textarea name="description" id="description" rows="6"
                                                         class="input-style summernote @error('description') is-invalid @enderror"
-                                                        placeholder="{{ translation('Enter a Description') }}">{{ old('description') }}</textarea>
+                                                        placeholder="{{ __tr('Enter a Description') }}">{{ old('description') }}</textarea>
                                                     <div class="invalid-feedback @error('description') d-block @enderror">
                                                         @error('description')
                                                             {{ $message }}
@@ -138,11 +137,11 @@
                                             <!-- Price -->
                                             <div class="card mb-30">
                                                 <div class="card-header">
-                                                    <h6 class="card-title">{{ translation('Price') }}</h6>
+                                                    <h6 class="card-title">{{ __tr('Price') }}</h6>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="form-group">
-                                                        <label for="price">{{ translation('Price') }} <span
+                                                        <label for="price">{{ __tr('Price') }} <span
                                                                 class="text-danger">*</span></label>
                                                         <input type="number" name="price" id="price"
                                                             value="{{ old('price') }}"
@@ -157,7 +156,7 @@
                                                             <input type="checkbox" class="custom-check-box"
                                                                 name="negotiable" id="negotiable"
                                                                 {{ old('negotiable') ? 'checked' : '' }}>
-                                                            <span class="ms-2">{{ translation('Negotiable') }}</span>
+                                                            <span class="ms-2">{{ __tr('Negotiable') }}</span>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -166,17 +165,17 @@
                                             <!-- Contact -->
                                             <div class="card mb-30">
                                                 <div class="card-header">
-                                                    <h6>{{ translation('Contact') }}</h6>
+                                                    <h6>{{ __tr('Contact') }}</h6>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="form-group mb-20">
-                                                        <label for="contact_email">{{ translation('Contact Email') }}
+                                                        <label for="contact_email">{{ __tr('Contact Email') }}
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <input type="email" name="contact_email" id="contact_email"
                                                             value="{{ old('contact_email', auth()->check() ? auth()->user()->email : '') }}"
                                                             class="input-style w-100 @error('contact_email') is-invalid @enderror"
-                                                            placeholder="{{ translation('Email Address') }}">
+                                                            placeholder="{{ __tr('Email Address') }}">
                                                         <div
                                                             class="invalid-feedback @error('contact_email') d-block @enderror">
                                                             @error('contact_email')
@@ -190,14 +189,14 @@
                                                                 name="hide_phone_number"
                                                                 {{ old('hide_phone_number') ? 'checked' : '' }}>
                                                             <span
-                                                                class="black-font">{{ translation('Hide My Phone Number') }}</span>
+                                                                class="black-font">{{ __tr('Hide My Phone Number') }}</span>
                                                         </label>
                                                         <div class="mt-3">
                                                             <input
                                                                 class="input-style w-100 @error('phone') is-invalid @enderror"
                                                                 type="tel" name="phone"
                                                                 value="{{ old('phone') }}" id="phone"
-                                                                placeholder="{{ translation('Type Phone') }}">
+                                                                placeholder="{{ __tr('Type Phone') }}">
                                                             <div
                                                                 class="invalid-feedback @error('phone') d-block @enderror">
                                                                 @error('phone')
@@ -211,12 +210,12 @@
 
                                             <div class="card mb-30">
                                                 <div class="card-header">
-                                                    <h6>{{ translation('Media Uploads') }}</h6>
+                                                    <h6>{{ __tr('Media Uploads') }}</h6>
                                                 </div>
                                                 <div class="card-body">
                                                     <!-- Thumbnail Image -->
                                                     <div class="form-group mb-20">
-                                                        <label>{{ translation('Featured Image') }} <span
+                                                        <label>{{ __tr('Featured Image') }} <span
                                                                 class="text-danger">*</span></label>
                                                         <div class="thumbnail-slot" id="thumbnail-slot">
                                                             <div class="slot-placeholder">
@@ -226,7 +225,7 @@
                                                                         stroke-width="1.5"
                                                                         d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                                 </svg>
-                                                                <span>{{ translation('Choose Featured Image') }}</span>
+                                                                <span>{{ __tr('Choose Featured Image') }}</span>
                                                             </div>
                                                             <div class="slot-image" id="thumbnail-slot-image"
                                                                 style="display:none;">
@@ -240,7 +239,7 @@
                                                                 accept="image/jpg,image/jpeg,image/png,image/gif,image/webp">
                                                         </div>
                                                         <small
-                                                            class="text-muted d-block mt-2">{{ translation('image format: jpg,jpeg,png,gif,webp | max: 5MB') }}</small>
+                                                            class="text-muted d-block mt-2">{{ __tr('image format: jpg,jpeg,png,gif,webp | max: 5MB') }}</small>
                                                         <div
                                                             class="invalid-feedback @error('thumbnail_image') d-block @enderror">
                                                             @error('thumbnail_image')
@@ -252,10 +251,10 @@
                                                     <!-- Gallery Images -->
                                                     <div class="form-group">
                                                         <div class="gallery-slots-label">
-                                                            <span>{{ translation('Gallery Images') }}</span>
+                                                            <span>{{ __tr('Gallery Images') }}</span>
                                                             @if ($galleryImageLimit > 0)
                                                                 <span class="slot-count-badge">{{ $galleryImageLimit }}
-                                                                    {{ translation('photos') }}</span>
+                                                                    {{ __tr('photos') }}</span>
                                                             @endif
                                                         </div>
 
@@ -273,7 +272,7 @@
                                                                                     stroke-width="1.5"
                                                                                     d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                                             </svg>
-                                                                            <span>{{ translation('Add Photo') }}</span>
+                                                                            <span>{{ __tr('Add Photo') }}</span>
                                                                         </div>
                                                                         <div class="slot-image" style="display:none;">
                                                                             <img src="" alt="">
@@ -288,8 +287,8 @@
                                                                 @endfor
                                                             </div>
                                                             <small
-                                                                class="text-muted d-block mt-2">{{ translation('Click a box to add a photo') }}
-                                                                &bull; {{ translation('max 5MB each') }}</small>
+                                                                class="text-muted d-block mt-2">{{ __tr('Click a box to add a photo') }}
+                                                                &bull; {{ __tr('max 5MB each') }}</small>
                                                         @else
                                                             <div class="gallery-no-plan-notice">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -298,10 +297,10 @@
                                                                         stroke-width="2"
                                                                         d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                                 </svg>
-                                                                <span>{{ translation('Your current plan does not include gallery images.') }}
+                                                                <span>{{ __tr('Your current plan does not include gallery images.') }}
                                                                     <a
-                                                                        href="{{ url('/membership') }}">{{ translation('Upgrade your plan') }}</a>
-                                                                    {{ translation('to upload gallery photos.') }}</span>
+                                                                        href="{{ url('/membership') }}">{{ __tr('Upgrade your plan') }}</a>
+                                                                    {{ __tr('to upload gallery photos.') }}</span>
                                                             </div>
                                                         @endif
                                                     </div>
@@ -314,7 +313,7 @@
                                             <div class="continue-btn mt-3">
                                                 <div class="btn-wrapper mb-10 d-flex justify-content-end gap-3">
                                                     <button class="cmn-btn w-100" id="nextBtn"
-                                                        type="button">{{ translation('Continue') }}</button>
+                                                        type="button">{{ __tr('Continue') }}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -334,17 +333,17 @@
                                         <!-- Location Information -->
                                         <div class="card mb-30">
                                             <div class="card-header">
-                                                <h6 class="card-title">{{ translation('Location Information') }}</h6>
+                                                <h6 class="card-title">{{ __tr('Location Information') }}</h6>
                                             </div>
                                             <div class="card-body">
                                                 <!-- Country -->
                                                 @if ($countriesCount > 1)
                                                     <div class="form-group mb-20">
-                                                        <label for="country">{{ translation('Country') }} <span
+                                                        <label for="country">{{ __tr('Country') }} <span
                                                                 class="text-danger">*</span></label>
                                                         <select name="country" id="country" class="select2-ajax w-100"
                                                             required>
-                                                            <option value="">{{ translation('Select Country') }}
+                                                            <option value="">{{ __tr('Select Country') }}
                                                             </option>
                                                         </select>
                                                         <div class="invalid-feedback"></div>
@@ -356,31 +355,31 @@
 
                                                 <!-- State -->
                                                 <div class="form-group mb-20">
-                                                    <label for="state">{{ translation('State') }} <span
+                                                    <label for="state">{{ __tr('State') }} <span
                                                             class="text-danger">*</span></label>
                                                     <select name="state" id="state" class="select2-ajax w-100"
                                                         required disabled>
-                                                        <option value="">{{ translation('Select State') }}</option>
+                                                        <option value="">{{ __tr('Select State') }}</option>
                                                     </select>
                                                     <div class="invalid-feedback"></div>
                                                 </div>
 
                                                 <!-- City -->
                                                 <div class="form-group mb-20">
-                                                    <label for="city">{{ translation('City') }} <span
+                                                    <label for="city">{{ __tr('City') }} <span
                                                             class="text-danger">*</span></label>
                                                     <select name="city" id="city" class="select2-ajax w-100"
                                                         required disabled>
-                                                        <option value="">{{ translation('Select City') }}</option>
+                                                        <option value="">{{ __tr('Select City') }}</option>
                                                     </select>
                                                     <div class="invalid-feedback"></div>
                                                 </div>
 
                                                 <!-- Address -->
                                                 <div class="form-group">
-                                                    <label for="address">{{ translation('Address') }}</label>
+                                                    <label for="address">{{ __tr('Address') }}</label>
                                                     <textarea class="w-100 input-style" name="address" id="address" rows="3"
-                                                        placeholder="{{ translation('Enter your detailed address') }}">{{ old('address') }}</textarea>
+                                                        placeholder="{{ __tr('Enter your detailed address') }}">{{ old('address') }}</textarea>
                                                     <div class="invalid-feedback"></div>
                                                 </div>
                                             </div>
@@ -389,14 +388,14 @@
                                         <!-- Video URL -->
                                         <div class="card mb-30">
                                             <div class="card-header">
-                                                <h6 class="card-title">{{ translation('Video') }}</h6>
+                                                <h6 class="card-title">{{ __tr('Video') }}</h6>
                                             </div>
                                             <div class="card-body">
                                                 <div class="form-group">
-                                                    <label for="video_url">{{ translation('Video URL') }}</label>
+                                                    <label for="video_url">{{ __tr('Video URL') }}</label>
                                                     <input type="text" class="input-style w-100" name="video_url"
                                                         id="video_url" value="{{ old('video_url') }}"
-                                                        placeholder="{{ translation('YouTube URL') }}">
+                                                        placeholder="{{ __tr('YouTube URL') }}">
                                                     <div class="invalid-feedback"></div>
                                                 </div>
                                             </div>
@@ -408,7 +407,7 @@
                                             <!-- Featured Ad -->
                                             <div class="card mb-30">
                                                 <div class="card-header">
-                                                    <h6 class="card-title">{{ translation('Feature This Ad') }}</h6>
+                                                    <h6 class="card-title">{{ __tr('Feature This Ad') }}</h6>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="form-group">
@@ -416,13 +415,12 @@
                                                             <input type="checkbox" name="is_featured" id="is_featured"
                                                                 class="custom-check-box feature_disable_color"
                                                                 {{ old('is_featured') ? 'checked' : '' }}>
-                                                            <span
-                                                                class="ms-2">{{ translation('Feature This Ad') }}</span>
+                                                            <span class="ms-2">{{ __tr('Feature This Ad') }}</span>
                                                         </label>
                                                         <p class="mt-2 mb-0">
-                                                            {{ translation('To feature this ad, you will need to subscribe to a') }}
+                                                            {{ __tr('To feature this ad, you will need to subscribe to a') }}
                                                             <a
-                                                                href="{{ url('/membership') }}">{{ translation('paid membership') }}</a>
+                                                                href="{{ url('/membership') }}">{{ __tr('paid membership') }}</a>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -431,7 +429,7 @@
                                             <!-- Tags -->
                                             <div class="card mb-30">
                                                 <div class="card-header">
-                                                    <h6 class="card-title">{{ translation('Tags') }}</h6>
+                                                    <h6 class="card-title">{{ __tr('Tags') }}</h6>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="form-group">
@@ -445,7 +443,7 @@
                                                                     </option>
                                                                 @endforeach
                                                             </select>
-                                                            <small>{{ translation('Select your tags or type a new tag name') }}</small>
+                                                            <small>{{ __tr('Select your tags or type a new tag name') }}</small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -455,40 +453,40 @@
                                             @guest
                                                 <div class="card mb-30">
                                                     <div class="card-header">
-                                                        <h6 class="card-title">{{ translation('User Information') }}</h6>
+                                                        <h6 class="card-title">{{ __tr('User Information') }}</h6>
                                                     </div>
                                                     <div class="card-body">
                                                         <div class="form-group mb-20">
-                                                            <label for="guest_first_name">{{ translation('First Name') }}
+                                                            <label for="guest_first_name">{{ __tr('First Name') }}
                                                                 <span class="text-danger">*</span></label>
                                                             <input type="text" class="input-style w-100"
                                                                 name="guest_first_name" id="guest_first_name"
                                                                 value="{{ old('guest_first_name') }}"
-                                                                placeholder="{{ translation('First Name') }}">
+                                                                placeholder="{{ __tr('First Name') }}">
                                                         </div>
                                                         <div class="form-group mb-20">
-                                                            <label for="guest_last_name">{{ translation('Last Name') }} <span
+                                                            <label for="guest_last_name">{{ __tr('Last Name') }} <span
                                                                     class="text-danger">*</span></label>
                                                             <input type="text" class="input-style w-100"
                                                                 name="guest_last_name" id="guest_last_name"
                                                                 value="{{ old('guest_last_name') }}"
-                                                                placeholder="{{ translation('Last Name') }}">
+                                                                placeholder="{{ __tr('Last Name') }}">
                                                         </div>
                                                         <div class="form-group mb-20">
-                                                            <label for="guest_email">{{ translation('Email') }} <span
+                                                            <label for="guest_email">{{ __tr('Email') }} <span
                                                                     class="text-danger">*</span></label>
                                                             <input type="email" class="input-style w-100"
                                                                 name="guest_email" id="guest_email"
                                                                 value="{{ old('guest_email') }}"
-                                                                placeholder="{{ translation('Email') }}">
+                                                                placeholder="{{ __tr('Email') }}">
                                                         </div>
                                                         <div class="form-group mb-20">
-                                                            <label for="guest_phone">{{ translation('Phone Number') }} <span
+                                                            <label for="guest_phone">{{ __tr('Phone Number') }} <span
                                                                     class="text-danger">*</span></label>
                                                             <input type="tel" class="input-style w-100"
                                                                 name="guest_phone" id="guest_phone"
                                                                 value="{{ old('guest_phone') }}"
-                                                                placeholder="{{ translation('Phone') }}">
+                                                                placeholder="{{ __tr('Phone') }}">
                                                         </div>
                                                         <div id="guest_error_message" class="d-flex flex-column gap-2 mb-2">
                                                         </div>
@@ -498,7 +496,7 @@
                                                                     id="guest_register_request" value="1"
                                                                     class="custom-check-box">
                                                                 <span
-                                                                    class="ms-2 title-para text-primary">{{ translation('I confirm the above info and am excited to register!') }}</span>
+                                                                    class="ms-2 title-para text-primary">{{ __tr('I confirm the above info and am excited to register!') }}</span>
                                                             </label>
                                                         </div>
                                                     </div>
@@ -508,7 +506,7 @@
                                             <!-- Terms and Conditions -->
                                             <div class="card mb-30">
                                                 <div class="card-header">
-                                                    <h6 class="card-title">{{ translation('Terms & Conditions') }}</h6>
+                                                    <h6 class="card-title">{{ __tr('Terms & Conditions') }}</h6>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="form-group">
@@ -516,10 +514,10 @@
                                                             <input class="custom-check-box" type="checkbox"
                                                                 name="terms_conditions" id="terms_conditions"
                                                                 value="1">
-                                                            <span>{{ translation('I agree with the') }}
+                                                            <span>{{ __tr('I agree with the') }}
                                                                 <a href="{{ url('/terms-and-conditions') }}"
                                                                     target="_blank"
-                                                                    class="text-primary">{{ translation('Terms and Conditions') }}</a>
+                                                                    class="text-primary">{{ __tr('Terms and Conditions') }}</a>
                                                             </span>
                                                         </label>
                                                         <div
@@ -539,9 +537,9 @@
                                             <div class="continue-btn mt-3">
                                                 <div class="btn-wrapper mb-10 d-flex justify-content-end gap-3">
                                                     <button class="cmn-btn w-100" id="prevBtn"
-                                                        type="button">{{ translation('Previous') }}</button>
+                                                        type="button">{{ __tr('Previous') }}</button>
                                                     <button class="cmn-btn w-100" id="submitBtn" type="submit">
-                                                        <span class="btn-text">{{ translation('Submit Listing') }}</span>
+                                                        <span class="btn-text">{{ __tr('Submit Listing') }}</span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -563,7 +561,7 @@
     <!-- Form Loader -->
     <div id="form-loader">
         <div class="spinner-border" role="status">
-            <span class="visually-hidden">{{ translation('Loading...') }}</span>
+            <span class="visually-hidden">{{ __tr('Loading...') }}</span>
         </div>
     </div>
 @endsection

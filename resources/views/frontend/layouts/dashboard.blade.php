@@ -12,7 +12,7 @@
 
             <main class="dashboard-main">
                 <button class="mobile-menu-toggle" onclick="toggleSidebar()">
-                    <i class="fa-solid fa-bars"></i> {{ translation('Menu') }}
+                    <i class="fa-solid fa-bars"></i> {{ __tr('Menu') }}
                 </button>
 
                 @yield('dashboard-content')

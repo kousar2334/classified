@@ -15,7 +15,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Edit Category') }}
+    {{ __tr('Edit Category') }}
 @endsection
 @section('page-style')
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
@@ -30,13 +30,13 @@
                 <div class="col-6 mx-auto">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Category Information') }}</h3>
+                            <h3 class="card-title">{{ __tr('Category Information') }}</h3>
                         </div>
                         <div class="card-body">
                             <div class="lang-switcher-wrap mb-3">
                                 <div class="lang-switcher-label">
                                     <i class="fas fa-globe-americas"></i>
-                                    <span>{{ translation('Language') }}</span>
+                                    <span>{{ __tr('Language') }}</span>
                                 </div>
                                 <div class="lang-switcher-tabs">
                                     @foreach (activeLanguages() as $key => $language)
@@ -51,16 +51,16 @@
                             <form action="{{ route('admin.blogs.categories.update') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <label>{{ translation('Category Title') }}</label>
+                                    <label>{{ __tr('Category Title') }}</label>
                                     <input type="hidden" name="id" value="{{ $category->id }}">
                                     <input type="hidden" name="lang" value="{{ $lang }}">
                                     <input type="text" class="form-control" name="title"
                                         value="{{ $category->translation('title', $lang) }}"
-                                        placeholder="{{ translation('Enter Category Title') }}">
+                                        placeholder="{{ __tr('Enter Category Title') }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{ translation('Parent Category') }}</label>
+                                    <label>{{ __tr('Parent Category') }}</label>
                                     <select class="parent-category-select form-control" name="parent">
                                         @if ($category->parentCat != null)
                                             <option value="{{ $category->parentCat->id }}" selected>
@@ -70,47 +70,45 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{ translation('Meta Title') }}</label>
+                                    <label>{{ __tr('Meta Title') }}</label>
                                     <input type="text" class="form-control" name="meta_title"
-                                        value="{{ $category->meta_title }}"
-                                        placeholder="{{ translation('Enter Meta Title') }}">
+                                        value="{{ $category->meta_title }}" placeholder="{{ __tr('Enter Meta Title') }}">
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Meta Description') }}</label>
+                                    <label>{{ __tr('Meta Description') }}</label>
                                     <textarea class="form-control" name="meta_description" value="{{ $category->meta_description }}"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Meta Image') }}</label>
+                                    <label>{{ __tr('Meta Image') }}</label>
                                     <x-media name="edit_meta_image" :value="$category->meta_image"></x-media>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>{{ translation('Status') }}</label>
+                                    <label>{{ __tr('Status') }}</label>
                                     <select name="status" class="form-control">
                                         <option value="{{ config('settings.general_status.active') }}"
                                             @selected($category->status == config('settings.general_status.active'))>
-                                            {{ translation('Active') }}</option>
+                                            {{ __tr('Active') }}</option>
                                         <option value="{{ config('settings.general_status.in_active') }}"
                                             @selected($category->status == config('settings.general_status.in_active'))>
-                                            {{ translation('Inactive') }}
+                                            {{ __tr('Inactive') }}
                                         </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Is Featured') }}</label>
+                                    <label>{{ __tr('Is Featured') }}</label>
                                     <select name="is_featured" class="form-control">
                                         <option value="{{ config('settings.general_status.active') }}"
                                             @selected($category->is_featured == config('settings.general_status.active'))>
-                                            {{ translation('Active') }}</option>
+                                            {{ __tr('Active') }}</option>
                                         <option value="{{ config('settings.general_status.in_active') }}"
                                             @selected($category->is_featured == config('settings.general_status.in_active'))>
-                                            {{ translation('Inactive') }}
+                                            {{ __tr('Inactive') }}
                                         </option>
                                     </select>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <button type="submit"
-                                        class="btn btn-primary">{{ translation('Save Changes') }}</button>
+                                    <button type="submit" class="btn btn-primary">{{ __tr('Save Changes') }}</button>
                                 </div>
                             </form>
                         </div>

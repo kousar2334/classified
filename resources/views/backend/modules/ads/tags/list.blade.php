@@ -24,18 +24,18 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Listing Tags') }}</h3>
+                            <h3 class="card-title">{{ __tr('Listing Tags') }}</h3>
                             <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
-                                data-target="#create-item-modal">{{ translation('Create New Tags') }}
+                                data-target="#create-item-modal">{{ __tr('Create New Tags') }}
                             </button>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('#') }}</th>
-                                        <th>{{ translation('Title') }}</th>
-                                        <th class="text-right">{{ translation('Action') }}</th>
+                                        <th>{{ __tr('#') }}</th>
+                                        <th>{{ __tr('Title') }}</th>
+                                        <th class="text-right">{{ __tr('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -49,8 +49,7 @@
                                             </td>
                                             <td class="text-right">
                                                 <div class="btn-group">
-                                                    <button type="button"
-                                                        class="btn btn-default">{{ translation('Action') }}
+                                                    <button type="button" class="btn btn-default">{{ __tr('Action') }}
                                                     </button>
                                                     <button type="button"
                                                         class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
@@ -61,7 +60,7 @@
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item delete-item"
                                                             data-id="{{ $item->id }}">
-                                                            {{ translation('Delete') }}
+                                                            {{ __tr('Delete') }}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -70,7 +69,7 @@
                                     @empty
                                         <tr>
                                             <td colspan="10">
-                                                <div class="text-center">{{ translation('No item found') }}</div>
+                                                <div class="text-center">{{ __tr('No item found') }}</div>
                                             </td>
                                         </tr>
                                     @endforelse
@@ -91,7 +90,7 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('New Tags') }}</h5>
+                        <h5 class="modal-title">{{ __tr('New Tags') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -100,13 +99,13 @@
                         <form id="item-adding-form">
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translation('Tags') }}</label>
+                                    <label class="black font-14">{{ __tr('Tags') }}</label>
                                     <textarea name="tags" class="form-control" placeholder="Enter tags"></textarea>
-                                    <small>{{ translation('Separated tags by comma') }}</small>
+                                    <small>{{ __tr('Separated tags by comma') }}</small>
                                 </div>
                             </div>
                             <div class="btn-area d-flex justify-content-between">
-                                <button class="btn btn-primary mt-2 store-category">{{ translation('Save') }}</button>
+                                <button class="btn btn-primary mt-2 store-category">{{ __tr('Save') }}</button>
                             </div>
 
                         </form>
@@ -121,19 +120,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete ?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete ?') }}</h4>
                         <form method="POST" action="{{ route('classified.ads.tag.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-item-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>

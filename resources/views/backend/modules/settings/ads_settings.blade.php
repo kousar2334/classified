@@ -1,6 +1,6 @@
 @extends('backend.layouts.dashboard_layout')
 @section('title')
-    {{ translation('Ads Settings') }}
+    {{ __tr('Ads Settings') }}
 @endsection
 @section('page-content')
     <div class="theme-option-container">
@@ -11,14 +11,14 @@
                 <div class="tab-pane fade show active">
                     <div class="card">
                         <div class="card-header bg-white border-bottom2 py-3">
-                            <h4>{{ translation('Ads Settings') }}</h4>
+                            <h4>{{ __tr('Ads Settings') }}</h4>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('classified.settings.update') }}" method="POST">
                                 @csrf
                                 <div class="form-row align-items-center mb-20">
                                     <div class="col-sm-4">
-                                        <label class="font-14 bold black">{{ translation('Display Ads per page') }}
+                                        <label class="font-14 bold black">{{ __tr('Display Ads per page') }}
                                         </label>
                                     </div>
                                     <div class="col-sm-4">
@@ -29,7 +29,7 @@
 
                                 <div class="form-row align-items-center mb-20">
                                     <div class="col-sm-4">
-                                        <label class="font-14 bold black">{{ translation('Free Ad Posting Limit') }}
+                                        <label class="font-14 bold black">{{ __tr('Free Ad Posting Limit') }}
                                         </label>
                                     </div>
                                     <div class="col-sm-4">
@@ -40,7 +40,7 @@
 
                                 <div class="form-row align-items-center mb-20">
                                     <div class="col-sm-4">
-                                        <label class="font-14 bold black">{{ translation('Cost Per Ad') }}
+                                        <label class="font-14 bold black">{{ __tr('Cost Per Ad') }}
                                         </label>
                                     </div>
                                     <div class="col-sm-4">
@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="form-row align-items-center mb-20">
                                     <div class="col-sm-4">
-                                        <label class="font-14 bold black">{{ translation('Cost Per Featured Ad') }}
+                                        <label class="font-14 bold black">{{ __tr('Cost Per Featured Ad') }}
                                         </label>
                                     </div>
                                     <div class="col-sm-4">
@@ -61,7 +61,7 @@
                                 <div class="form-row align-items-center mb-20">
                                     <div class="col-sm-4">
                                         <label
-                                            class="font-14 bold black">{{ translation('How Many Days Featured Add Visible on Top ?') }}
+                                            class="font-14 bold black">{{ __tr('How Many Days Featured Add Visible on Top ?') }}
                                         </label>
                                     </div>
                                     <div class="col-sm-4">
@@ -72,7 +72,7 @@
                                 <div class="form-row align-items-center mb-20">
                                     <div class="col-sm-4">
                                         <label
-                                            class="font-14 bold black">{{ translation('How Many Featured Add Visible on Top ?') }}
+                                            class="font-14 bold black">{{ __tr('How Many Featured Add Visible on Top ?') }}
                                         </label>
                                     </div>
                                     <div class="col-sm-4">
@@ -83,7 +83,7 @@
 
                                 <div class="form-row align-items-center mb-20">
                                     <div class="col-sm-4">
-                                        <label class="font-14 bold black">{{ translation('Maximum Gallery Image') }}
+                                        <label class="font-14 bold black">{{ __tr('Maximum Gallery Image') }}
                                         </label>
                                     </div>
                                     <div class="col-sm-4">
@@ -94,7 +94,7 @@
 
                                 <div class="form-row">
                                     <div class="col-md-12 text-right">
-                                        <button type="submit" class="btn long">{{ translation('Save Changes') }}</button>
+                                        <button type="submit" class="btn long">{{ __tr('Save Changes') }}</button>
                                     </div>
                                 </div>
                             </form>

@@ -31,14 +31,14 @@ class PricingPlanRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.required' => translation('Plan title is required'),
-            'duration_days.required' => translation('Duration days is required'),
-            'duration_days.min' => translation('Duration must be at least 1 day'),
-            'price.required' => translation('Price is required'),
-            'price.numeric' => translation('Price must be a number'),
-            'listing_quantity.required' => translation('Listing quantity is required'),
-            'featured_listing_quantity.required' => translation('Featured listing quantity is required'),
-            'gallery_image_quantity.required' => translation('Gallery image quantity is required'),
+            'title.required' => __tr('Plan title is required'),
+            'duration_days.required' => __tr('Duration days is required'),
+            'duration_days.min' => __tr('Duration must be at least 1 day'),
+            'price.required' => __tr('Price is required'),
+            'price.numeric' => __tr('Price must be a number'),
+            'listing_quantity.required' => __tr('Listing quantity is required'),
+            'featured_listing_quantity.required' => __tr('Featured listing quantity is required'),
+            'gallery_image_quantity.required' => __tr('Gallery image quantity is required'),
         ];
     }
 }

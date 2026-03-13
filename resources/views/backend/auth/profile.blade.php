@@ -1,6 +1,6 @@
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Profile') }}
+    {{ __tr('Profile') }}
 @endsection
 @section('page-style')
 @endsection
@@ -10,13 +10,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ translation('Profile') }}</h1>
+                    <h1 class="m-0">{{ __tr('Profile') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ translation('Home') }}</a>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __tr('Home') }}</a>
                         </li>
-                        <li class="breadcrumb-item active">{{ translation('Profile') }}</li>
+                        <li class="breadcrumb-item active">{{ __tr('Profile') }}</li>
                     </ol>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
-                                {{ translation('Profile') }}
+                                {{ __tr('Profile') }}
                             </h3>
                         </div>
                         <div class="card-body">
@@ -41,65 +41,65 @@
                                         aria-orientation="vertical">
                                         <a class="nav-link active" id="profile-tab-tab" data-toggle="pill"
                                             href="#profile-tab" role="tab" aria-controls="profile-tab"
-                                            aria-selected="true">{{ translation('Profile') }}</a>
+                                            aria-selected="true">{{ __tr('Profile') }}</a>
                                         <a class="nav-link" id="change-password-tab-tab" data-toggle="pill"
                                             href="#change-password-tab" role="tab" aria-controls="change-password-tab"
-                                            aria-selected="false">{{ translation('Change Password') }}</a>
+                                            aria-selected="false">{{ __tr('Change Password') }}</a>
                                     </div>
                                 </div>
                                 <div class="col-7 col-sm-9">
                                     <div class="tab-content" id="vert-tabs-tabContent">
                                         <div class="tab-pane text-left fade show active" id="profile-tab" role="tabpanel"
                                             aria-labelledby="profile-tab-tab">
-                                            <h4 class="header-title">{{ translation('User Information') }}</h4>
+                                            <h4 class="header-title">{{ __tr('User Information') }}</h4>
                                             <form id="update-profile-form">
                                                 @csrf
                                                 <div class="form-group">
-                                                    <label>{{ translation('Image') }}</label>
+                                                    <label>{{ __tr('Image') }}</label>
                                                     <x-media name="image" :value="auth()->user()->image"></x-media>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>{{ translation('Name') }}</label>
+                                                    <label>{{ __tr('Name') }}</label>
                                                     <input type="text" class="form-control" name="name"
                                                         placeholder="Enter Name" value="{{ auth()->user()->name }}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>{{ translation('Email') }}</label>
+                                                    <label>{{ __tr('Email') }}</label>
                                                     <input type="email" class="form-control" name="email"
                                                         placeholder="Enter Email" value="{{ auth()->user()->email }}">
                                                 </div>
                                             </form>
                                             <div class="d-flex justify-content-between">
                                                 <button type="button" class="btn btn-primary update-profile-btn">
-                                                    {{ translation('Save Changes') }}
+                                                    {{ __tr('Save Changes') }}
                                                 </button>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="change-password-tab" role="tabpanel"
                                             aria-labelledby="change-password-tab-tab">
-                                            <h4 class="header-title">{{ translation('Change Password') }}</h4>
+                                            <h4 class="header-title">{{ __tr('Change Password') }}</h4>
                                             <form id="update-password-form">
                                                 @csrf
 
                                                 <div class="form-group">
-                                                    <label>{{ translation('Current Password') }}</label>
+                                                    <label>{{ __tr('Current Password') }}</label>
                                                     <input type="password" class="form-control" name="current_password"
                                                         placeholder="Enter Current Password">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>{{ translation('New Password') }}</label>
+                                                    <label>{{ __tr('New Password') }}</label>
                                                     <input type="password" class="form-control" name="password"
                                                         placeholder="Enter New Password">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>{{ translation('Confirm Password') }}</label>
+                                                    <label>{{ __tr('Confirm Password') }}</label>
                                                     <input type="password" class="form-control" name="password_confirmation"
                                                         placeholder="Re Enter Password">
                                                 </div>
                                             </form>
                                             <div class="d-flex justify-content-between">
                                                 <button type="button" class="btn btn-primary update-password-btn">
-                                                    {{ translation('Update Password') }}
+                                                    {{ __tr('Update Password') }}
                                                 </button>
                                             </div>
                                         </div>

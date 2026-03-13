@@ -14,7 +14,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Blog Comments') }}
+    {{ __tr('Blog Comments') }}
 @endsection
 @section('page-style')
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
@@ -29,19 +29,19 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Comments') }}</h3>
+                            <h3 class="card-title">{{ __tr('Comments') }}</h3>
 
                         </div>
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover text-nowrap table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('#') }}</th>
-                                        <th>{{ translation('Author') }}</th>
-                                        <th>{{ translation('Comment') }}</th>
-                                        <th>{{ translation('Blog') }}</th>
-                                        <th>{{ translation('Date') }}</th>
-                                        <th class="text-right">{{ translation('Action') }}</th>
+                                        <th>{{ __tr('#') }}</th>
+                                        <th>{{ __tr('Author') }}</th>
+                                        <th>{{ __tr('Comment') }}</th>
+                                        <th>{{ __tr('Blog') }}</th>
+                                        <th>{{ __tr('Date') }}</th>
+                                        <th class="text-right">{{ __tr('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -72,7 +72,7 @@
                                                 <td class="text-right">
                                                     <div class="btn-group">
                                                         <button type="button"
-                                                            class="btn btn-default">{{ translation('Action') }}</button>
+                                                            class="btn btn-default">{{ __tr('Action') }}</button>
                                                         <button type="button"
                                                             class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
                                                             data-toggle="dropdown" aria-expanded="false">
@@ -80,7 +80,7 @@
                                                         <div class="dropdown-menu" role="menu">
                                                             <a class="dropdown-item delete-comment" href="#"
                                                                 data-id="{{ $comment->id }}">
-                                                                {{ translation('Delete') }}
+                                                                {{ __tr('Delete') }}
                                                             </a>
                                                         </div>
                                                     </div>
@@ -91,7 +91,7 @@
                                         <tr>
                                             <td colspan="6">
                                                 <p class="alert alert-default-danger text-center">
-                                                    {{ translation('No item found') }}
+                                                    {{ __tr('No item found') }}
                                                 </p>
                                             </td>
                                         </tr>
@@ -111,19 +111,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete ?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete ?') }}</h4>
                         <form method="POST" action="{{ route('admin.blogs.comment.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-comment-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 @extends('backend.layouts.dashboard_layout')
 @section('title')
-    {{ translation('New City') }}
+    {{ __tr('New City') }}
 @endsection
 @section('page-style')
     <link rel="stylesheet" href="{{ asset('/public/web-assets/backend/plugins/select2/select2.min.css') }}">
@@ -10,18 +10,18 @@
         <div class="col-lg-6 mx-auto">
             <div class="card mb-30">
                 <div class="card-header bg-white py-3">
-                    <h4 class="font-20">{{ translation('New City') }}</h4>
+                    <h4 class="font-20">{{ __tr('New City') }}</h4>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('classified.locations.city.store') }}" method="POST">
                         @csrf
                         <div class="form-row mb-20">
                             <div class="col-sm-4">
-                                <label class="font-14 bold black">{{ translation('Name') }} </label>
+                                <label class="font-14 bold black">{{ __tr('Name') }} </label>
                             </div>
                             <div class="col-sm-8">
                                 <input type="text" name="name" class="form-control" value="{{ old('name') }}"
-                                    placeholder="{{ translation('Type Name') }}">
+                                    placeholder="{{ __tr('Type Name') }}">
                                 @if ($errors->has('name'))
                                     <div class="invalid-input">{{ $errors->first('name') }}</div>
                                 @endif
@@ -29,11 +29,11 @@
                         </div>
                         <div class="form-row mb-20">
                             <div class="col-sm-4">
-                                <label class="font-14 bold black">{{ translation('State') }}</label>
+                                <label class="font-14 bold black">{{ __tr('State') }}</label>
                             </div>
                             <div class="col-sm-8">
                                 <select class="stateSelect form-control" name="state"
-                                    placeholder="{{ translation('Select a State') }}">
+                                    placeholder="{{ __tr('Select a State') }}">
                                     @foreach ($states as $state)
                                         <option value="{{ $state->id }}">
                                             {{ $state->name }}
@@ -47,7 +47,7 @@
                         </div>
                         <div class="form-row">
                             <div class="col-12 text-right">
-                                <button type="submit" class="btn long">{{ translation('Save') }}</button>
+                                <button type="submit" class="btn long">{{ __tr('Save') }}</button>
                             </div>
                         </div>
                     </form>

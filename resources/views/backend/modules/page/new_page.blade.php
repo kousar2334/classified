@@ -14,7 +14,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Create New Page') }}
+    {{ __tr('Create New Page') }}
 @endsection
 @section('page-style')
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
@@ -33,7 +33,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>{{ translation('Page Title') }}</label>
+                                    <label>{{ __tr('Page Title') }}</label>
                                     <input type="text" class="form-control page-title" name="title"
                                         placeholder="Enter Page Title" value="{{ old('title') }}">
                                     @if ($errors->has('title'))
@@ -45,22 +45,22 @@
                                 <div
                                     class="form-row align-items-center mb-20 permalink-input-group d-none @if ($errors->has('permalink')) d-flex @endif">
                                     <div class="label">
-                                        <label class="font-14 bold black">{{ translation('Permalink') }} </label>
+                                        <label class="font-14 bold black">{{ __tr('Permalink') }} </label>
                                         <input type="hidden" id="permalink_input_field" value="{{ old('permalink') }}"
                                             name="permalink">
                                     </div>
                                     <div class="input ml-1">
                                         <a href="#">{{ url('') }}/page/<span
                                                 id="permalink">{{ old('permalink') }}</span><span
-                                                class="btn btn-light ml-1 permalink-edit-btn">{{ translation('Edit') }}</span></a>
+                                                class="btn btn-light ml-1 permalink-edit-btn">{{ __tr('Edit') }}</span></a>
 
                                         <div class="permalink-editor d-none">
                                             <input type="text" class="form-control" id="permalink-updated-input"
-                                                placeholder="{{ translation('Type here') }}">
+                                                placeholder="{{ __tr('Type here') }}">
                                             <button type="button" class="btn mt-2 btn-danger permalink-cancel-btn"
-                                                data-dismiss="modal">{{ translation('Cancel') }}</button>
+                                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
                                             <button type="button"
-                                                class="btn btn-success mt-2 permalink-save-btn">{{ translation('Save') }}</button>
+                                                class="btn btn-success mt-2 permalink-save-btn">{{ __tr('Save') }}</button>
                                         </div>
                                         @if ($errors->has('permalink'))
                                             <div class="error text-danger mb-0 invalid-input">
@@ -70,7 +70,7 @@
                                 </div>
                                 <!--End Permalink-->
                                 <div class="form-group">
-                                    <label>{{ translation('Content') }}</label>
+                                    <label>{{ __tr('Content') }}</label>
                                     <textarea id="contentSummernote" name="content">{{ old('content') }}</textarea>
                                     @if ($errors->has('content'))
                                         <div class="error text-danger mb-0 invalid-input">
@@ -80,17 +80,16 @@
 
                                 <!--Seo-->
                                 <div class="form-group">
-                                    <label>{{ translation('Meta Title') }}</label>
+                                    <label>{{ __tr('Meta Title') }}</label>
                                     <input type="text" class="form-control" name="meta_title"
-                                        placeholder="{{ translation('Enter Meta Title') }}"
-                                        value="{{ old('meta_title') }}">
+                                        placeholder="{{ __tr('Enter Meta Title') }}" value="{{ old('meta_title') }}">
                                     @if ($errors->has('meta_title'))
                                         <div class="error text-danger mb-0 invalid-input">
                                             {{ $errors->first('meta_title') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Meta Description') }}</label>
+                                    <label>{{ __tr('Meta Description') }}</label>
                                     <textarea class="form-control" name="meta_description">{{ old('meta_description') }}</textarea>
                                     @if ($errors->has('meta_description'))
                                         <div class="error text-danger mb-0 invalid-input">
@@ -98,7 +97,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Meta Image') }}</label>
+                                    <label>{{ __tr('Meta Image') }}</label>
                                     <x-media name="meta_image" :value="old('meta_image')"></x-media>
                                     @if ($errors->has('meta_image'))
                                         <div class="error text-danger mb-0 invalid-input">
@@ -113,7 +112,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>{{ translation('Custom Header') }}</label>
+                                    <label>{{ __tr('Custom Header') }}</label>
                                     <div
                                         class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                         <input type="checkbox" name="has_custom_header" id="pageCustomHeaderSwitcher"
@@ -123,29 +122,28 @@
                                 </div>
 
                                 <div class="form-group mb-1 header-option d-none">
-                                    <label
-                                        class="builder-properties-input-label">{{ translation('Select Header') }}</label>
+                                    <label class="builder-properties-input-label">{{ __tr('Select Header') }}</label>
                                     <select class="form-control" name="header">
-                                        <option>{{ translation('Select Header') }}</option>
+                                        <option>{{ __tr('Select Header') }}</option>
                                         <option value="style_1">
-                                            {{ translation('Style 1') }}
+                                            {{ __tr('Style 1') }}
                                         </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ translation('Status') }}</label>
+                                    <label>{{ __tr('Status') }}</label>
                                     <select name="status" class="form-control">
                                         <option value="{{ config('settings.page_status.active') }}">
-                                            {{ translation('Active') }}
+                                            {{ __tr('Active') }}
                                         </option>
                                         <option value="{{ config('settings.page_status.in_active') }}">
-                                            {{ translation('Inactive') }}
+                                            {{ __tr('Inactive') }}
                                         </option>
                                     </select>
                                 </div>
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ translation('Store Page') }}
+                                        {{ __tr('Store Page') }}
                                     </button>
                                 </div>
                             </div>

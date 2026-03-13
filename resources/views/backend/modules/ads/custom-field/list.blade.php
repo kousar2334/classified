@@ -29,24 +29,24 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Listing Custom Fields') }}</h3>
+                            <h3 class="card-title">{{ __tr('Listing Custom Fields') }}</h3>
                             <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
-                                data-target="#create-item-modal">{{ translation('Create New Custom Field') }}
+                                data-target="#create-item-modal">{{ __tr('Create New Custom Field') }}
                             </button>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('#') }}</th>
-                                        <th>{{ translation('Title') }}</th>
-                                        <th>{{ translation('Type') }}</th>
-                                        <th>{{ translation('Category') }}</th>
-                                        <th>{{ translation('Options') }}</th>
-                                        <th>{{ translation('Is Required') }}</th>
-                                        <th>{{ translation('Is Filterable') }}</th>
-                                        <th>{{ translation('Status') }}</th>
-                                        <th class="text-center">{{ translation('Actions') }}</th>
+                                        <th>{{ __tr('#') }}</th>
+                                        <th>{{ __tr('Title') }}</th>
+                                        <th>{{ __tr('Type') }}</th>
+                                        <th>{{ __tr('Category') }}</th>
+                                        <th>{{ __tr('Options') }}</th>
+                                        <th>{{ __tr('Is Required') }}</th>
+                                        <th>{{ __tr('Is Filterable') }}</th>
+                                        <th>{{ __tr('Status') }}</th>
+                                        <th class="text-center">{{ __tr('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,7 +64,7 @@
                                                 @else
                                                     <a href="#" data-id="{{ $field->id }}"
                                                         class="attatch-category"><i class="icofont-plus-circle"></i>
-                                                        {{ translation('Add to a category') }}
+                                                        {{ __tr('Add to a category') }}
                                                     </a>
                                                 @endif
                                             </td>
@@ -74,36 +74,35 @@
                                                     <a
                                                         href="{{ route('classified.ads.custom.field.options', ['id' => $field->id]) }}">
                                                         <i class="icofont-ui-settings"></i>
-                                                        {{ translation('Options') }}</a>
+                                                        {{ __tr('Options') }}</a>
                                                 @else
                                                     -
                                                 @endif
                                             </td>
                                             <td>
                                                 @if ($field->is_required == config('settings.general_status.active'))
-                                                    <p class="badge badge-success">{{ translation('Yes') }}</p>
+                                                    <p class="badge badge-success">{{ __tr('Yes') }}</p>
                                                 @else
-                                                    <p class="badge badge-danger">{{ translation('No') }}</p>
+                                                    <p class="badge badge-danger">{{ __tr('No') }}</p>
                                                 @endif
                                             </td>
                                             <td>
                                                 @if ($field->is_filterable == config('settings.general_status.active'))
-                                                    <p class="badge badge-success">{{ translation('Yes') }}</p>
+                                                    <p class="badge badge-success">{{ __tr('Yes') }}</p>
                                                 @else
-                                                    <p class="badge badge-danger">{{ translation('No') }}</p>
+                                                    <p class="badge badge-danger">{{ __tr('No') }}</p>
                                                 @endif
                                             </td>
                                             <td>
                                                 @if ($field->status == config('settings.general_status.active'))
-                                                    <p class="badge badge-success">{{ translation('Active') }}</p>
+                                                    <p class="badge badge-success">{{ __tr('Active') }}</p>
                                                 @else
-                                                    <p class="badge badge-danger">{{ translation('Inactive') }}</p>
+                                                    <p class="badge badge-danger">{{ __tr('Inactive') }}</p>
                                                 @endif
                                             </td>
                                             <td class="text-right">
                                                 <div class="btn-group">
-                                                    <button type="button"
-                                                        class="btn btn-default">{{ translation('Action') }}
+                                                    <button type="button" class="btn btn-default">{{ __tr('Action') }}
                                                     </button>
                                                     <button type="button"
                                                         class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
@@ -113,17 +112,17 @@
                                                         @if ($field->has_options() == config('settings.general_status.active'))
                                                             <a class="dropdown-item edit-item"
                                                                 href="{{ route('classified.ads.custom.field.options', ['id' => $field->id]) }}">
-                                                                {{ translation('Options') }}</a>
+                                                                {{ __tr('Options') }}</a>
                                                             <div class="dropdown-divider"></div>
                                                         @endif
                                                         <a class="dropdown-item"
                                                             href="{{ route('classified.ads.custom.field.edit.page', ['id' => $field->id, 'lang' => defaultLangCode()]) }}">
-                                                            {{ translation('Edit') }}
+                                                            {{ __tr('Edit') }}
                                                         </a>
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item delete-item"
                                                             data-id="{{ $field->id }}">
-                                                            {{ translation('Delete') }}
+                                                            {{ __tr('Delete') }}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -132,7 +131,7 @@
                                     @empty
                                         <tr>
                                             <td colspan="10">
-                                                <div class="text-center">{{ translation('No item found') }}</div>
+                                                <div class="text-center">{{ __tr('No item found') }}</div>
                                             </td>
                                         </tr>
                                     @endforelse
@@ -153,7 +152,7 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('New Custom Field') }}</h5>
+                        <h5 class="modal-title">{{ __tr('New Custom Field') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -163,7 +162,7 @@
                             @csrf
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translation('Type') }}</label>
+                                    <label class="black font-14">{{ __tr('Type') }}</label>
                                     <select name="type" class="form-control text-capitalize">
                                         @foreach (config('settings.input_types') as $key => $value)
                                             <option value="{{ $value }}">
@@ -175,17 +174,17 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translation('Title') }}</label>
+                                    <label class="black font-14">{{ __tr('Title') }}</label>
                                     <input type="text" name="title" class="form-control slugable_input"
-                                        placeholder="{{ translation('Enter title') }}">
+                                        placeholder="{{ __tr('Enter title') }}">
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translation('Default Value') }}</label>
+                                    <label class="black font-14">{{ __tr('Default Value') }}</label>
                                     <input type="text" name="default_value" class="form-control slugable_input"
-                                        placeholder="{{ translation('Enter Default Value') }}">
+                                        placeholder="{{ __tr('Enter Default Value') }}">
                                 </div>
                             </div>
 
@@ -195,7 +194,7 @@
                                         <input type="checkbox" name="is_required">
                                         <span class="control"></span>
                                     </label>
-                                    <label class="black font-14">{{ translation('Is Required ?') }}</label>
+                                    <label class="black font-14">{{ __tr('Is Required ?') }}</label>
                                 </div>
                             </div>
 
@@ -205,25 +204,25 @@
                                         <input type="checkbox" name="is_filterable">
                                         <span class="control"></span>
                                     </label>
-                                    <label class="black font-14">{{ translation('Is Filterable ?') }}</label>
+                                    <label class="black font-14">{{ __tr('Is Filterable ?') }}</label>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translation('Status') }}</label>
+                                    <label class="black font-14">{{ __tr('Status') }}</label>
                                     <select name="status" class="form-control">
                                         <option value="{{ config('settings.general_status.active') }}">
-                                            {{ translation('Active') }}
+                                            {{ __tr('Active') }}
                                         </option>
                                         <option value="{{ config('settings.general_status.in_active') }}">
-                                            {{ translation('Inactive') }}
+                                            {{ __tr('Inactive') }}
                                         </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="btn-area d-flex justify-content-between">
-                                <button class="btn btn-primary mt-2 store-category">{{ translation('Save') }}</button>
+                                <button class="btn btn-primary mt-2 store-category">{{ __tr('Save') }}</button>
                             </div>
 
                         </form>
@@ -238,7 +237,7 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('Custom Field Information') }}</h5>
+                        <h5 class="modal-title">{{ __tr('Custom Field Information') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -255,19 +254,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete ?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete ?') }}</h4>
                         <form method="POST" action="{{ route('classified.ads.condition.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-item-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>
@@ -279,7 +278,7 @@
             <div class="modal-dialog modal-md modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Category') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Category') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -289,13 +288,13 @@
                             <input type="hidden" id="selected-field-id" name="id">
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="font-14 bold black w-100">{{ translation('Select category') }} </label>
+                                    <label class="font-14 bold black w-100">{{ __tr('Select category') }} </label>
                                     <select class="category-options form-control w-100" name="category">
                                     </select>
                                 </div>
                             </div>
                             <div class="form-row d-flex justify-content-between">
-                                <button class="btn btn-primary assign-category">{{ translation('Save') }}</button>
+                                <button class="btn btn-primary assign-category">{{ __tr('Save') }}</button>
                             </div>
                         </form>
                     </div>
@@ -312,7 +311,7 @@
             "use strict";
             $('.category-options').select2({
                 theme: "bootstrap4",
-                placeholder: '{{ translation('Select a category') }}',
+                placeholder: '{{ __tr('Select a category') }}',
                 closeOnSelect: true,
                 ajax: {
                     url: '{{ route('classified.ads.categories.options') }}',
@@ -417,10 +416,10 @@
                     url: '{{ route('classified.ads.custom.field.assign.category') }}',
                     success: function(response) {
                         if (response.success) {
-                            toastr.success('{{ translation('Category  assigned successfully') }}');
+                            toastr.success('{{ __tr('Category  assigned successfully') }}');
                             location.reload();
                         } else {
-                            toastr.error('{{ translation('Category  assign failed') }}');
+                            toastr.error('{{ __tr('Category  assign failed') }}');
                         }
                     },
                     error: function(response) {
@@ -432,7 +431,7 @@
                                     '</div>')
                             })
                         } else {
-                            toastr.error('{{ translation('Category  assign failed') }}');
+                            toastr.error('{{ __tr('Category  assign failed') }}');
                         }
                     }
                 });

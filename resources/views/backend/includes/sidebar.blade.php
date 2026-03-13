@@ -31,7 +31,7 @@
                         <a href="{{ route('admin.dashboard') }}"
                             class="nav-link {{ Request::routeIs(['admin.dashboard']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>{{ translation('Dashboard') }}</p>
+                            <p>{{ __tr('Dashboard') }}</p>
                         </a>
                     </li>
                 @endcan
@@ -42,7 +42,7 @@
                         <a href="{{ route('admin.members.list') }}"
                             class="nav-link {{ Request::routeIs(['admin.members.list']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-users"></i>
-                            <p>{{ translation('Members') }}</p>
+                            <p>{{ __tr('Members') }}</p>
                         </a>
                     </li>
                 @endcan
@@ -64,7 +64,7 @@
                             class="nav-link {{ Request::routeIs(['classified.ads.report.reasons.list', 'classified.ads.report.reasons.edit', 'classified.ads.reports.list', 'classified.ads.list.featured', 'classified.ads.list', 'classified.ads.custom.field.options', 'classified.ads.custom.field.list', 'classified.ads.tag.list', 'classified.ads.condition.list', 'classified.ads.categories.list']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-list"></i>
                             <p>
-                                {{ translation('Ads Management') }}
+                                {{ __tr('Ads Management') }}
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
@@ -74,14 +74,14 @@
                                     <a href="{{ route('classified.ads.list') }}"
                                         class="nav-link {{ Request::routeIs(['classified.ads.list']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('All Ads') }}</p>
+                                        <p>{{ __tr('All Ads') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('classified.ads.list.featured') }}"
                                         class="nav-link {{ Request::routeIs(['classified.ads.list.featured']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('Featured Ads') }}</p>
+                                        <p>{{ __tr('Featured Ads') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -90,7 +90,7 @@
                                     <a href="{{ route('classified.ads.categories.list') }}"
                                         class="nav-link {{ Request::routeIs(['classified.ads.categories.list']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('Categories') }}</p>
+                                        <p>{{ __tr('Categories') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -99,7 +99,7 @@
                                     <a href="{{ route('classified.ads.custom.field.list') }}"
                                         class="nav-link {{ Request::routeIs(['classified.ads.custom.field.list']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('Custom Fields') }}</p>
+                                        <p>{{ __tr('Custom Fields') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -108,7 +108,7 @@
                                     <a href="{{ route('classified.ads.condition.list') }}"
                                         class="nav-link {{ Request::routeIs(['classified.ads.condition.list']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('Conditions') }}</p>
+                                        <p>{{ __tr('Conditions') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -117,7 +117,7 @@
                                     <a href="{{ route('classified.ads.tag.list') }}"
                                         class="nav-link {{ Request::routeIs(['classified.ads.tag.list']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('Tags') }}</p>
+                                        <p>{{ __tr('Tags') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -126,7 +126,7 @@
                                     <a href="{{ route('classified.ads.reports.list') }}"
                                         class="nav-link {{ Request::routeIs(['classified.ads.reports.list']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('Reported Ads') }}</p>
+                                        <p>{{ __tr('Reported Ads') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -135,7 +135,7 @@
                                     <a href="{{ route('classified.ads.report.reasons.list') }}"
                                         class="nav-link {{ Request::routeIs(['classified.ads.report.reasons.list', 'classified.ads.report.reasons.edit']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('Report Reasons') }}</p>
+                                        <p>{{ __tr('Report Reasons') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -149,7 +149,7 @@
                         <a href="{{ route('admin.pricing.plans.list') }}"
                             class="nav-link {{ Request::routeIs(['admin.pricing.plans.list']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tags"></i>
-                            <p>{{ translation('Pricing Plans') }}</p>
+                            <p>{{ __tr('Pricing Plans') }}</p>
                         </a>
                     </li>
                 @endcan
@@ -160,7 +160,7 @@
                         <a href="{{ route('admin.subscriptions.list') }}"
                             class="nav-link {{ Request::routeIs(['admin.subscriptions.list']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-crown"></i>
-                            <p>{{ translation('Subscriptions') }}</p>
+                            <p>{{ __tr('Subscriptions') }}</p>
                         </a>
                     </li>
                 @endcan
@@ -173,7 +173,7 @@
                             class="nav-link {{ Request::routeIs(['admin.bank.payments', 'admin.payment.settings', 'classified.settings.currency']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-dollar-sign"></i>
                             <p>
-                                {{ translation('Payments') }}
+                                {{ __tr('Payments') }}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -183,7 +183,7 @@
                                     <a href="{{ route('admin.bank.payments') }}"
                                         class="nav-link {{ Request::routeIs(['admin.bank.payments']) ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>{{ translation('Transactions') }}</p>
+                                        <p>{{ __tr('Transactions') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -192,7 +192,7 @@
                                     <a href="{{ route('classified.settings.currency') }}"
                                         class="nav-link {{ Request::routeIs(['classified.settings.currency']) ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>{{ translation('Currency Settings') }}</p>
+                                        <p>{{ __tr('Currency Settings') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -201,7 +201,7 @@
                                     <a href="{{ route('admin.payment.settings') }}"
                                         class="nav-link {{ Request::routeIs(['admin.payment.settings']) ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>{{ translation('Payment Settings') }}</p>
+                                        <p>{{ __tr('Payment Settings') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -217,7 +217,7 @@
                             class="nav-link {{ Request::routeIs(['classified.locations.country.list', 'classified.locations.state.list', 'classified.locations.city.list']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-map-marker-alt"></i>
                             <p>
-                                {{ translation('Locations') }}
+                                {{ __tr('Locations') }}
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
@@ -226,21 +226,21 @@
                                 <a href="{{ route('classified.locations.country.list') }}"
                                     class="nav-link {{ Request::routeIs(['classified.locations.country.list']) ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>{{ translation('Countries') }}</p>
+                                    <p>{{ __tr('Countries') }}</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('classified.locations.state.list') }}"
                                     class="nav-link {{ Request::routeIs(['classified.locations.state.list']) ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>{{ translation('States') }}</p>
+                                    <p>{{ __tr('States') }}</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('classified.locations.city.list') }}"
                                     class="nav-link {{ Request::routeIs(['classified.locations.city.list']) ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>{{ translation('Cities') }}</p>
+                                    <p>{{ __tr('Cities') }}</p>
                                 </a>
                             </li>
                         </ul>
@@ -253,7 +253,7 @@
                         <a href="{{ route('classified.settings.safety.tips.list') }}"
                             class="nav-link {{ Request::routeIs(['classified.settings.safety.tips.list', 'classified.settings.safety.tips.edit']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-shield-alt"></i>
-                            <p>{{ translation('Safety Tips') }}</p>
+                            <p>{{ __tr('Safety Tips') }}</p>
                         </a>
                     </li>
                 @endcan
@@ -264,7 +264,7 @@
                         <a href="{{ route('admin.advertisement.list') }}"
                             class="nav-link {{ Request::routeIs(['admin.advertisement.list', 'admin.advertisement.analytics']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-ad"></i>
-                            <p>{{ translation('Advertisements') }}</p>
+                            <p>{{ __tr('Advertisements') }}</p>
                         </a>
                     </li>
                 @endcan
@@ -275,7 +275,7 @@
                         <a href="#" class="nav-link {{ Request::routeIs('admin.newsletter.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-paper-plane"></i>
                             <p>
-                                {{ translation('Newsletter') }}
+                                {{ __tr('Newsletter') }}
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -284,14 +284,14 @@
                                 <a href="{{ route('admin.newsletter.subscribers') }}"
                                     class="nav-link {{ Request::routeIs('admin.newsletter.subscribers') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>{{ translation('Subscribers') }}</p>
+                                    <p>{{ __tr('Subscribers') }}</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.newsletter.campaigns') }}"
                                     class="nav-link {{ Request::routeIs(['admin.newsletter.campaigns', 'admin.newsletter.campaigns.*']) ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>{{ translation('Campaigns') }}</p>
+                                    <p>{{ __tr('Campaigns') }}</p>
                                 </a>
                             </li>
                         </ul>
@@ -304,7 +304,7 @@
                         <a href="{{ route('admin.conversations.index') }}"
                             class="nav-link {{ Request::routeIs(['admin.conversations.index', 'admin.conversations.show']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-comments"></i>
-                            <p>{{ translation('Conversations') }}</p>
+                            <p>{{ __tr('Conversations') }}</p>
                         </a>
                     </li>
                 @endcan
@@ -315,7 +315,7 @@
                         <a href="{{ route('admin.contact.us.message.list') }}"
                             class="nav-link {{ Request::routeIs(['admin.contact.us.message.list']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-envelope-open-text"></i>
-                            <p>{{ translation('Contact Messages') }}</p>
+                            <p>{{ __tr('Contact Messages') }}</p>
                         </a>
                     </li>
                 @endcan
@@ -326,7 +326,7 @@
                         <a href="{{ route('admin.media.list') }}"
                             class="nav-link {{ Request::routeIs(['admin.media.list']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-photo-video"></i>
-                            <p>{{ translation('Media') }}</p>
+                            <p>{{ __tr('Media') }}</p>
                         </a>
                     </li>
                 @endcan
@@ -339,7 +339,7 @@
                             class="nav-link {{ Request::routeIs(['admin.blogs.categories.edit', 'admin.blogs.comment.list', 'admin.blogs.edit', 'admin.blogs.list', 'admin.blogs.create', 'admin.blogs.categories.list']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-blog"></i>
                             <p>
-                                {{ translation('Blogs') }}
+                                {{ __tr('Blogs') }}
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
@@ -349,7 +349,7 @@
                                     <a href="{{ route('admin.blogs.create') }}"
                                         class="nav-link {{ Request::routeIs(['admin.blogs.create']) ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>{{ translation('Write New Blog') }}</p>
+                                        <p>{{ __tr('Write New Blog') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -357,7 +357,7 @@
                                 <a href="{{ route('admin.blogs.list') }}"
                                     class="nav-link {{ Request::routeIs(['admin.blogs.list']) ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>{{ translation('All Blogs') }}</p>
+                                    <p>{{ __tr('All Blogs') }}</p>
                                 </a>
                             </li>
                             @can('Manage Blog Category')
@@ -365,7 +365,7 @@
                                     <a href="{{ route('admin.blogs.categories.list') }}"
                                         class="nav-link {{ Request::routeIs(['admin.blogs.categories.edit', 'admin.blogs.categories.list']) ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>{{ translation('Categories') }}</p>
+                                        <p>{{ __tr('Categories') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -381,7 +381,7 @@
                             class="nav-link {{ Request::routeIs(['admin.page.edit', 'admin.page.list', 'admin.page.create']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-file"></i>
                             <p>
-                                {{ translation('Pages') }}
+                                {{ __tr('Pages') }}
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
@@ -390,7 +390,7 @@
                                 <a href="{{ route('admin.page.list') }}"
                                     class="nav-link {{ Request::routeIs(['admin.page.list']) ? 'active' : '' }}">
                                     <i class="fa fa-minus nav-icon"></i>
-                                    <p>{{ translation('All Page') }}</p>
+                                    <p>{{ __tr('All Page') }}</p>
                                 </a>
                             </li>
                             @can('Create New Page')
@@ -398,7 +398,7 @@
                                     <a href="{{ route('admin.page.create') }}"
                                         class="nav-link {{ Request::routeIs(['admin.page.create']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('Create New Page') }}</p>
+                                        <p>{{ __tr('Create New Page') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -414,7 +414,7 @@
                             class="nav-link {{ Request::routeIs(['admin.home.builder', 'admin.appearance.site.setting', 'admin.appearance.site.setting.*', 'admin.appearance.menu.builder']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-desktop"></i>
                             <p>
-                                {{ translation('Appearances') }}
+                                {{ __tr('Appearances') }}
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
@@ -424,7 +424,7 @@
                                     <a href="{{ route('admin.appearance.menu.builder') }}"
                                         class="nav-link {{ Request::routeIs(['admin.appearance.menu.builder']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('Menus') }}</p>
+                                        <p>{{ __tr('Menus') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -433,7 +433,7 @@
                                     <a href="{{ route('admin.home.builder') }}"
                                         class="nav-link {{ Request::routeIs(['admin.home.builder']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('Home Builder') }}</p>
+                                        <p>{{ __tr('Home Builder') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -442,7 +442,7 @@
                                     <a href="{{ route('admin.appearance.site.setting') }}"
                                         class="nav-link {{ Request::routeIs(['admin.appearance.site.setting']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('Site Setting') }}</p>
+                                        <p>{{ __tr('Site Setting') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -458,7 +458,7 @@
                             class="nav-link {{ Request::routeIs(['admin.users.list', 'admin.users.permission.list', 'admin.users.role.list']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-users-cog"></i>
                             <p>
-                                {{ translation('Users') }}
+                                {{ __tr('Users') }}
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
@@ -468,7 +468,7 @@
                                     <a href="{{ route('admin.users.list') }}"
                                         class="nav-link {{ Request::routeIs(['admin.users.list']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('Users') }}</p>
+                                        <p>{{ __tr('Users') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -477,7 +477,7 @@
                                     <a href="{{ route('admin.users.role.list') }}"
                                         class="nav-link {{ Request::routeIs(['admin.users.role.list']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('Roles') }}</p>
+                                        <p>{{ __tr('Roles') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -486,7 +486,7 @@
                                     <a href="{{ route('admin.users.permission.list') }}"
                                         class="nav-link {{ Request::routeIs(['admin.users.permission.list']) ? 'active' : '' }}">
                                         <i class="fa fa-minus nav-icon"></i>
-                                        <p>{{ translation('Permissions') }}</p>
+                                        <p>{{ __tr('Permissions') }}</p>
                                     </a>
                                 </li>
                             @endcan
@@ -500,7 +500,7 @@
                         <a href="{{ route('admin.system.settings.language.list') }}"
                             class="nav-link {{ Request::routeIs(['admin.system.settings.language.list', 'admin.system.settings.language.translation']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-language"></i>
-                            <p>{{ translation('Languages') }}</p>
+                            <p>{{ __tr('Languages') }}</p>
                         </a>
                     </li>
                 @endcan
@@ -511,7 +511,7 @@
                         <a href="{{ route('admin.system.settings.environment') }}"
                             class="nav-link {{ Request::routeIs(['admin.system.settings.social.login', 'admin.system.settings.environment', 'admin.system.settings.smtp']) ? 'active' : '' }}">
                             <i class="nav-icon fas fa-cog"></i>
-                            <p>{{ translation('System') }}</p>
+                            <p>{{ __tr('System') }}</p>
                         </a>
                     </li>
                 @endcanany

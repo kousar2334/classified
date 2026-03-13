@@ -48,16 +48,16 @@ class MemberRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => translation('Name is required'),
-            'password.required' => translation('Password is required'),
-            'password.confirmed' => translation('Password does not match'),
-            'password.min' => translation('Password is too short'),
-            'phone.required' => translation('Phone is required'),
-            'phone.phone' => translation('Incorrect phone number'),
-            'phone.unique' => translation('Phone is already used'),
-            'email.required' => translation('Email is required'),
-            'email.email' => translation('Incorrect email'),
-            'email.unique' => translation('Email is already used'),
+            'name.required' => __tr('Name is required'),
+            'password.required' => __tr('Password is required'),
+            'password.confirmed' => __tr('Password does not match'),
+            'password.min' => __tr('Password is too short'),
+            'phone.required' => __tr('Phone is required'),
+            'phone.phone' => __tr('Incorrect phone number'),
+            'phone.unique' => __tr('Phone is already used'),
+            'email.required' => __tr('Email is required'),
+            'email.email' => __tr('Incorrect email'),
+            'email.unique' => __tr('Email is already used'),
         ];
     }
 }

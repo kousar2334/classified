@@ -5,7 +5,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Ad Reports') }}
+    {{ __tr('Ad Reports') }}
 @endsection
 @section('page-content')
     <x-admin-page-header title="Ad Reports" :links="$links" />
@@ -18,9 +18,9 @@
                     <form method="GET" action="{{ route('classified.ads.reports.list') }}"
                         class="form-inline flex-wrap gap-2">
                         <div class="form-group mr-2 mb-2">
-                            <label class="mr-1">{{ translation('Reason') }}</label>
+                            <label class="mr-1">{{ __tr('Reason') }}</label>
                             <select name="reason_id" class="form-control form-control-sm">
-                                <option value="">{{ translation('All Reasons') }}</option>
+                                <option value="">{{ __tr('All Reasons') }}</option>
                                 @foreach ($reasons as $reason)
                                     <option value="{{ $reason->id }}"
                                         {{ request('reason_id') == $reason->id ? 'selected' : '' }}>
@@ -30,20 +30,20 @@
                             </select>
                         </div>
                         <div class="form-group mr-2 mb-2">
-                            <label class="mr-1">{{ translation('Status') }}</label>
+                            <label class="mr-1">{{ __tr('Status') }}</label>
                             <select name="status" class="form-control form-control-sm">
-                                <option value="">{{ translation('All Statuses') }}</option>
+                                <option value="">{{ __tr('All Statuses') }}</option>
                                 @foreach ($statuses as $val => $label)
                                     <option value="{{ $val }}"
                                         {{ request('status') !== null && request('status') == $val ? 'selected' : '' }}>
-                                        {{ translation($label) }}
+                                        {{ __tr($label) }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-sm mb-2">{{ translation('Filter') }}</button>
+                        <button type="submit" class="btn btn-primary btn-sm mb-2">{{ __tr('Filter') }}</button>
                         <a href="{{ route('classified.ads.reports.list') }}"
-                            class="btn btn-secondary btn-sm mb-2 ml-1">{{ translation('Reset') }}</a>
+                            class="btn btn-secondary btn-sm mb-2 ml-1">{{ __tr('Reset') }}</a>
                     </form>
                 </div>
             </div>
@@ -52,21 +52,21 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header d-flex align-items-center justify-content-between">
-                            <h3 class="card-title">{{ translation('Reported Ads') }}</h3>
-                            <span class="badge badge-danger">{{ $reports->total() }} {{ translation('Reports') }}</span>
+                            <h3 class="card-title">{{ __tr('Reported Ads') }}</h3>
+                            <span class="badge badge-danger">{{ $reports->total() }} {{ __tr('Reports') }}</span>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('#') }}</th>
-                                        <th>{{ translation('Ad') }}</th>
-                                        <th>{{ translation('Reported By') }}</th>
-                                        <th>{{ translation('Reason') }}</th>
-                                        <th>{{ translation('Message') }}</th>
-                                        <th>{{ translation('Status') }}</th>
-                                        <th>{{ translation('Date') }}</th>
-                                        <th class="text-right">{{ translation('Actions') }}</th>
+                                        <th>{{ __tr('#') }}</th>
+                                        <th>{{ __tr('Ad') }}</th>
+                                        <th>{{ __tr('Reported By') }}</th>
+                                        <th>{{ __tr('Reason') }}</th>
+                                        <th>{{ __tr('Message') }}</th>
+                                        <th>{{ __tr('Status') }}</th>
+                                        <th>{{ __tr('Date') }}</th>
+                                        <th class="text-right">{{ __tr('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,10 +80,10 @@
                                                         {{ Str::limit($report->ad->title, 40) }}
                                                     </a>
                                                 @else
-                                                    <span class="text-muted">{{ translation('Ad deleted') }}</span>
+                                                    <span class="text-muted">{{ __tr('Ad deleted') }}</span>
                                                 @endif
                                             </td>
-                                            <td>{{ $report->user?->name ?? translation('Guest') }}</td>
+                                            <td>{{ $report->user?->name ?? __tr('Guest') }}</td>
                                             <td>
                                                 <span class="badge badge-info">
                                                     {{ $report->reason ? $report->reason->translation('title') : '—' }}
@@ -93,14 +93,14 @@
                                             <td>
                                                 <span
                                                     class="badge {{ $statusBadges[$report->status] ?? 'badge-warning' }}">
-                                                    {{ translation($statuses[$report->status] ?? 'Pending') }}
+                                                    {{ __tr($statuses[$report->status] ?? 'Pending') }}
                                                 </span>
                                             </td>
                                             <td>{{ $report->created_at->format('d M Y') }}</td>
                                             <td class="text-right">
                                                 <div class="btn-group">
                                                     <button type="button"
-                                                        class="btn btn-sm btn-default">{{ translation('Action') }}</button>
+                                                        class="btn btn-sm btn-default">{{ __tr('Action') }}</button>
                                                     <button type="button"
                                                         class="btn btn-sm btn-default dropdown-toggle dropdown-hover dropdown-icon"
                                                         data-toggle="dropdown" aria-expanded="false"></button>
@@ -108,25 +108,25 @@
                                                         @if ($report->status != 1)
                                                             <button class="dropdown-item update-status-btn"
                                                                 data-id="{{ $report->id }}" data-status="1">
-                                                                {{ translation('Mark as Reviewed') }}
+                                                                {{ __tr('Mark as Reviewed') }}
                                                             </button>
                                                         @endif
                                                         @if ($report->status != 2)
                                                             <button class="dropdown-item update-status-btn"
                                                                 data-id="{{ $report->id }}" data-status="2">
-                                                                {{ translation('Dismiss') }}
+                                                                {{ __tr('Dismiss') }}
                                                             </button>
                                                         @endif
                                                         @if ($report->status != 0)
                                                             <button class="dropdown-item update-status-btn"
                                                                 data-id="{{ $report->id }}" data-status="0">
-                                                                {{ translation('Mark as Pending') }}
+                                                                {{ __tr('Mark as Pending') }}
                                                             </button>
                                                         @endif
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item text-danger delete-report-btn"
                                                             data-id="{{ $report->id }}">
-                                                            {{ translation('Delete') }}
+                                                            {{ __tr('Delete') }}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -135,7 +135,7 @@
                                     @empty
                                         <tr>
                                             <td colspan="8">
-                                                <div class="text-center py-3">{{ translation('No reports found') }}</div>
+                                                <div class="text-center py-3">{{ __tr('No reports found') }}</div>
                                             </td>
                                         </tr>
                                     @endforelse
@@ -157,19 +157,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <p class="mt-1 h6 my-2">{{ translation('Are you sure to delete this report?') }}</p>
+                        <p class="mt-1 h6 my-2">{{ __tr('Are you sure to delete this report?') }}</p>
                         <form method="POST" action="{{ route('classified.ads.reports.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-report-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>

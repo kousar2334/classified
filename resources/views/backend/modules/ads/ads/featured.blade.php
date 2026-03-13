@@ -29,22 +29,22 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation(' Featured Ad Listings') }}</h3>
+                            <h3 class="card-title">{{ __tr(' Featured Ad Listings') }}</h3>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('#') }}</th>
-                                        <th>{{ translation('Image') }}</th>
-                                        <th>{{ translation('Title') }}</th>
-                                        <th>{{ translation('Category') }}</th>
-                                        <th>{{ translation('Member') }}</th>
-                                        <th>{{ translation('Location') }}</th>
-                                        <th>{{ translation('Price') }}</th>
-                                        <th>{{ translation('Post Date') }}</th>
-                                        <th>{{ translation('Status') }}</th>
-                                        <th class="text-right">{{ translation('Actions') }}</th>
+                                        <th>{{ __tr('#') }}</th>
+                                        <th>{{ __tr('Image') }}</th>
+                                        <th>{{ __tr('Title') }}</th>
+                                        <th>{{ __tr('Category') }}</th>
+                                        <th>{{ __tr('Member') }}</th>
+                                        <th>{{ __tr('Location') }}</th>
+                                        <th>{{ __tr('Price') }}</th>
+                                        <th>{{ __tr('Post Date') }}</th>
+                                        <th>{{ __tr('Status') }}</th>
+                                        <th class="text-right">{{ __tr('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -73,15 +73,14 @@
                                             </td>
                                             <td>
                                                 @if ($ad->status == config('settings.general_status.active'))
-                                                    <p class="badge badge-success">{{ translation('Active') }}</p>
+                                                    <p class="badge badge-success">{{ __tr('Active') }}</p>
                                                 @else
-                                                    <p class="badge badge-danger">{{ translation('Inactive') }}</p>
+                                                    <p class="badge badge-danger">{{ __tr('Inactive') }}</p>
                                                 @endif
                                             </td>
                                             <td class="text-right">
                                                 <div class="btn-group">
-                                                    <button type="button"
-                                                        class="btn btn-default">{{ translation('Action') }}
+                                                    <button type="button" class="btn btn-default">{{ __tr('Action') }}
                                                     </button>
                                                     <button type="button"
                                                         class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
@@ -89,12 +88,12 @@
                                                     </button>
                                                     <div class="dropdown-menu" role="menu">
                                                         <button class="dropdown-item edit-item">
-                                                            {{ translation('Edit') }}
+                                                            {{ __tr('Edit') }}
                                                         </button>
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item delete-item"
                                                             data-id="{{ $ad->id }}">
-                                                            {{ translation('Delete') }}
+                                                            {{ __tr('Delete') }}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -104,7 +103,7 @@
                                     @empty
                                         <tr>
                                             <td colspan="10">
-                                                <div class="text-center">{{ translation('No item found') }}</div>
+                                                <div class="text-center">{{ __tr('No item found') }}</div>
                                             </td>
                                         </tr>
                                     @endforelse
@@ -125,19 +124,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete ?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete ?') }}</h4>
                         <form method="POST" action="{{ route('classified.ads.categories.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-item-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>
@@ -164,7 +163,7 @@
             function initParentSelect() {
                 $('.parent-options').select2({
                     theme: "bootstrap4",
-                    placeholder: '{{ translation('Select parent category') }}',
+                    placeholder: '{{ __tr('Select parent category') }}',
                     closeOnSelect: true,
                     width: '100%',
                     ajax: {

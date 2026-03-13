@@ -36,20 +36,20 @@
                                 <i class="las la-search"></i>
                             </div>
                             <input class="banner-v2-field w-100" type="text" name="q" id="home_search"
-                                placeholder="{{ translation('What are you looking for?') }}">
+                                placeholder="{{ __tr('What are you looking for?') }}">
                             <span id="all_search_result" class="search_with_text_section"></span>
                         </div>
                     </div>
                     <button type="submit" class="banner-v2-btn setLocation_btn">
                         <i class="las la-search"></i>
-                        <span class="d-none d-sm-inline">{{ translation('Search') }}</span>
+                        <span class="d-none d-sm-inline">{{ __tr('Search') }}</span>
                     </button>
                 </form>
             </div>
 
             @if ($categories->count() > 0)
                 <div class="banner-quick-cats wow fadeInUp" data-wow-delay="0.5s">
-                    <span class="banner-quick-label">{{ translation('Browse:') }}</span>
+                    <span class="banner-quick-label">{{ __tr('Browse:') }}</span>
                     @foreach ($categories->take(8) as $cat)
                         <a href="{{ route('ad.listing.page', $cat->permalink) }}" class="banner-quick-pill">
                             {{ $cat->title }}
@@ -61,17 +61,17 @@
             <div class="banner-v2-stats wow fadeInUp" data-wow-delay="0.6s">
                 <div class="stat-pill">
                     <strong>{{ number_format($totalAdsCount) }}+</strong>
-                    <span>{{ translation('Live Ads') }}</span>
+                    <span>{{ __tr('Live Ads') }}</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat-pill">
                     <strong>{{ $categories->count() }}</strong>
-                    <span>{{ translation('Categories') }}</span>
+                    <span>{{ __tr('Categories') }}</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat-pill">
-                    <strong>{{ translation('Free') }}</strong>
-                    <span>{{ translation('To Post') }}</span>
+                    <strong>{{ __tr('Free') }}</strong>
+                    <span>{{ __tr('To Post') }}</span>
                 </div>
             </div>
 

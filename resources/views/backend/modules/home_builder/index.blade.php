@@ -1,7 +1,7 @@
 @extends('backend.layouts.dashboard_layout')
 
 @section('page-title')
-    {{ translation('Home Page Builder') }}
+    {{ __tr('Home Page Builder') }}
 @endsection
 
 @section('page-style')
@@ -163,7 +163,7 @@
                 <div class="lang-switcher-wrap">
                     <div class="lang-switcher-label">
                         <i class="fas fa-globe-americas"></i>
-                        <span>{{ translation('Language') }}</span>
+                        <span>{{ __tr('Language') }}</span>
                     </div>
                     <div class="lang-switcher-tabs">
                         @foreach (activeLanguages() as $language)
@@ -176,16 +176,16 @@
                     </div>
                 </div>
                 <span class="order-saving-indicator" id="order-saving-indicator">
-                    <i class="fas fa-check-circle"></i> {{ translation('Order saved') }}
+                    <i class="fas fa-check-circle"></i> {{ __tr('Order saved') }}
                 </span>
             </div>
 
             {{-- Section Builder --}}
             <div class="card">
                 <div class="card-header d-flex align-items-center justify-content-between">
-                    <h5 class="card-title mb-0">{{ translation('Home Page Sections') }}</h5>
+                    <h5 class="card-title mb-0">{{ __tr('Home Page Sections') }}</h5>
                     <small class="text-muted">
-                        <i class="fas fa-arrows-alt"></i> {{ translation('Drag to reorder') }}
+                        <i class="fas fa-arrows-alt"></i> {{ __tr('Drag to reorder') }}
                     </small>
                 </div>
                 <div class="card-body">
@@ -209,14 +209,14 @@
                                             <span class="slider"></span>
                                         </span>
                                         <span class="toggle-status-text">
-                                            {{ $section->is_active ? translation('Visible') : translation('Hidden') }}
+                                            {{ $section->is_active ? __tr('Visible') : __tr('Hidden') }}
                                         </span>
                                     </label>
 
                                     {{-- Expand Button (only sections with content fields) --}}
                                     @if ($section->key !== 'ad_slot')
                                         <button type="button" class="hb-expand-btn" onclick="toggleSectionBody(this)">
-                                            <i class="fas fa-chevron-down"></i> {{ translation('Edit Content') }}
+                                            <i class="fas fa-chevron-down"></i> {{ __tr('Edit Content') }}
                                         </button>
                                     @endif
                                 </div>
@@ -232,39 +232,39 @@
                                             @switch($section->key)
                                                 @case('banner')
                                                     <div class="form-group">
-                                                        <label class="font-weight-bold">{{ translation('Badge Text') }}</label>
+                                                        <label class="font-weight-bold">{{ __tr('Badge Text') }}</label>
                                                         <input type="text" class="form-control" name="home_banner_badge"
-                                                            placeholder="{{ translation('e.g. #1 Classified Platform') }}"
+                                                            placeholder="{{ __tr('e.g. #1 Classified Platform') }}"
                                                             value="{{ p_trans('home_banner_badge', $lang, get_setting('banner_badge_text')) }}">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="font-weight-bold">{{ translation('Main Title') }}</label>
+                                                        <label class="font-weight-bold">{{ __tr('Main Title') }}</label>
                                                         <input type="text" class="form-control" name="home_banner_title"
-                                                            placeholder="{{ translation('Enter banner title') }}"
+                                                            placeholder="{{ __tr('Enter banner title') }}"
                                                             value="{{ p_trans('home_banner_title', $lang, get_setting('banner_title')) }}">
                                                     </div>
                                                     <div class="form-group">
                                                         <label
-                                                            class="font-weight-bold">{{ translation('Subtitle / Description') }}</label>
+                                                            class="font-weight-bold">{{ __tr('Subtitle / Description') }}</label>
                                                         <textarea class="form-control" name="home_banner_subtitle" rows="2"
-                                                            placeholder="{{ translation('Enter banner description') }}">{{ p_trans('home_banner_subtitle', $lang, get_setting('banner_description')) }}</textarea>
+                                                            placeholder="{{ __tr('Enter banner description') }}">{{ p_trans('home_banner_subtitle', $lang, get_setting('banner_description')) }}</textarea>
                                                     </div>
                                                 @break
 
                                                 @case('categories')
                                                     <div class="form-group">
-                                                        <label class="font-weight-bold">{{ translation('Section Title') }}</label>
+                                                        <label class="font-weight-bold">{{ __tr('Section Title') }}</label>
                                                         <input type="text" class="form-control" name="home_categories_title"
-                                                            placeholder="{{ translation('e.g. Categories') }}"
+                                                            placeholder="{{ __tr('e.g. Categories') }}"
                                                             value="{{ p_trans('home_categories_title', $lang, 'Categories') }}">
                                                     </div>
                                                 @break
 
                                                 @case('top_listings')
                                                     <div class="form-group">
-                                                        <label class="font-weight-bold">{{ translation('Section Title') }}</label>
+                                                        <label class="font-weight-bold">{{ __tr('Section Title') }}</label>
                                                         <input type="text" class="form-control" name="home_top_listings_title"
-                                                            placeholder="{{ translation('e.g. Top Listings') }}"
+                                                            placeholder="{{ __tr('e.g. Top Listings') }}"
                                                             value="{{ p_trans('home_top_listings_title', $lang, 'Top Listings') }}">
                                                     </div>
                                                 @break
@@ -272,38 +272,38 @@
                                                 @case('promo')
                                                     <div class="form-row">
                                                         <div class="form-group col-md-6">
-                                                            <label class="font-weight-bold">{{ translation('Badge') }}</label>
+                                                            <label class="font-weight-bold">{{ __tr('Badge') }}</label>
                                                             <input type="text" class="form-control" name="home_promo_badge"
-                                                                placeholder="{{ translation('e.g. Your Local Marketplace') }}"
+                                                                placeholder="{{ __tr('e.g. Your Local Marketplace') }}"
                                                                 value="{{ p_trans('home_promo_badge', $lang, 'Your Local Marketplace') }}">
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label class="font-weight-bold">{{ translation('Heading') }}</label>
+                                                            <label class="font-weight-bold">{{ __tr('Heading') }}</label>
                                                             <input type="text" class="form-control" name="home_promo_heading"
-                                                                placeholder="{{ translation('Enter promo heading') }}"
+                                                                placeholder="{{ __tr('Enter promo heading') }}"
                                                                 value="{{ p_trans('home_promo_heading', $lang, 'Earn cash by selling or find anything you desire') }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="font-weight-bold">{{ translation('Paragraph Text') }}</label>
+                                                        <label class="font-weight-bold">{{ __tr('Paragraph Text') }}</label>
                                                         <textarea class="form-control" name="home_promo_text" rows="2"
-                                                            placeholder="{{ translation('Enter promo description') }}">{{ p_trans('home_promo_text', $lang, 'List your pre-loved or new items in minutes, or browse thousands of ads to find exactly what you need — all in one place.') }}</textarea>
+                                                            placeholder="{{ __tr('Enter promo description') }}">{{ p_trans('home_promo_text', $lang, 'List your pre-loved or new items in minutes, or browse thousands of ads to find exactly what you need — all in one place.') }}</textarea>
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="form-group col-md-6">
                                                             <label
-                                                                class="font-weight-bold">{{ translation('Primary Button Text') }}</label>
+                                                                class="font-weight-bold">{{ __tr('Primary Button Text') }}</label>
                                                             <input type="text" class="form-control"
                                                                 name="home_promo_btn_primary"
-                                                                placeholder="{{ translation('e.g. Post Your Ad') }}"
+                                                                placeholder="{{ __tr('e.g. Post Your Ad') }}"
                                                                 value="{{ p_trans('home_promo_btn_primary', $lang, 'Post Your Ad') }}">
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label
-                                                                class="font-weight-bold">{{ translation('Secondary Button Text') }}</label>
+                                                                class="font-weight-bold">{{ __tr('Secondary Button Text') }}</label>
                                                             <input type="text" class="form-control"
                                                                 name="home_promo_btn_secondary"
-                                                                placeholder="{{ translation('e.g. Browse Ads') }}"
+                                                                placeholder="{{ __tr('e.g. Browse Ads') }}"
                                                                 value="{{ p_trans('home_promo_btn_secondary', $lang, 'Browse Ads') }}">
                                                         </div>
                                                     </div>
@@ -311,27 +311,27 @@
 
                                                 @case('pricing_plans')
                                                     <div class="form-group">
-                                                        <label class="font-weight-bold">{{ translation('Section Title') }}</label>
+                                                        <label class="font-weight-bold">{{ __tr('Section Title') }}</label>
                                                         <input type="text" class="form-control" name="home_pricing_title"
-                                                            placeholder="{{ translation('e.g. Membership') }}"
+                                                            placeholder="{{ __tr('e.g. Membership') }}"
                                                             value="{{ p_trans('home_pricing_title', $lang, 'Membership') }}">
                                                     </div>
                                                 @break
 
                                                 @case('featured_ads')
                                                     <div class="form-group">
-                                                        <label class="font-weight-bold">{{ translation('Section Title') }}</label>
+                                                        <label class="font-weight-bold">{{ __tr('Section Title') }}</label>
                                                         <input type="text" class="form-control" name="home_featured_ads_title"
-                                                            placeholder="{{ translation('e.g. Featured Ads') }}"
+                                                            placeholder="{{ __tr('e.g. Featured Ads') }}"
                                                             value="{{ p_trans('home_featured_ads_title', $lang, 'Featured Ads') }}">
                                                     </div>
                                                 @break
 
                                                 @case('recent_listings')
                                                     <div class="form-group">
-                                                        <label class="font-weight-bold">{{ translation('Section Title') }}</label>
+                                                        <label class="font-weight-bold">{{ __tr('Section Title') }}</label>
                                                         <input type="text" class="form-control" name="home_recent_title"
-                                                            placeholder="{{ translation('e.g. Recent Listings') }}"
+                                                            placeholder="{{ __tr('e.g. Recent Listings') }}"
                                                             value="{{ p_trans('home_recent_title', $lang, 'Recent Listing') }}">
                                                     </div>
                                                 @break
@@ -339,7 +339,7 @@
 
                                             <div class="text-right">
                                                 <button type="submit" class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-save"></i> {{ translation('Save') }}
+                                                    <i class="fas fa-save"></i> {{ __tr('Save') }}
                                                 </button>
                                             </div>
                                         </form>
@@ -394,7 +394,7 @@
                             }
                         },
                         error: function() {
-                            toastr.error("{{ translation('Failed to save order') }}");
+                            toastr.error("{{ __tr('Failed to save order') }}");
                         }
                     });
                 }
@@ -418,11 +418,11 @@
                         if (res.success) {
                             if (res.is_active) {
                                 $card.removeClass("section-disabled");
-                                $statusText.text("{{ translation('Visible') }}");
+                                $statusText.text("{{ __tr('Visible') }}");
                                 toastr.success(res.message);
                             } else {
                                 $card.addClass("section-disabled");
-                                $statusText.text("{{ translation('Hidden') }}");
+                                $statusText.text("{{ __tr('Hidden') }}");
                                 toastr.warning(res.message);
                             }
                         }
@@ -430,7 +430,7 @@
                     error: function() {
                         // Revert checkbox on error
                         $checkbox.prop("checked", !$checkbox.prop("checked"));
-                        toastr.error("{{ translation('Failed to update section') }}");
+                        toastr.error("{{ __tr('Failed to update section') }}");
                     }
                 });
             });
@@ -444,8 +444,8 @@
             $body.toggleClass("open", !isOpen);
             $(btn).html(
                 isOpen ?
-                '<i class="fas fa-chevron-down"></i> {{ translation('Edit Content') }}' :
-                '<i class="fas fa-chevron-up"></i> {{ translation('Close') }}'
+                '<i class="fas fa-chevron-down"></i> {{ __tr('Edit Content') }}' :
+                '<i class="fas fa-chevron-up"></i> {{ __tr('Close') }}'
             );
         }
 

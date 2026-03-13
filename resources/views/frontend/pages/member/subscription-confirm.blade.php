@@ -1,6 +1,6 @@
 @extends('frontend.layouts.dashboard')
 @section('dash-meta')
-    <title>{{ translation('Confirm Subscription') }} - {{ get_setting('site_name') }}</title>
+    <title>{{ __tr('Confirm Subscription') }} - {{ get_setting('site_name') }}</title>
     <style>
         .sc-layout {
             display: flex;
@@ -219,10 +219,10 @@
 
 @section('dashboard-content')
     <div class="my-listings-header">
-        <h1>{{ translation('Confirm Subscription') }}</h1>
+        <h1>{{ __tr('Confirm Subscription') }}</h1>
         <div class="btn-wrapper">
             <a href="{{ route('pricing.plans') }}" class="cmn-btn btn-outline">
-                <i class="fas fa-arrow-left"></i> {{ translation('Back to Plans') }}
+                <i class="fas fa-arrow-left"></i> {{ __tr('Back to Plans') }}
             </a>
         </div>
     </div>
@@ -232,29 +232,29 @@
         {{-- Plan Summary --}}
         <div class="sc-sidebar">
             <div class="dashboard-card">
-                <h3 class="sc-summary-title">{{ translation('Order Summary') }}</h3>
+                <h3 class="sc-summary-title">{{ __tr('Order Summary') }}</h3>
                 <div class="sc-summary-row">
-                    <span class="sc-summary-label">{{ translation('Plan') }}</span>
+                    <span class="sc-summary-label">{{ __tr('Plan') }}</span>
                     <strong>{{ $plan->translation('title') }}</strong>
                 </div>
                 <div class="sc-summary-row">
-                    <span class="sc-summary-label">{{ translation('Duration') }}</span>
-                    <strong>{{ $plan->duration_days }} {{ translation('days') }}</strong>
+                    <span class="sc-summary-label">{{ __tr('Duration') }}</span>
+                    <strong>{{ $plan->duration_days }} {{ __tr('days') }}</strong>
                 </div>
                 <div class="sc-summary-row">
-                    <span class="sc-summary-label">{{ translation('Ad Posting') }}</span>
+                    <span class="sc-summary-label">{{ __tr('Ad Posting') }}</span>
                     <strong>{{ $plan->listing_quantity }}</strong>
                 </div>
                 <div class="sc-summary-row">
-                    <span class="sc-summary-label">{{ translation('Featured') }}</span>
+                    <span class="sc-summary-label">{{ __tr('Featured') }}</span>
                     <strong>{{ $plan->featured_listing_quantity }}</strong>
                 </div>
                 <div class="sc-summary-row">
-                    <span class="sc-summary-label">{{ translation('Gallery Images') }}</span>
+                    <span class="sc-summary-label">{{ __tr('Gallery Images') }}</span>
                     <strong>{{ $plan->gallery_image_quantity }}</strong>
                 </div>
                 <div class="sc-summary-row">
-                    <span class="sc-total-label">{{ translation('Total') }}</span>
+                    <span class="sc-total-label">{{ __tr('Total') }}</span>
                     <span class="sc-total-value">{{ format_amount($plan->price) }}</span>
                 </div>
             </div>
@@ -267,8 +267,8 @@
                 <div class="sub-warning-banner">
                     <i class="fas fa-exclamation-triangle sub-warning-icon"></i>
                     <div>
-                        <strong class="sub-warning-title">{{ translation('No payment method available') }}</strong>
-                        <p class="sub-warning-text">{{ translation('Please contact the administrator.') }}</p>
+                        <strong class="sub-warning-title">{{ __tr('No payment method available') }}</strong>
+                        <p class="sub-warning-text">{{ __tr('Please contact the administrator.') }}</p>
                     </div>
                 </div>
             @endif
@@ -281,19 +281,19 @@
                             <i class="fas fa-credit-card"></i>
                         </div>
                         <div>
-                            <h4 class="sc-method-title">{{ translation('Online Payment') }}</h4>
-                            <small class="sc-method-sub">{{ translation('Pay securely via SSLCommerz') }}</small>
+                            <h4 class="sc-method-title">{{ __tr('Online Payment') }}</h4>
+                            <small class="sc-method-sub">{{ __tr('Pay securely via SSLCommerz') }}</small>
                         </div>
                     </div>
                     <p class="sc-method-desc">
-                        {{ translation('Supports credit/debit cards, mobile banking, and internet banking. Instant activation.') }}
+                        {{ __tr('Supports credit/debit cards, mobile banking, and internet banking. Instant activation.') }}
                     </p>
                     <form action="{{ route('membership.initiate.payment') }}" method="POST">
                         @csrf
                         <input type="hidden" name="membership_id" value="{{ $plan->id }}">
                         <button type="submit" class="cmn-btn sc-btn-full">
                             <i class="fas fa-lock me-2"></i>
-                            {{ translation('Pay') }} {{ format_amount($plan->price) }} {{ translation('Online') }}
+                            {{ __tr('Pay') }} {{ format_amount($plan->price) }} {{ __tr('Online') }}
                         </button>
                     </form>
                 </div>
@@ -307,41 +307,41 @@
                             <i class="fas fa-university"></i>
                         </div>
                         <div>
-                            <h4 class="sc-method-title">{{ translation('Bank Transfer') }}</h4>
-                            <small class="sc-method-sub">{{ translation('Manual verification required') }}</small>
+                            <h4 class="sc-method-title">{{ __tr('Bank Transfer') }}</h4>
+                            <small class="sc-method-sub">{{ __tr('Manual verification required') }}</small>
                         </div>
                     </div>
 
                     {{-- Bank Details --}}
                     <div class="sc-bank-details">
-                        <p class="sc-bank-details-label">{{ translation('Bank Account Details') }}</p>
+                        <p class="sc-bank-details-label">{{ __tr('Bank Account Details') }}</p>
                         @if (get_setting('bank_name'))
                             <div class="sc-bank-row">
-                                <span class="sc-bank-row-label">{{ translation('Bank Name') }}</span>
+                                <span class="sc-bank-row-label">{{ __tr('Bank Name') }}</span>
                                 <strong>{{ get_setting('bank_name') }}</strong>
                             </div>
                         @endif
                         @if (get_setting('bank_account_name'))
                             <div class="sc-bank-row">
-                                <span class="sc-bank-row-label">{{ translation('Account Name') }}</span>
+                                <span class="sc-bank-row-label">{{ __tr('Account Name') }}</span>
                                 <strong>{{ get_setting('bank_account_name') }}</strong>
                             </div>
                         @endif
                         @if (get_setting('bank_account_number'))
                             <div class="sc-bank-row">
-                                <span class="sc-bank-row-label">{{ translation('Account Number') }}</span>
+                                <span class="sc-bank-row-label">{{ __tr('Account Number') }}</span>
                                 <strong class="sc-bank-mono">{{ get_setting('bank_account_number') }}</strong>
                             </div>
                         @endif
                         @if (get_setting('bank_routing_number'))
                             <div class="sc-bank-row">
-                                <span class="sc-bank-row-label">{{ translation('Routing Number') }}</span>
+                                <span class="sc-bank-row-label">{{ __tr('Routing Number') }}</span>
                                 <strong class="sc-bank-mono">{{ get_setting('bank_routing_number') }}</strong>
                             </div>
                         @endif
                         @if (get_setting('bank_branch'))
                             <div class="sc-bank-row">
-                                <span class="sc-bank-row-label">{{ translation('Branch') }}</span>
+                                <span class="sc-bank-row-label">{{ __tr('Branch') }}</span>
                                 <strong>{{ get_setting('bank_branch') }}</strong>
                             </div>
                         @endif
@@ -359,14 +359,14 @@
                         <input type="hidden" name="membership_id" value="{{ $plan->id }}">
                         <div class="sc-file-group">
                             <label class="sc-file-label">
-                                {{ translation('Bank Transaction Number') }}
+                                {{ __tr('Bank Transaction Number') }}
                                 <span class="sc-file-required">*</span>
                             </label>
                             <input type="text" name="bank_transaction_number" class="sc-file-input"
-                                value="{{ old('bank_transaction_number') }}"
-                                placeholder="{{ translation('e.g. TRN123456789') }}" required>
+                                value="{{ old('bank_transaction_number') }}" placeholder="{{ __tr('e.g. TRN123456789') }}"
+                                required>
                             <small class="sc-file-hint">
-                                {{ translation('Enter the transaction/reference number from your bank receipt.') }}
+                                {{ __tr('Enter the transaction/reference number from your bank receipt.') }}
                             </small>
                             @error('bank_transaction_number')
                                 <span class="sc-file-error">{{ $message }}</span>
@@ -374,26 +374,26 @@
                         </div>
                         <div class="sc-file-group">
                             <label class="sc-file-label">
-                                {{ translation('Upload Payment Slip') }}
+                                {{ __tr('Upload Payment Slip') }}
                                 <span class="sc-file-required">*</span>
                             </label>
                             <input type="file" name="bank_slip" accept=".jpg,.jpeg,.png,.pdf" required
                                 class="sc-file-input">
                             <small class="sc-file-hint">
-                                {{ translation('Accepted formats: JPG, PNG, PDF. Max 4MB.') }}
+                                {{ __tr('Accepted formats: JPG, PNG, PDF. Max 4MB.') }}
                             </small>
                             @error('bank_slip')
                                 <span class="sc-file-error">{{ $message }}</span>
                             @enderror
                         </div>
                         <button type="submit" class="cmn-btn sc-btn-full sc-btn-bank">
-                            <i class="fas fa-paper-plane me-2"></i> {{ translation('Submit Payment') }}
+                            <i class="fas fa-paper-plane me-2"></i> {{ __tr('Submit Payment') }}
                         </button>
                     </form>
 
                     <p class="sc-pending-note">
                         <i class="fas fa-clock me-1"></i>
-                        {{ translation('Your subscription will be activated after admin verification.') }}
+                        {{ __tr('Your subscription will be activated after admin verification.') }}
                     </p>
                 </div>
             @endif

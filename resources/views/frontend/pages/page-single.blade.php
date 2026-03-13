@@ -25,7 +25,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="{{ route('home') }}">{{ translation('Home') }}</a>
+                                <a href="{{ route('home') }}">{{ __tr('Home') }}</a>
                             </li>
                             <li class="breadcrumb-item active">{{ $page->translation('title') }}</li>
                         </ol>

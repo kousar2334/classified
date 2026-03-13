@@ -1,7 +1,7 @@
 <div class="singlePrice mb-24 wow fadeInLeft" data-wow-delay="0.{{ $loop->iteration ?? 1 }}s">
     <h4 class="priceTittle">{{ $plan->translation('title') }}</h4>
     <span class="price">{{ format_amount($plan->price) }}
-        <span class="subTittle">{{ $plan->duration_days }} {{ translation('days') }}</span>
+        <span class="subTittle">{{ $plan->duration_days }} {{ __tr('days') }}</span>
     </span>
     <div class="btn-wrapper">
         @if ($plan->price == 0)
@@ -9,20 +9,20 @@
                 <form action="{{ route('membership.buy') }}" method="post">
                     @csrf
                     <input type="hidden" name="membership_id" value="{{ $plan->id }}">
-                    <button type="submit" class="cmn-btn-outline1">{{ translation('Get Started') }}</button>
+                    <button type="submit" class="cmn-btn-outline1">{{ __tr('Get Started') }}</button>
                 </form>
             @else
-                <a href="{{ route('member.login') }}" class="cmn-btn-outline1">{{ translation('Get Started') }}</a>
+                <a href="{{ route('member.login') }}" class="cmn-btn-outline1">{{ __tr('Get Started') }}</a>
             @endauth
         @else
             @auth
                 <a href="{{ route('subscription.confirm', $plan->id) }}" class="cmn-btn-outline1">
-                    {{ translation('Buy Now') }}
+                    {{ __tr('Buy Now') }}
                 </a>
             @else
                 <button class="cmn-btn-outline1 choose_membership_plan" data-bs-toggle="modal"
                     data-id="{{ $plan->id }}" data-price="{{ $plan->price }}" data-bs-target="#loginModal">
-                    {{ translation('Buy Now') }}
+                    {{ __tr('Buy Now') }}
                 </button>
             @endauth
         @endif
@@ -41,7 +41,7 @@
             @else
                 <div class="me-2">{!! $crossSvg !!}</div>
             @endif
-            {{ translation('Ad Posting') }}: {{ $plan->listing_quantity }}
+            {{ __tr('Ad Posting') }}: {{ $plan->listing_quantity }}
         </li>
         <li class="listItem {{ $plan->gallery_image_quantity > 0 ? 'check' : '' }}">
             @if ($plan->gallery_image_quantity > 0)
@@ -49,7 +49,7 @@
             @else
                 <div class="me-2">{!! $crossSvg !!}</div>
             @endif
-            {{ translation('Gallery Images') }}: {{ $plan->gallery_image_quantity }}
+            {{ __tr('Gallery Images') }}: {{ $plan->gallery_image_quantity }}
         </li>
         <li class="listItem {{ $plan->featured_listing_quantity > 0 ? 'check' : '' }}">
             @if ($plan->featured_listing_quantity > 0)
@@ -57,7 +57,7 @@
             @else
                 <div class="me-2">{!! $crossSvg !!}</div>
             @endif
-            {{ translation('Featured Listings') }}: {{ $plan->featured_listing_quantity }}
+            {{ __tr('Featured Listings') }}: {{ $plan->featured_listing_quantity }}
         </li>
         <li class="listItem {{ $plan->online_shop == 1 ? 'check' : '' }}">
             @if ($plan->online_shop == 1)
@@ -65,7 +65,7 @@
             @else
                 <div class="me-2">{!! $crossSvg !!}</div>
             @endif
-            {{ translation('Online Shop') }}
+            {{ __tr('Online Shop') }}
         </li>
         <li class="listItem {{ $plan->membership_badge == 1 ? 'check' : '' }}">
             @if ($plan->membership_badge == 1)
@@ -73,7 +73,7 @@
             @else
                 <div class="me-2">{!! $crossSvg !!}</div>
             @endif
-            {{ translation('Membership Badge') }}
+            {{ __tr('Membership Badge') }}
         </li>
     </ul>
 </div>

@@ -19,26 +19,26 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Pricing Plans') }}</h3>
+                            <h3 class="card-title">{{ __tr('Pricing Plans') }}</h3>
                             <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
-                                data-target="#create-item-modal">{{ translation('Create New Plan') }}
+                                data-target="#create-item-modal">{{ __tr('Create New Plan') }}
                             </button>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('#') }}</th>
-                                        <th>{{ translation('Title') }}</th>
-                                        <th>{{ translation('Duration') }}</th>
-                                        <th>{{ translation('Price') }}</th>
-                                        <th>{{ translation('Ad Posting Quantity') }}</th>
-                                        <th>{{ translation('Featured') }}</th>
-                                        <th>{{ translation('Gallery Images') }}</th>
-                                        <th>{{ translation('Membership Badge') }}</th>
-                                        <th>{{ translation('Online Shop') }}</th>
-                                        <th>{{ translation('Status') }}</th>
-                                        <th class="text-right">{{ translation('Action') }}</th>
+                                        <th>{{ __tr('#') }}</th>
+                                        <th>{{ __tr('Title') }}</th>
+                                        <th>{{ __tr('Duration') }}</th>
+                                        <th>{{ __tr('Price') }}</th>
+                                        <th>{{ __tr('Ad Posting Quantity') }}</th>
+                                        <th>{{ __tr('Featured') }}</th>
+                                        <th>{{ __tr('Gallery Images') }}</th>
+                                        <th>{{ __tr('Membership Badge') }}</th>
+                                        <th>{{ __tr('Online Shop') }}</th>
+                                        <th>{{ __tr('Status') }}</th>
+                                        <th class="text-right">{{ __tr('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -46,36 +46,35 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $plan->title }}</td>
-                                            <td>{{ $plan->duration_days }} {{ translation('days') }}</td>
+                                            <td>{{ $plan->duration_days }} {{ __tr('days') }}</td>
                                             <td>{{ $plan->price }}</td>
                                             <td>{{ $plan->listing_quantity }}</td>
                                             <td>{{ $plan->featured_listing_quantity }}</td>
                                             <td>{{ $plan->gallery_image_quantity }}</td>
                                             <td>
                                                 @if ($plan->membership_badge == 1)
-                                                    <p class="badge badge-success">{{ translation('Enabled') }}</p>
+                                                    <p class="badge badge-success">{{ __tr('Enabled') }}</p>
                                                 @else
-                                                    <p class="badge badge-secondary">{{ translation('Disabled') }}</p>
+                                                    <p class="badge badge-secondary">{{ __tr('Disabled') }}</p>
                                                 @endif
                                             </td>
                                             <td>
                                                 @if ($plan->online_shop == 1)
-                                                    <p class="badge badge-success">{{ translation('Enabled') }}</p>
+                                                    <p class="badge badge-success">{{ __tr('Enabled') }}</p>
                                                 @else
-                                                    <p class="badge badge-secondary">{{ translation('Disabled') }}</p>
+                                                    <p class="badge badge-secondary">{{ __tr('Disabled') }}</p>
                                                 @endif
                                             </td>
                                             <td>
                                                 @if ($plan->status == config('settings.general_status.active'))
-                                                    <p class="badge badge-success">{{ translation('Active') }}</p>
+                                                    <p class="badge badge-success">{{ __tr('Active') }}</p>
                                                 @else
-                                                    <p class="badge badge-danger">{{ translation('Inactive') }}</p>
+                                                    <p class="badge badge-danger">{{ __tr('Inactive') }}</p>
                                                 @endif
                                             </td>
                                             <td class="text-right">
                                                 <div class="btn-group">
-                                                    <button type="button"
-                                                        class="btn btn-default">{{ translation('Action') }}
+                                                    <button type="button" class="btn btn-default">{{ __tr('Action') }}
                                                     </button>
                                                     <button type="button"
                                                         class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
@@ -84,12 +83,12 @@
                                                     <div class="dropdown-menu" role="menu">
                                                         <button class="dropdown-item edit-item"
                                                             data-id="{{ $plan->id }}">
-                                                            {{ translation('Edit') }}
+                                                            {{ __tr('Edit') }}
                                                         </button>
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item delete-item"
                                                             data-id="{{ $plan->id }}">
-                                                            {{ translation('Delete') }}
+                                                            {{ __tr('Delete') }}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -98,7 +97,7 @@
                                     @empty
                                         <tr>
                                             <td colspan="11">
-                                                <div class="text-center">{{ translation('No item found') }}</div>
+                                                <div class="text-center">{{ __tr('No item found') }}</div>
                                             </td>
                                         </tr>
                                     @endforelse
@@ -120,7 +119,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('New Pricing Plan') }}</h5>
+                        <h5 class="modal-title">{{ __tr('New Pricing Plan') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -129,74 +128,74 @@
                         <form id="new-plan-form">
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translation('Title') }} *</label>
+                                    <label class="black font-14">{{ __tr('Title') }} *</label>
                                     <input type="text" name="title" class="form-control"
-                                        placeholder="{{ translation('Enter plan title') }}">
+                                        placeholder="{{ __tr('Enter plan title') }}">
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
-                                    <label class="black font-14">{{ translation('Duration (Days)') }} *</label>
+                                    <label class="black font-14">{{ __tr('Duration (Days)') }} *</label>
                                     <input type="number" name="duration_days" class="form-control" min="1"
-                                        value="30" placeholder="{{ translation('Enter duration in days') }}">
+                                        value="30" placeholder="{{ __tr('Enter duration in days') }}">
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="black font-14">{{ translation('Price') }} *</label>
+                                    <label class="black font-14">{{ __tr('Price') }} *</label>
                                     <input type="number" name="price" class="form-control" min="0" step="0.01"
-                                        value="0" placeholder="{{ translation('Enter price') }}">
+                                        value="0" placeholder="{{ __tr('Enter price') }}">
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-lg-4">
-                                    <label class="black font-14">{{ translation('Ad Posting Quantity') }} *</label>
+                                    <label class="black font-14">{{ __tr('Ad Posting Quantity') }} *</label>
                                     <input type="number" name="listing_quantity" class="form-control" min="0"
-                                        value="0" placeholder="{{ translation('Number of listings') }}">
+                                        value="0" placeholder="{{ __tr('Number of listings') }}">
                                 </div>
                                 <div class="form-group col-lg-4">
-                                    <label class="black font-14">{{ translation('Featured Listing Quantity') }} *</label>
+                                    <label class="black font-14">{{ __tr('Featured Listing Quantity') }} *</label>
                                     <input type="number" name="featured_listing_quantity" class="form-control"
                                         min="0" value="0"
-                                        placeholder="{{ translation('Number of featured listings') }}">
+                                        placeholder="{{ __tr('Number of featured listings') }}">
                                 </div>
                                 <div class="form-group col-lg-4">
-                                    <label class="black font-14">{{ translation('Gallery Image Quantity') }} *</label>
+                                    <label class="black font-14">{{ __tr('Gallery Image Quantity') }} *</label>
                                     <input type="number" name="gallery_image_quantity" class="form-control" min="0"
-                                        value="0" placeholder="{{ translation('Max gallery images per listing') }}">
+                                        value="0" placeholder="{{ __tr('Max gallery images per listing') }}">
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-lg-4">
-                                    <label class="black font-14">{{ translation('Membership Badge') }}</label>
+                                    <label class="black font-14">{{ __tr('Membership Badge') }}</label>
                                     <select name="membership_badge" class="form-control">
-                                        <option value="0">{{ translation('Disabled') }}</option>
-                                        <option value="1">{{ translation('Enabled') }}</option>
+                                        <option value="0">{{ __tr('Disabled') }}</option>
+                                        <option value="1">{{ __tr('Enabled') }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-4">
-                                    <label class="black font-14">{{ translation('Online Shop') }}</label>
+                                    <label class="black font-14">{{ __tr('Online Shop') }}</label>
                                     <select name="online_shop" class="form-control">
-                                        <option value="0">{{ translation('Disabled') }}</option>
-                                        <option value="1">{{ translation('Enabled') }}</option>
+                                        <option value="0">{{ __tr('Disabled') }}</option>
+                                        <option value="1">{{ __tr('Enabled') }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-4">
-                                    <label class="black font-14">{{ translation('Status') }}</label>
+                                    <label class="black font-14">{{ __tr('Status') }}</label>
                                     <select name="status" class="form-control">
                                         <option value="{{ config('settings.general_status.active') }}">
-                                            {{ translation('Active') }}
+                                            {{ __tr('Active') }}
                                         </option>
                                         <option value="{{ config('settings.general_status.in_active') }}">
-                                            {{ translation('Inactive') }}
+                                            {{ __tr('Inactive') }}
                                         </option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="btn-area d-flex justify-content-between">
-                                <button class="btn btn-primary mt-2">{{ translation('Save') }}</button>
+                                <button class="btn btn-primary mt-2">{{ __tr('Save') }}</button>
                             </div>
                         </form>
                     </div>
@@ -210,7 +209,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('Edit Pricing Plan') }}</h5>
+                        <h5 class="modal-title">{{ __tr('Edit Pricing Plan') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -227,19 +226,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete ?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete ?') }}</h4>
                         <form method="POST" action="{{ route('admin.pricing.plans.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-item-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>

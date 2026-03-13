@@ -1,33 +1,33 @@
 <form id="update-user-form">
     @csrf
     <div class="form-group">
-        <label>{{ translation('Name') }}</label>
+        <label>{{ __tr('Name') }}</label>
         <input type="hidden" name="id" value="{{ $user->id }}">
-        <input type="text" class="form-control" name="name" placeholder="{{ translation('Enter Name') }}"
+        <input type="text" class="form-control" name="name" placeholder="{{ __tr('Enter Name') }}"
             value="{{ $user->name }}">
     </div>
     <div class="form-group">
-        <label>{{ translation('Email') }}</label>
-        <input type="email" class="form-control" name="email" placeholder="{{ translation('Enter Email') }}"
+        <label>{{ __tr('Email') }}</label>
+        <input type="email" class="form-control" name="email" placeholder="{{ __tr('Enter Email') }}"
             value="{{ $user->email }}">
     </div>
     <div class="form-group">
-        <label>{{ translation('Password') }}</label>
-        <input type="password" class="form-control" name="password" placeholder="{{ translation('Enter Password') }}">
+        <label>{{ __tr('Password') }}</label>
+        <input type="password" class="form-control" name="password" placeholder="{{ __tr('Enter Password') }}">
     </div>
     <div class="form-group">
-        <label>{{ translation('Confirm Password') }}</label>
+        <label>{{ __tr('Confirm Password') }}</label>
         <input type="password" class="form-control" name="password_confirmation"
-            placeholder="{{ translation('Re Enter Password') }}">
+            placeholder="{{ __tr('Re Enter Password') }}">
     </div>
     <div class="form-group">
-        <label>{{ translation('Image') }}</label>
+        <label>{{ __tr('Image') }}</label>
         <div class="input-group">
             <x-media name="edit_image" :value="$user->image"></x-media>
         </div>
     </div>
     <div class="form-group">
-        <label>{{ translation('Role') }}</label>
+        <label>{{ __tr('Role') }}</label>
         <select name="role" class="form-control">
             @foreach ($roles as $role)
                 <option value="{{ $role->id }}" @selected($user->getRoleNames()->contains($role->name))>{{ $role->name }}</option>
@@ -35,18 +35,18 @@
         </select>
     </div>
     <div class="form-group">
-        <label>{{ translation('Status') }}</label>
+        <label>{{ __tr('Status') }}</label>
         <select name="status" class="form-control">
             <option value="{{ config('settings.general_status.active') }}" @selected($user->status == config('settings.general_status.active'))>
-                {{ translation('Active') }}</option>
+                {{ __tr('Active') }}</option>
             <option value="{{ config('settings.general_status.in_active') }}" @selected($user->status == config('settings.general_status.in_active'))>
-                {{ translation('Inactive') }}
+                {{ __tr('Inactive') }}
             </option>
         </select>
     </div>
 </form>
 <div class="d-flex justify-content-between">
-    <button type="button" class="btn btn-primary update-user-btn">{{ translation('Save Changes') }}</button>
+    <button type="button" class="btn btn-primary update-user-btn">{{ __tr('Save Changes') }}</button>
 </div>
 
 <script>

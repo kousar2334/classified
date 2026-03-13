@@ -25,20 +25,20 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Countries') }}</h3>
+                            <h3 class="card-title">{{ __tr('Countries') }}</h3>
                             <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
-                                data-target="#create-item-modal">{{ translation('Create New Country') }}
+                                data-target="#create-item-modal">{{ __tr('Create New Country') }}
                             </button>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('#') }}</th>
-                                        <th>{{ translation('Name') }}</th>
-                                        <th>{{ translation('Code') }}</th>
-                                        <th>{{ translation('Status') }}</th>
-                                        <th>{{ translation('Actions') }}</th>
+                                        <th>{{ __tr('#') }}</th>
+                                        <th>{{ __tr('Name') }}</th>
+                                        <th>{{ __tr('Code') }}</th>
+                                        <th>{{ __tr('Status') }}</th>
+                                        <th>{{ __tr('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -51,15 +51,14 @@
                                             <td class="text-uppercase">{{ $country->code }}</td>
                                             <td>
                                                 @if ($country->status == config('settings.general_status.active'))
-                                                    <span class="badge badge-success">{{ translation('Active') }}</span>
+                                                    <span class="badge badge-success">{{ __tr('Active') }}</span>
                                                 @else
-                                                    <span class="badge badge-danger">{{ translation('Inactive') }}</span>
+                                                    <span class="badge badge-danger">{{ __tr('Inactive') }}</span>
                                                 @endif
                                             </td>
                                             <td class="text-right">
                                                 <div class="btn-group">
-                                                    <button type="button"
-                                                        class="btn btn-default">{{ translation('Action') }}
+                                                    <button type="button" class="btn btn-default">{{ __tr('Action') }}
                                                     </button>
                                                     <button type="button"
                                                         class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
@@ -68,12 +67,12 @@
                                                     <div class="dropdown-menu" role="menu">
                                                         <button class="dropdown-item edit-item"
                                                             data-id="{{ $country->id }}">
-                                                            {{ translation('Edit') }}
+                                                            {{ __tr('Edit') }}
                                                         </button>
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item delete-item"
                                                             data-id="{{ $country->id }}">
-                                                            {{ translation('Delete') }}
+                                                            {{ __tr('Delete') }}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -82,7 +81,7 @@
                                     @empty
                                         <tr>
                                             <td colspan="10">
-                                                <div class="text-center">{{ translation('No item found') }}</div>
+                                                <div class="text-center">{{ __tr('No item found') }}</div>
                                             </td>
                                         </tr>
                                     @endforelse
@@ -103,7 +102,7 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('New Country') }}</h5>
+                        <h5 class="modal-title">{{ __tr('New Country') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -113,32 +112,32 @@
                             @csrf
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translation('Name') }}</label>
+                                    <label class="black font-14">{{ __tr('Name') }}</label>
                                     <input type="text" name="name" class="form-control"
-                                        placeholder="{{ translation('Enter Name') }}">
+                                        placeholder="{{ __tr('Enter Name') }}">
                                 </div>
 
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translation('Country Code') }}</label>
+                                    <label class="black font-14">{{ __tr('Country Code') }}</label>
                                     <input type="text" name="code" class="form-control"
-                                        placeholder="{{ translation('Enter Country Code') }}">
+                                        placeholder="{{ __tr('Enter Country Code') }}">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translation('Status') }}</label>
+                                    <label class="black font-14">{{ __tr('Status') }}</label>
                                     <select name="status" class="form-control">
                                         <option value="{{ config('settings.general_status.active') }}">
-                                            {{ translation('Active') }}
+                                            {{ __tr('Active') }}
                                         </option>
                                         <option value="{{ config('settings.general_status.in_active') }}">
-                                            {{ translation('Inactive') }}
+                                            {{ __tr('Inactive') }}
                                         </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="btn-area d-flex justify-content-between">
-                                <button class="btn btn-primary mt-2 store-country">{{ translation('Save') }}</button>
+                                <button class="btn btn-primary mt-2 store-country">{{ __tr('Save') }}</button>
                             </div>
 
                         </form>
@@ -153,7 +152,7 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('Country Information') }}</h5>
+                        <h5 class="modal-title">{{ __tr('Country Information') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -170,19 +169,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete ?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete ?') }}</h4>
                         <form method="POST" action="{{ route('classified.locations.country.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-item-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>
@@ -330,7 +329,7 @@
             function initParentSelect() {
                 $('.parent-options').select2({
                     theme: "bootstrap4",
-                    placeholder: '{{ translation('Select parent country') }}',
+                    placeholder: '{{ __tr('Select parent country') }}',
                     closeOnSelect: true,
                     width: '100%',
                     ajax: {

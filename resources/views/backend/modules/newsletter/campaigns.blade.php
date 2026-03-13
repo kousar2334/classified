@@ -8,11 +8,11 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ translation('Campaigns') }}</h3>
+                    <h3 class="card-title">{{ __tr('Campaigns') }}</h3>
                     <div class="card-tools d-flex align-items-center">
                         <form class="form-inline mr-2" method="GET">
                             <input type="text" name="search" class="form-control form-control-sm mr-2"
-                                placeholder="{{ translation('Search subject...') }}" value="{{ request('search') }}">
+                                placeholder="{{ __tr('Search subject...') }}" value="{{ request('search') }}">
                             <select name="status" class="form-control form-control-sm mr-2">
                                 <option value="">All Status</option>
                                 <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Draft</option>
@@ -20,11 +20,11 @@
                                 </option>
                                 <option value="sent" {{ request('status') == 'sent' ? 'selected' : '' }}>Sent</option>
                             </select>
-                            <button class="btn btn-sm btn-primary">{{ translation('Filter') }}</button>
+                            <button class="btn btn-sm btn-primary">{{ __tr('Filter') }}</button>
                         </form>
                         <a href="{{ route('admin.newsletter.campaigns.create') }}"
                             class="btn btn-success btn-sm text-white">
-                            {{ translation('New Campaign') }}
+                            {{ __tr('New Campaign') }}
                         </a>
                     </div>
                 </div>
@@ -33,13 +33,13 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>{{ translation('Subject') }}</th>
-                                <th>{{ translation('Status') }}</th>
-                                <th class="text-center">{{ translation('Sent') }}</th>
-                                <th class="text-center">{{ translation('Opened') }}</th>
-                                <th class="text-center">{{ translation('Clicked') }}</th>
-                                <th>{{ translation('Sent At') }}</th>
-                                <th class="text-right">{{ translation('Action') }}</th>
+                                <th>{{ __tr('Subject') }}</th>
+                                <th>{{ __tr('Status') }}</th>
+                                <th class="text-center">{{ __tr('Sent') }}</th>
+                                <th class="text-center">{{ __tr('Opened') }}</th>
+                                <th class="text-center">{{ __tr('Clicked') }}</th>
+                                <th>{{ __tr('Sent At') }}</th>
+                                <th class="text-right">{{ __tr('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,7 +77,7 @@
                                     <td class="text-right">
                                         <div class="btn-group">
                                             <button type="button"
-                                                class="btn btn-default btn-sm">{{ translation('Action') }}</button>
+                                                class="btn btn-default btn-sm">{{ __tr('Action') }}</button>
                                             <button type="button"
                                                 class="btn btn-default btn-sm dropdown-toggle dropdown-hover dropdown-icon"
                                                 data-toggle="dropdown"></button>
@@ -85,26 +85,26 @@
                                                 @if ($campaign->status === 'sent')
                                                     <a class="dropdown-item"
                                                         href="{{ route('admin.newsletter.campaigns.stats', $campaign->id) }}">
-                                                        {{ translation('View Stats') }}
+                                                        {{ __tr('View Stats') }}
                                                     </a>
                                                     <div class="dropdown-divider"></div>
                                                 @endif
                                                 @if ($campaign->status !== 'sent')
                                                     <a class="dropdown-item"
                                                         href="{{ route('admin.newsletter.campaigns.edit', $campaign->id) }}">
-                                                        {{ translation('Edit') }}
+                                                        {{ __tr('Edit') }}
                                                     </a>
                                                     <div class="dropdown-divider"></div>
                                                     <button class="dropdown-item send-campaign-btn"
                                                         data-id="{{ $campaign->id }}"
                                                         data-subject="{{ $campaign->subject }}">
-                                                        {{ translation('Send Now') }}
+                                                        {{ __tr('Send Now') }}
                                                     </button>
                                                     <div class="dropdown-divider"></div>
                                                 @endif
                                                 <button class="dropdown-item delete-campaign-btn"
                                                     data-id="{{ $campaign->id }}">
-                                                    {{ translation('Delete') }}
+                                                    {{ __tr('Delete') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -112,7 +112,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-center">{{ translation('No campaigns found') }}</td>
+                                    <td colspan="8" class="text-center">{{ __tr('No campaigns found') }}</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -152,17 +152,17 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete?') }}</h4>
                         <form method="POST" action="{{ route('admin.newsletter.campaigns.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-campaign-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>

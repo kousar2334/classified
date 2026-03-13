@@ -29,20 +29,20 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Custom Field Options') }}</h3>
+                            <h3 class="card-title">{{ __tr('Custom Field Options') }}</h3>
                             <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
-                                data-target="#new-option-modal">{{ translation('Create New Custom Field') }}
+                                data-target="#new-option-modal">{{ __tr('Create New Custom Field') }}
                             </button>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('#') }}</th>
-                                        <th>{{ translation('Value') }}</th>
-                                        <th>{{ translation('Field') }}</th>
-                                        <th>{{ translation('Status') }}</th>
-                                        <th class="text-center">{{ translation('Actions') }}</th>
+                                        <th>{{ __tr('#') }}</th>
+                                        <th>{{ __tr('Value') }}</th>
+                                        <th>{{ __tr('Field') }}</th>
+                                        <th>{{ __tr('Status') }}</th>
+                                        <th class="text-center">{{ __tr('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -58,15 +58,14 @@
                                                 <td>{{ $option->field?->title }}</td>
                                                 <td>
                                                     @if ($option->status == config('settings.general_status.active'))
-                                                        <p class="badge badge-success">{{ translation('Active') }}</p>
+                                                        <p class="badge badge-success">{{ __tr('Active') }}</p>
                                                     @else
-                                                        <p class="badge badge-danger">{{ translation('Inactive') }}</p>
+                                                        <p class="badge badge-danger">{{ __tr('Inactive') }}</p>
                                                     @endif
                                                 </td>
                                                 <td class="text-right">
                                                     <div class="btn-group">
-                                                        <button type="button"
-                                                            class="btn btn-default">{{ translation('Action') }}
+                                                        <button type="button" class="btn btn-default">{{ __tr('Action') }}
                                                         </button>
                                                         <button type="button"
                                                             class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
@@ -76,12 +75,12 @@
 
                                                             <a class="dropdown-item"
                                                                 href="{{ route('classified.ads.custom.field.options.edit.page', ['id' => $option->id, 'lang' => defaultLangCode()]) }}">
-                                                                {{ translation('Edit') }}
+                                                                {{ __tr('Edit') }}
                                                             </a>
                                                             <div class="dropdown-divider"></div>
                                                             <button class="dropdown-item delete-item"
                                                                 data-id="{{ $option->id }}">
-                                                                {{ translation('Delete') }}
+                                                                {{ __tr('Delete') }}
                                                             </button>
                                                         </div>
                                                     </div>
@@ -92,7 +91,7 @@
                                         <tr>
                                             <td colspan="9">
                                                 <p class="alert alert-danger text-center">
-                                                    {{ translation('Nothing Found') }}
+                                                    {{ __tr('Nothing Found') }}
                                                 </p>
                                             </td>
                                         </tr>
@@ -115,7 +114,7 @@
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ translation('New Custom Field') }}</h5>
+                    <h5 class="modal-title">{{ __tr('New Custom Field') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -124,28 +123,28 @@
                     <form id="new-Option-form">
                         <div class="form-row">
                             <div class="form-group col-lg-12">
-                                <label class="black font-14">{{ translation('Value') }}</label>
+                                <label class="black font-14">{{ __tr('Value') }}</label>
                                 <input type="text" name="value" class="form-control"
-                                    placeholder="{{ translation('Enter value') }}">
+                                    placeholder="{{ __tr('Enter value') }}">
                                 <input type="hidden" name="field" value="{{ $field->id }}">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col-lg-12">
-                                <label class="black font-14">{{ translation('Status') }}</label>
+                                <label class="black font-14">{{ __tr('Status') }}</label>
                                 <select name="status" class="form-control">
                                     <option value="{{ config('settings.general_status.active') }}">
-                                        {{ translation('Active') }}
+                                        {{ __tr('Active') }}
                                     </option>
                                     <option value="{{ config('settings.general_status.in_active') }}">
-                                        {{ translation('Inactive') }}
+                                        {{ __tr('Inactive') }}
                                     </option>
                                 </select>
                             </div>
                         </div>
                         <div class="btn-area d-flex justify-content-between">
-                            <button class="btn btn-primary mt-2 store-option">{{ translation('Save') }}</button>
+                            <button class="btn btn-primary mt-2 store-option">{{ __tr('Save') }}</button>
                         </div>
                     </form>
                 </div>
@@ -159,7 +158,7 @@
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ translation('Custom Field Information') }}</h5>
+                    <h5 class="modal-title">{{ __tr('Custom Field Information') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -176,20 +175,20 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                    <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body text-center">
-                    <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete ?') }}</h4>
+                    <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete ?') }}</h4>
                     <form method="POST" action="{{ route('classified.ads.custom.field.options.delete') }}">
                         @csrf
                         <input type="hidden" id="delete-item-id" name="id">
                         <input type="hidden" name="field_id" value="{{ $field->id }}">
                         <button type="button" class="btn mt-2 btn-danger"
-                            data-dismiss="modal">{{ translation('Cancel') }}</button>
-                        <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                            data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                        <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                     </form>
                 </div>
             </div>
@@ -218,10 +217,10 @@
                     url: '{{ route('classified.ads.custom.field.options.store') }}',
                     success: function(response) {
                         if (response.success) {
-                            toastr.success('{{ translation('Option created successfully') }}');
+                            toastr.success('{{ __tr('Option created successfully') }}');
                             location.reload();
                         } else {
-                            toastr.error('{{ translation('Option create failed') }}');
+                            toastr.error('{{ __tr('Option create failed') }}');
                         }
                     },
                     error: function(response) {
@@ -233,7 +232,7 @@
                                     '</div>')
                             })
                         } else {
-                            toastr.error('{{ translation('Option create failed') }}');
+                            toastr.error('{{ __tr('Option create failed') }}');
                         }
                     }
                 });

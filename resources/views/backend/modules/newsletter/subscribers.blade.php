@@ -40,17 +40,17 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ translation('All Subscribers') }}</h3>
+                    <h3 class="card-title">{{ __tr('All Subscribers') }}</h3>
                     <div class="card-tools">
                         <form class="form-inline" method="GET">
                             <input type="text" name="search" class="form-control form-control-sm mr-2"
-                                placeholder="{{ translation('Search email / name...') }}" value="{{ request('search') }}">
+                                placeholder="{{ __tr('Search email / name...') }}" value="{{ request('search') }}">
                             <select name="status" class="form-control form-control-sm mr-2">
                                 <option value="">All Status</option>
                                 <option value="1" {{ request('status') == 1 ? 'selected' : '' }}>Active</option>
                                 <option value="2" {{ request('status') == 2 ? 'selected' : '' }}>Unsubscribed</option>
                             </select>
-                            <button class="btn btn-sm btn-primary">{{ translation('Filter') }}</button>
+                            <button class="btn btn-sm btn-primary">{{ __tr('Filter') }}</button>
                         </form>
                     </div>
                 </div>
@@ -59,11 +59,11 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>{{ translation('Email') }}</th>
-                                <th>{{ translation('Name') }}</th>
-                                <th>{{ translation('Status') }}</th>
-                                <th>{{ translation('Subscribed At') }}</th>
-                                <th class="text-right">{{ translation('Action') }}</th>
+                                <th>{{ __tr('Email') }}</th>
+                                <th>{{ __tr('Name') }}</th>
+                                <th>{{ __tr('Status') }}</th>
+                                <th>{{ __tr('Subscribed At') }}</th>
+                                <th class="text-right">{{ __tr('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,7 +88,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center">{{ translation('No subscribers found') }}</td>
+                                    <td colspan="6" class="text-center">{{ __tr('No subscribers found') }}</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -107,17 +107,17 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete?') }}</h4>
                         <form method="POST" action="{{ route('admin.newsletter.subscribers.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-sub-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>

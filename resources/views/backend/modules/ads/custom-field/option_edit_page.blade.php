@@ -21,7 +21,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Edit Custom Field Option') }}
+    {{ __tr('Edit Custom Field Option') }}
 @endsection
 @section('page-content')
     <x-admin-page-header title="Edit Custom Field Option" :links="$links" />
@@ -31,14 +31,14 @@
                 <div class="col-8 mx-auto">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Option Information') }}</h3>
+                            <h3 class="card-title">{{ __tr('Option Information') }}</h3>
                         </div>
                         <div class="card-body">
                             {{-- Language tabs --}}
                             <div class="lang-switcher-wrap mb-3">
                                 <div class="lang-switcher-label">
                                     <i class="fas fa-globe-americas"></i>
-                                    <span>{{ translation('Language') }}</span>
+                                    <span>{{ __tr('Language') }}</span>
                                 </div>
                                 <div class="lang-switcher-tabs">
                                     @foreach (activeLanguages() as $language)
@@ -57,23 +57,23 @@
                                 <input type="hidden" name="lang" value="{{ $lang }}">
 
                                 <div class="form-group">
-                                    <label class="black font-14">{{ translation('Value') }}</label>
+                                    <label class="black font-14">{{ __tr('Value') }}</label>
                                     <input type="text" name="value" class="form-control"
                                         value="{{ $option->translation('value', $lang) }}"
-                                        placeholder="{{ translation('Enter value') }}">
+                                        placeholder="{{ __tr('Enter value') }}">
                                 </div>
 
                                 @if ($lang == defaultLangCode())
                                     <div class="form-group">
-                                        <label class="black font-14">{{ translation('Status') }}</label>
+                                        <label class="black font-14">{{ __tr('Status') }}</label>
                                         <select name="status" class="form-control">
                                             <option value="{{ config('settings.general_status.active') }}"
                                                 @selected($option->status == config('settings.general_status.active'))>
-                                                {{ translation('Active') }}
+                                                {{ __tr('Active') }}
                                             </option>
                                             <option value="{{ config('settings.general_status.in_active') }}"
                                                 @selected($option->status == config('settings.general_status.in_active'))>
-                                                {{ translation('Inactive') }}
+                                                {{ __tr('Inactive') }}
                                             </option>
                                         </select>
                                     </div>
@@ -83,12 +83,12 @@
 
                                 <div class="d-flex justify-content-between mt-3">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ translation('Save Changes') }}
+                                        {{ __tr('Save Changes') }}
                                     </button>
                                     @if ($option->field)
                                         <a href="{{ route('classified.ads.custom.field.options', ['id' => $option->field->id]) }}"
                                             class="btn btn-secondary">
-                                            {{ translation('Back') }}
+                                            {{ __tr('Back') }}
                                         </a>
                                     @endif
                                 </div>
@@ -137,7 +137,7 @@
                                 );
                             });
                         } else {
-                            toastr.error('{{ translation('Option update failed') }}', 'Error');
+                            toastr.error('{{ __tr('Option update failed') }}', 'Error');
                         }
                     }
                 });

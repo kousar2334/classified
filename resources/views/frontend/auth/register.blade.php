@@ -6,8 +6,8 @@
     <div class="auth-page-wrapper">
         <div class="auth-card auth-card-wide">
             <div class="auth-card-header text-center">
-                <h2 class="auth-title">{{ translation('Create Account') }}</h2>
-                <p class="auth-subtitle">{{ translation('Join us today and get started') }}</p>
+                <h2 class="auth-title">{{ __tr('Create Account') }}</h2>
+                <p class="auth-subtitle">{{ __tr('Join us today and get started') }}</p>
             </div>
 
             {{-- Social Login --}}
@@ -25,7 +25,7 @@
                                 d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
                             <path fill="none" d="M0 0h48v48H0z" />
                         </svg>
-                        {{ translation('Sign up with Google') }}
+                        {{ __tr('Sign up with Google') }}
                     </a>
                 @endif
                 @if (get_setting('facebook_login') == config('settings.general_status.active'))
@@ -35,7 +35,7 @@
                             <path
                                 d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                         </svg>
-                        {{ translation('Sign up with Facebook') }}
+                        {{ __tr('Sign up with Facebook') }}
                     </a>
                 @endif
             </div>
@@ -43,7 +43,7 @@
             @if (get_setting('facebook_login') == config('settings.general_status.active') ||
                     get_setting('google_login') == config('settings.general_status.active'))
                 <div class="auth-divider">
-                    <span>{{ translation('or register with email') }}</span>
+                    <span>{{ __tr('or register with email') }}</span>
                 </div>
             @endif
 
@@ -52,52 +52,52 @@
                 @csrf
 
                 <div class="form-group mb-20">
-                    <label>{{ translation('Full Name') }}</label>
-                    <input type="text" class="input-style" name="name"
-                        placeholder="{{ translation('Enter your name') }}" value="{{ old('name') }}">
+                    <label>{{ __tr('Full Name') }}</label>
+                    <input type="text" class="input-style" name="name" placeholder="{{ __tr('Enter your name') }}"
+                        value="{{ old('name') }}">
                     @if ($errors->has('name'))
                         <p class="invalid-feedback d-block">{{ $errors->first('name') }}</p>
                     @endif
                 </div>
 
                 <div class="form-group mb-20">
-                    <label>{{ translation('Email Address') }}</label>
-                    <input type="email" class="input-style" name="email"
-                        placeholder="{{ translation('Enter your email') }}" value="{{ old('email') }}">
+                    <label>{{ __tr('Email Address') }}</label>
+                    <input type="email" class="input-style" name="email" placeholder="{{ __tr('Enter your email') }}"
+                        value="{{ old('email') }}">
                     @if ($errors->has('email'))
                         <p class="invalid-feedback d-block">{{ $errors->first('email') }}</p>
                     @endif
                 </div>
 
                 <div class="form-group mb-20">
-                    <label>{{ translation('Phone Number') }}</label>
-                    <input type="text" class="input-style" name="phone"
-                        placeholder="{{ translation('Enter your phone') }}" value="{{ old('phone') }}">
+                    <label>{{ __tr('Phone Number') }}</label>
+                    <input type="text" class="input-style" name="phone" placeholder="{{ __tr('Enter your phone') }}"
+                        value="{{ old('phone') }}">
                     @if ($errors->has('phone'))
                         <p class="invalid-feedback d-block">{{ $errors->first('phone') }}</p>
                     @endif
                 </div>
 
                 <div class="form-group mb-20">
-                    <label>{{ translation('Password') }}</label>
+                    <label>{{ __tr('Password') }}</label>
                     <input type="password" class="input-style" name="password"
-                        placeholder="{{ translation('Create a password') }}">
+                        placeholder="{{ __tr('Create a password') }}">
                     @if ($errors->has('password'))
                         <p class="invalid-feedback d-block">{{ $errors->first('password') }}</p>
                     @endif
                 </div>
 
                 <div class="form-group mb-20">
-                    <label>{{ translation('Confirm Password') }}</label>
+                    <label>{{ __tr('Confirm Password') }}</label>
                     <input type="password" class="input-style" name="password_confirmation"
-                        placeholder="{{ translation('Confirm your password') }}">
+                        placeholder="{{ __tr('Confirm your password') }}">
                 </div>
 
                 <div class="form-group mb-20">
                     <label class="auth-checkbox-label">
                         <input type="checkbox" name="terms_conditions" id="terms_conditions">
-                        <span>{{ translation('I agree to the') }} <a href="terms-and-conditions.html" target="_blank"
-                                class="auth-link">{{ translation('Terms and Conditions') }}</a></span>
+                        <span>{{ __tr('I agree to the') }} <a href="terms-and-conditions.html" target="_blank"
+                                class="auth-link">{{ __tr('Terms and Conditions') }}</a></span>
                     </label>
                     @if ($errors->has('terms_conditions'))
                         <p class="invalid-feedback d-block">{{ $errors->first('terms_conditions') }}</p>
@@ -105,13 +105,13 @@
                 </div>
 
                 <button type="submit" class="cmn-btn w-100 user-register-form sign_up_now_button">
-                    {{ translation('Create Account') }} <span id="user_register_load_spinner"></span>
+                    {{ __tr('Create Account') }} <span id="user_register_load_spinner"></span>
                 </button>
             </form>
 
             <p class="auth-switch-text">
-                {{ translation('Already have an account?') }}
-                <a href="{{ route('member.login') }}" class="auth-switch-link">{{ translation('Sign in') }}</a>
+                {{ __tr('Already have an account?') }}
+                <a href="{{ route('member.login') }}" class="auth-switch-link">{{ __tr('Sign in') }}</a>
             </p>
         </div>
     </div>

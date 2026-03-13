@@ -1,12 +1,12 @@
 @extends('frontend.layouts.dashboard')
 @section('dash-meta')
-    <title>{{ translation('My Favorites') }} - {{ get_setting('site_name') }}</title>
+    <title>{{ __tr('My Favorites') }} - {{ get_setting('site_name') }}</title>
 @endsection
 
 @section('dashboard-content')
     <div class="my-listings-header">
-        <h1>{{ translation('My Favorites') }}</h1>
-        <span class="fav-count-badge">{{ $totalCount }} {{ translation('saved') }}</span>
+        <h1>{{ __tr('My Favorites') }}</h1>
+        <span class="fav-count-badge">{{ $totalCount }} {{ __tr('saved') }}</span>
     </div>
 
     <form id="fav-filter-form" method="GET" action="{{ route('member.favourites') }}">
@@ -21,16 +21,16 @@
                             stroke-linejoin="round" />
                     </svg>
                 </span>
-                <input type="text" name="q" placeholder="{{ translation('Search your favourites...') }}"
+                <input type="text" name="q" placeholder="{{ __tr('Search your favourites...') }}"
                     value="{{ request('q') }}">
             </div>
             <select name="sortby" class="sort-select" onchange="this.form.submit()">
-                <option value="">{{ translation('Sort by: Latest') }}</option>
+                <option value="">{{ __tr('Sort by: Latest') }}</option>
                 <option value="price_low" {{ request('sortby') == 'price_low' ? 'selected' : '' }}>
-                    {{ translation('Price: Low to High') }}
+                    {{ __tr('Price: Low to High') }}
                 </option>
                 <option value="price_high" {{ request('sortby') == 'price_high' ? 'selected' : '' }}>
-                    {{ translation('Price: High to Low') }}
+                    {{ __tr('Price: High to Low') }}
                 </option>
             </select>
         </div>
@@ -46,13 +46,13 @@
                         </a>
 
                         @if ($ad->is_sold == config('settings.general_status.active'))
-                            <span class="listing-status sold">{{ translation('Sold') }}</span>
+                            <span class="listing-status sold">{{ __tr('Sold') }}</span>
                         @elseif ($ad->is_featured == config('settings.general_status.active'))
-                            <span class="listing-status featured">{{ translation('Featured') }}</span>
+                            <span class="listing-status featured">{{ __tr('Featured') }}</span>
                         @elseif ($ad->status == config('settings.general_status.active'))
-                            <span class="listing-status active">{{ translation('Active') }}</span>
+                            <span class="listing-status active">{{ __tr('Active') }}</span>
                         @else
-                            <span class="listing-status inactive">{{ translation('Inactive') }}</span>
+                            <span class="listing-status inactive">{{ __tr('Inactive') }}</span>
                         @endif
 
                         <div class="listing-actions-overlay">
@@ -90,7 +90,7 @@
                                     d="M11.7712 11.6047L8.94251 14.4333C8.6925 14.6831 8.35356 14.8234 8.00017 14.8234C7.64678 14.8234 7.30785 14.6831 7.05784 14.4333L4.22851 11.6047C3.48265 10.8588 2.97473 9.90845 2.76896 8.8739C2.5632 7.83934 2.66883 6.767 3.07251 5.79247C3.47618 4.81795 4.15977 3.98501 5.03683 3.39899C5.91388 2.81297 6.94502 2.50018 7.99984 2.50018C9.05466 2.50018 10.0858 2.81297 10.9629 3.39899C11.8399 3.98501 12.5235 4.81795 12.9272 5.79247C13.3308 6.767 13.4365 7.83934 13.2307 8.8739C13.0249 9.90845 12.517 10.8588 11.7712 11.6047Z"
                                     stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                            <span>{{ $ad->cityInfo?->name ? $ad->cityInfo->name . ', ' . $ad->stateInfo?->name : translation('Unknown Location') }}</span>
+                            <span>{{ $ad->cityInfo?->name ? $ad->cityInfo->name . ', ' . $ad->stateInfo?->name : __tr('Unknown Location') }}</span>
                         </div>
 
                         <div class="listing-footer">
@@ -98,7 +98,7 @@
                         </div>
 
                         <div class="listing-date">
-                            {{ translation('Saved') }} · {{ translation('Posted') }}
+                            {{ __tr('Saved') }} · {{ __tr('Posted') }}
                             {{ $ad->created_at->diffForHumans() }}
                         </div>
                     </div>
@@ -113,18 +113,18 @@
         @endif
     @else
         <div class="empty-listings">
-            <h3>{{ translation('No favorites yet') }}</h3>
+            <h3>{{ __tr('No favorites yet') }}</h3>
             <p>
                 @if (request('q'))
-                    {{ translation('No saved ads match your search. Try a different keyword.') }}
+                    {{ __tr('No saved ads match your search. Try a different keyword.') }}
                 @else
-                    {{ translation("Start saving listings you like and they'll appear here.") }}
+                    {{ __tr("Start saving listings you like and they'll appear here.") }}
                 @endif
             </p>
             @if (request('q'))
-                <a href="{{ route('member.favourites') }}" class="cmn-btn">{{ translation('View All Favorites') }}</a>
+                <a href="{{ route('member.favourites') }}" class="cmn-btn">{{ __tr('View All Favorites') }}</a>
             @else
-                <a href="{{ route('ad.listing.page') }}" class="cmn-btn">{{ translation('Browse Listings') }}</a>
+                <a href="{{ route('ad.listing.page') }}" class="cmn-btn">{{ __tr('Browse Listings') }}</a>
             @endif
         </div>
     @endif

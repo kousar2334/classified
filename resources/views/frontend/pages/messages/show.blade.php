@@ -1,13 +1,13 @@
 @extends('frontend.layouts.dashboard')
 @section('dash-meta')
-    <title>{{ translation('Message') }} - {{ get_setting('site_name') }}</title>
+    <title>{{ __tr('Message') }} - {{ get_setting('site_name') }}</title>
 @endsection
 
 @section('dashboard-content')
     <div class="dashboard-wrapper">
         <div class="dashboard-content">
             <a href="{{ route('member.messages.index') }}" class="back-link">
-                <i class="las la-arrow-left"></i> {{ translation('Back to messages') }}
+                <i class="las la-arrow-left"></i> {{ __tr('Back to messages') }}
             </a>
 
             <div class="chat-card">
@@ -24,12 +24,12 @@
                         </div>
                     @endif
                     <div class="chat-header-info">
-                        <p class="chat-header-name">{{ $other->name ?? translation('Unknown') }}</p>
+                        <p class="chat-header-name">{{ $other->name ?? __tr('Unknown') }}</p>
                         @if ($chat->ad)
                             <p class="chat-header-sub">
                                 <a href="{{ route('ad.details.page', $chat->ad->uid) }}" target="_blank"
                                     class="chat-ad-link">
-                                    {{ translation('Re') }}: {{ $chat->ad->title }}
+                                    {{ __tr('Re') }}: {{ $chat->ad->title }}
                                 </a>
                             </p>
                         @endif
@@ -65,7 +65,7 @@
                         </div>
                     @empty
                         <div class="text-center text-muted mt-auto mb-auto">
-                            {{ translation('No messages yet. Say hello!') }}</div>
+                            {{ __tr('No messages yet. Say hello!') }}</div>
                     @endforelse
                 </div>
 
@@ -73,10 +73,10 @@
                 <div class="chat-footer">
                     <form action="{{ route('member.messages.send', $chat->uid) }}" method="POST">
                         @csrf
-                        <textarea name="message" rows="2" placeholder="{{ translation('Type a message...') }}" required
+                        <textarea name="message" rows="2" placeholder="{{ __tr('Type a message...') }}" required
                             onkeydown="if(event.ctrlKey && event.key==='Enter') this.form.submit()">{{ old('message') }}</textarea>
                         <button type="submit">
-                            <i class="las la-paper-plane"></i> {{ translation('Send') }}
+                            <i class="las la-paper-plane"></i> {{ __tr('Send') }}
                         </button>
                     </form>
                 </div>

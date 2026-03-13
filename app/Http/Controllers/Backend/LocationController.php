@@ -41,13 +41,13 @@ class LocationController extends Controller
         if ($res) {
             return response()->json([
                 'success' => true,
-                'message' => translation('Country added successfully'),
+                'message' => __tr('Country added successfully'),
             ]);
         }
 
         return response()->json([
             'success' => false,
-            'message' => translation('Country added failed'),
+            'message' => __tr('Country added failed'),
         ]);
     }
     /**
@@ -77,13 +77,13 @@ class LocationController extends Controller
         if ($res == true) {
             return response()->json([
                 'success' => true,
-                'message' => translation('Country updated successfully'),
+                'message' => __tr('Country updated successfully'),
             ]);
         }
 
         return response()->json([
             'success' => false,
-            'message' => translation('Country update failed'),
+            'message' => __tr('Country update failed'),
         ]);
     }
     /**
@@ -107,12 +107,12 @@ class LocationController extends Controller
     {
         $res = $this->location_repository->changeCountryStatus($request->id);
         if ($res == true) {
-            toastNotification('success',  translation('Status updated successfully'), 'Success');
+            toastNotification('success',  __tr('Status updated successfully'), 'Success');
             return response()->json([
                 'success' => true,
             ]);
         } else {
-            toastNotification('success', translation('Status update failed'), 'failed');
+            toastNotification('success', __tr('Status update failed'), 'failed');
             return response()->json([
                 'success' => false
             ]);
@@ -153,12 +153,12 @@ class LocationController extends Controller
         if ($res == true) {
             return response()->json([
                 'success' => true,
-                'message' => translation('State added successfully'),
+                'message' => __tr('State added successfully'),
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => translation('Action failed'),
+                'message' => __tr('Action failed'),
             ]);
         }
     }
@@ -172,12 +172,12 @@ class LocationController extends Controller
         if ($res == true) {
             return response()->json([
                 'success' => true,
-                'message' => translation('State deleted successfully'),
+                'message' => __tr('State deleted successfully'),
             ]);
         }
         return response()->json([
             'success' => false,
-            'message' => translation('Action failed'),
+            'message' => __tr('Action failed'),
         ]);
     }
 
@@ -206,12 +206,12 @@ class LocationController extends Controller
         if ($res == true) {
             return response()->json([
                 'success' => true,
-                'message' => translation('State updated successfully'),
+                'message' => __tr('State updated successfully'),
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => translation('Action failed'),
+                'message' => __tr('Action failed'),
             ]);
         }
     }
@@ -240,12 +240,12 @@ class LocationController extends Controller
         if ($res == true) {
             return response()->json([
                 'success' => true,
-                'message' => translation('City added successfully'),
+                'message' => __tr('City added successfully'),
             ]);
         }
         return response()->json([
             'success' => false,
-            'message' => translation('Action failed'),
+            'message' => __tr('Action failed'),
         ]);
     }
     /**
@@ -255,10 +255,10 @@ class LocationController extends Controller
     {
         $res = $this->location_repository->deleteCity($request->id);
         if ($res == true) {
-            toastNotification('success', translation('City deleted successfully'), 'Success');
+            toastNotification('success', __tr('City deleted successfully'), 'Success');
             return to_route('classified.locations.city.list');
         }
-        toastNotification('error', translation('Action failed'), 'Error');
+        toastNotification('error', __tr('Action failed'), 'Error');
         return to_route('classified.locations.city.list');
     }
 
@@ -292,12 +292,12 @@ class LocationController extends Controller
         if ($res == true) {
             return response()->json([
                 'success' => true,
-                'message' => translation('City updated successfully'),
+                'message' => __tr('City updated successfully'),
             ]);
         }
         return response()->json([
             'success' => false,
-            'message' => translation('Action failed'),
+            'message' => __tr('Action failed'),
         ]);
     }
 }

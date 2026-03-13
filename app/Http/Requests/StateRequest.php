@@ -33,9 +33,9 @@ class StateRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'    => translation('Name is required'),
-            'country.required' => translation('Please select a country'),
-            'country.exists'   => translation('Invalid country'),
+            'name.required'    => __tr('Name is required'),
+            'country.required' => __tr('Please select a country'),
+            'country.exists'   => __tr('Invalid country'),
         ];
     }
 }

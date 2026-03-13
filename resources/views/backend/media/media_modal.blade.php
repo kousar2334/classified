@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header bg-blue py-2">
                 <h5 class="modal-title">
-                    <i class="fas fa-photo-video"></i> {{ translation('Media Library') }}
+                    <i class="fas fa-photo-video"></i> {{ __tr('Media Library') }}
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>

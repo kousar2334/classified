@@ -17,7 +17,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('Menus') }}
+    {{ __tr('Menus') }}
 @endsection
 @section('page-style')
     <link rel="stylesheet" href="{{ asset('public/web-assets/backend/plugins/select2/css/select2.min.css') }}">
@@ -179,8 +179,8 @@
         }
 
         /**
-                                                                                                                                                                    * Nestable Extras
-                                                                                                                                                                    */
+                                                                                                                                                                        * Nestable Extras
+                                                                                                                                                                        */
 
         .nestable-lists {
             display: block;
@@ -215,8 +215,8 @@
         }
 
         /**
-                                                                                                                                                                    * Nestable Draggable Handles
-                                                                                                                                                                    */
+                                                                                                                                                                        * Nestable Draggable Handles
+                                                                                                                                                                        */
         .dd-item-header {
             margin-left: 43px;
         }
@@ -289,7 +289,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" id="edit-menus-tab" data-toggle="pill" href="#edit-menus"
                                         role="tab" aria-controls="edit-menus"
-                                        aria-selected="true">{{ translation('Edit Menus') }}</a>
+                                        aria-selected="true">{{ __tr('Edit Menus') }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -301,10 +301,10 @@
                                         <div class="col-12 mb-20">
                                             <form method="get"
                                                 class="align-items-baseline d-flex gap-10 mb-2 flex-wrap mb-3">
-                                                <p class="mb-0">{{ translation('Select a menu to edit') }}</p>
+                                                <p class="mb-0">{{ __tr('Select a menu to edit') }}</p>
                                                 <input type="hidden" value="edit" name="action">
                                                 <select class="form-control menu-selector" name="item">
-                                                    <option value="">{{ translation('Select menu') }}</option>
+                                                    <option value="">{{ __tr('Select menu') }}</option>
                                                     @foreach ($all_menus as $menu)
                                                         <option value="{{ $menu->id }}" @selected($selected_menu != null && $selected_menu->id == $menu->id)>
                                                             {{ $menu->title }}</option>
@@ -317,7 +317,7 @@
                                                         : defaultLangCode();
                                                 @endphp
                                                 <select class="form-control menu-selector" name="lang">
-                                                    <option value="">{{ translation('Select Language') }}</option>
+                                                    <option value="">{{ __tr('Select Language') }}</option>
                                                     @foreach ($languages as $language)
                                                         <option value="{{ $language->code }}" @selected($selected_language != null && $selected_language == $language->code)>
                                                             {{ $language->native_title }}
@@ -326,9 +326,9 @@
                                                 </select>
 
                                                 <button class="btn btn-outline-primary btn-sm"
-                                                    type="submit">{{ translation('Select') }}</button>
-                                                <p class="mb-0">{{ translation('or') }} <a
-                                                        href="{{ route('admin.appearance.menu.builder', ['action' => 'create']) }}">{{ translation('Create a new menu') }}</a>
+                                                    type="submit">{{ __tr('Select') }}</button>
+                                                <p class="mb-0">{{ __tr('or') }} <a
+                                                        href="{{ route('admin.appearance.menu.builder', ['action' => 'create']) }}">{{ __tr('Create a new menu') }}</a>
                                                 </p>
                                             </form>
                                         </div>
@@ -342,7 +342,7 @@
                                                     <div id="CustomAccordianHeading"
                                                         class="align-items-center border-0 d-flex justify-content-between p-1 px-2">
                                                         <h5 class="mb-0 h6">
-                                                            {{ translation('Custom Link') }}
+                                                            {{ __tr('Custom Link') }}
                                                         </h5>
                                                         <button type="button" data-toggle="collapse"
                                                             data-target="#customLinkAccordion" aria-expanded="false"
@@ -354,22 +354,22 @@
                                                         <div class="card-body p-2">
                                                             <div class="input-area">
                                                                 <div class="form-group">
-                                                                    <label>{{ translation('Text') }}</label>
+                                                                    <label>{{ __tr('Text') }}</label>
                                                                     <input type="text" class="form-control"
                                                                         name="text" id="custom-item-text"
-                                                                        placeholder="{{ translation('Enter Text') }}">
+                                                                        placeholder="{{ __tr('Enter Text') }}">
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label>{{ translation('URL') }}</label>
+                                                                    <label>{{ __tr('URL') }}</label>
                                                                     <input type="text" class="form-control"
                                                                         id="custom-item-link" name="link"
-                                                                        placeholder="{{ translation('https://') }}">
+                                                                        placeholder="{{ __tr('https://') }}">
                                                                 </div>
                                                             </div>
                                                             <div class="action-area">
                                                                 <button
                                                                     class="btn btn-outline-primary btn-sm item-add-btn-to-menu"
-                                                                    data-item="custom">{{ translation('Add to Menu') }}
+                                                                    data-item="custom">{{ __tr('Add to Menu') }}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -381,7 +381,7 @@
                                                     <div id="PageAccordianheading"
                                                         class="align-items-center border-0 d-flex justify-content-between p-1 px-2">
                                                         <h5 class="mb-0 h6">
-                                                            {{ translation('Pages') }}
+                                                            {{ __tr('Pages') }}
                                                         </h5>
                                                         <button type="button" data-toggle="collapse"
                                                             data-target="#pageItemAccordion" aria-expanded="false"
@@ -410,7 +410,7 @@
                                                             <div class="action-area">
                                                                 <button
                                                                     class="btn btn-outline-primary btn-sm item-add-btn-to-menu"
-                                                                    data-item="page">{{ translation('Add to Menu') }}
+                                                                    data-item="page">{{ __tr('Add to Menu') }}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -422,7 +422,7 @@
                                                     <div id="categoryAccordianheading"
                                                         class="align-items-center border-0 d-flex justify-content-between p-1 px-2">
                                                         <h5 class="mb-0 h6">
-                                                            {{ translation('Categories') }}
+                                                            {{ __tr('Categories') }}
                                                         </h5>
                                                         <button type="button" data-toggle="collapse"
                                                             data-target="#categoryItemAccordion" aria-expanded="false"
@@ -452,7 +452,7 @@
                                                             <div class="action-area">
                                                                 <button
                                                                     class="btn btn-outline-primary btn-sm item-add-btn-to-menu"
-                                                                    data-item="category">{{ translation('Add to Menu') }}
+                                                                    data-item="category">{{ __tr('Add to Menu') }}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -476,7 +476,7 @@
                                                     <div class="card-header">
                                                         <div class="form-group row mb-0">
                                                             <label
-                                                                class="col-form-label font-weight-normal mr-3">{{ translation('Menu Name') }}</label>
+                                                                class="col-form-label font-weight-normal mr-3">{{ __tr('Menu Name') }}</label>
                                                             <div class="menu-name">
                                                                 <input type="text" class="form-control"
                                                                     name="menu_name" placeholder="Menu Name"
@@ -486,7 +486,7 @@
                                                     </div>
                                                     <div class="card-body d-flex flex-column p-2">
                                                         @if (request()->has('action') && request()->get('action') == 'create')
-                                                            <p>{{ translation('Enter menu name and click on save menu button') }}
+                                                            <p>{{ __tr('Enter menu name and click on save menu button') }}
                                                             </p>
                                                         @endif
                                                         @if (request()->has('action') && request()->get('action') == 'edit')
@@ -525,23 +525,23 @@
                                                                                             class="border bg-white menu-item-content-body p-2">
                                                                                             <div class="menu-item-content">
                                                                                                 <div class="form-group">
-                                                                                                    <label>{{ translation('Text') }}</label>
+                                                                                                    <label>{{ __tr('Text') }}</label>
                                                                                                     <input type="text"
                                                                                                         id="text-{{ $item->id }}"
                                                                                                         class="form-control"
                                                                                                         name="text"
                                                                                                         value="{{ $item->translation('title', $selected_language) }}"
-                                                                                                        placeholder="{{ translation('Enter Text') }}">
+                                                                                                        placeholder="{{ __tr('Enter Text') }}">
                                                                                                 </div>
                                                                                                 <div class="form-group">
-                                                                                                    <label>{{ translation('URL') }}</label>
+                                                                                                    <label>{{ __tr('URL') }}</label>
                                                                                                     <input type="text"
                                                                                                         id="link-{{ $item->id }}"
                                                                                                         class="form-control"
                                                                                                         name="link"
                                                                                                         value="{{ $item->link() }}"
                                                                                                         {{ $item->linkable_type != null ? 'disabled' : '' }}
-                                                                                                        placeholder="{{ translation('https://') }}">
+                                                                                                        placeholder="{{ __tr('https://') }}">
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div
@@ -549,12 +549,12 @@
                                                                                                 <button
                                                                                                     class="btn btn-outline-danger btn-sm menu-item-remove-btn"
                                                                                                     data-id="{{ $item->id }}">
-                                                                                                    {{ translation('Remove Item') }}
+                                                                                                    {{ __tr('Remove Item') }}
                                                                                                 </button>
                                                                                                 <button
                                                                                                     class="btn btn-outline-primary btn-sm menu-item-update-btn"
                                                                                                     data-id="{{ $item->id }}">
-                                                                                                    {{ translation('Save Change') }}
+                                                                                                    {{ __tr('Save Change') }}
                                                                                                 </button>
 
                                                                                             </div>
@@ -582,10 +582,10 @@
 
                                                         <!--Menu Position Settings-->
                                                         <div class="menu-settings border-top pt-2 mt-2">
-                                                            <h5>{{ translation('Menu Settings') }}</h5>
+                                                            <h5>{{ __tr('Menu Settings') }}</h5>
                                                             <div
                                                                 class="d-flex display-location-settings flex-wrap gap-10 mt-4">
-                                                                <h6>{{ translation('Display Locations') }}</h6>
+                                                                <h6>{{ __tr('Display Locations') }}</h6>
                                                                 <div
                                                                     class="d-flex display-location-options flex-column ml-lg-5">
                                                                     <!--Header Menu-->
@@ -595,7 +595,7 @@
                                                                             name="header_menu"
                                                                             @checked($menu_id != null && $header_menu != null && $header_menu->menu_id == $menu_id)>
                                                                         <span class="h6">
-                                                                            {{ translation('Header Menu') }}
+                                                                            {{ __tr('Header Menu') }}
                                                                             <span>
                                                                                 {{ $header_menu != null ? __('(Currently set to: ' . $header_menu->menu->title . ')') : 'No Menu set' }}
                                                                             </span>
@@ -609,7 +609,7 @@
                                                                             name="footer_menu"
                                                                             @checked($menu_id != null && $footer_menu != null && $footer_menu->menu_id == $menu_id)>
                                                                         <span class="h6">
-                                                                            {{ translation('Footer Menu') }}
+                                                                            {{ __tr('Footer Menu') }}
                                                                             <span>
                                                                                 {{ $footer_menu != null ? __('(Currently set to: ' . $footer_menu->menu->title . ')') : 'No Menu set' }}
                                                                             </span>
@@ -627,17 +627,17 @@
                                                     @if (request()->has('action') && request()->get('action') == 'create')
                                                         <div class="bg-light d-flex justify-content-end p-2">
                                                             <button class="btn btn-primary">
-                                                                {{ translation('Save Menu') }}
+                                                                {{ __tr('Save Menu') }}
                                                             </button>
                                                         </div>
                                                     @else
                                                         <div class="bg-light d-flex justify-content-between p-2">
                                                             <button type="button"
                                                                 class="btn btn-link text-danger delete-menu-btn">
-                                                                {{ translation('Delete Menu') }}
+                                                                {{ __tr('Delete Menu') }}
                                                             </button>
                                                             <button class="btn btn-primary">
-                                                                {{ translation('Update Menu') }}
+                                                                {{ __tr('Update Menu') }}
                                                             </button>
                                                         </div>
                                                     @endif
@@ -659,19 +659,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete menu ?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete menu ?') }}</h4>
                         <form method="POST" action="{{ route('admin.appearance.menu.builder.delete.menu') }}">
                             @csrf
                             <input type="hidden" name="id" value="{{ $menu_id }}">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>

@@ -64,14 +64,14 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('All Subscriptions') }}</h3>
+                            <h3 class="card-title">{{ __tr('All Subscriptions') }}</h3>
                             <div class="card-tools">
                                 <form method="GET" action="{{ route('admin.subscriptions.list') }}" class="d-flex"
                                     style="gap: 0.5rem;">
                                     <input type="text" name="q" class="form-control form-control-sm"
-                                        placeholder="{{ translation('Search member...') }}" value="{{ request('q') }}">
+                                        placeholder="{{ __tr('Search member...') }}" value="{{ request('q') }}">
                                     <select name="status" class="form-control form-control-sm" style="width: auto;">
-                                        <option value="">{{ translation('All Status') }}</option>
+                                        <option value="">{{ __tr('All Status') }}</option>
                                         <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>
                                             Active</option>
                                         <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>
@@ -84,7 +84,7 @@
                                             Rejected</option>
                                     </select>
                                     <select name="method" class="form-control form-control-sm" style="width: auto;">
-                                        <option value="">{{ translation('All Methods') }}</option>
+                                        <option value="">{{ __tr('All Methods') }}</option>
                                         <option value="sslcommerz"
                                             {{ request('method') === 'sslcommerz' ? 'selected' : '' }}>SSLCommerz</option>
                                         <option value="bank_transfer"
@@ -93,11 +93,10 @@
                                         <option value="trial" {{ request('method') === 'trial' ? 'selected' : '' }}>Trial
                                         </option>
                                     </select>
-                                    <button type="submit"
-                                        class="btn btn-primary btn-sm">{{ translation('Search') }}</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">{{ __tr('Search') }}</button>
                                     @if (request('q') || request('status') || request('method'))
                                         <a href="{{ route('admin.subscriptions.list') }}"
-                                            class="btn btn-secondary btn-sm">{{ translation('Reset') }}</a>
+                                            class="btn btn-secondary btn-sm">{{ __tr('Reset') }}</a>
                                     @endif
                                 </form>
                             </div>
@@ -106,17 +105,17 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('#') }}</th>
-                                        <th>{{ translation('Member') }}</th>
-                                        <th>{{ translation('Plan') }}</th>
-                                        <th>{{ translation('Transaction ID') }}</th>
-                                        <th>{{ translation('Amount') }}</th>
-                                        <th>{{ translation('Method') }}</th>
-                                        <th>{{ translation('Status') }}</th>
-                                        <th>{{ translation('Starts') }}</th>
-                                        <th>{{ translation('Expires') }}</th>
-                                        <th>{{ translation('Date') }}</th>
-                                        <th class="text-right">{{ translation('Action') }}</th>
+                                        <th>{{ __tr('#') }}</th>
+                                        <th>{{ __tr('Member') }}</th>
+                                        <th>{{ __tr('Plan') }}</th>
+                                        <th>{{ __tr('Transaction ID') }}</th>
+                                        <th>{{ __tr('Amount') }}</th>
+                                        <th>{{ __tr('Method') }}</th>
+                                        <th>{{ __tr('Status') }}</th>
+                                        <th>{{ __tr('Starts') }}</th>
+                                        <th>{{ __tr('Expires') }}</th>
+                                        <th>{{ __tr('Date') }}</th>
+                                        <th class="text-right">{{ __tr('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -194,8 +193,7 @@
                                                 @if ($sub->payment_method === 'bank_transfer' && $sub->status === 'pending')
                                                     @if ($sub->bank_slip)
                                                         <a href="{{ asset('storage/' . $sub->bank_slip) }}" target="_blank"
-                                                            class="btn btn-info btn-sm"
-                                                            title="{{ translation('View Slip') }}">
+                                                            class="btn btn-info btn-sm" title="{{ __tr('View Slip') }}">
                                                             <i class="fas fa-file-image"></i>
                                                         </a>
                                                     @endif
@@ -203,14 +201,14 @@
                                                         data-id="{{ $sub->id }}"
                                                         data-name="{{ $sub->user->name ?? '' }}"
                                                         data-plan="{{ $sub->plan->title ?? '' }}"
-                                                        title="{{ translation('Approve') }}">
+                                                        title="{{ __tr('Approve') }}">
                                                         <i class="fas fa-check"></i>
                                                     </button>
                                                     <button class="btn btn-warning btn-sm reject-item"
                                                         data-id="{{ $sub->id }}"
                                                         data-name="{{ $sub->user->name ?? '' }}"
                                                         data-plan="{{ $sub->plan->title ?? '' }}"
-                                                        title="{{ translation('Reject') }}">
+                                                        title="{{ __tr('Reject') }}">
                                                         <i class="fas fa-times"></i>
                                                     </button>
                                                 @endif
@@ -223,7 +221,7 @@
                                     @empty
                                         <tr>
                                             <td colspan="11">
-                                                <div class="text-center">{{ translation('No subscriptions found') }}</div>
+                                                <div class="text-center">{{ __tr('No subscriptions found') }}</div>
                                             </td>
                                         </tr>
                                     @endforelse
@@ -247,7 +245,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-success text-white">
                     <h4 class="modal-title h6">
-                        <i class="fas fa-check-circle mr-2"></i>{{ translation('Approve Subscription') }}
+                        <i class="fas fa-check-circle mr-2"></i>{{ __tr('Approve Subscription') }}
                     </h4>
                     <button type="button" class="close text-white" data-dismiss="modal">
                         <span>&times;</span>
@@ -258,20 +256,20 @@
                     <input type="hidden" id="approve-item-id" name="id">
                     <div class="modal-body">
                         <p class="mb-3">
-                            {{ translation('Approve bank transfer for') }}
+                            {{ __tr('Approve bank transfer for') }}
                             <strong id="approve-member-name"></strong> &mdash;
-                            {{ translation('plan') }} <strong id="approve-plan-name"></strong>?
+                            {{ __tr('plan') }} <strong id="approve-plan-name"></strong>?
                         </p>
                         <div class="form-group mb-0">
-                            <label>{{ translation('Admin Note (optional, sent to user)') }}</label>
+                            <label>{{ __tr('Admin Note (optional, sent to user)') }}</label>
                             <textarea name="admin_note" class="form-control" rows="2" placeholder="e.g. Payment verified successfully."></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
-                            data-dismiss="modal">{{ translation('Cancel') }}</button>
+                            data-dismiss="modal">{{ __tr('Cancel') }}</button>
                         <button type="submit" class="btn btn-success">
-                            <i class="fas fa-check mr-1"></i> {{ translation('Approve & Activate') }}
+                            <i class="fas fa-check mr-1"></i> {{ __tr('Approve & Activate') }}
                         </button>
                     </div>
                 </form>
@@ -285,7 +283,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-warning">
                     <h4 class="modal-title h6">
-                        <i class="fas fa-times-circle mr-2"></i>{{ translation('Reject Subscription') }}
+                        <i class="fas fa-times-circle mr-2"></i>{{ __tr('Reject Subscription') }}
                     </h4>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
@@ -296,21 +294,21 @@
                     <input type="hidden" id="reject-item-id" name="id">
                     <div class="modal-body">
                         <p class="mb-3">
-                            {{ translation('Reject bank transfer for') }}
+                            {{ __tr('Reject bank transfer for') }}
                             <strong id="reject-member-name"></strong> &mdash;
-                            {{ translation('plan') }} <strong id="reject-plan-name"></strong>?
+                            {{ __tr('plan') }} <strong id="reject-plan-name"></strong>?
                         </p>
                         <div class="form-group mb-0">
-                            <label>{{ translation('Rejection Reason (sent to user via notification & email)') }}</label>
+                            <label>{{ __tr('Rejection Reason (sent to user via notification & email)') }}</label>
                             <textarea name="admin_note" class="form-control" rows="2"
                                 placeholder="e.g. Payment slip could not be verified."></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
-                            data-dismiss="modal">{{ translation('Cancel') }}</button>
+                            data-dismiss="modal">{{ __tr('Cancel') }}</button>
                         <button type="submit" class="btn btn-warning">
-                            <i class="fas fa-times mr-1"></i> {{ translation('Reject') }}
+                            <i class="fas fa-times mr-1"></i> {{ __tr('Reject') }}
                         </button>
                     </div>
                 </form>
@@ -323,19 +321,19 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                    <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body text-center">
-                    <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete?') }}</h4>
+                    <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete?') }}</h4>
                     <form method="POST" action="{{ route('admin.subscriptions.delete') }}">
                         @csrf
                         <input type="hidden" id="delete-item-id" name="id">
                         <button type="button" class="btn mt-2 btn-danger"
-                            data-dismiss="modal">{{ translation('Cancel') }}</button>
-                        <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                            data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                        <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                     </form>
                 </div>
             </div>

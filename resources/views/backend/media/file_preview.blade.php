@@ -17,41 +17,41 @@
         </div>
         <div class="single-media-info p-2">
             <div class="media-form">
-                <p>{{ translation('Name') }}</p>
+                <p>{{ __tr('Name') }}</p>
                 <span>{{ $files[0]->title }}</span>
             </div>
             <div class="media-form">
-                <p class="mb-1">{{ translation('Full URL') }}</p>
+                <p class="mb-1">{{ __tr('Full URL') }}</p>
                 <div class="input-group">
                     <input type="text" class="form-control media-url-input" readonly
                         value="{{ asset(getFilePath($files[0]->path)) }}">
                     <div class="input-group-append">
                         <button type="button" class="btn btn-outline-secondary copy-url-btn"
-                            title="{{ translation('Copy URL') }}">
+                            title="{{ __tr('Copy URL') }}">
                             <i class="fa fa-copy"></i>
                         </button>
                     </div>
                 </div>
             </div>
             <div class="media-form">
-                <p>{{ translation('File Type') }}</p>
+                <p>{{ __tr('File Type') }}</p>
                 <span>{{ $files[0]->mime_type }}</span>
             </div>
             <div class="media-form">
-                <p>{{ translation('Size') }}</p>
-                <span>{{ number_format($files[0]->size, 2) }} {{ translation('KB') }}</span>
+                <p>{{ __tr('Size') }}</p>
+                <span>{{ number_format($files[0]->size, 2) }} {{ __tr('KB') }}</span>
             </div>
             <div class="media-form">
-                <p>{{ translation('Uploaded at') }}</p>
+                <p>{{ __tr('Uploaded at') }}</p>
                 <span>{{ $files[0]->created_at->format('d M Y') }}</span>
             </div>
             <div class="media-form">
-                <p>{{ translation('Modified at') }}</p>
+                <p>{{ __tr('Modified at') }}</p>
                 <span>{{ $files[0]->updated_at->format('d M Y') }}</span>
             </div>
             @if ($files[0]->user != null)
                 <div class="media-form">
-                    <p>{{ translation('Uploaded By') }}</p>
+                    <p>{{ __tr('Uploaded By') }}</p>
                     <span>{{ $files[0]->user->name }}</span>
                 </div>
             @endif
@@ -59,7 +59,7 @@
         <form class="d-none">
             <div class="d-flex gap-10 justify-content-end flex-wrap mt-2">
                 <button type="button" class="btn btn-link text-danger">
-                    {{ translation('Delete Permanently') }}
+                    {{ __tr('Delete Permanently') }}
                 </button>
             </div>
         </form>

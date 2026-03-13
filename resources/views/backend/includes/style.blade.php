@@ -66,11 +66,11 @@
 
     @keyframes lds-ellipsis2 {
         0% {
-            transform: translation(0, 0);
+            transform: __tr(0, 0);
         }
 
         100% {
-            transform: translation(24px, 0);
+            transform: __tr(24px, 0);
         }
     }
 

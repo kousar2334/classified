@@ -29,22 +29,22 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ translation('Listing Categories') }}</h3>
+                            <h3 class="card-title">{{ __tr('Listing Categories') }}</h3>
                             <button class="btn btn-success btn-sm float-right text-white" data-toggle="modal"
-                                data-target="#create-item-modal">{{ translation('Create New Category') }}
+                                data-target="#create-item-modal">{{ __tr('Create New Category') }}
                             </button>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>{{ translation('#') }}</th>
-                                        <th>{{ translation('Title') }}</th>
-                                        <th>{{ translation('Parent') }}</th>
-                                        <th>{{ translation('Icon') }}</th>
-                                        <th>{{ translation('Image') }}</th>
-                                        <th>{{ translation('Status') }}</th>
-                                        <th class="text-right">{{ translation('Action') }}</th>
+                                        <th>{{ __tr('#') }}</th>
+                                        <th>{{ __tr('Title') }}</th>
+                                        <th>{{ __tr('Parent') }}</th>
+                                        <th>{{ __tr('Icon') }}</th>
+                                        <th>{{ __tr('Image') }}</th>
+                                        <th>{{ __tr('Status') }}</th>
+                                        <th class="text-right">{{ __tr('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,15 +74,14 @@
 
                                             <td>
                                                 @if ($category->status == config('settings.general_status.active'))
-                                                    <p class="badge badge-success">{{ translation('Active') }}</p>
+                                                    <p class="badge badge-success">{{ __tr('Active') }}</p>
                                                 @else
-                                                    <p class="badge badge-danger">{{ translation('Inactive') }}</p>
+                                                    <p class="badge badge-danger">{{ __tr('Inactive') }}</p>
                                                 @endif
                                             </td>
                                             <td class="text-right">
                                                 <div class="btn-group">
-                                                    <button type="button"
-                                                        class="btn btn-default">{{ translation('Action') }}
+                                                    <button type="button" class="btn btn-default">{{ __tr('Action') }}
                                                     </button>
                                                     <button type="button"
                                                         class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon"
@@ -91,12 +90,12 @@
                                                     <div class="dropdown-menu" role="menu">
                                                         <a class="dropdown-item"
                                                             href="{{ route('classified.ads.categories.edit.page', ['id' => $category->id]) }}">
-                                                            {{ translation('Edit') }}
+                                                            {{ __tr('Edit') }}
                                                         </a>
                                                         <div class="dropdown-divider"></div>
                                                         <button class="dropdown-item delete-item"
                                                             data-id="{{ $category->id }}">
-                                                            {{ translation('Delete') }}
+                                                            {{ __tr('Delete') }}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -105,7 +104,7 @@
                                     @empty
                                         <tr>
                                             <td colspan="10">
-                                                <div class="text-center">{{ translation('No item found') }}</div>
+                                                <div class="text-center">{{ __tr('No item found') }}</div>
                                             </td>
                                         </tr>
                                     @endforelse
@@ -126,7 +125,7 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ translation('New Category') }}</h5>
+                        <h5 class="modal-title">{{ __tr('New Category') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -135,26 +134,26 @@
                         <form id="new-category-form">
                             <div class="form-row mb-20">
                                 <div class="form-group col-lg-6">
-                                    <label class="black font-14">{{ translation('Icon') }}</label>
+                                    <label class="black font-14">{{ __tr('Icon') }}</label>
                                     <x-media name="icon"></x-media>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="black font-14">{{ translation('Featured Image') }}</label>
+                                    <label class="black font-14">{{ __tr('Featured Image') }}</label>
                                     <x-media name="image"></x-media>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translation('Title') }}</label>
+                                    <label class="black font-14">{{ __tr('Title') }}</label>
                                     <input type="text" name="title" class="form-control slugable_input"
-                                        placeholder="{{ translation('Enter title') }}">
+                                        placeholder="{{ __tr('Enter title') }}">
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="font-14 bold black w-100">{{ translation('Parent') }} </label>
+                                    <label class="font-14 bold black w-100">{{ __tr('Parent') }} </label>
                                     <select class="parent-options form-control w-100" name="parent">
                                     </select>
                                     @if ($errors->has('parent'))
@@ -165,19 +164,19 @@
 
                             <div class="form-row">
                                 <div class="form-group col-lg-12">
-                                    <label class="black font-14">{{ translation('Status') }}</label>
+                                    <label class="black font-14">{{ __tr('Status') }}</label>
                                     <select name="status" class="form-control">
                                         <option value="{{ config('settings.general_status.active') }}">
-                                            {{ translation('Active') }}
+                                            {{ __tr('Active') }}
                                         </option>
                                         <option value="{{ config('settings.general_status.in_active') }}">
-                                            {{ translation('Inactive') }}
+                                            {{ __tr('Inactive') }}
                                         </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="btn-area d-flex justify-content-between">
-                                <button class="btn btn-primary mt-2 store-category">{{ translation('Save') }}</button>
+                                <button class="btn btn-primary mt-2 store-category">{{ __tr('Save') }}</button>
                             </div>
 
                         </form>
@@ -192,19 +191,19 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title h6">{{ translation('Delete Confirmation') }}</h4>
+                        <h4 class="modal-title h6">{{ __tr('Delete Confirmation') }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <h4 class="mt-1 h6 my-2">{{ translation('Are you sure to delete ?') }}</h4>
+                        <h4 class="mt-1 h6 my-2">{{ __tr('Are you sure to delete ?') }}</h4>
                         <form method="POST" action="{{ route('classified.ads.categories.delete') }}">
                             @csrf
                             <input type="hidden" id="delete-item-id" name="id">
                             <button type="button" class="btn mt-2 btn-danger"
-                                data-dismiss="modal">{{ translation('Cancel') }}</button>
-                            <button type="submit" class="btn btn-success mt-2">{{ translation('Delete') }}</button>
+                                data-dismiss="modal">{{ __tr('Cancel') }}</button>
+                            <button type="submit" class="btn btn-success mt-2">{{ __tr('Delete') }}</button>
                         </form>
                     </div>
                 </div>
@@ -274,7 +273,7 @@
             function initParentSelect() {
                 $('.parent-options').select2({
                     theme: "bootstrap4",
-                    placeholder: '{{ translation('Select parent category') }}',
+                    placeholder: '{{ __tr('Select parent category') }}',
                     closeOnSelect: true,
                     width: '100%',
                     ajax: {

@@ -71,12 +71,12 @@ class PricingPlanController extends Controller
         if ($res) {
             return response()->json([
                 'success' => true,
-                'message' => translation('Pricing plan updated successfully'),
+                'message' => __tr('Pricing plan updated successfully'),
             ]);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => translation('Pricing plan update failed'),
+                'message' => __tr('Pricing plan update failed'),
             ]);
         }
     }

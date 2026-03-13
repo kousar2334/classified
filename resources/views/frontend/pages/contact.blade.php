@@ -1,8 +1,7 @@
 @extends('frontend.layouts.master')
 @section('meta')
-    <title>{{ translation('Contact Us') }} - {{ get_setting('site_name') }}</title>
-    <meta name="description"
-        content="{{ translation('Get in touch with us. Send us a message and we will get back to you.') }}">
+    <title>{{ __tr('Contact Us') }} - {{ get_setting('site_name') }}</title>
+    <meta name="description" content="{{ __tr('Get in touch with us. Send us a message and we will get back to you.') }}">
 @endsection
 
 @section('content')
@@ -11,17 +10,17 @@
     <section class="contact-breadcrumb-area">
         <div class="container">
             <div class="breadcrumb-content text-center">
-                <span class="page-tag">{{ translation('Get In Touch') }}</span>
-                <h1>{{ $content->get('contact_title') ?: translation('Contact Us') }}</h1>
+                <span class="page-tag">{{ __tr('Get In Touch') }}</span>
+                <h1>{{ $content->get('contact_title') ?: __tr('Contact Us') }}</h1>
                 <p class="sub-text">
-                    {{ $content->get('contact_sub_title') ?: translation('We would love to hear from you. Send us a message and we will get back to you shortly.') }}
+                    {{ $content->get('contact_sub_title') ?: __tr('We would love to hear from you. Send us a message and we will get back to you shortly.') }}
                 </p>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('home') }}">{{ translation('Home') }}</a>
+                            <a href="{{ route('home') }}">{{ __tr('Home') }}</a>
                         </li>
-                        <li class="breadcrumb-item active">{{ translation('Contact Us') }}</li>
+                        <li class="breadcrumb-item active">{{ __tr('Contact Us') }}</li>
                     </ol>
                 </nav>
             </div>
@@ -36,9 +35,9 @@
 
             {{-- Section heading --}}
             <div class="contact-section-head text-center">
-                <span class="section-tag">{{ translation('Contact') }}</span>
-                <h2>{{ translation('How Can We Help You?') }}</h2>
-                <p>{{ translation('Choose the best way to reach us or just drop a message below.') }}</p>
+                <span class="section-tag">{{ __tr('Contact') }}</span>
+                <h2>{{ __tr('How Can We Help You?') }}</h2>
+                <p>{{ __tr('Choose the best way to reach us or just drop a message below.') }}</p>
             </div>
 
             <div class="row g-4 align-items-start">
@@ -53,7 +52,7 @@
                                     <i class="las la-map-marker-alt"></i>
                                 </div>
                                 <div>
-                                    <p class="card-label">{{ translation('Address') }}</p>
+                                    <p class="card-label">{{ __tr('Address') }}</p>
                                     <p class="card-value">{{ $content->get('contact_address') }}</p>
                                 </div>
                             </div>
@@ -65,7 +64,7 @@
                                     <i class="las la-envelope"></i>
                                 </div>
                                 <div>
-                                    <p class="card-label">{{ translation('Email') }}</p>
+                                    <p class="card-label">{{ __tr('Email') }}</p>
                                     <a href="mailto:{{ $content->get('contact_email') }}"
                                         class="card-value">{{ $content->get('contact_email') }}</a>
                                 </div>
@@ -78,7 +77,7 @@
                                     <i class="las la-phone-alt"></i>
                                 </div>
                                 <div>
-                                    <p class="card-label">{{ translation('Phone') }}</p>
+                                    <p class="card-label">{{ __tr('Phone') }}</p>
                                     <a href="tel:{{ $content->get('contact_phone_1') }}"
                                         class="card-value d-block">{{ $content->get('contact_phone_1') }}</a>
                                     @if ($content->get('contact_phone_2'))
@@ -95,7 +94,7 @@
                                     <i class="las la-clock"></i>
                                 </div>
                                 <div>
-                                    <p class="card-label">{{ translation('Working Hours') }}</p>
+                                    <p class="card-label">{{ __tr('Working Hours') }}</p>
                                     <p class="card-value">{{ $content->get('contact_opening_hours') }}</p>
                                     @if ($content->get('contact_closed_hours'))
                                         <p class="card-value">{{ $content->get('contact_closed_hours') }}</p>
@@ -111,10 +110,10 @@
                                     <i class="las la-headset"></i>
                                 </div>
                                 <div>
-                                    <p class="card-label">{{ translation('Support') }}</p>
+                                    <p class="card-label">{{ __tr('Support') }}</p>
                                     <p class="card-value">{{ get_setting('site_name') }}</p>
                                     <p class="card-value" style="font-size:13px; color:#94a3b8; margin-top:4px;">
-                                        {{ translation('Fill the form and we will reach out to you.') }}
+                                        {{ __tr('Fill the form and we will reach out to you.') }}
                                     </p>
                                 </div>
                             </div>
@@ -130,8 +129,8 @@
                     <div class="contact-form-card">
 
                         <div class="form-head">
-                            <h4>{{ translation('Send Us a Message') }}</h4>
-                            <p>{{ translation('Fill in the details below and our team will respond as soon as possible.') }}
+                            <h4>{{ __tr('Send Us a Message') }}</h4>
+                            <p>{{ __tr('Fill in the details below and our team will respond as soon as possible.') }}
                             </p>
                         </div>
 
@@ -164,12 +163,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-20">
                                         <label class="fe-label">
-                                            {{ translation('Full Name') }}
+                                            {{ __tr('Full Name') }}
                                             <span class="required">*</span>
                                         </label>
                                         <input type="text" name="name" value="{{ old('name') }}"
                                             class="input-style {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                            placeholder="{{ translation('Enter your full name') }}" required>
+                                            placeholder="{{ __tr('Enter your full name') }}" required>
                                         @error('name')
                                             <span class="fe-invalid-feedback">{{ $message }}</span>
                                         @enderror
@@ -180,12 +179,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-20">
                                         <label class="fe-label">
-                                            {{ translation('Email Address') }}
+                                            {{ __tr('Email Address') }}
                                             <span class="required">*</span>
                                         </label>
                                         <input type="email" name="email" value="{{ old('email') }}"
                                             class="input-style {{ $errors->has('email') ? 'is-invalid' : '' }}"
-                                            placeholder="{{ translation('Enter your email') }}" required>
+                                            placeholder="{{ __tr('Enter your email') }}" required>
                                         @error('email')
                                             <span class="fe-invalid-feedback">{{ $message }}</span>
                                         @enderror
@@ -196,12 +195,12 @@
                                 <div class="col-12">
                                     <div class="form-group mb-20">
                                         <label class="fe-label">
-                                            {{ translation('Subject') }}
+                                            {{ __tr('Subject') }}
                                             <span class="required">*</span>
                                         </label>
                                         <input type="text" name="subject" value="{{ old('subject') }}"
                                             class="input-style {{ $errors->has('subject') ? 'is-invalid' : '' }}"
-                                            placeholder="{{ translation('What is this about?') }}" required>
+                                            placeholder="{{ __tr('What is this about?') }}" required>
                                         @error('subject')
                                             <span class="fe-invalid-feedback">{{ $message }}</span>
                                         @enderror
@@ -212,11 +211,11 @@
                                 <div class="col-12">
                                     <div class="form-group mb-20">
                                         <label class="fe-label">
-                                            {{ translation('Message') }}
+                                            {{ __tr('Message') }}
                                             <span class="required">*</span>
                                         </label>
                                         <textarea name="message" rows="6" class="input-style {{ $errors->has('message') ? 'is-invalid' : '' }}"
-                                            placeholder="{{ translation('Write your message here...') }}" required>{{ old('message') }}</textarea>
+                                            placeholder="{{ __tr('Write your message here...') }}" required>{{ old('message') }}</textarea>
                                         @error('message')
                                             <span class="fe-invalid-feedback">{{ $message }}</span>
                                         @enderror
@@ -227,7 +226,7 @@
                                 <div class="col-12">
                                     <button type="submit" class="cmn-btn">
                                         <i class="las la-paper-plane"></i>
-                                        {{ translation('Send Message') }}
+                                        {{ __tr('Send Message') }}
                                     </button>
                                 </div>
 

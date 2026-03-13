@@ -14,7 +14,7 @@
 @endphp
 @extends('backend.layouts.dashboard_layout')
 @section('page-title')
-    {{ translation('System') }}
+    {{ __tr('System') }}
 @endsection
 @section('page-style')
 @endsection
