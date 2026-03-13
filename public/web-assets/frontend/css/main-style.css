@@ -3713,14 +3713,14 @@ object {
     border: 1px solid transparent;
     background: var(--main-color-one);
     color: #ffffff;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
     border-radius: 8px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 12px 24px;
+    padding: 9px 25px;
     cursor: pointer;
     text-align: center;
     white-space: nowrap;

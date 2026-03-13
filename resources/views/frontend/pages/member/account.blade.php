@@ -136,7 +136,7 @@
     </div>
 
     {{-- ── Profile Photo ── --}}
-    <div class="dashboard-card avatar-card">
+    <div class="dashboard-card p-0 avatar-card">
         <div class="card-header">
             <h3 class="card-title">
                 <i class="fa-solid fa-camera"
@@ -144,7 +144,8 @@
             </h3>
         </div>
 
-        <form action="{{ route('member.account.update.image') }}" method="POST" enctype="multipart/form-data" id="avatarForm">
+        <form class="p-2" action="{{ route('member.account.update.image') }}" method="POST" enctype="multipart/form-data"
+            id="avatarForm">
             @csrf
 
             <div class="avatar-upload-wrap">
@@ -162,7 +163,7 @@
                         <i class="fa-solid fa-arrow-up-from-bracket"></i> {{ translation('Choose Photo') }}
                     </label>
                     <button type="submit" class="cmn-btn" id="avatarSaveBtn" style="display:none">
-                        <i class="fa-solid fa-floppy-disk"></i> {{ translation('Upload') }}
+                        {{ translation('Upload') }}
                     </button>
                     <input type="file" name="profile_image" id="profileImageInput" class="avatar-file-input"
                         accept="image/jpeg,image/png,image/jpg,image/webp">
@@ -178,7 +179,7 @@
     <div class="account-grid">
 
         {{-- ── Profile Information ── --}}
-        <div class="dashboard-card">
+        <div class="dashboard-card p-0">
             <div class="card-header">
                 <h3 class="card-title">
                     <i class="fa-solid fa-user"
@@ -186,7 +187,7 @@
                 </h3>
             </div>
 
-            <form action="{{ route('member.account.update.profile') }}" method="POST" novalidate>
+            <form class="p-3" action="{{ route('member.account.update.profile') }}" method="POST" novalidate>
                 @csrf
                 @method('PUT')
 
@@ -219,14 +220,14 @@
 
                 <div class="form-group mb-0">
                     <button type="submit" class="cmn-btn">
-                        <i class="fa-solid fa-floppy-disk"></i> {{ translation('Save Changes') }}
+                        {{ translation('Save Changes') }}
                     </button>
                 </div>
             </form>
         </div>
 
         {{-- ── Change Password ── --}}
-        <div class="dashboard-card">
+        <div class="dashboard-card p-0">
             <div class="card-header">
                 <h3 class="card-title">
                     <i class="fa-solid fa-lock"
@@ -235,14 +236,14 @@
             </div>
 
             @if ($user->social_provider)
-                <div class="social-notice">
+                <div class="social-notice p-3">
                     <i class="fa-solid fa-circle-info"></i>
                     {{ translation('Your account is linked via') }}
                     <strong>{{ ucfirst($user->social_provider) }}</strong>.
                     {{ translation('Password change is not available for social login accounts.') }}
                 </div>
             @else
-                <form action="{{ route('member.account.update.password') }}" method="POST" novalidate>
+                <form class="p-3" action="{{ route('member.account.update.password') }}" method="POST" novalidate>
                     @csrf
                     @method('PUT')
 
@@ -289,7 +290,7 @@
 
                     <div class="form-group mb-0">
                         <button type="submit" class="cmn-btn">
-                            <i class="fa-solid fa-key"></i> {{ translation('Update Password') }}
+                            {{ translation('Update Password') }}
                         </button>
                     </div>
                 </form>
