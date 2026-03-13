@@ -52,7 +52,7 @@
     @endif
 
     {{-- Subscription History Table --}}
-    <div class="dashboard-card">
+    <div class="dashboard-card p-0">
         <div class="card-header">
             <h3 class="card-title">{{ translation('Subscription History') }}</h3>
             <span class="sub-history-count">{{ $subscriptions->total() }} {{ translation('total') }}</span>
