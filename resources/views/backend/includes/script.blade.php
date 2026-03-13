@@ -107,22 +107,22 @@
 
     }
     /**
-     * 
+     *
      * Remove file input field value
-     * 
+     *
      **/
-    function removeFileInputValue(name, place_holder_image, input_is_multiple) {
+    function removeFileInputValue(name, input_is_multiple) {
         "use strict";
         let is_multiple_remove = input_is_multiple == 'true' ? true : false;
         if (!is_multiple_remove) {
-            let input_id = 'input-' + name;
-            let input_preview = 'media-input-preview-' + name;
-            // Set the value of the input field
-            let inputElement = document.getElementById(input_id);
-            inputElement.value = "";
-            // Set the src of the input preview
-            let inputPreviewElement = document.getElementById(input_preview);
-            inputPreviewElement.src = place_holder_image;
+            document.getElementById('input-' + name).value = '';
+            // Hide image container, show placeholder
+            var imgWrap = document.getElementById('single-img-wrap-' + name);
+            var placeholder = document.getElementById('single-placeholder-' + name);
+            if (imgWrap) imgWrap.style.display = 'none';
+            if (placeholder) placeholder.style.display = '';
+            var img = document.getElementById('media-input-preview-' + name);
+            if (img) img.src = '';
         }
     }
     /**
@@ -199,19 +199,18 @@
         }
         //Set single input filed value
         if (!is_multiple) {
-            let input_id = 'input-' + input_name;
-            let input_preview = 'media-input-preview-' + input_name;
             let file_path = ready_for_insert_items[0].path;
 
-            // Set the value of the input field
-            let inputElement = document.getElementById(input_id);
-            inputElement.value = file_path;
+            document.getElementById('input-' + input_name).value = file_path;
 
-            // Set the src of the input preview
-            let inputPreviewElement = document.getElementById(input_preview);
-            inputPreviewElement.src = '/public/' + file_path;
+            // Show image container, hide placeholder
+            var imgWrap = document.getElementById('single-img-wrap-' + input_name);
+            var placeholder = document.getElementById('single-placeholder-' + input_name);
+            var img = document.getElementById('media-input-preview-' + input_name);
+            if (imgWrap) imgWrap.style.display = '';
+            if (placeholder) placeholder.style.display = 'none';
+            if (img) img.src = '/public/' + file_path;
 
-            //Hide media modal
             $("#mediaManagerModal").modal('hide');
             return;
         }

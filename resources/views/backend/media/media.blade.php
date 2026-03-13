@@ -29,22 +29,31 @@
 @else
     <input type="hidden" name="{{ $name }}" id="input-{{ $name }}" value="{{ $value }}">
     <div class="image-box">
-        <div class="d-flex flex-wrap gap-10">
-            <div class="media-input-container {{ $width == '100' ? 'w-100' : '' }}">
-                <img src="{{ asset(getFilePath($value, true)) }}" alt="{{ $name }}" width="150"
+        <div class="media-single-wrap mb-1" id="single-wrap-{{ $name }}">
+            {{-- Placeholder: shown when no image --}}
+            <div class="single-media-placeholder {{ $value ? 'media-hidden' : '' }}"
+                id="single-placeholder-{{ $name }}">
+                <i class="fas fa-image"></i>
+                <span>{{ translation('No image selected') }}</span>
+            </div>
+            {{-- Image container: shown when image selected --}}
+            <div class="media-input-container {{ $width == '100' ? 'w-100' : '' }} {{ !$value ? 'media-hidden' : '' }}"
+                id="single-img-wrap-{{ $name }}">
+                <img src="{{ $value ? asset(getFilePath($value, true)) : '' }}" alt="{{ $name }}"
+                    width="150"
                     class="media-input-preview {{ $width == '100' ? 'w-100' : '' }}"
                     id="media-input-preview-{{ $name }}" />
-                <button type="button" title="Remove {{ $name }}" class="input-remove-btn"
-                    onclick="removeFileInputValue('{{ $name }}','{{ getPlaceHolder() }}', 'false')">
+                <button type="button" class="input-remove-btn"
+                    onclick="removeFileInputValue('{{ $name }}', 'false')">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
         </div>
         <div class="image-box-actions">
-            <button type="button" class="btn-link bg-transparent border-0 media-choose-btn" data-toggle="modal"
-                data-target="#mediaManagerModal"
+            <button type="button" class="btn-link bg-transparent border-0 media-choose-btn"
+                data-toggle="modal" data-target="#mediaManagerModal"
                 onclick="getMediaModalData('{{ $name }}', {{ $media_ids }}, 'false')">
-                {{ translation('Chosse File') }}
+                {{ translation('Choose File') }}
             </button>
         </div>
     </div>
