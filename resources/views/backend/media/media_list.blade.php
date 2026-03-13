@@ -32,38 +32,43 @@
     {{-- Media Library Tab --}}
     <div class="tab-pane fade show active" id="media-library" role="tabpanel" aria-labelledby="media-library-tab">
 
-        {{-- Toolbar: Search + Filter + Multi-select (single row) --}}
-        <div class="media-toolbar border-bottom px-3 py-2">
+        {{-- Toolbar: Search + Filter + Multi-select --}}
+        <div class="media-toolbar">
             <div class="media-toolbar-inner">
-                <div class="input-group input-group-sm media-search-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text bg-white border-right-0 text-muted">
-                            <i class="fas fa-search media-search-icon"></i>
-                        </span>
-                    </div>
-                    <input type="text" class="form-control form-control-sm border-left-0 media-search-input-field"
-                        id="media-search-input" placeholder="{{ translation('Search files...') }}">
-                    <div class="input-group-append d-none" id="media-search-clear-btn">
-                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="clearMediaSearch()">
-                            <i class="fas fa-times media-clear-icon"></i>
-                        </button>
-                    </div>
+
+                {{-- Search --}}
+                <div class="media-search-wrap">
+                    <i class="fas fa-search media-search-icon"></i>
+                    <input type="text" class="media-search-field" id="media-search-input"
+                        placeholder="{{ translation('Search files...') }}">
+                    <button type="button" class="media-search-clear d-none" id="media-search-clear-btn"
+                        onclick="clearMediaSearch()">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-                <div class="btn-group btn-group-sm" role="group">
-                    <button type="button" class="btn btn-outline-secondary media-filter-btn active"
-                        data-type="all">{{ translation('All') }}</button>
-                    <button type="button" class="btn btn-outline-secondary media-filter-btn"
-                        data-type="image">{{ translation('Images') }}</button>
-                    <button type="button" class="btn btn-outline-secondary media-filter-btn"
-                        data-type="video">{{ translation('Videos') }}</button>
-                    <button type="button" class="btn btn-outline-secondary media-filter-btn"
-                        data-type="document">{{ translation('Docs') }}</button>
+
+                {{-- Type filter pills --}}
+                <div class="media-filter-pills">
+                    <button type="button" class="media-filter-pill active" data-type="all">
+                        {{ translation('All') }}
+                    </button>
+                    <button type="button" class="media-filter-pill" data-type="image">
+                        <i class="fas fa-image"></i> {{ translation('Images') }}
+                    </button>
+                    <button type="button" class="media-filter-pill" data-type="video">
+                        <i class="fas fa-video"></i> {{ translation('Videos') }}
+                    </button>
+                    <button type="button" class="media-filter-pill" data-type="document">
+                        <i class="fas fa-file-alt"></i> {{ translation('Docs') }}
+                    </button>
                 </div>
-                <div class="custom-control custom-switch ml-auto media-multiselect-toggle">
-                    <input type="checkbox" class="custom-control-input" id="multi-select-toggle">
-                    <label class="custom-control-label media-multiselect-label"
-                        for="multi-select-toggle">{{ translation('Multi Select') }}</label>
-                </div>
+
+                {{-- Multi-select toggle button --}}
+                <button type="button" class="media-multi-btn ml-auto" id="multi-select-btn">
+                    <i class="fas fa-th-large"></i>
+                    <span>{{ translation('Multi Select') }}</span>
+                </button>
+
             </div>
         </div>
 

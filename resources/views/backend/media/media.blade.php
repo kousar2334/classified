@@ -40,8 +40,7 @@
             <div class="media-input-container {{ $width == '100' ? 'w-100' : '' }} {{ !$value ? 'media-hidden' : '' }}"
                 id="single-img-wrap-{{ $name }}">
                 <img src="{{ $value ? asset(getFilePath($value, true)) : '' }}" alt="{{ $name }}"
-                    width="150"
-                    class="media-input-preview {{ $width == '100' ? 'w-100' : '' }}"
+                    width="150" class="media-input-preview {{ $width == '100' ? 'w-100' : '' }}"
                     id="media-input-preview-{{ $name }}" />
                 <button type="button" class="input-remove-btn"
                     onclick="removeFileInputValue('{{ $name }}', 'false')">
@@ -50,8 +49,8 @@
             </div>
         </div>
         <div class="image-box-actions">
-            <button type="button" class="btn-link bg-transparent border-0 media-choose-btn"
-                data-toggle="modal" data-target="#mediaManagerModal"
+            <button type="button" class="btn-link bg-transparent border-0 media-choose-btn" data-toggle="modal"
+                data-target="#mediaManagerModal"
                 onclick="getMediaModalData('{{ $name }}', {{ $media_ids }}, 'false')">
                 {{ translation('Choose File') }}
             </button>

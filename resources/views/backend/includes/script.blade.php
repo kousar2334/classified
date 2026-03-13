@@ -454,27 +454,25 @@
         getMediaItemsList();
     }
 
-    // Media type filter buttons
-    $(document).on('click', '.media-filter-btn', function() {
-        $('.media-filter-btn').removeClass('active');
+    // Media type filter pills
+    $(document).on('click', '.media-filter-pill', function() {
+        $('.media-filter-pill').removeClass('active');
         $(this).addClass('active');
         media_filter_type = $(this).data('type');
         current_page = 1;
         getMediaItemsList();
     });
 
-    // Multi-select toggle
-    $(document).on('change', '#multi-select-toggle', function() {
-        multi_select_mode = $(this).is(':checked');
-        if (!multi_select_mode) {
-            // When turning off, keep only the last selected item
-            if (selected_items.length > 1) {
-                var last = selected_items[selected_items.length - 1];
-                $('.single-media-item').removeClass('selected');
-                $('#list-item-' + last).addClass('selected');
-                selected_items = [last];
-                previewSelectedFiles();
-            }
+    // Multi-select toggle button
+    $(document).on('click', '#multi-select-btn', function() {
+        multi_select_mode = !multi_select_mode;
+        $(this).toggleClass('active', multi_select_mode);
+        if (!multi_select_mode && selected_items.length > 1) {
+            var last = selected_items[selected_items.length - 1];
+            $('.single-media-item').removeClass('selected');
+            $('#list-item-' + last).addClass('selected');
+            selected_items = [last];
+            previewSelectedFiles();
         }
     });
 
@@ -485,9 +483,9 @@
         multi_select_mode = false;
         $('#media-search-input').val('');
         $('#media-search-clear-btn').addClass('d-none');
-        $('.media-filter-btn').removeClass('active');
-        $('.media-filter-btn[data-type="all"]').addClass('active');
-        $('#multi-select-toggle').prop('checked', false);
+        $('.media-filter-pill').removeClass('active');
+        $('.media-filter-pill[data-type="all"]').addClass('active');
+        $('#multi-select-btn').removeClass('active');
     });
 
     // Copy URL button in media preview sidebar (delegated — content is AJAX-injected)
