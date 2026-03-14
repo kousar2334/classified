@@ -35,8 +35,9 @@
                                 </div>
                             </div>
                             <div class="date-location">
-                                <span>{{ __tr('Posted on') }} <span
-                                        class="posted">{{ $ad->created_at->format('d F Y') }}</span></span>
+                                <span>{{ __tr('Posted on') }}
+                                    <span class="posted">{{ $ad->created_at->format('d F Y') }}</span>
+                                </span>
                                 @if ($ad->categoryInfo)
                                     <span class="vartical-devider"></span>
                                     <span>{{ __tr('Category') }} <span
@@ -51,8 +52,9 @@
                                 @endphp
                                 @if (count($locationParts) > 0)
                                     <span class="vartical-devider"></span>
-                                    <span>{{ __tr('Location') }} <span
-                                            class="posted">{{ implode(', ', $locationParts) }}</span></span>
+                                    <span>{{ __tr('Location') }}
+                                        <span class="posted">{{ implode(', ', $locationParts) }}</span>
+                                    </span>
                                 @endif
                             </div>
                         </div>
@@ -122,7 +124,6 @@
 
                     {{-- Description Section --}}
                     <div class="proDescription box-shadow1">
-                        {{-- Custom Fields / Condition --}}
                         {{-- $customFields and $fieldModels passed from controller --}}
                         @if ($ad->condition || $fieldModels->count() > 0)
                             <div class="descriptionTop">
